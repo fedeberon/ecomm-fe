@@ -17,7 +17,7 @@ function ProductCard({ product }) {
           {
             product.images.length === 0
                 ?
-                  <div> image </div>
+                  <div>  </div>
                 :
                 <Image
                     src={product.images[0].link}

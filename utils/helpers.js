@@ -25,15 +25,15 @@ export function setLocalData(setCart, setCheckoutId, setCheckoutUrl) {
 }
 
 export async function createShopifyCheckout(newItem) {
-  const data = await createCheckout( newItem['variantId'], newItem['variantQuantity'])
+  const data = await createCheckout( newItem['id'], newItem['quantity'])
   return data
 }
 
 export async function updateShopifyCheckout(updatedCart, checkoutId) {
   const lineItems = updatedCart.map(item => {
     return {
-      variantId: item['variantId'],
-      quantity: item['variantQuantity']
+      id: item['id'],
+      quantity: item['quantity']
     }
   })
   await updateCheckout(checkoutId, lineItems)

@@ -58,3 +58,13 @@ export async function createCheckout(id, quantity) {
         throw new Error("Could not create checkout!");
     }
 }
+
+export async function save(product) {
+    const fetchUrl = `http://localhost:8888/eComm/product`;
+    try {
+        let response = await axios.post(fetchUrl, product);
+        return response;
+    } catch (error) {
+        throw new Error("Could not create product!");
+    }
+}

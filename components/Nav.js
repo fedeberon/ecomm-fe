@@ -23,9 +23,26 @@ function Nav() {
         <Link href="/" passHref>
           <a className=" cursor-pointer">
             <h1 className="flex no-underline">
-              <img height="32" width="32" alt="logo" className="h-8 w-8 mr-1 object-contain" src="/icon.svg" />
               <span className="text-xl font-primary font-bold tracking-tight pt-1">
-                {process.env.siteTitle}
+                Inicio
+              </span>
+            </h1>
+          </a>
+        </Link>
+        <Link href="/products">
+        <a className=" cursor-pointer">
+          <h1 className="flex no-underline">
+            <span className="text-xl font-primary font-bold tracking-tight pt-1">
+               Products
+              </span>
+          </h1>
+        </a>
+        </Link>
+        <Link href="/products">
+          <a className=" cursor-pointer">
+            <h1 className="flex no-underline">
+              <span className="text-xl font-primary font-bold tracking-tight pt-1">
+               Ventas
               </span>
             </h1>
           </a>
