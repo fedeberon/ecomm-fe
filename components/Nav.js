@@ -9,7 +9,6 @@ function Nav() {
   const [cartItems, setCartItems] = useState(0)
 
   useEffect(() => {
-    debugger;
     let numItems = 0
     cart.forEach(item => {
       numItems += item.quantity

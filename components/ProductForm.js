@@ -101,6 +101,7 @@ function ProductForm({ title, mainImg, id, images }) {
       <UploadFile
           isOpen={openUploadFile}
           setIsOpen={setOpenUploadFile}
+          folder={id}
       />
 
     </div>
