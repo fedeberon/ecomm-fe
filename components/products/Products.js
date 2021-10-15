@@ -1,4 +1,14 @@
+import logo from "../../images/default.jpeg";
+import Image from 'next/image'
+import Link from "next/link";
+
 const Products = ({products}) => {
+    const defaultImage =
+        {
+            "url": "default.jpeg",
+            "link": logo,
+            "main": false
+        };
 
     return (
         <div>
@@ -10,16 +20,19 @@ const Products = ({products}) => {
                                 <thead className="bg-gray-50">
                                 <tr>
                                     <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                        Name
+                                        Nombre
+                                    </th>
+                                    <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500  tracking-wider">
+                                        Descripci&oacute;n
                                     </th>
                                     <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                        Title
+                                        Estado
                                     </th>
                                     <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                        Status
+                                        Precio
                                     </th>
                                     <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                        Role
+                                        Stock
                                     </th>
                                     <th scope="col" className="relative px-6 py-3">
                                         <span className="sr-only">Edit</span>
@@ -30,19 +43,20 @@ const Products = ({products}) => {
 
                                 {
                                     products.map(product =>
-
                                         <tr>
                                             <td className="px-6 py-4 whitespace-nowrap">
                                                 <div className="flex items-center">
                                                     <div className="flex-shrink-0 h-10 w-10">
+
                                                         {
-                                                            product.images.length === 0
+                                                            product.images && product.images.length != 0
                                                                 ?
-                                                                <div>  </div>
-                                                                :
                                                                 <img className="h-10 w-10 rounded-full"
                                                                      src={product.images[0].link}
-
+                                                                     alt=""/>
+                                                                :
+                                                                <img className="h-10 w-10 rounded-full"
+                                                                     src={defaultImage.link}
                                                                      alt=""/>
                                                         }
                                                     </div>
@@ -74,7 +88,9 @@ const Products = ({products}) => {
                                                 {product.stock}
                                             </td>
                                             <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                                                <Link href={"/products/" + product.id} passHref>
                                                 <a href="#" className="text-indigo-600 hover:text-indigo-900">Editar</a>
+                                                </Link>
                                             </td>
                                         </tr>
                                     )

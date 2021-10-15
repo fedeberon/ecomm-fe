@@ -1,13 +1,25 @@
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {save} from "../../services/productService";
 import { useRouter } from 'next/router'
 const NewProduct = () => {
     const router = useRouter()
+    const [activeSubmit, setActiveSubmit] = useState(false)
     const [product, setProduct]  = useState({
-        "name":"",
-        "price":"",
-        "category":"" ,
-        "stock": ""
+        "name" : "",
+        "price" : "",
+        "description" : "",
+        "category" : "",
+        "code" : "",
+        "stock" : ""
+    })
+
+    const [validate, setValidate] = useState({
+        "name" : false,
+        "price": false,
+        "description": false,
+        "category" : false,
+        "code" : false,
+        "stock" : false
     })
 
     const handleChange = (e) => {
@@ -15,10 +27,30 @@ const NewProduct = () => {
             ...product,
             [e.target.name]: e.target.value,
         });
+        validateInputs()
+        console.log("readyToSubmit", readyToSubmit)
+        setActiveSubmit(validateInputs())
+    }
+
+    const readyToSubmit = () => {
+        return  validate.name &&
+                validate.price &&
+                validate.description &&
+                validate.category &&
+                validate.code &&
+                validate.stock
+    }
+
+    const validateInputs = () => {
+        validate.name = product.name.length >= 5 ? true : false
+        validate.price = product.price.length >= 3 ? true : false
+        validate.description = product.description.length >= 5 ? true : false
+        validate.category = product.category.length >= 5 ? true : false
+        validate.code = product.code.length >= 5 ? true : false
+        validate.stock = product.stock.length >= 5 ? true : false
     }
 
     const submit =  (e) => {
-        debugger;
         e.preventDefault();
         save(product).then((result) => {
             if (result.status === 202) {
@@ -37,11 +69,13 @@ const NewProduct = () => {
                                     Nombre
                                 </label>
                                 <input
+                                    autoComplete="off"
                                     className="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
                                     id="name" type="text" placeholder="Nombre del Producto" name="name"
+                                    value={product.name}
                                     onChange={handleChange}
                                 />
-                                    <p className="text-red-500 text-xs italic">Please fill out this field.</p>
+                                    <p className={`text-red-500 text-xs italic ${validate.name ? "invisible" : ""}`}>Complete el nombre.</p>
                             </div>
                             <div className="w-full">
                                 <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
@@ -49,10 +83,12 @@ const NewProduct = () => {
                                     Descripcion
                                 </label>
                                 <textarea
-                                    className="no-resize appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-                                    id="grid-last-name"  type='text' placeholder="Doe" name="description"
+                                    autoComplete="off"
+                                    className="resize-none appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                                    id="grid-last-name" placeholder="Descripci&oacute;n del producto" name="description" rows="3"
                                     onChange={handleChange}
                                 />
+                                <p className={`text-red-500 text-xs italic ${validate.description ? "invisible" : ""}`}>Complete la descripci&oacute;n.</p>
                             </div>
                         </div>
 
@@ -60,30 +96,43 @@ const NewProduct = () => {
                             <div className="w-full md:w-1/3 px-3 mb-6 md:mb-0">
                                 <label className="block tracking-wide text-gray-700 text-xs font-bold mb-2"
                                        htmlFor="grid-city">
-                                    Codigo
+                                    C&oacute;digo
                                 </label>
                                 <input
-                                    className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-                                    id="grid-city" type="text" placeholder="Albuquerque" name="codigo"
+                                    autoComplete="off"
+                                    className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3    px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                                    id="grid-city" type="text" placeholder="C&oacute;digo del producto"
+                                    name="code"
                                     onChange={handleChange}
+
                                 />
+                                <p className={`text-red-500 text-xs italic ${validate.code ? "invisible" : ""}`}>Complete la descripci&oacute;n.</p>
                             </div>
                             <div className="w-full md:w-1/3 px-3 mb-6 md:mb-0">
                                 <div>
-                                    <label htmlFor="price"
-                                           className="block text-sm font-medium text-gray-700">Price</label>
+                                    <label htmlFor="price" className="block text-sm font-medium text-gray-700">
+                                        Precio
+                                    </label>
                                     <div className="mt-1 relative rounded-md shadow-sm">
                                         <div
-                                            className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                            className="absolute inset-y-0 left-0 pl-2 pb-4 flex items-center pointer-events-none">
                                           <span className="text-gray-500 sm:text-sm">
                                             $
                                           </span>
                                         </div>
-                                        <input type="text"  id="price"
-                                               className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                                        <input type="text"
+                                               id="price"
+                                               autoComplete="off"
+                                               className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 pl-6 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                                                placeholder="0.00" name="price"
                                                onChange={handleChange}
+                                               onKeyPress={(event) => {
+                                                   if (!/[0-9]/.test(event.key)) {
+                                                       event.preventDefault();
+                                                   }
+                                               }}
                                         />
+                                        <p className={`text-red-500 text-xs italic ${validate.price ? "invisible" : ""}`}>Complete el precio.</p>
                                     </div>
                                 </div>
                             </div>
@@ -92,15 +141,24 @@ const NewProduct = () => {
                                        htmlFor="grid-zip">
                                     Stock
                                 </label>
-                                <input
-                                    className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-                                    id="grid-zip" type="text" placeholder="90210"
-                                    name="stock"
-                                    onChange={handleChange}
+                                <input  type="text"
+                                        id="grid-zip"
+                                        placeholder="Stock"
+                                        name="stock"
+                                        autoComplete="off"
+                                        className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                                        onChange={handleChange}
+                                        onKeyPress={(event) => {
+                                            if (!/[0-9]/.test(event.key)) {
+                                                event.preventDefault();
+                                            }
+                                        }}
                                 />
+                                <p className={`text-red-500 text-xs italic ${validate.stock ? "invisible" : ""}`}>Complete el stock.</p>
                             </div>
                         </div>
-                        <button type="submit" className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                        <button type="submit"
+                                className={`bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded  ${activeSubmit ? "" : "select-none"}`}>
                             Guardar
                         </button>
                     </form>

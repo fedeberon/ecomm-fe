@@ -20,8 +20,6 @@ function ProductForm({ title, mainImg, id, images }) {
 
 
   async function handleAddToCart() {
-    const varId = id
-    // update store context
     if (quantity !== '') {
       addToCart({
         productTitle: title,
