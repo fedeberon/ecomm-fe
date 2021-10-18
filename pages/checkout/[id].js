@@ -1,12 +1,8 @@
-import {callbackPayment, getCallback} from "../../services/productService";
-import {useEffect} from "react";
+import {getCallback} from "../../services/productService";
 import logo from "../../images/default.jpeg";
 
 const Checkout = ({data}) => {
 
-    useEffect(() => {
-        console.log("data", data)
-    })
 
 
     const defaultImage = {
