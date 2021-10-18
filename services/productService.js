@@ -84,11 +84,21 @@ export async function getPreference(checkoutId) {
 export async function callbackPayment(result) {
     const fetchUrl = `http://localhost:8888/eComm/payment/callback` ;
     try {
-        debugger;
         let response = await axios.post(fetchUrl, result);
         return response.data;
     } catch (error) {
         console.log("error", error);
         throw new Error("Could not create preference!");
+    }
+}
+
+export async function getCallback(id) {
+    const fetchUrl = `http://localhost:8888/eComm/callback/${id}` ;
+    try {
+        let response = await axios.get(fetchUrl);
+        return response.data;
+    } catch (error) {
+        console.log("error", error);
+        throw new Error("Could not get the callback!");
     }
 }
