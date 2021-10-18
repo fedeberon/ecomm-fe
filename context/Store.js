@@ -22,6 +22,7 @@ export function CartProvider({ children }) {
   const [cart, setCart] = useState([])
   const [checkoutId, setCheckoutId] = useState('')
   const [checkoutUrl, setCheckoutUrl] = useState('')
+  const [price, setPrice] = useState('');
   const [isLoading, setisLoading] = useState(false)
 
   useEffect(() => {
@@ -31,7 +32,6 @@ export function CartProvider({ children }) {
   useEffect(() => {
     // do this to make sure multiple tabs are always in sync
     const onReceiveMessage = (e) => {
-      console.log(e)
       setLocalData(setCart, setCheckoutId, setCheckoutUrl)
     }
 
@@ -50,12 +50,13 @@ export function CartProvider({ children }) {
         newItem
       ])
       const response = await createCheckout(newItem.id, newItem.quantity);
-      setCheckoutId(response.id)
+      setCheckoutId(response.data.id)
+      newItem.checkoutId = response.data.id
       setCheckoutUrl(response.products)
+      setPrice(response.price)
       saveLocalData(newItem, response.id, response.products)
 
     } else {
-      debugger;
       let newCart = [...cart]
       let itemAdded = false
       // loop through all cart items to check if variant
@@ -89,7 +90,7 @@ export function CartProvider({ children }) {
     }
     let newCart = [...cart]
     newCart.forEach(item => {
-      if (item.variantId === id) {
+      if (item.id === id) {
         item.quantity = newQuantity
       }
     })

@@ -1,14 +1,7 @@
-import logo from "../../images/default.jpeg";
-import Image from 'next/image'
 import Link from "next/link";
+import logo from "../../images/default.jpeg";
 
 const Products = ({products}) => {
-    const defaultImage =
-        {
-            "url": "default.jpeg",
-            "link": logo,
-            "main": false
-        };
 
     return (
         <div>
@@ -47,7 +40,6 @@ const Products = ({products}) => {
                                             <td className="px-6 py-4 whitespace-nowrap">
                                                 <div className="flex items-center">
                                                     <div className="flex-shrink-0 h-10 w-10">
-
                                                         {
                                                             product.images && product.images.length != 0
                                                                 ?
@@ -56,7 +48,7 @@ const Products = ({products}) => {
                                                                      alt=""/>
                                                                 :
                                                                 <img className="h-10 w-10 rounded-full"
-                                                                     src={defaultImage.link}
+                                                                     src={logo.src}
                                                                      alt=""/>
                                                         }
                                                     </div>

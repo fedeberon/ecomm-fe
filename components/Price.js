@@ -1,7 +1,7 @@
 function Price({currency, num, numSize }) {
   return (
     <>
-      {currency}<span className={numSize}>{num}</span>
+      {currency}&nbsp;<span className={numSize}>{num}</span>
     </>
   )
 }

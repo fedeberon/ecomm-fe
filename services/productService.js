@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 export async function getProducts() {
-    const fetchUrl = `${process.env.BACKEND_SERVICE}/product`;
+    const fetchUrl = `http://localhost:8888/eComm/product`;
 
     const fetchOptions = {
         endpoint: fetchUrl,
@@ -23,7 +23,7 @@ export async function getProducts() {
 }
 
 export async function getProduct(id) {
-    const fetchUrl = `${process.env.BACKEND_SERVICE}/product/${id}`;
+    const fetchUrl = `http://localhost:8888/eComm/product/${id}`;
 
     const fetchOptions = {
         endpoint: fetchUrl,
@@ -53,6 +53,8 @@ export async function createCheckout(id, quantity) {
 
     try {
         let response = await axios.post(fetchUrl, checkout);
+        debugger;
+        console.log(response);
         return response;
     } catch (error) {
         throw new Error("Could not create checkout!");
@@ -66,5 +68,27 @@ export async function save(product) {
         return response;
     } catch (error) {
         throw new Error("Could not create product!");
+    }
+}
+
+export async function getPreference(checkoutId) {
+    const fetchUrl = `http://localhost:8888/eComm/payment/checkout?checkoutId=${checkoutId}` ;
+    try {
+        let response = await axios.get(fetchUrl);
+        return response;
+    } catch (error) {
+        throw new Error("Could not create preference!");
+    }
+}
+
+export async function callbackPayment(result) {
+    const fetchUrl = `http://localhost:8888/eComm/payment/callback` ;
+    try {
+        debugger;
+        let response = await axios.post(fetchUrl, result);
+        return response.data;
+    } catch (error) {
+        console.log("error", error);
+        throw new Error("Could not create preference!");
     }
 }

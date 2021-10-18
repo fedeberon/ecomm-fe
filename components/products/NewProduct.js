@@ -1,6 +1,7 @@
-import {useEffect, useState} from "react";
+import {useState} from "react";
 import {save} from "../../services/productService";
-import { useRouter } from 'next/router'
+import {useRouter} from 'next/router'
+
 const NewProduct = () => {
     const router = useRouter()
     const [activeSubmit, setActiveSubmit] = useState(false)
@@ -28,7 +29,6 @@ const NewProduct = () => {
             [e.target.name]: e.target.value,
         });
         validateInputs()
-        console.log("readyToSubmit", readyToSubmit)
         setActiveSubmit(validateInputs())
     }
 
@@ -59,6 +59,7 @@ const NewProduct = () => {
         });
     }
 
+
     return (
             <div className="flex justify-center">
                     <form className="w-full max-w-lg" onSubmit={submit}>
@@ -71,7 +72,9 @@ const NewProduct = () => {
                                 <input
                                     autoComplete="off"
                                     className="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
-                                    id="name" type="text" placeholder="Nombre del Producto" name="name"
+                                    id="name" type="text"
+                                    placeholder="Nombre del Producto"
+                                    name="name"
                                     value={product.name}
                                     onChange={handleChange}
                                 />
@@ -90,10 +93,8 @@ const NewProduct = () => {
                                 />
                                 <p className={`text-red-500 text-xs italic ${validate.description ? "invisible" : ""}`}>Complete la descripci&oacute;n.</p>
                             </div>
-                        </div>
 
-                        <div className="flex flex-wrap -mx-3 mb-2">
-                            <div className="w-full md:w-1/3 px-3 mb-6 md:mb-0">
+                            <div className="w-full">
                                 <label className="block tracking-wide text-gray-700 text-xs font-bold mb-2"
                                        htmlFor="grid-city">
                                     C&oacute;digo
@@ -101,14 +102,19 @@ const NewProduct = () => {
                                 <input
                                     autoComplete="off"
                                     className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3    px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-                                    id="grid-city" type="text" placeholder="C&oacute;digo del producto"
+                                    id="grid-city" type="text" placeholder="Cod. del producto"
                                     name="code"
                                     onChange={handleChange}
 
                                 />
-                                <p className={`text-red-500 text-xs italic ${validate.code ? "invisible" : ""}`}>Complete la descripci&oacute;n.</p>
+                                <p className={`text-red-500 text-xs italic ${validate.code ? "invisible" : ""}`}>Complete la c&oacute;digo.</p>
                             </div>
-                            <div className="w-full md:w-1/3 px-3 mb-6 md:mb-0">
+
+                        </div>
+
+
+                        <div className="flex flex-wrap -mx-3 mb-2">
+                            <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
                                 <div>
                                     <label htmlFor="price" className="block text-sm font-medium text-gray-700">
                                         Precio
@@ -120,14 +126,16 @@ const NewProduct = () => {
                                             $
                                           </span>
                                         </div>
-                                        <input type="text"
+                                        <input
+                                               type="text"
                                                id="price"
                                                autoComplete="off"
-                                               className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 pl-6 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                                               className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-1 pl-6 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                                                placeholder="0.00" name="price"
                                                onChange={handleChange}
+                                               maxLength = "7"
                                                onKeyPress={(event) => {
-                                                   if (!/[0-9]/.test(event.key)) {
+                                                   if (!/[0-9]?[0-9]?(\.[0-9][0-9]?)?/.test(event.key)) {
                                                        event.preventDefault();
                                                    }
                                                }}
@@ -136,12 +144,12 @@ const NewProduct = () => {
                                     </div>
                                 </div>
                             </div>
-                            <div className="w-full md:w-1/3 px-3 mb-6 md:mb-0">
+                            <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
                                 <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
                                        htmlFor="grid-zip">
                                     Stock
                                 </label>
-                                <input  type="text"
+                                <input
                                         id="grid-zip"
                                         placeholder="Stock"
                                         name="stock"

@@ -2,6 +2,7 @@ import BackToProductButton from '@/components/BackToProductButton'
 import ProductInfo from '@/components/ProductInfo'
 import ProductForm from '@/components/ProductForm'
 import logo from "../images/default.jpeg";
+import {useEffect} from "react";
 
 function ProductDetails({ productData }) {
     const defaultImage =
@@ -10,6 +11,10 @@ function ProductDetails({ productData }) {
             "link": logo,
             "main": false
         };
+
+    useEffect(() => {
+        console.log("productData", productData);
+    }, [])
 
    const image = productData.images && productData.images.length != 0 ? productData.images[0].link : defaultImage.link
 
@@ -26,6 +31,7 @@ function ProductDetails({ productData }) {
         mainImg={image}
         id={productData.id}
         images={productData.images}
+        price={productData.price}
       />
     </div>
   )

@@ -4,7 +4,7 @@ import {faShoppingCart, faCloudUploadAlt, faArrowLeft} from '@fortawesome/free-s
 import { useCartContext, useAddToCartContext } from '@/context/Store'
 import UploadFile from "@/components/products/UploadFile";
 
-function ProductForm({ title, mainImg, id, images }) {
+function ProductForm({ title, mainImg, id, images, price }) {
   const [quantity, setQuantity] = useState(1)
   const isLoading = useCartContext()[2]
   const addToCart = useAddToCartContext()
@@ -20,12 +20,14 @@ function ProductForm({ title, mainImg, id, images }) {
 
 
   async function handleAddToCart() {
-    if (quantity !== '') {
+    debugger;
+    if (quantity != '') {
       addToCart({
         productTitle: title,
         productImage: mainImg,
-        quantity: 1,
-        id: 1
+        quantity: quantity,
+        id: id,
+        price: price
       })
     }
   }
