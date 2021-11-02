@@ -36,7 +36,7 @@ function CartTable({ cart }) {
             <tr key={item.id} className="text-sm sm:text-base text-gray-600 text-center">
               <td className="font-primary font-medium px-4 sm:px-6 py-4 flex items-center ">
                 <img
-                  src={item.productImage.src}
+                  src={item.productImage}
                   alt={item.productImage}
                   height={64}
                   width={64}

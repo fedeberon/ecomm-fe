@@ -4,9 +4,10 @@ import CartTable from '@/components/CartTable'
 import CheckOutButton from '@/components/CheckOutButton'
 import BackToProductButton from '@/components/BackToProductButton'
 import {useCartContext} from '@/context/Store'
-import PayForm from "@/components/mercadoPago/PayForm";
 import {getPreference} from "../services/productService";
 import {useEffect, useState} from "react";
+import MercadoPago from "@/components/mercadoPago/MercadoPago";
+
 
 function CartPage() {
   const pageTitle = `Cart | ${process.env.siteTitle}`  
@@ -29,17 +30,24 @@ function CartPage() {
         cart={cart}
       />
       <div className="max-w-sm mx-auto space-y-4 px-2">
-        <CheckOutButton webUrl={checkoutUrl} />
+          {
+              cart[0]
+              ?
+              <CheckOutButton checkoutId={cart[0].checkoutId}/>
+              :
+              <></>
+          }
         <BackToProductButton />
+          {
+              preference != null
+                  ?
+                    <MercadoPago preference={preference}/>
+                  :
+                  <></>
+          }
+
       </div>
 
-        {
-            preference != null
-            ?
-                <PayForm preference={preference}/>
-            :
-                <></>
-        }
 
     </div>
   )

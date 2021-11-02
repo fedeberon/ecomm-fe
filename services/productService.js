@@ -53,8 +53,6 @@ export async function createCheckout(id, quantity) {
 
     try {
         let response = await axios.post(fetchUrl, checkout);
-        debugger;
-        console.log(response);
         return response;
     } catch (error) {
         throw new Error("Could not create checkout!");
