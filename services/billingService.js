@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export async function getBilling(user, checkoutId) {
+export async function getBilling(user, checkout) {
 
     const bill = {
         "id": 1,
@@ -10,7 +10,7 @@ export async function getBilling(user, checkoutId) {
         "ivaConditionType" : "O_POCIENTO",
         "puntoDeVenta" : 1,
         "comments" : "Comentarios ...",
-        "checkoutId" : checkoutId
+        "checkoutId": checkout.id
     }
 
     const fetchUrl = `http://localhost:8888/eComm/billing`;

@@ -1,78 +1,56 @@
-const BillPrint = () => {
+import BillPrintBody from "@/components/BillPrintBody";
+
+const BillPrint = ({bill}) => {
+
+    const print = () => {
+        var mywindow = window.open('', 'PRINT', 'height=400,width=600');
+
+        mywindow.document.write('<html><head><title>' + document.title  + '</title>');
+        mywindow.document.write('</head><body >');
+        mywindow.document.write('<h1>' + document.title  + '</h1>');
+        mywindow.document.write(document.getElementById("bill").innerHTML);
+        mywindow.document.write('</body></html>');
+
+        mywindow.document.close(); // necessary for IE >= 10
+        mywindow.focus(); // necessary for IE >= 10*/
+
+        mywindow.print();
+        mywindow.close();
+
+        return true;
+    }
+
     return (
-        <div className="mx-auto p-16" style="max-width: 800px;">
-            <div className="flex items-center justify-between mb-8 px-3">
-                <div>
-                    <span className="text-2xl">Example Invoice #</span>: 0001-2019<br/>
-                    <span>Date</span>: January 1st 2019<br/>
+
+        <div id="bill" className="fixed z-10 inset-0 overflow-y-auto mx-auto p-16 mt-10" aria-labelledby="modal-title" role="dialog" aria-modal="true">
+            <div className="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+                <div className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" aria-hidden="true"></div>
+
+                <span className="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
+
+                <div className="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:w-2/3">
+                    <div className="bg-white px-2 pt-5 pb-4 sm:p-6 sm:pb-4">
+                        <div className="sm:flex sm:items-start">
+                            <div className="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
+                                <div className="mt-1">
+                                    <p className="text-sm text-gray-500">
+
+                                        <BillPrintBody bill={bill}/>
+
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+                        <button onClick={print} type="button" className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-red-600 text-base font-medium text-white hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:ml-3 sm:w-auto sm:text-sm">
+                            Imprimir
+                        </button>
+                        <button type="button" className="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm">
+                            Cancelar
+                        </button>
+                    </div>
                 </div>
-                <div className="text-right">
-                    <img src="https://www.stenvdb.be/assets/img/email-signature.png"/>
-                </div>
-            </div>
-
-            <div className="flex justify-between mb-8 px-3">
-                <div>
-                    Pixel &amp; Tonic<br/>
-                    919 NW Bond St. Ste 203<br/>
-                    Bend, OR 97703 USA<br/>
-                    hello@pixelandtonic.com<br/>
-                    +1 855-700-5115
-                </div>
-                <div className="text-right">
-                    Company Name<br/>
-                    Street 12<br/>
-                    10000 City<br/>
-                    hello@yoursite.com
-                </div>
-            </div>
-
-            <div className="border border-t-2 border-gray-200 mb-8 px-3"></div>
-
-            <div className="mb-8 px-3">
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus aliquam vestibulum elit, id rutrum
-                    sem lobortis eget. In a massa et leo vehicula dapibus. In convallis ut nisi ut vestibulum. Integer
-                    non feugiat tellus. Nullam id ex suscipit, volutpat sapien tristique, porttitor sapien.</p>
-            </div>
-
-            <div className="flex justify-between mb-4 bg-gray-200 px-3 py-2">
-                <div>Development</div>
-                <div className="text-right font-medium">1200 EUR</div>
-            </div>
-            <div className="flex justify-between mb-4 bg-gray-200 px-3 py-2">
-                <div>Design</div>
-                <div className="text-right font-medium">800 EUR</div>
-            </div>
-            <div className="flex justify-between mb-4 bg-gray-200 px-3 py-2">
-                <div>Licensing</div>
-                <div className="text-right font-medium">300 EUR</div>
-            </div>
-
-            <div className="flex justify-between items-center mb-2 px-3">
-                <div className="text-2xl leading-none"><span className="">Total</span>:</div>
-                <div className="text-2xl text-right font-medium">2300 EUR</div>
-            </div>
-
-            <div className="flex mb-8 justify-end px-3">
-                <div className="text-right w-1/2 px-0 leading-tight">
-                    <small className="text-xs">Nullam auctor, tellus sit amet eleifend interdum, quam nisl luctus quam,
-                        a tincidunt nisi eros ac dui. Curabitur leo ipsum, bibendum sit amet suscipit sed, gravida non
-                        lectus. Nunc porttitor lacus sapien, nec congue quam cursus nec. Quisque vel vehicula ipsum.
-                        Donec condimentum dolor est, ut interdum augue blandit luctus. </small>
-                </div>
-            </div>
-
-            <div className="mb-8 px-3">
-                <span>To be paid before</span> Februari 1st 2019 on <b className="underline font-bold">BE71 0961 2345
-                6769</b> specifying the invoice #
-            </div>
-
-            <div className="mb-8 text-4xl text-center px-3">
-                <span>Thank you!</span>
-            </div>
-
-            <div className="text-center text-sm px-3">
-                hello@yourdomain.com ∖ www.yourdomain.com
             </div>
         </div>
     )

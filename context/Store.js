@@ -5,6 +5,11 @@ import {createCheckout} from "../services/productService";
 const CartContext = createContext()
 const AddToCartContext = createContext()
 const UpdateCartQuantityContext = createContext()
+const CleanCartContext = createContext()
+
+export function useCleanCartContext() {
+  return useContext(CleanCartContext)
+}
 
 export function useCartContext() {
   return useContext(CartContext)
@@ -43,19 +48,14 @@ export function CartProvider({ children }) {
 
   async function addToCart(newItem) {
     setisLoading(true)
+
     // empty cart
     if (cart.length === 0) {
       setCart([
         ...cart,
         newItem
       ])
-      const response = await createCheckout(newItem.id, newItem.quantity);
-      setCheckoutId(response.data.id)
-      newItem.checkoutId = response.data.id
-      setCheckoutUrl(response.products)
-      setPrice(response.price)
-      saveLocalData(newItem, response.id, response.products)
-
+      saveLocalData(newItem, newItem.id)
     } else {
       let newCart = [...cart]
       let itemAdded = false
@@ -80,6 +80,10 @@ export function CartProvider({ children }) {
       saveLocalData(newCartWithItem, checkoutId, checkoutUrl)
     }
     setisLoading(false)
+  }
+
+  function emptyCart() {
+    setCart([])
   }
 
   async function updateCartItemQuantity(id, quantity) {
@@ -108,7 +112,9 @@ export function CartProvider({ children }) {
     <CartContext.Provider value={[cart, checkoutUrl, isLoading]}>
       <AddToCartContext.Provider value={addToCart}>
         <UpdateCartQuantityContext.Provider value={updateCartItemQuantity}>
-          {children}
+          <CleanCartContext.Provider value={emptyCart}>
+            {children}
+          </CleanCartContext.Provider>
         </UpdateCartQuantityContext.Provider>
       </AddToCartContext.Provider>
     </CartContext.Provider>

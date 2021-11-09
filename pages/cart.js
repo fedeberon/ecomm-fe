@@ -4,7 +4,7 @@ import CartTable from '@/components/CartTable'
 import CheckOutButton from '@/components/CheckOutButton'
 import BackToProductButton from '@/components/BackToProductButton'
 import {useCartContext} from '@/context/Store'
-import {getPreference} from "../services/productService";
+import {getPreference, createCheckout} from "../services/productService";
 import {useEffect, useState} from "react";
 import MercadoPago from "@/components/mercadoPago/MercadoPago";
 
@@ -13,15 +13,19 @@ function CartPage() {
   const pageTitle = `Cart | ${process.env.siteTitle}`  
   const [cart, checkoutUrl] = useCartContext()
   const [preference, setPreference] = useState();
+  const [checkout, setCheckout] = useState();
 
-   useEffect(() => {
-        if(cart.length != 0){
-            getPreference(cart[0].checkoutId).then((res) => {
-                setPreference(res.data);
-            });
-        }
-   }, [])
+  const preparePreference = () => {
+      getPreference(cart).then((res) => {
+          setPreference(res.data);
+      });
+  }
 
+  const handleCheckout = () => {
+      createCheckout(cart).then((res) => {
+          setCheckout(res.data);
+      });
+  }
   return (
     <div className="container mx-auto mb-20 min-h-screen">
       <SEO title={pageTitle} />
@@ -30,20 +34,28 @@ function CartPage() {
         cart={cart}
       />
       <div className="max-w-sm mx-auto space-y-4 px-2">
-          {
-              cart[0]
-              ?
-              <CheckOutButton checkoutId={cart[0].checkoutId}/>
-              :
-              <></>
-          }
         <BackToProductButton />
           {
-              preference != null
+              checkout != null
                   ?
-                    <MercadoPago preference={preference}/>
+                  <>
+                      <CheckOutButton checkout={checkout}/>
+                      <MercadoPago preference={preference}/>
+                  </>
                   :
-                  <></>
+                  <>
+                      <a onClick={preparePreference}
+                      aria-label="checkout-products"
+                      className="bg-palette-primary text-white text-lg font-primary font-semibold pt-2 pb-1 leading-relaxed flex
+                      justify-center items-center focus:ring-1 focus:ring-palette-light focus:outline-none w-full hover:bg-palette-dark rounded-sm"
+                      >Generar el Pago</a>
+
+                      <a onClick={handleCheckout}
+                      aria-label="checkout-products"
+                      className="bg-palette-primary text-white text-lg font-primary font-semibold pt-2 pb-1 leading-relaxed flex
+                              justify-center items-center focus:ring-1 focus:ring-palette-light focus:outline-none w-full hover:bg-palette-dark rounded-sm"
+                      >Checkout</a>
+                  </>
           }
 
       </div>

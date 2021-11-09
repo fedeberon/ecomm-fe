@@ -2,7 +2,7 @@ import { createCheckout, updateCheckout } from '@/lib/shopify'
 import {createCheckout as createCheckoutBackend}  from '../services/productService'
 
 export function saveLocalData(cart, checkoutId, checkoutUrl) {
-  localStorage.setItem(process.env.LOCAL_STORAGE_NAME, JSON.stringify([cart, checkoutId, checkoutUrl]))
+  localStorage.setItem("cart", JSON.stringify([cart, checkoutId, checkoutUrl]))
 }
 
 function getLocalData() {

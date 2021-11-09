@@ -12,10 +12,6 @@ function ProductDetails({ productData }) {
             "main": false
         };
 
-    useEffect(() => {
-        console.log("productData", productData);
-    }, [])
-
    const image = productData.images && productData.images.length != 0 ? productData.images[0].link : defaultImage.link
 
   return (

@@ -44,21 +44,6 @@ export async function getProduct(id) {
     }
 }
 
-export async function createCheckout(id, quantity) {
-    const fetchUrl = `http://localhost:8888/eComm/checkout`;
-    let checkout = {
-        productId: id,
-        quantity: quantity
-    };
-
-    try {
-        let response = await axios.post(fetchUrl, checkout);
-        return response;
-    } catch (error) {
-        throw new Error("Could not create checkout!");
-    }
-}
-
 export async function save(product) {
     const fetchUrl = `http://localhost:8888/eComm/product`;
     try {
@@ -69,10 +54,18 @@ export async function save(product) {
     }
 }
 
-export async function getPreference(checkoutId) {
-    const fetchUrl = `http://localhost:8888/eComm/payment/checkout?checkoutId=${checkoutId}` ;
+export async function getPreference(cart) {
+    const fetchUrl = `http://localhost:8888/eComm/payment/checkout`;
+    let details = []
+    cart.forEach(function(value, index, array) {
+        let detail = {
+            "id": value.id,
+            "quantity" : value.quantity
+        }
+        details.push(detail);
+    });
     try {
-        let response = await axios.get(fetchUrl);
+        let response = await axios.post(fetchUrl, details);
         return response;
     } catch (error) {
         throw new Error("Could not create preference!");
@@ -80,7 +73,7 @@ export async function getPreference(checkoutId) {
 }
 
 export async function callbackPayment(result) {
-    const fetchUrl = `http://localhost:8888/eComm/payment/callback` ;
+    const fetchUrl = `http://localhost:8888/eComm/payment/MP/callback` ;
     try {
         let response = await axios.post(fetchUrl, result);
         return response.data;
@@ -98,5 +91,24 @@ export async function getCallback(id) {
     } catch (error) {
         console.log("error", error);
         throw new Error("Could not get the callback!");
+    }
+}
+
+
+export async function createCheckout(cart){
+    const fetchUrl = `http://localhost:8888/eComm/checkout`;
+    let details = []
+    cart.forEach(function(value, index, array) {
+        let detail = {
+            "id": value.id,
+            "quantity" : value.quantity
+        }
+        details.push(detail);
+    });
+    try {
+        let response = await axios.post(fetchUrl, details);
+        return response;
+    } catch (error) {
+        throw new Error("Could not create preference!");
     }
 }

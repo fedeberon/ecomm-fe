@@ -5,12 +5,15 @@ import {getPersonByCUIT} from "../services/personService";
 import Loading from "@/components/utils/Loading";
 import {getBilling} from "../services/billingService";
 import BillPrint from "@/components/BillPrint";
+import {useAddToCartContext, useCleanCartContext} from "@/context/Store";
 
-const Billing = ({isShowing, checkoutId}) => {
+const Billing = ({isShowing, checkout}) => {
 
     const [loading, isLoading] = useState(false);
-    const [readyToPrint, isReadyToPrint] = useState(true);
+    const [readyToPrint, isReadyToPrint] = useState(false);
     const [billResponse, setBillResponse] = useState();
+    const cleanCart = useCleanCartContext()
+
 
     const [person, setPerson] = useState({
         "name": "",
@@ -43,11 +46,15 @@ const Billing = ({isShowing, checkoutId}) => {
         isLoading(false)
     }
 
-
     const submit = async () => {
-        const response = await getBilling(person, checkoutId);
+        debugger
+        isLoading(true);
+        const response = await getBilling(person, checkout);
         setBillResponse(response);
+        console.log(response);
+        isLoading(true);
         isReadyToPrint(true);
+        cleanCart();
     }
 
     return (
@@ -119,7 +126,7 @@ const Billing = ({isShowing, checkoutId}) => {
                 }
             </div>
             :
-            <BillPrint  />
+            <BillPrint bill={billResponse}  />
         }
 
         </>

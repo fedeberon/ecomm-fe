@@ -20,7 +20,6 @@ function ProductForm({ title, mainImg, id, images, price }) {
 
 
   async function handleAddToCart() {
-    debugger;
     if (quantity != '') {
       addToCart({
         productTitle: title,
