@@ -1,7 +1,8 @@
 import Image from 'next/image'
 import Link from 'next/link'
-import Price from '@/components/Price'
-import logo from "../images/default.jpeg";
+import Price from '@/components/products/Price'
+import logo from "../../images/default.jpeg";
+import {useEffect} from "react";
 
 function ProductCard({ product }) {
   const title = product.name
@@ -37,6 +38,9 @@ function ProductCard({ product }) {
           </div>
           <div className="text-lg text-gray-600 p-4 font-primary font-light">
             {description}
+          </div>
+          <div className="text-lg text-gray-600 p-4 font-primary font-light">
+            {product.category ? product.category.name : ''}
           </div>
           <div
             className="text-palette-dark font-primary font-medium text-base absolute bottom-0 right-0 mb-4 pl-8 pr-4 pb-1 pt-2 bg-palette-lighter 

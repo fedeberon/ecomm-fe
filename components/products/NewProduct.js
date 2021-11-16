@@ -9,7 +9,9 @@ const NewProduct = () => {
         "name" : "",
         "price" : "",
         "description" : "",
-        "category" : "",
+        "category" : {
+            "id" : ""
+        },
         "code" : "",
         "stock" : ""
     })
@@ -32,6 +34,15 @@ const NewProduct = () => {
         setActiveSubmit(validateInputs())
     }
 
+    const handleChangeCategory = (e) => {
+        setProduct({
+            ...product,
+            "category": {
+                "id": e.target.value
+            },
+        });
+    }
+
     const readyToSubmit = () => {
         return  validate.name &&
                 validate.price &&
@@ -45,7 +56,6 @@ const NewProduct = () => {
         validate.name = product.name.length >= 5 ? true : false
         validate.price = product.price.length >= 3 ? true : false
         validate.description = product.description.length >= 5 ? true : false
-        validate.category = product.category.length >= 5 ? true : false
         validate.code = product.code.length >= 5 ? true : false
         validate.stock = product.stock.length >= 5 ? true : false
     }
@@ -105,13 +115,22 @@ const NewProduct = () => {
                                     id="grid-city" type="text" placeholder="Cod. del producto"
                                     name="code"
                                     onChange={handleChange}
-
                                 />
                                 <p className={`text-red-500 text-xs italic ${validate.code ? "invisible" : ""}`}>Complete la c&oacute;digo.</p>
                             </div>
 
+                            <div className="w-full">
+                                <label className="block tracking-wide text-gray-700 text-xs font-bold mb-2"
+                                       htmlFor="grid-city">
+                                    Categoria
+                                </label>
+                                <select onChange={handleChangeCategory} className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3    px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500">
+                                    <option value="0">Seleccione</option>
+                                    <option value="1">Jugueteria</option>
+                                    <option value="2">Accesorios</option>
+                                </select>
+                            </div>
                         </div>
-
 
                         <div className="flex flex-wrap -mx-3 mb-2">
                             <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
@@ -166,7 +185,7 @@ const NewProduct = () => {
                             </div>
                         </div>
                         <button type="submit"
-                                className={`bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded  ${activeSubmit ? "" : "select-none"}`}>
+                                className={`bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-8  ${activeSubmit ? "" : "select-none"}`}>
                             Guardar
                         </button>
                     </form>

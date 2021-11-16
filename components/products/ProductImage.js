@@ -2,7 +2,7 @@ import { useState, useRef } from 'react'
 import Image from 'next/image'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowLeft, faArrowRight } from '@fortawesome/free-solid-svg-icons'
-import logo  from '../images/default.jpeg'
+import logo  from '../../images/default.jpeg'
 
 function ProductImage({ images }) {
 

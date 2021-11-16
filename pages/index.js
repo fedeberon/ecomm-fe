@@ -1,13 +1,15 @@
-import StoreHeading from '@/components/StoreHeading'
-import ProductListings from '@/components/ProductListings'
+import ProductListings from '@/components/products/ProductListings'
 import {getProducts} from "../services/productService";
+import Carrusel from "@/components/Carrusel";
 
 function IndexPage({ products }) {
-
   return (
-    <div className="mx-auto max-w-6xl">
-      <StoreHeading/>
-      <ProductListings products={products} />
+    <div className="mx-auto max-w-full">
+        <div className="flex justify-center">
+            <Carrusel/>
+        </div>
+
+        <ProductListings products={products} />
     </div>
   )
 }

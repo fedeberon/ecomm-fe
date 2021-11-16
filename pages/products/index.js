@@ -21,7 +21,6 @@ const ProductsManager = ({products}) => {
 }
 export async function getStaticProps() {
     const products = await getProducts()
-    console.table(products);
     return {
         props: {
             products

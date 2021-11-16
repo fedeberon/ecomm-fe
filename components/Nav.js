@@ -2,7 +2,10 @@ import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { useCartContext } from '@/context/Store'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faShoppingCart } from '@fortawesome/free-solid-svg-icons'
+
+import {faShoppingCart, faUserCircle} from '@fortawesome/free-solid-svg-icons'
+import logo from '/images/logo.png';
+import UserSession from "@/components/users/UserSession";
 
 function Nav() {
   const cart = useCartContext()[0]
@@ -18,7 +21,8 @@ function Nav() {
 
   return (
     <header className="border-b border-palette-lighter sticky top-0 z-20 bg-white">
-      <div className="flex items-center justify-between mx-auto max-w-6xl px-6 pb-2 pt-4 md:pt-6">
+      <div className="flex items-center justify-between mx-auto -mt-7 max-w-6xl px-6 pb-2 pt-4 md:pt-6">
+        <img src={logo.src}/>
         <Link href="/" passHref>
           <a className=" cursor-pointer">
             <h1 className="flex no-underline">
@@ -28,24 +32,39 @@ function Nav() {
             </h1>
           </a>
         </Link>
-        <Link href="/products">
+        <Link href="/shop/Jugueteria">
         <a className=" cursor-pointer">
           <h1 className="flex no-underline">
             <span className="text-xl font-primary font-bold tracking-tight pt-1">
-               Products
+               Juguetes
               </span>
           </h1>
         </a>
         </Link>
-        <Link href="/products">
+        <Link href="/shop/Accesorios">
           <a className=" cursor-pointer">
             <h1 className="flex no-underline">
               <span className="text-xl font-primary font-bold tracking-tight pt-1">
-               Ventas
+               Accesorios
               </span>
             </h1>
           </a>
         </Link>
+
+        <Link href="/admin">
+          <a className=" cursor-pointer">
+            <h1 className="flex no-underline">
+              <span className="text-xl font-primary font-bold tracking-tight pt-1">
+               Administracion
+              </span>
+            </h1>
+          </a>
+        </Link>
+
+        <div>
+          <UserSession/>
+        </div>
+
         <div>
           <Link
             href="/cart"

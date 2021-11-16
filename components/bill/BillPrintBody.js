@@ -1,10 +1,7 @@
 import {useEffect} from "react";
+import Moment from "react-moment";
 
 const BillPrintBody = ({bill}) => {
-
-    useEffect(() => {
-        console.log("bill", bill)
-    })
 
     return (
 
@@ -12,7 +9,7 @@ const BillPrintBody = ({bill}) => {
             <div className="flex items-center justify-between mb-8 px-3">
                 <div>
                     <span className="text-2xl">Factura #</span>: {bill.data.number}<br/>
-                    <span>Date</span>: {bill.data.date}<br/>
+                    <span>Fecha</span>:   <Moment format="DD-MM-YYYY">{bill.data.date}</Moment><br/>
                 </div>
                 <div className="text-right">
                     {bill.data.billTypeName}
@@ -21,17 +18,18 @@ const BillPrintBody = ({bill}) => {
 
             <div className="flex justify-between mb-8 px-3">
                 <div>
-                    Pixel &amp; Tonic<br/>
-                    919 NW Bond St. Ste 203<br/>
-                    Bend, OR 97703 USA<br/>
-                    hello@pixelandtonic.com<br/>
-                    +1 855-700-5115
+                    Juan Perez<br/>
+                    San Martin 232<br/>
+                    Bolilvar, Buenos Aires<br/>
+                    juanperez@gmail.com<br/>
+                    351 123 456 789
                 </div>
                 <div className="text-right">
                     Dulce Bebe<br/>
-                    Street 12<br/>
-                    Bolivar<br/>
-                    hello@dulcebebe.com
+                    Av. Alsina 472<br/>
+                    San Carlos de Bolivar<br/>
+                    Prov Buenos Aires<br/>
+                    B6550<br/>
                 </div>
             </div>
 
@@ -95,7 +93,7 @@ const BillPrintBody = ({bill}) => {
                     </div>
                 </div>
             </div>
-
+            <br/>
             <div className="flex justify-between items-center mb-2 px-3">
                 <div className="text-2xl leading-none"><span className="">Total</span>:</div>
                 <div className="text-2xl text-right font-medium">$ {bill.data.totalAmount}</div>
@@ -104,8 +102,11 @@ const BillPrintBody = ({bill}) => {
             <div className="mb-8 px-3">
                 <span>CAE: </span>
                 <b className="underline font-bold">{bill.data.cae} </b>
+                <br/>
                 <span>FECHA: </span>
-                {bill.data.date}
+                <Moment format="DD-MM-YYYY">
+                 {bill.data.date}
+                </Moment>
             </div>
 
             <div className="mb-8 text-4xl text-center px-3">

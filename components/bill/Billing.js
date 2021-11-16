@@ -1,19 +1,16 @@
 import React, {useState} from "react";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faArrowRight} from "@fortawesome/free-solid-svg-icons";
-import {getPersonByCUIT} from "../services/personService";
+import {getPersonByCUIT} from "../../services/personService";
 import Loading from "@/components/utils/Loading";
-import {getBilling} from "../services/billingService";
-import BillPrint from "@/components/BillPrint";
-import {useAddToCartContext, useCleanCartContext} from "@/context/Store";
+import {getBilling} from "../../services/billingService";
+import {useCleanCartContext} from "@/context/Store";
+import {useRouter} from "next/router";
 
 const Billing = ({isShowing, checkout}) => {
-
+    const router = useRouter()
     const [loading, isLoading] = useState(false);
-    const [readyToPrint, isReadyToPrint] = useState(false);
-    const [billResponse, setBillResponse] = useState();
     const cleanCart = useCleanCartContext()
-
 
     const [person, setPerson] = useState({
         "name": "",
@@ -23,7 +20,6 @@ const Billing = ({isShowing, checkout}) => {
     })
 
     const handleChange = (e) => {
-        console.log("person", person);
         setPerson({
             ...person,
             [e.target.name]: e.target.value,
@@ -47,21 +43,17 @@ const Billing = ({isShowing, checkout}) => {
     }
 
     const submit = async () => {
-        debugger
         isLoading(true);
         const response = await getBilling(person, checkout);
-        setBillResponse(response);
-        console.log(response);
         isLoading(true);
-        isReadyToPrint(true);
         cleanCart();
+        if (response.status === 202) {
+            await router.push('/bill' + 219)
+        }
     }
 
     return (
         <>
-            {
-                readyToPrint == false
-            ?
             <div>
                 <div className="py-12 bg-gray-700 transition duration-100 ease-in-out z-10 absolute top-10 right-0 bottom-0 left-0" id="modal">
                     <div role="alert" className="container mx-auto w-11/12 md:w-2/3 max-w-lg">
@@ -125,8 +117,6 @@ const Billing = ({isShowing, checkout}) => {
                         <></>
                 }
             </div>
-            :
-            <BillPrint bill={billResponse}  />
         }
 
         </>

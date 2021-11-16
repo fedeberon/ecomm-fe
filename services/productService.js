@@ -1,5 +1,6 @@
 import axios from 'axios';
 
+
 export async function getProducts() {
     const fetchUrl = `http://localhost:8888/eComm/product`;
 
@@ -14,13 +15,37 @@ export async function getProducts() {
 
     try {
         const data = await fetch(fetchUrl, fetchOptions)
-                            .then((response) => response.json())
-                            .catch(error => console.log(error));
+            .then((response) => response.json())
+            .catch(error => console.log(error));
         return data;
     } catch (error) {
         throw new Error("Could not fetch products!");
     }
 }
+
+export async function getProductsByType(type) {
+    debugger
+    const fetchUrl = `http://localhost:8888/eComm/product/byType/${type}`;
+
+    const fetchOptions = {
+        endpoint: fetchUrl,
+        method: "GET",
+        headers: {
+            "Accept": "application/json",
+            "Content-Type": "application/json",
+        },
+    };
+
+    try {
+        const data = await fetch(fetchUrl, fetchOptions)
+            .then((response) => response.json())
+            .catch(error => console.log(error));
+        return data;
+    } catch (error) {
+        throw new Error("Could not fetch products!");
+    }
+}
+
 
 export async function getProduct(id) {
     const fetchUrl = `http://localhost:8888/eComm/product/${id}`;

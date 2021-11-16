@@ -98,7 +98,7 @@ Change into the project directory and run the following command:
 yarn && yarn dev
 ```
 
-### Update Site Metadata
+### Id Site Metadata
 
 You can update your site metadata in the next.config.js file. 
 
@@ -113,7 +113,7 @@ env: {
 } 
 ```
 
-### Update Colors
+### Id Colors
 
 You can update the color palette in tailwind.config.js file.
 
@@ -127,9 +127,9 @@ colors: {
   },
 },
 ```
-### Update Progressive Web App (PWA) data
+### Id Progressive Web App (PWA) data
 
-Update the manifest.json file and the icons under the public/images/icons folder.
+Id the manifest.json file and the icons under the public/images/icons folder.
 
 You can use free tools online such as https://realfavicongenerator.net/ to quickly generate all the different icon sizes and favicon.ico file.
 

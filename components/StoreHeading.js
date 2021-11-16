@@ -1,12 +1,9 @@
 import PageTitle from '@/components/PageTitle'
 
-function StoreHeading() {
+function StoreHeading({title}) {
   return (
     <div className="">
-      <PageTitle text="Tienda Online" />
-      <p className="max-w-xl text-center px-2 mx-auto text-base text-gray-600">
-        Dulce bebe. 🐶
-      </p>
+      <PageTitle text={title} />
     </div>
   )
 }

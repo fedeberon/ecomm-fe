@@ -1,6 +1,5 @@
-import ProductSection from '@/components/ProductSection'
+import ProductSection from '@/components/products/ProductSection'
 import {getProduct} from "../../services/productService";
-import {useEffect} from "react";
 
 function ProductPage({ productData }) {  
 

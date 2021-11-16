@@ -3,7 +3,7 @@ import { useUpdateCartQuantityContext } from '@/context/Store'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTimes } from '@fortawesome/free-solid-svg-icons'
 import Link from 'next/link'
-import Price from '@/components/Price'
+import Price from '@/components/products/Price'
 import { getCartSubTotal } from '@/utils/helpers'
 
 function CartTable({ cart }) {
@@ -36,8 +36,8 @@ function CartTable({ cart }) {
             <tr key={item.id} className="text-sm sm:text-base text-gray-600 text-center">
               <td className="font-primary font-medium px-4 sm:px-6 py-4 flex items-center ">
                 <img
-                  src={item.productImage}
-                  alt={item.productImage}
+                  src={item.productImage.src}
+                  alt={item.productImage.src}
                   height={64}
                   width={64}
                   className={`hidden sm:inline-flex  mr-10`}

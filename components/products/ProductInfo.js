@@ -1,4 +1,4 @@
-import Price from '@/components/Price'
+import Price from '@/components/products/Price'
 
 function ProductInfo({ title, description, price }) {
   return (

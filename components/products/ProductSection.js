@@ -1,5 +1,5 @@
-import ProductImage from '@/components/ProductImage'
-import ProductDetails from '@/components/ProductDetails'
+import ProductImage from '@/components/products/ProductImage'
+import ProductDetails from '@/components/products/ProductDetails'
 
 function ProductSection({ productData }) {
   return (

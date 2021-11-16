@@ -1,8 +1,10 @@
 import NewProduct from "@/components/products/NewProduct";
+import StoreHeading from "@/components/StoreHeading";
 
 const Create = () => {
     return(
-        <div className="min-h-screen py-12 sm:pt-20">
+        <div className="min-h-screen">
+            <StoreHeading title="Nuevo Articulo"/>
             <NewProduct/>
         </div>
     )
