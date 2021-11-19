@@ -74,7 +74,7 @@ If you require pagination you will have to keep track of the [cursor](https://yo
 
 ### Setup Environment variables
 
-Create a .env.local file in the root directory. You need to add these 4 variables:
+New a .env.local file in the root directory. You need to add these 4 variables:
 
 ```
 NEXT_PUBLIC_SHOPIFY_STORE_FRONT_ACCESS_TOKEN=

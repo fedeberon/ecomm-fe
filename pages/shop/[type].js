@@ -1,7 +1,6 @@
-import {getProducts, getProductsByType} from "../../services/productService";
+import {getProductsByType} from "../../services/productService";
 import ProductListings from "@/components/products/ProductListings";
 import StoreHeading from "@/components/StoreHeading";
-import {useEffect} from "react";
 
 function Shop({title, products }) {
 
