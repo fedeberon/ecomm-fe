@@ -32,6 +32,7 @@ function Nav() {
             </h1>
           </a>
         </Link>
+
         <Link href="/shop/Panialeria">
         <a className=" cursor-pointer">
           <h1 className="flex no-underline">
@@ -41,11 +42,32 @@ function Nav() {
           </h1>
         </a>
         </Link>
+
         <Link href="/shop/Accesorios">
           <a className=" cursor-pointer">
             <h1 className="flex no-underline">
               <span className="text-xl font-primary font-bold tracking-tight pt-1">
                Accesorios
+              </span>
+            </h1>
+          </a>
+        </Link>
+
+        <Link href="/">
+          <a className=" cursor-pointer">
+            <h1 className="flex no-underline">
+              <span className="text-xl font-primary font-bold tracking-tight pt-1">
+               Puericultura
+              </span>
+            </h1>
+          </a>
+        </Link>
+
+        <Link href="/">
+          <a className=" cursor-pointer">
+            <h1 className="flex no-underline">
+              <span className="text-xl font-primary font-bold tracking-tight pt-1">
+               Lactancia
               </span>
             </h1>
           </a>

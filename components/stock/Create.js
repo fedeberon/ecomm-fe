@@ -6,7 +6,7 @@ const Create = () => {
 
     const [list, setList] = useState([])
 
-    const[show, isShow] = useState(true)
+    const[show, isShow] = useState(false)
 
     const[result, setResult] = useState([])
 
@@ -53,6 +53,7 @@ const Create = () => {
 
     return (
         <>
+
             <section className="container mx-auto p-6 font-mono">
                 <div className="w-full mb-8 overflow-hidden rounded-lg shadow-lg">
                     <div className="w-full overflow-x-auto">
@@ -63,6 +64,7 @@ const Create = () => {
                                 <th className="px-4 py-3">C&oacute;digo</th>
                                 <th className="px-4 py-3">Stock</th>
                                 <th className="px-4 py-3">Categoria</th>
+                                <th className="px-4 py-3"></th>
                                 <th className="px-4 py-3"></th>
                             </tr>
                             </thead>
@@ -97,8 +99,27 @@ const Create = () => {
                                                 className="px-2 py-1 font-semibold leading-tight text-green-700 bg-green-100 rounded-sm"> {item.category.name} </span>
                                             </td>
                                             <td className="px-4 py-3 text-sm border">
+                                                <div className="custom-number-input h-10 w-32">
+                                                    <div
+                                                        className="flex flex-row h-10 w-full rounded-lg relative bg-transparent mt-1">
+                                                        <button data-action="decrement"
+                                                                className=" bg-gray-300 text-gray-600 hover:text-gray-700 hover:bg-gray-400 h-full w-20 rounded-l cursor-pointer outline-none">
+                                                            <span className="m-auto text-2xl font-thin">−</span>
+                                                        </button>
+                                                        <input
+                                                               className="outline-none focus:outline-none text-center w-full bg-gray-300 font-semibold text-md hover:text-black focus:text-black  md:text-basecursor-default flex items-center text-gray-700  outline-none"
+                                                               name="custom-input-number" value="0"></input>
+                                                        <button data-action="increment"
+                                                                className="bg-gray-300 text-gray-600 hover:text-gray-700 hover:bg-gray-400 h-full w-20 rounded-r cursor-pointer">
+                                                            <span className="m-auto text-2xl font-thin">+</span>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td className="px-4 py-3 text-sm border">
                                                 <a href={"#"} onClick={() => remove(item.id)}>Quitar</a>
                                             </td>
+
                                         </tr>
                                     ))
                             }
@@ -109,7 +130,11 @@ const Create = () => {
             </section>
             <div className="flex items-center justify-center h-full">
                 <button className="py-2 px-4 bg-blue-500 text-white rounded hover:bg-blue-700"
-                        onClick={toggleModal}>Nuevo
+                        onClick={toggleModal}>Agregar
+                </button>
+
+                <button className="py-2 px-4 ml-4 bg-green-500 text-white rounded hover:bg-blue-700"
+                        onClick={toggleModal}>Guardar
                 </button>
             </div>
             <div className={`fixed z-10 overflow-y-auto top-0 w-full left-0 ${show ? "" : "hidden"}  `} id="modal">
@@ -128,13 +153,13 @@ const Create = () => {
                                 className="right-0 w-full rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none"
                                 role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabIndex="-1">
                                 <div className="py-1" role="none">
+                                    <ul className="bg-white rounded-lg border border-gray-200 text-gray-900 text-sm font-medium">
                                     {
                                         result.map((item, index) => (
-                                            <div className={"text-gray-700 block px-4 py-2 text-sm"}>
-                                                <a key={index} href="#" className={"cursor-pointer"}
-                                                   tabIndex="-1"  onClick={() => add(item)}>
-                                                    {item.name}
-                                                </a>
+                                            <li className="px-4 py-2 border-b border-gray-200 w-full rounded-t-lg  hover:bg-blue-700 hover:text-white cursor-pointer"
+                                                key={index} href="#"
+                                                tabIndex="-1"  onClick={() => add(item)} tabindex={index}>
+                                                {item.name}
                                                 <span
                                                     className="
                                                                 cursor-pointer
@@ -150,11 +175,10 @@ const Create = () => {
                                                     onClick={() => showOnShop(item)}
                                                 > Shop
                                                 </span>
-                                            </div>
-                                        ))
-
+                                            </li>
+                                           ))
                                     }
-
+                                    </ul>
                                 </div>
                             </div>
                         </div>

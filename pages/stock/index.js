@@ -9,7 +9,6 @@ const Index = ({stock}) => {
 
         <div className="mx-auto max-w-6xl">
             <PageTitle text="Stock" />
-
             <List stock={stock}/>
         </div>
     )
