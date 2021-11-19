@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Moment from "react-moment";
 
 const List = ({stock}) => {
     return (
@@ -10,24 +11,23 @@ const List = ({stock}) => {
                             <table className="min-w-full divide-y divide-gray-200">
                                 <thead className="bg-gray-50">
                                 <tr>
-                                    <th></th>
                                     <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                         Id
                                     </th>
-                                    <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500  tracking-wider">
-                                        product
+                                    <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500  uppercase tracking-wider">
+                                        Articulo
                                     </th>
                                     <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                        stockType
+                                        Tipo
                                     </th>
                                     <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                         Referencia
                                     </th>
                                     <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                        quantity
+                                        Cantidad
                                     </th>
-                                    <th scope="col" className="relative px-6 py-3">
-                                        <span className="sr-only">Edit</span>
+                                    <th scope="col" className="px-6 py-3  text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        Fecha
                                     </th>
                                 </tr>
                                 </thead>
@@ -56,11 +56,18 @@ const List = ({stock}) => {
                                                 # {item.referenceId}
                                             </td>
                                             <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                                {product.quantity}
+                                                <div className="text-sm text-gray-900">
+                                                    {item.quantity}
+                                                </div>
                                             </td>
                                             <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                                                {item.date}
+                                                <div className="text-sm text-gray-900">
+                                                    <Moment format="DD-MM-YYYY">
+                                                        {item.date}
+                                                    </Moment>
+                                                </div>
                                             </td>
+
                                         </tr>
                                     )
                                 }

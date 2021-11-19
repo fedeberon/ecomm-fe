@@ -1,14 +1,20 @@
 import {search} from "../../services/productService";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import logo from "../../images/default.jpeg";
+import SearchProduct from "@/components/stock/SearchProduct";
+import {save} from "/services/stockService"
 
 const Create = () => {
 
     const [list, setList] = useState([])
-
     const[show, isShow] = useState(false)
-
     const[result, setResult] = useState([])
+
+    useEffect(() => {
+
+        console.log("list" , list)
+
+    }, [list])
 
     const searchValue = async (e) => {
         if(e.target.value === '') return;
@@ -30,6 +36,9 @@ const Create = () => {
         console.log("item", item)
         const updatedCarsArray = [...list, {
             "id" : item.id,
+            "product" : {
+                "id": item.id,
+            },
             "name" : item.name,
             "description": item.description,
             "code" : item.code,
@@ -51,9 +60,12 @@ const Create = () => {
         isShow(!show)
     }
 
+    const saveStock = async () => {
+        const result = await save(list)
+    }
+
     return (
         <>
-
             <section className="container mx-auto p-6 font-mono">
                 <div className="w-full mb-8 overflow-hidden rounded-lg shadow-lg">
                     <div className="w-full overflow-x-auto">
@@ -101,7 +113,7 @@ const Create = () => {
                                             <td className="px-4 py-3 text-sm border">
                                                 <div className="custom-number-input h-10 w-32">
                                                     <div
-                                                        className="flex flex-row h-10 w-full rounded-lg relative bg-transparent mt-1">
+                                                        className="flex flex-row h-10 w-full rounded-lg  bg-transparent mt-1">
                                                         <button data-action="decrement"
                                                                 className=" bg-gray-300 text-gray-600 hover:text-gray-700 hover:bg-gray-400 h-full w-20 rounded-l cursor-pointer outline-none">
                                                             <span className="m-auto text-2xl font-thin">−</span>
@@ -134,57 +146,12 @@ const Create = () => {
                 </button>
 
                 <button className="py-2 px-4 ml-4 bg-green-500 text-white rounded hover:bg-blue-700"
-                        onClick={toggleModal}>Guardar
+                        onClick={saveStock}>Guardar
                 </button>
             </div>
-            <div className={`fixed z-10 overflow-y-auto top-0 w-full left-0 ${show ? "" : "hidden"}  `} id="modal">
-                <div
-                    className="flex items-center justify-center min-height-100vh pt-4 px-4 pb-20 text-center sm:block sm:p-0">
-                    <div className="fixed inset-0 transition-opacity">
-                        <div className="absolute inset-0 bg-gray-700 opacity-75"/>
-                    </div>
-                    <span className="hidden sm:inline-block sm:align-middle sm:h-screen">&#8203;</span>
-                    <div
-                        className="inline-block align-center bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full"
-                        role="dialog" aria-modal="true" aria-labelledby="modal-headline">
-                        <div className="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
-                            <input type="text" id={"search"} placeholder={"Buscar ..."} onChange={searchValue}  className="w-full bg-gray-100 p-2 mt-2 mb-3"/>
-                            <div
-                                className="right-0 w-full rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none"
-                                role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabIndex="-1">
-                                <div className="py-1" role="none">
-                                    <ul className="bg-white rounded-lg border border-gray-200 text-gray-900 text-sm font-medium">
-                                    {
-                                        result.map((item, index) => (
-                                            <li className="px-4 py-2 border-b border-gray-200 w-full rounded-t-lg  hover:bg-blue-700 hover:text-white cursor-pointer"
-                                                key={index} href="#"
-                                                tabIndex="-1"  onClick={() => add(item)} tabindex={index}>
-                                                {item.name}
-                                                <span
-                                                    className="
-                                                                cursor-pointer
-                                                                float-right
-                                                                text-xs
-                                                                px-3
-                                                                font-small
-                                                                text-base
-                                                                bg-pink-500
-                                                                text-white
-                                                                rounded-full
-                                                                "
-                                                    onClick={() => showOnShop(item)}
-                                                > Shop
-                                                </span>
-                                            </li>
-                                           ))
-                                    }
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+
+            <SearchProduct show={show} add={add} searchValue={searchValue} showOnShop={showOnShop} result={result}/>
+
         </>
 
     )

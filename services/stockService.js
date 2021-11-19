@@ -1,3 +1,5 @@
+import axios from "axios";
+
 export async function findAll() {
     const fetchUrl = `http://localhost:8888/eComm/stock`;
 
@@ -17,5 +19,16 @@ export async function findAll() {
         return data;
     } catch (error) {
         throw new Error("Could not fetch stock!");
+    }
+}
+
+export async function save(stock){
+    debugger
+    const fetchUrl = `http://localhost:8888/eComm/stock/list`;
+    try {
+        let response = await axios.post(fetchUrl, stock);
+        return response;
+    } catch (error) {
+        throw new Error("Could not create stock!");
     }
 }
