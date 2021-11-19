@@ -1,6 +1,7 @@
 import axios from 'axios';
 
 
+
 export async function getProducts() {
     const fetchUrl = `http://localhost:8888/eComm/product`;
 
@@ -24,7 +25,6 @@ export async function getProducts() {
 }
 
 export async function getProductsByType(type) {
-    debugger
     const fetchUrl = `http://localhost:8888/eComm/product/byType/${type}`;
 
     const fetchOptions = {
@@ -135,5 +135,15 @@ export async function createCheckout(cart){
         return response;
     } catch (error) {
         throw new Error("Could not create preference!");
+    }
+}
+
+export async function search(value) {
+    const fetchUrl = `http://localhost:8888/eComm/product/search/${value}`;
+    try {
+        const data = await axios.get(fetchUrl);
+        return data;
+    } catch (error) {
+        throw new Error("Could not search products!");
     }
 }
