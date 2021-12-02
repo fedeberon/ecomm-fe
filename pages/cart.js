@@ -57,8 +57,8 @@ function CartPage() {
                                 <>
                                     <a onClick={preparePreference}
                                        aria-label="checkout-products"
-                                       className="bg-palette-primary text-white text-lg font-primary font-semibold pt-2 pb-1 leading-relaxed flex
-                      justify-center items-center focus:ring-1 focus:ring-palette-light focus:outline-none w-full hover:bg-palette-dark rounded-sm"
+                                       className="bg-blue-500 text-white text-lg font-primary font-semibold pt-2 pb-1 leading-relaxed flex cursor-pointer
+                                                  justify-center items-center focus:ring-1 focus:ring-palette-light focus:outline-none w-full hover:bg-blue-600 rounded-sm"
                                     >Generar Pago de Meracado Pago</a>
                                 </>
                         }

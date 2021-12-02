@@ -5,11 +5,11 @@ import {getPersonByCUIT} from "../../services/personService";
 import Loading from "@/components/utils/Loading";
 import {getBilling} from "../../services/billingService";
 import {useCleanCartContext} from "@/context/Store";
-import {useRouter} from "next/router";
+import {getSession} from "next-auth/client";
 
-const Billing = ({isShowing, checkout}) => {
-    const router = useRouter()
-    const [loading, isLoading] = useState(false);
+const Billing = ({isShowing, checkout, type}) => {
+    const [show, setShow] = useState(false);
+    const [error, setError] = useState();
     const cleanCart = useCleanCartContext()
 
     const [person, setPerson] = useState({
@@ -31,7 +31,7 @@ const Billing = ({isShowing, checkout}) => {
     }
 
     const handleFindCUIT = async () => {
-        isLoading(true)
+        setShow(true)
         const data = await getPersonByCUIT(person.cuit);
         setPerson({
             ...person,
@@ -39,17 +39,24 @@ const Billing = ({isShowing, checkout}) => {
             "lastName": data.lastName,
             "address": data.addresses[0].direccion
         })
-        isLoading(false)
+        setShow(false)
     }
 
     const submit = async () => {
-        isLoading(true);
-        const response = await getBilling(person, checkout);
-        isLoading(true);
-        cleanCart();
-        if (response.status === 202) {
-            await router.push('/bill' + 219)
+        debugger
+        let session =  await getSession()
+        setShow(true);
+        const response = await getBilling(person, checkout, type, session);
+        if (response.status === 200) {
+            cleanCart();
+            window.location.href = '/bills/' + response.data.id
         }
+        if(response.status === 500) {
+            setShow(false);
+            setError(response.data)
+            console.log(response.data)
+        }
+
     }
 
     return (
@@ -68,6 +75,10 @@ const Billing = ({isShowing, checkout}) => {
                             <h1 className="text-gray-800 font-lg font-bold tracking-normal leading-tight mb-4">Detalle de Facturaci&oacute;n</h1>
                             <label htmlFor="cuit" className="text-gray-800 text-sm font-bold leading-tight tracking-normal">
                                 CUIT
+                            </label>
+                            <br/>
+                            <label htmlFor="cuit" className="text-red-600 uppercase text-sm font-bold leading-tight tracking-normal">
+                                {error ? error : ""}
                             </label>
                             <div className="relative mb-5 mt-2">
                                 <div className="absolute right-0 text-gray-600 flex items-center pr-3 h-full cursor-pointer">
@@ -110,7 +121,7 @@ const Billing = ({isShowing, checkout}) => {
                     </div>
                 </div>
                 {
-                    loading
+                    show
                         ?
                         <Loading message={"Espere un segundo por favor"} />
                         :
@@ -122,4 +133,7 @@ const Billing = ({isShowing, checkout}) => {
         </>
     );
 };
+
 export default Billing;
+
+

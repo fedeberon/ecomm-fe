@@ -31,7 +31,7 @@ function ProductForm({ title, mainImg, id, images, price }) {
         id: id,
         price: price
       })
-      NotificationManager.info('Se agrego ' + title + '.', 'Carro de compras' , 2000 ,  () => {
+      NotificationManager.info('Se agrego ' + title + '.', 'Carro de compras' , 1000 ,  () => {
         window.location.href = '/cart';
       });
     }
