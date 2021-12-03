@@ -1,10 +1,15 @@
-import {getCallback} from "../../services/productService";
-import CheckoutDetail from "@/components/checkout";
+import {getById} from "../../services/checkoutService";
+import Details from "@/components/checkout/details";
+import PageTitle from "@/components/PageTitle";
+import React from "react";
 
-const Checkout = ({data}) => {
+const Checkout = ({checkout}) => {
 
     return (
-       <CheckoutDetail data={data}/>
+        <div className="mx-auto max-w-6xl">
+            <PageTitle text={`Checkout #${checkout.id}`} />
+            <Details checkout={checkout}/>
+        </div>
     )
 
 }
@@ -12,11 +17,11 @@ const Checkout = ({data}) => {
 export default Checkout
 
 export async function getServerSideProps({query}) {
-    const data = await getCallback(query.id);
+    const checkout = await getById(query.id);
 
     return {
         props: {
-            data
+            checkout
         },
     }
 }
