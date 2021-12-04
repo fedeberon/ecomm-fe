@@ -43,7 +43,6 @@ const Billing = ({isShowing, checkout, type}) => {
     }
 
     const submit = async () => {
-        debugger
         let session =  await getSession()
         setShow(true);
         const response = await getBilling(person, checkout, type, session);

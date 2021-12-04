@@ -6,12 +6,11 @@ export function saveLocalData(cart, checkoutId, checkoutUrl) {
 }
 
 function getLocalData() {
-  return JSON.parse(localStorage.getItem(process.env.NEXT_PUBLIC_LOCAL_STORAGE_NAME))
+  return JSON.parse(localStorage.getItem(''))
 }
 
 export function setLocalData(setCart, setCheckoutId, setCheckoutUrl) {
   const localData = getLocalData()
-
   if (localData) {
     if (Array.isArray(localData[0])) {
       setCart([...localData[0]])

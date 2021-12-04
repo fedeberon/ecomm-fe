@@ -1,11 +1,10 @@
-import {signOut, useSession} from "next-auth/client"
+import {signOut} from "next-auth/client"
 import Link from "next/link";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faUserCircle} from "@fortawesome/free-solid-svg-icons";
 import useComponentVisible from "../../hooks/UseComponentVisible";
 
-const UserSession = () => {
-    const [session, loading] = useSession()
+const UserSession = ({session}) => {
     const {
         ref,
         isComponentVisible,
@@ -18,7 +17,7 @@ const UserSession = () => {
 
     if (session) {
         return (
-                    <div className="relative inline-block text-left">
+                <div className="relative inline-block text-left">
                         <div>
                             <button type="button"
                                     onClick={showOptionsSession}
@@ -27,9 +26,9 @@ const UserSession = () => {
                                 {session.user.name}
                                 <svg className="-mr-1 ml-2 h-5 w-5" xmlns="http://www.w3.org/2000/svg"
                                      viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                                    <path fill-rule="evenodd"
+                                    <path fillRule="evenodd"
                                           d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                                          clip-rule="evenodd"/>
+                                          clipRule="evenodd"/>
                                 </svg>
                             </button>
                         </div>

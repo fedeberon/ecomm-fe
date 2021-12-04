@@ -5,6 +5,8 @@ import { useCartContext, useAddToCartContext } from '@/context/Store'
 import UploadFile from "@/components/products/UploadFile";
 import {NotificationContainer, NotificationManager} from 'react-notifications';
 import 'react-notifications/lib/notifications.css';
+import {useSession} from "next-auth/client";
+import Link from "next/link";
 
 
 function ProductForm({ title, mainImg, id, images, price }) {
@@ -12,6 +14,7 @@ function ProductForm({ title, mainImg, id, images, price }) {
   const isLoading = useCartContext()[2]
   const addToCart = useAddToCartContext()
   const [openUploadFile, setOpenUploadFile] = useState(false);
+  const [session, loading] = useSession()
 
   const atcBtnStyle = isLoading ?
     `pt-3 pb-2 bg-palette-primary text-white w-full mt-2 rounded-sm font-primary font-semibold text-xl flex 
@@ -53,7 +56,8 @@ function ProductForm({ title, mainImg, id, images, price }) {
     <>
       <NotificationContainer/>
       <div className="w-full">
-        <div className="flex justify-start space-x-2 w-full">
+        <div className="flex justify-start space-x-2">
+
           <div className="flex flex-col items-start space-y-1 flex-grow-0">
             <label className="text-gray-500 text-base">Qty.</label>
             <input
@@ -68,62 +72,53 @@ function ProductForm({ title, mainImg, id, images, price }) {
                 className="text-gray-900 form-input border border-gray-300 w-16 rounded-sm focus:border-palette-light focus:ring-palette-light"
             />
           </div>
-          <div className="flex flex-col items-start space-y-1 flex-grow">
-            <label className="text-gray-500 text-base">Size</label>
-            <select
-                id="size-selector"
-                name="size-selector"
-                value={id}
-                className="form-select border border-gray-300 rounded-sm w-full text-gray-900 focus:border-palette-light focus:ring-palette-light"
-            >
-              {
-                images.map(item => (
-                    <option
-                        id={item.link}
-                        key={item.link}
-                        value={item.link}
-                    >
-                      {item.url}
-                    </option>
-                ))
-              }
-            </select>
+
+          <div className="flex flex-col items-start space-y-1 flex-grow-0">
+            <label className="text-gray-500 text-base">&nbsp;</label>
+            <a
+                onClick={handleAddToCart}
+                aria-label="back-to-products"
+                className="border border-palette-primary text-palette-primary text-lg font-primary font-semibold pt-2 pb-1 leading-relaxed flex
+                justify-center items-center focus:ring-1 focus:ring-palette-light focus:outline-none w-full hover:bg-palette-lighter rounded-sm">
+              Agregar al carrito
+            </a>
           </div>
+
         </div>
-        <button
-            className={atcBtnStyle}
-            aria-label="cart-button"
-            onClick={handleAddToCart}
-        >
-          Agregar al carrito
-          <FontAwesomeIcon icon={faShoppingCart} className="w-5 ml-2" />
-        </button>
-
-        <a
-            aria-label="back-to-products"
-            className="pt-3 pb-2 bg-red-600 text-white w-full mt-2 rounded-sm font-primary font-semibold text-xl flex
+        {
+          session
+            ?
+              <>
+                <a
+                    aria-label="back-to-products"
+                    className="pt-3 pb-2 bg-red-600 text-white w-full mt-2 rounded-sm font-primary font-semibold text-xl flex
                       justify-center items-baseline  hover:bg-red-400"
-            onClick={() => setOpenUploadFile(true)}
-        >
-          Subir Imagenes
-          <FontAwesomeIcon icon={faCloudUploadAlt} className="w-5 ml-2" />
-        </a>
+                    onClick={() => setOpenUploadFile(true)}
+                >
+                  Subir Imagenes
+                  <FontAwesomeIcon icon={faCloudUploadAlt} className="w-5 ml-2" />
+                </a>
 
-        <a
-            aria-label="back-to-products"
-            className="pt-3 pb-2 bg-red-600 text-white w-full mt-2 rounded-sm font-primary font-semibold text-xl flex
+                <a
+                    aria-label="back-to-products"
+                    className="pt-3 pb-2 bg-red-600 text-white w-full mt-2 rounded-sm font-primary font-semibold text-xl flex
                       justify-center items-baseline  hover:bg-red-400"
-            onClick={goToEdit}
-        >
-          Modificar Datos
-          <FontAwesomeIcon icon={faEdit} className="w-5 ml-2" />
-        </a>
+                    onClick={goToEdit}
+                >
+                  Modificar Datos
+                  <FontAwesomeIcon icon={faEdit} className="w-5 ml-2" />
+                </a>
 
-        <UploadFile
-            isOpen={openUploadFile}
-            setIsOpen={setOpenUploadFile}
-            folder={id}
-        />
+                <UploadFile
+                    isOpen={openUploadFile}
+                    setIsOpen={setOpenUploadFile}
+                    folder={id}
+                />
+              </>
+              :
+              <></>
+        }
+
 
       </div>
     </>

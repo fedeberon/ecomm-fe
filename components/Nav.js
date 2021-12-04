@@ -1,15 +1,19 @@
-import { useState, useEffect } from 'react'
+import {useEffect, useState} from 'react'
 import Link from 'next/link'
-import { useCartContext } from '@/context/Store'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import {useCartContext} from '@/context/Store'
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 
-import {faShoppingCart, faUserCircle} from '@fortawesome/free-solid-svg-icons'
+import {faShoppingCart} from '@fortawesome/free-solid-svg-icons'
 import logo from '/images/logo.png';
 import UserSession from "@/components/users/UserSession";
+import Index from "./admin";
+import {useSession} from "next-auth/client";
 
 function Nav() {
   const cart = useCartContext()[0]
   const [cartItems, setCartItems] = useState(0)
+  const [session, loading] = useSession()
+
 
   useEffect(() => {
     let numItems = 0
@@ -73,19 +77,9 @@ function Nav() {
           </a>
         </Link>
 
-        <Link href="/admin">
-          <a className=" cursor-pointer">
-            <h1 className="flex no-underline">
-              <span className="text-xl font-primary font-bold tracking-tight pt-1">
-               Administracion
-              </span>
-            </h1>
-          </a>
-        </Link>
+         <Index session={session}/>
 
-        <div>
-          <UserSession/>
-        </div>
+         <UserSession session={session}/>
 
         <div>
           <Link

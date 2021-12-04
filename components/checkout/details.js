@@ -1,4 +1,6 @@
 import CheckOutButton from "@/components/CheckOutButton";
+import Image from "@/components/products/Image";
+import Link from "next/link";
 
 const Details = ({checkout}) => {
     return (
@@ -6,6 +8,7 @@ const Details = ({checkout}) => {
             <table className="w-full divide-y divide-gray-200">
                 <thead className="bg-gray-50">
                 <tr>
+                    <th></th>
                     <th scope="col"
                         className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                         Producto
@@ -38,19 +41,26 @@ const Details = ({checkout}) => {
                         :
                         checkout.products.map((p, index) => (
                             <tr key={index}>
+                                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 cursor-pointer">
+                                    <Link href={'/products/' + p.product.id}>
+                                      <Image product={p.product}/>
+                                    </Link>
+                                </td>
                                 <td className="px-6 py-4 whitespace-nowrap">
-                                    <div className="flex items-center">
-                                        <div className="ml-4">
-                                            <div
-                                                className="text-sm font-medium text-gray-900">
-                                                <div>{p.product.name}</div>
-                                            </div>
-                                            <div
-                                                className="text-sm text-gray-500">
-                                                {p.product.description}
+                                    <Link href={'/products/' + p.product.id}>
+                                        <div className="flex items-center cursor-pointer">
+                                            <div className="ml-4">
+                                                <div
+                                                    className="text-sm font-medium text-gray-900">
+                                                    <div>{p.product.name}</div>
+                                                </div>
+                                                <div
+                                                    className="text-sm text-gray-500">
+                                                    {p.product.description}
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
+                                    </Link>
                                 </td>
                                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                                     {p.quantity}
