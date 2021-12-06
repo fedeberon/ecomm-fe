@@ -6,7 +6,7 @@ export function saveLocalData(cart, checkoutId, checkoutUrl) {
 }
 
 function getLocalData() {
-  return JSON.parse(localStorage.getItem(''))
+  return JSON.parse(localStorage.getItem('DULCE-BEBE-CART'))
 }
 
 export function setLocalData(setCart, setCheckoutId, setCheckoutUrl) {

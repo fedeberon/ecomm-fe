@@ -1,5 +1,6 @@
 import CheckoutDetail from "@/components/checkout";
 import {useState} from "react";
+import Link from 'next/link'
 
 const Shopping = ({bills}) => {
 
@@ -8,7 +9,6 @@ const Shopping = ({bills}) => {
     const [show, setShow] = useState(false);
 
     const showCheckout = (id) => {
-        debugger
         bills.forEach(bill => {
             if(bill.id == id) {
                 setCheckout((checkout) => {
@@ -40,13 +40,13 @@ const Shopping = ({bills}) => {
                                             CUIT
                                         </th>
                                         <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                            Detalle
-                                        </th>
-                                        <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                            Estado
+                                            Checkout
                                         </th>
                                         <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                             Total
+                                        </th>
+                                        <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                            Detalle
                                         </th>
                                         <th>
                                         </th>
@@ -76,12 +76,16 @@ const Shopping = ({bills}) => {
                                                     </div>
                                                 </td>
                                                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                                    {bill.checkout.id}
+                                                    <Link href={`/checkout/${bill.checkout.id}`}>
+                                                        <a> 
+                                                            {bill.checkout.id}
+                                                        </a>
+                                                    </Link>
                                                 </td>
                                                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                                                     {bill.totalAmount}
                                                 </td>
-                                                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 cursor-pointer text-blue-500">
                                                     <a onClick={() => showCheckout(bill.id)}>
                                                         Detalle
                                                     </a>

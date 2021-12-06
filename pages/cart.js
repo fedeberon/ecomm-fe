@@ -32,6 +32,7 @@ function CartPage() {
           isLoading(false);
       });
   }
+
   return (
     <div className="container mx-auto mb-20 min-h-screen">
       <SEO title={pageTitle} />
@@ -39,9 +40,14 @@ function CartPage() {
         {
             cart.length == 0
             ?
-                <h1 className="leading-relaxed font-primary font-extrabold text-3xl text-center text-palette-primary mt-4 py-2 sm:py-4">
-                    No hay Art&iacute;culos por aqu&iacute;
-                </h1>
+                <>
+                    <h1 className="leading-relaxed font-primary font-extrabold text-3xl text-center text-palette-primary mt-4 py-2 sm:py-4">
+                        No hay Art&iacute;culos por aqu&iacute;
+                    </h1>
+                    <div className={"w-80"}>
+                        <BackToProductButton  />
+                    </div>
+                </>
             :
                 <>
                     <CartTable
@@ -68,7 +74,7 @@ function CartPage() {
                                 <a onClick={handleCheckout}
                                    aria-label="checkout-products"
                                    className="bg-palette-primary text-white text-lg font-primary font-semibold pt-2 pb-1 leading-relaxed flex
-                              justify-center items-center focus:ring-1 focus:ring-palette-light focus:outline-none w-full hover:bg-palette-dark rounded-sm"
+                              justify-center items-center focus:ring-1 focus:ring-palette-light focus:outline-none w-full hover:bg-palette-dark rounded-sm cursor-pointer"
                                 >Checkout</a>
                                 :
                                 <CheckOutButton checkout={checkout}/>

@@ -1,12 +1,6 @@
 import logo from "../../images/default.jpeg";
-import {useEffect} from "react";
 
 const Image = ({product}) => {
-
-
-    useEffect(() => {
-        console.log("product", product)
-    })
 
     return (
         <div className="flex-shrink-0 h-10 w-10">

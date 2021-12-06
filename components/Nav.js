@@ -7,7 +7,8 @@ import {faShoppingCart} from '@fortawesome/free-solid-svg-icons'
 import logo from '/images/logo.png';
 import UserSession from "@/components/users/UserSession";
 import Index from "./admin";
-import {useSession} from "next-auth/client";
+import {getSession, useSession} from "next-auth/client";
+import { getServerSideProps } from 'pages/login'
 
 function Nav() {
   const cart = useCartContext()[0]
@@ -105,5 +106,6 @@ function Nav() {
     </header >
   )
 }
+
 
 export default Nav

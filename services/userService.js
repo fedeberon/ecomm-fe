@@ -33,3 +33,15 @@ export async function findAll() {
         throw new Error("Could not get all users !");
     }
 }
+
+export async function getByUsername(username) {
+    const fetchUrl = `http://localhost:8888/eComm/user/${username}`;
+
+    try {
+        let response = await axios.get(fetchUrl);
+
+        return response.data;
+    } catch (error) {
+        throw new Error("Could not get users !");
+    }
+}

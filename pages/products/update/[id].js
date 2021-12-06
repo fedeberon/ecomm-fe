@@ -188,11 +188,11 @@ const Update = ({product}) => {
                     </div>
 
                     <div className="mt-8">
-                        <a onClick={goToProductList} className={`hover:bg-gray-400 hover:text-white  text-black py-2 px-4 mr-2 rounded`}>
+                        <a onClick={goToProductList} className={`hover:bg-gray-400 hover:text-white  text-black py-2 px-4 mr-2 rounded cursor-pointer`}>
                             Ir a la lista
                         </a>
 
-                        <a onClick={showOnShop} className={`hover:bg-gray-400 hover:text-white  text-black py-2 px-4 mr-2 rounded`}>
+                        <a onClick={showOnShop} className={`hover:bg-gray-400 hover:text-white  text-black py-2 px-4 mr-2 rounded cursor-pointer`}>
                             Ver en el Shop
                         </a>
 

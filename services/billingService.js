@@ -70,3 +70,25 @@ export async function getBillsById(id) {
     }
 }
 
+
+export async function findAllByUsername(username) {
+    const fetchUrl = `http://localhost:8888/eComm/billing/user/` + username;
+    const fetchOptions = {
+        endpoint: fetchUrl,
+        method: "GET",
+        headers: {
+            "Accept": "application/json",
+            "Content-Type": "application/json",
+        },
+    };
+    try {
+        const data = await fetch(fetchUrl, fetchOptions)
+            .then((response) => response.json())
+            .catch(error => console.log(error));
+
+        return data;
+    } catch (error) {
+        throw new Error("Could not fetch bills by username!");
+    }
+}
+

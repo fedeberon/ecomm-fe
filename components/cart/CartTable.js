@@ -5,11 +5,19 @@ import { faTimes } from '@fortawesome/free-solid-svg-icons'
 import Link from 'next/link'
 import Price from '@/components/products/Price'
 import { getCartSubTotal } from '@/utils/helpers'
+import logo from "../../images/default.jpeg";
+import Image from 'next/image'
 
 function CartTable({ cart }) {
   const updateCartQuantity = useUpdateCartQuantityContext()
   const [cartItems, setCartItems] = useState([])
   const [subtotal, setSubtotal] = useState(0)
+
+  const defaultImage = {
+    "url": "default.jpeg",
+    "link": logo,
+    "main": false
+  };
 
   useEffect(() => {
     setCartItems(cart)
@@ -19,6 +27,7 @@ function CartTable({ cart }) {
   function updateItem(id, quantity) {
     updateCartQuantity(id, quantity)
   }
+
 
   return (
     <div className="min-h-80 max-w-2xl my-4 sm:my-8 mx-auto w-full">
@@ -32,18 +41,16 @@ function CartTable({ cart }) {
           </tr>
         </thead>
         <tbody className="divide-y divide-palette-lighter">
-          {cartItems.map(item => (
-            <tr key={item.id} className="text-sm sm:text-base text-gray-600 text-center">
-              <td className="font-primary font-medium px-4 sm:px-6 py-4 flex items-center ">
-                <img
-                  src={item.productImage.src}
-                  alt={item.productImage.src}
-                  height={64}
-                  width={64}
-                  className={`hidden sm:inline-flex  mr-10`}
-                />
-                <Link passHref href={`/products/${item.productHandle}`}>
-                  <a className="pt-1 hover:text-palette-dark">
+          {cartItems.map((item, index) => (
+            <tr key={index} className="text-sm sm:text-base text-gray-600 text-center">
+              <td className="font-primary font-medium px-4 sm:px-6 py-4 flex items-center">
+                <Image src={item.productImage ? item.productImage : defaultImage}
+                       width={50}
+                       height={50}
+                  className="w-12 h-12 rounded-full"/>
+
+                <Link passHref href={`/products/${item.id}`}>
+                  <a className="pt-1 hover:text-palette-dark ml-4">
                     {item.productTitle}, {item.variantTitle}
                   </a>
                 </Link>

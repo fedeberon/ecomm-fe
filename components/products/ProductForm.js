@@ -77,9 +77,9 @@ function ProductForm({ title, mainImg, id, images, price }) {
             <label className="text-gray-500 text-base">&nbsp;</label>
             <a
                 onClick={handleAddToCart}
-                aria-label="back-to-products"
+                aria-label="add-to-cart"
                 className="border border-palette-primary text-palette-primary text-lg font-primary font-semibold pt-2 pb-1 leading-relaxed flex
-                justify-center items-center focus:ring-1 focus:ring-palette-light focus:outline-none w-full hover:bg-palette-lighter rounded-sm">
+                justify-center items-center focus:ring-1 focus:ring-palette-light focus:outline-none w-full hover:bg-palette-lighter rounded-md cursor-pointer  pl-4 pr-4">
               Agregar al carrito
             </a>
           </div>
@@ -90,7 +90,7 @@ function ProductForm({ title, mainImg, id, images, price }) {
             ?
               <>
                 <a
-                    aria-label="back-to-products"
+                    aria-label="upload-images"
                     className="pt-3 pb-2 bg-red-600 text-white w-full mt-2 rounded-sm font-primary font-semibold text-xl flex
                       justify-center items-baseline  hover:bg-red-400"
                     onClick={() => setOpenUploadFile(true)}
@@ -100,7 +100,7 @@ function ProductForm({ title, mainImg, id, images, price }) {
                 </a>
 
                 <a
-                    aria-label="back-to-products"
+                    aria-label="edit-data"
                     className="pt-3 pb-2 bg-red-600 text-white w-full mt-2 rounded-sm font-primary font-semibold text-xl flex
                       justify-center items-baseline  hover:bg-red-400"
                     onClick={goToEdit}

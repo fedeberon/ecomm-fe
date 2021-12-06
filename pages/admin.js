@@ -9,8 +9,8 @@ const Admin = () => {
                     <div className="pl-1 w-96 h-20 bg-green-400 rounded-lg shadow-md cursor-pointer">
                         <div className="flex w-full h-full py-2 px-4 bg-white rounded-lg justify-between">
                             <div className="my-auto">
-                                <p className="font-bold">Facturaci&oacute;n (Mensual)</p>
-                                <p className="text-lg">$40,000</p>
+                                <p className="font-bold">Facturaci&oacute;n</p>
+                                <p className="text-lg">Detalle de las facturas generadadas</p>
                             </div>
                             <div className="my-auto">
                                 <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24"
@@ -27,7 +27,7 @@ const Admin = () => {
                         <div className="flex w-full h-full py-2 px-4 bg-white rounded-lg justify-between">
                             <div className="my-auto">
                                 <p className="font-bold">Stock</p>
-                                <p className="text-lg">100.500</p>
+                                <p className="text-lg">Detalle del stock de lo articulos</p>
                             </div>
                             <div className="my-auto">
                                 <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24"
@@ -43,8 +43,8 @@ const Admin = () => {
                     <div className="pl-1 w-96 h-20 bg-yellow-400 rounded-lg shadow-md cursor-pointer">
                         <div className="flex w-full h-full py-2 px-4 bg-white rounded-lg justify-between">
                             <div className="my-auto">
-                                <p className="font-bold">Productos</p>
-                                <p className="text-lg">18</p>
+                                <p className="font-bold">Articulos</p>
+                                <p className="text-lg">Detalle de los articulos</p>
                             </div>
                             <div className="my-auto">
                                 <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24"
@@ -61,7 +61,7 @@ const Admin = () => {
                         <div className="flex w-full h-full py-2 px-4 bg-white rounded-lg justify-between">
                             <div className="my-auto">
                                 <p className="font-bold">Usuarios</p>
-                                <p className="text-lg">133</p>
+                                <p className="text-lg">Detalle de los usuario del cargados</p>
                             </div>
                             <div className="my-auto">
                                 <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24"
@@ -80,7 +80,7 @@ const Admin = () => {
                             <div className="flex w-full h-full py-2 px-4 bg-white rounded-lg justify-between">
                                 <div className="my-auto">
                                     <p className="font-bold">Checkout</p>
-                                    <p className="text-lg">$40,000</p>
+                                    <p className="text-lg">Detalle de los checkouts generados</p>
                                 </div>
                                 <div className="my-auto">
                                     <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24"
@@ -96,8 +96,8 @@ const Admin = () => {
                         <div className="pl-1 w-96 h-20 bg-blue-500 rounded-lg shadow-md cursor-pointer">
                             <div className="flex w-full h-full py-2 px-4 bg-white rounded-lg justify-between">
                                 <div className="my-auto">
-                                    <p className="font-bold">Stock</p>
-                                    <p className="text-lg">100.500</p>
+                                    <p className="font-bold">EN PROGRESO</p>
+                                    <p className="text-lg"></p>
                                 </div>
                                 <div className="my-auto">
                                     <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24"
@@ -113,8 +113,8 @@ const Admin = () => {
                         <div className="pl-1 w-96 h-20 bg-yellow-400 rounded-lg shadow-md cursor-pointer">
                             <div className="flex w-full h-full py-2 px-4 bg-white rounded-lg justify-between">
                                 <div className="my-auto">
-                                    <p className="font-bold">Productos</p>
-                                    <p className="text-lg">18</p>
+                                    <p className="font-bold">EN PROGRESO</p>
+                                    <p className="text-lg"></p>
                                 </div>
                                 <div className="my-auto">
                                     <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24"
@@ -130,8 +130,8 @@ const Admin = () => {
                         <div className="pl-1 w-96 h-20 bg-yellow-400 rounded-lg shadow-md cursor-pointer">
                             <div className="flex w-full h-full py-2 px-4 bg-white rounded-lg justify-between">
                                 <div className="my-auto">
-                                    <p className="font-bold">Usuarios</p>
-                                    <p className="text-lg">133</p>
+                                    <p className="font-bold">EN PROGRESO</p>
+                                    <p className="text-lg"></p>
                                 </div>
                                 <div className="my-auto">
                                     <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24"

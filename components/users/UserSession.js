@@ -48,7 +48,7 @@ const UserSession = ({session}) => {
                                        tabIndex="-1" id="menu-item-2">Mis Datos</a>
                                 </Link>
                                 <form method="POST" action="#" role="none">
-                                    <button onClick={() => signOut({ callbackUrl: window.location.href = '/' })}
+                                    <button onClick={() => signOut({ callbackUrl: '/' })}
                                             className="text-gray-700 block w-full text-left px-4 py-2 text-sm"
                                             role="menuitem" tabIndex="-1" id="menu-item-3">
                                         Salir
