@@ -6,7 +6,6 @@ function MyDropzone({setFile}) {
         maxFiles : 1,
         accept: 'image/jpeg, image/png',
         onDrop: acceptedFiles => {
-            debugger;
             setFile(acceptedFiles[0]);
             console.log('acceptedFiles', acceptedFiles);
         }

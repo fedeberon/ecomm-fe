@@ -7,6 +7,7 @@ import {NotificationContainer, NotificationManager} from 'react-notifications';
 import 'react-notifications/lib/notifications.css';
 import {useSession} from "next-auth/client";
 import Link from "next/link";
+import {useRouter} from "next/router";
 
 
 function ProductForm({ title, mainImg, id, images, price }) {
@@ -15,6 +16,7 @@ function ProductForm({ title, mainImg, id, images, price }) {
   const addToCart = useAddToCartContext()
   const [openUploadFile, setOpenUploadFile] = useState(false);
   const [session, loading] = useSession()
+  const router = useRouter()
 
   const atcBtnStyle = isLoading ?
     `pt-3 pb-2 bg-palette-primary text-white w-full mt-2 rounded-sm font-primary font-semibold text-xl flex 
@@ -35,7 +37,7 @@ function ProductForm({ title, mainImg, id, images, price }) {
         price: price
       })
       NotificationManager.info('Se agrego ' + title + '.', 'Carro de compras' , 1000 ,  () => {
-        window.location.href = '/cart';
+        router.push('/cart')
       });
     }
   }

@@ -1,8 +1,7 @@
 import axios from "axios";
 
 export async function findAll() {
-    const fetchUrl = `http://localhost:8888/eComm/stock`;
-
+    const fetchUrl = `http://localhost:8888/eComm/brand`;
     const fetchOptions = {
         endpoint: fetchUrl,
         method: "GET",
@@ -18,16 +17,18 @@ export async function findAll() {
             .catch(error => console.log(error));
         return data;
     } catch (error) {
-        throw new Error("Could not fetch stock!");
+        throw new Error("Could not fetch brands!");
     }
 }
 
-export async function save(stock){
-    const fetchUrl = `http://localhost:8888/eComm/stock/list`;
+
+export async function save(brand) {
+    const fetchUrl = `http://localhost:8888/eComm/brand`;
     try {
-        let response = await axios.post(fetchUrl, stock);
+        let response = await axios.post(fetchUrl, brand);
         return response;
     } catch (error) {
-        throw new Error("Could not create stock!");
+        console.log(error);
+        throw new Error("Could not create brand!");
     }
 }

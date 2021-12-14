@@ -6,7 +6,6 @@ function ProductListings({ products }) {
   const [filter, isShowFilter] = useState(false)
 
   const open = () => {
-      debugger
     isShowFilter(!filter)
   }
 
@@ -45,14 +44,22 @@ function ProductListings({ products }) {
               <input type="search" className="w-2/3 ml-12 bg-purple-white shadow rounded border-0 p-3"
                      placeholder="Search by name..."/>
 
-              <Filter activeClass={filter} showing={isShowFilter}/>
-
-              <div className="py-2 max-w-6xl mx-auto grid grid-cols-1 flex w-3/4 sm:grid-cols-2 lg:grid-cols-3 gap-x-4 gap-y-8">
-                  {
-                      products.map((product, index) => (
-                          <ProductCard key={index} product={product} />
-                      ))
-                  }
+              <div className={"flex"}>
+                  <div className={`rounded-md bg-white shadow-lg py-10 pl-4 px-20 border border-t-4 border-gray-600 shadow-2xl
+                    inset-y-0 left-0 transform  transition duration-200 ease-in-out
+                      ${filter ? "translate-x-0  w-1/4" : "-translate-x-full" }`}>
+                        <Filter/>
+                  </div>
+                  <div className={`transition duration-200 ease-in-out 
+                                    ${filter ? "w-3/4 -translate-x-full" : "translate-x-full"} `}>
+                      <div className={`py-2 grid grid-cols-1 grid-cols-3 gap-x-10 gap-y-8`}>
+                          {
+                              products.map((product, index) => (
+                                  <ProductCard key={index} product={product} />
+                              ))
+                          }
+                      </div>
+                  </div>
               </div>
 
           </>

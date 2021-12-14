@@ -8,9 +8,18 @@ const FilterComponent = ({ filterText, onFilter, onClear }) => (
             value={filterText}
             onChange={onFilter}
         />
-        <button type="button" onClick={onClear}>
-            X
-        </button>
+
+        {
+            filterText
+                ?
+                <button className={"text-blue-500"} onClick={onClear}>
+                    &nbsp;&nbsp;Limpiar
+                </button>
+            :
+                <></>
+        }
+
+
     </>
 );
 

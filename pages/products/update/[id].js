@@ -13,7 +13,7 @@ const Update = ({product}) => {
         "price" : product.price,
         "description" : product.description,
         "category" : {
-            "id" : product.category.id
+            "id" : product?.category?.id
         },
         "code" : product.code,
         "stock" : product.stock

@@ -147,3 +147,14 @@ export async function search(value) {
         throw new Error("Could not search products!");
     }
 }
+
+export async function filterProductsByBrands(brands) {
+    const fetchUrl = `http://localhost:8888/eComm/product/search/brands/`;
+    try {
+        const data = await axios.post(fetchUrl, brands);
+        return data;
+    } catch (error) {
+        throw new Error("Could not search products!");
+    }
+}
+

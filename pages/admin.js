@@ -92,12 +92,12 @@ const Admin = () => {
                             </div>
                         </div>
                     </Link>
-                    <Link href="/stock">
+                    <Link href="/brand">
                         <div className="pl-1 w-96 h-20 bg-blue-500 rounded-lg shadow-md cursor-pointer">
                             <div className="flex w-full h-full py-2 px-4 bg-white rounded-lg justify-between">
                                 <div className="my-auto">
-                                    <p className="font-bold">EN PROGRESO</p>
-                                    <p className="text-lg"></p>
+                                    <p className="font-bold">Marcas</p>
+                                    <p className="text-lg">Detalle de las marcas de articulos</p>
                                 </div>
                                 <div className="my-auto">
                                     <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24"

@@ -2,6 +2,7 @@ import DataTable from 'react-data-table-component'
 import Link from 'next/link'
 import FilterComponent from "@/components/filter/FilterComponent";
 import {useMemo, useState} from "react";
+import {paginationComponentOptions} from "../../DataTableUtils";
 /*https://react-data-table-component.netlify.app/?path=/story/getting-started-intro--page*/
 const List = ({checkout}) => {
     const [filterText, setFilterText] = useState('');
@@ -29,12 +30,6 @@ const List = ({checkout}) => {
         }
     ];
 
-    const paginationComponentOptions = {
-        rowsPerPageText: 'Filas por página',
-        rangeSeparatorText: 'de',
-        selectAllRowsItem: true,
-        selectAllRowsItemText: 'Todos',
-    };
 
     const subHeaderComponentMemo = useMemo(() => {
         const handleClear = () => {
