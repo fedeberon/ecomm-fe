@@ -16,7 +16,8 @@ const Update = ({product}) => {
             "id" : product?.category?.id
         },
         "code" : product.code,
-        "stock" : product.stock
+        "stock" : product.stock,
+        "puntos": product.puntos
     })
 
     const [validate, setValidate] = useState({
@@ -25,7 +26,8 @@ const Update = ({product}) => {
         "description": false,
         "category" : false,
         "code" : false,
-        "stock" : false
+        "stock" : false,
+        "puntos" : false
     })
 
 
@@ -74,7 +76,7 @@ const Update = ({product}) => {
                                ID #{product.id}
                             </label>
                             <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-                                   htmlFor="grid-last-name">
+                                   htmlFor="name">
                                 Nombre
                             </label>
                             <input
@@ -104,14 +106,14 @@ const Update = ({product}) => {
 
                         <div className="w-full">
                             <label className="block tracking-wide text-gray-700 text-xs font-bold mb-2"
-                                   htmlFor="grid-city">
+                                   htmlFor="codigo">
                                 C&Oacute;DIGO
                             </label>
                             <input
                                 autoComplete="off"
                                 value={productToEdit.code}
                                 className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3  px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-                                id="grid-city" type="text" placeholder="C&oacute;dido del producto"
+                                id="codigo" type="text" placeholder="C&oacute;dido del producto"
                                 name="code"
                                 onChange={handleChange}
                             />
@@ -120,10 +122,10 @@ const Update = ({product}) => {
 
                         <div className="w-full">
                             <label className="block tracking-wide text-gray-700 text-xs font-bold mb-2"
-                                   htmlFor="grid-city">
+                                   htmlFor="categoria">
                                 CATEGORIA
                             </label>
-                            <select onChange={handleChangeCategory} value={productToEdit.category.id} className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3    px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500">
+                            <select onChange={handleChangeCategory} value={productToEdit.category.id} className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3    px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="categoria">
                                 <option value="0">Seleccione</option>
                                 <option value="1">Jugueteria</option>
                                 <option value="2">Accesorios</option>
@@ -166,11 +168,11 @@ const Update = ({product}) => {
                         </div>
                         <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
                             <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-                                   htmlFor="grid-zip">
+                                   htmlFor="stock">
                                 STOCK
                             </label>
                             <input
-                                id="grid-zip"
+                                id="stock"
                                 placeholder="Stock"
                                 name="stock"
                                 autoComplete="off"
@@ -185,6 +187,22 @@ const Update = ({product}) => {
                             />
                             <p className={`text-red-500 text-xs italic ${validate.stock ? "invisible" : ""}`}>Complete el stock.</p>
                         </div>
+                    </div>
+                    <div>
+
+                    <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+                                   htmlFor="puntos">
+                                Puntos de producto
+                            </label>
+                            <input
+                                autoComplete="off"
+                                className="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
+                                id="puntos" type="text"
+                                placeholder="Puntos del producto"
+                                name="puntos"
+                                value={productToEdit.puntos}
+                                onChange={handleChange}
+                            />
                     </div>
 
                     <div className="mt-8">
