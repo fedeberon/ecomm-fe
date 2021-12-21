@@ -17,20 +17,43 @@ const Update = ({product}) => {
         },
         "code" : product.code,
         "stock" : product.stock,
-        "puntos": product.puntos
+        "points": product.points
     })
 
-    const [validate, setValidate] = useState({
+    let [validate, setValidate] = useState({
         "name" : false,
         "price": false,
         "description": false,
         "category" : false,
         "code" : false,
         "stock" : false,
-        "puntos" : false
+        "points" : false
     })
 
+    const validateInputs = () => {
+        console.log("entro a validate")
+        console.log("validate points",validate.points)
+        setValidate({
+        name :productToEdit.name.length >= 2 ? true : false,
+        price : !isNaN( productToEdit.price) ? true : false,
+        description : productToEdit.description.length >= 5 ? true : false,
+        code : productToEdit.code.length >= 2 ? true : false,
+        stock : !isNaN(productToEdit.stock) ? true : false,
+        points : productToEdit.points >= 1 ? true : false,
+        category :  productToEdit.category.id > 0 ? true : false
+})}
 
+    const readyToSubmit = () => {
+        return  validate.name &&
+                validate.price &&
+                validate.description &&
+                validate.category &&
+                validate.code &&
+                validate.stock &&
+                validate.points
+    }
+    console.log(validate)
+    console.log(readyToSubmit())
     const goToProductList = () => {
         window.location.href = '/products'
     }
@@ -40,6 +63,8 @@ const Update = ({product}) => {
     }
 
     const handleChange = (e) => {
+        validateInputs();
+        setActiveSubmit(readyToSubmit())
         setProduct({
             ...productToEdit,
             [e.target.name]: e.target.value,
@@ -47,6 +72,8 @@ const Update = ({product}) => {
     }
 
     const handleChangeCategory = (e) => {
+        setActiveSubmit(readyToSubmit())
+        validateInputs();
         setProduct({
             ...product,
             "category": {
@@ -81,7 +108,7 @@ const Update = ({product}) => {
                             </label>
                             <input
                                 autoComplete="off"
-                                className="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
+                                className="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
                                 id="name" type="text"
                                 placeholder="Nombre del Producto"
                                 name="name"
@@ -147,7 +174,7 @@ const Update = ({product}) => {
                                           </span>
                                     </div>
                                     <input
-                                        type="text"
+                                        type="number"
                                         id="price"
                                         autoComplete="off"
                                         className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-1 pl-6 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
@@ -172,6 +199,7 @@ const Update = ({product}) => {
                                 STOCK
                             </label>
                             <input
+                                type="number"
                                 id="stock"
                                 placeholder="Stock"
                                 name="stock"
@@ -196,13 +224,15 @@ const Update = ({product}) => {
                             </label>
                             <input
                                 autoComplete="off"
-                                className="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
-                                id="puntos" type="text"
+                                className="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
+                                id="puntos" type="number"
                                 placeholder="Puntos del producto"
-                                name="puntos"
-                                value={productToEdit.puntos}
+                                name="points"
+                                value={productToEdit.points}
                                 onChange={handleChange}
                             />
+                            <p className={`text-red-500 text-xs italic ${validate.points ? "invisible" : ""}`}>Complete los puntos.</p>
+
                     </div>
 
                     <div className="mt-8">
@@ -214,11 +244,11 @@ const Update = ({product}) => {
                             Ver en el Shop
                         </a>
 
-
-                        <button type="submit" onClick={submit}
+                        <button type="submit" onClick={submit} disabled={activeSubmit && "disabled"}
                                 className={`bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded  ${activeSubmit ? "" : "select-none"}`}>
                             Guardar
                         </button>
+                        <p className={`text-red-500 text-xs italic ${activeSubmit ? "invisible" : ""} `}>Complete los campos.</p>
                     </div>
                 </form>
             </div>

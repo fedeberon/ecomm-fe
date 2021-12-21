@@ -1,10 +1,69 @@
 import {useState} from "react";
 import {save} from "../../services/productService";
 import {useRouter} from 'next/router'
+import useForm from "../../hooks/useForm"
+
 
 const NewProduct = () => {
+
+    const initialForm={
+        name: "",
+        price: "",
+        description: "",
+        category : "",
+        code : "",
+        stock : "",
+        points: ""
+    }
+    
+    const validationsForm = (form) =>{
+        let errors ={};
+        let regexName =/^[A-Za-z]+$/;
+
+        if (!form.name.trim()){
+            errors.name = "El campo 'Nombre' es requerido";
+        }
+
+        if (!form.price.trim()){
+            errors.price = "El campo 'Precio' es requerido";
+        }
+
+        if (!form.description.trim()){
+            errors.description = "El campo 'Descripcion' es requerido";
+        }
+
+        if (!form.category.trim()){
+            errors.category = "El campo 'Categoria' es requerido";
+        }
+
+        if (!form.code.trim()){
+            errors.code = "El campo 'Codigo' es requerido";
+        }
+
+        if (!form.stock.trim()){
+            errors.stock = "El campo 'Stock' es requerido";
+        }
+
+        if (!form.points.trim()){
+            errors.points = "El campo 'Puntos' es requerido";
+        }
+
+        return errors
+    };
+
+    const { 
+        form,
+        errors,
+        loading,
+        response,
+        handleChange,
+        handleBlur,
+        handleSubmit,} = useForm(initialForm, validationsForm);
+
+
+
     const router = useRouter()
-    const [activeSubmit, setActiveSubmit] = useState(false)
+    const [activeSubmit, setActiveSubmit] = useState(true)
     const [product, setProduct]  = useState({
         "name" : "",
         "price" : "",
@@ -17,52 +76,58 @@ const NewProduct = () => {
         "points":""
     })
 
-    const [validate, setValidate] = useState({
-        "name" : false,
-        "price": false,
-        "description": false,
-        "category" : false,
-        "code" : false,
-        "stock" : false,
-        "points": false
-    })
+    // const [validate, setValidate] = useState({
+    //     "name" : false,
+    //     "price": false,
+    //     "description": false,
+    //     "category" : false,
+    //     "code" : false,
+    //     "stock" : false,
+    //     "points": false
+    // })
 
-    const handleChange = (e) => {
-        setProduct({
-            ...product,
-            [e.target.name]: e.target.value,
-        });
-        validateInputs()
-        setActiveSubmit(validateInputs())
-    }
+    // const handleChange = (e) => {
+    //     setProduct({
+    //         ...product,
+    //         [e.target.name]: e.target.value,
+    //     });
+    //     validateInputs()
+    //     setActiveSubmit(readyToSubmit())
+    // }
+
 
     const handleChangeCategory = (e) => {
+        validateInputs()
         setProduct({
             ...product,
             "category": {
                 "id": e.target.value
             },
         });
+        setActiveSubmit(readyToSubmit())
     }
 
-    const readyToSubmit = () => {
-        return  validate.name &&
-                validate.price &&
-                validate.description &&
-                validate.category &&
-                validate.code &&
-                validate.stock &&
-                validate.points
-    }
+    // const readyToSubmit = () => {
+    //     return  validate.name &&
+    //             validate.price &&
+    //             validate.description &&
+    //             validate.category &&
+    //             validate.code &&
+    //             validate.stock &&
+    //             validate.points
+    // }
 
-    const validateInputs = () => {
-        validate.name = product.name.length >= 5 ? true : false
-        validate.price = product.price.length >= 3 ? true : false
-        validate.description = product.description.length >= 5 ? true : false
-        validate.code = product.code.length >= 5 ? true : false
-        validate.stock = product.stock.length >= 5 ? true : false
-        validate.points = product.points.length >= 5 ? true : false
-    }
+    
+    // const validateInputs = () => {
+    //     validate.name = product.name.length >= 2 ? true : false
+    //     validate.price = !isNaN( product.price) ? true : false
+    //     validate.description = product.description.length >= 5 ? true : false
+    //     validate.code = product.code.length >= 2 ? true : false
+    //     validate.stock = !isNaN(product.stock) ? true : false
+    //     validate.points = !isNaN(product.points) ? true : false
+    //     validate.category =  product.category.id > 0 ? true : false
+    // }
+
 
     const submit =  (e) => {
         e.preventDefault();
@@ -73,10 +138,9 @@ const NewProduct = () => {
         });
     }
 
-
     return (
             <div className="flex justify-center">
-                    <form className="w-full max-w-lg" onSubmit={submit}>
+                    <form className="w-full max-w-lg" onSubmit={handleSubmit}>
                         <div className="flex flex-wrap -mx-3 mb-6">
                             <div className="w-full">
                                 <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
@@ -85,14 +149,16 @@ const NewProduct = () => {
                                 </label>
                                 <input
                                     autoComplete="off"
-                                    className="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
+                                    className="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
                                     id="name" type="text"
                                     placeholder="Nombre del Producto"
                                     name="name"
-                                    value={product.name}
+                                    value={form.name}
                                     onChange={handleChange}
+                                    onBlur={handleBlur}
+                                    required
                                 />
-                                    <p className={`text-red-500 text-xs italic ${validate.name ? "invisible" : ""}`}>Complete el nombre.</p>
+                                    {errors.name &&  <p className={`text-red-500 text-xs italic`}>{errors.name}</p>}
                             </div>
                             <div className="w-full">
                                 <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
@@ -104,8 +170,10 @@ const NewProduct = () => {
                                     className="resize-none appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                                     id="descripcion" placeholder="Descripci&oacute;n del producto" name="description" rows="3"
                                     onChange={handleChange}
+                                    onBlur={handleBlur}
+                                    required
                                 />
-                                <p className={`text-red-500 text-xs italic ${validate.description ? "invisible" : ""}`}>Complete la descripci&oacute;n.</p>
+                                    {errors.description &&  <p className={`text-red-500 text-xs italic`}>{errors.description}</p>}
                             </div>
 
                             <div className="w-full">
@@ -119,8 +187,10 @@ const NewProduct = () => {
                                     id="codigo" type="text" placeholder="Cod. del producto"
                                     name="code"
                                     onChange={handleChange}
+                                    onBlur={handleBlur}
+                                    required
                                 />
-                                <p className={`text-red-500 text-xs italic ${validate.code ? "invisible" : ""}`}>Complete la c&oacute;digo.</p>
+                                    {errors.code &&  <p className={`text-red-500 text-xs italic`}>{errors.code}</p>}
                             </div>
 
                             <div className="w-full">
@@ -128,11 +198,12 @@ const NewProduct = () => {
                                        htmlFor="categoria">
                                     Categoria
                                 </label>
-                                <select onChange={handleChangeCategory} className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3    px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500">
+                                <select onChange={handleChange} name="category" onBlur={handleBlur} className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3    px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500">
                                     <option value="0">Seleccione</option>
                                     <option value="1">Jugueteria</option>
                                     <option value="2">Accesorios</option>
                                 </select>
+                                {errors.category &&  <p className={`text-red-500 text-xs italic`}>{errors.category}</p>}
                             </div>
                         </div>
                         <div>
@@ -143,13 +214,15 @@ const NewProduct = () => {
                             </label>
                             <input
                                 autoComplete="off"
-                                className="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
-                                id="puntos" type="text"
+                                className="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
+                                id="puntos" type="number"
                                 placeholder="Puntos del producto"
                                 name="points"
                                 onChange={handleChange}
+                                onBlur={handleBlur}
+                                required
                             />
-                            <p className={`text-red-500 text-xs italic ${validate.points ? "invisible" : ""}`}>Complete los puntos.</p>
+                            {errors.points &&  <p className={`text-red-500 text-xs italic`}>{errors.points}</p>}
 
                     </div>
 
@@ -168,12 +241,14 @@ const NewProduct = () => {
                                           </span>
                                         </div>
                                         <input
-                                               type="text"
+                                               type="number"
                                                id="price"
                                                autoComplete="off"
                                                className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-1 pl-6 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                                                placeholder="0.00" name="price"
                                                onChange={handleChange}
+                                               onBlur={handleBlur}
+                                               required
                                                maxLength = "7"
                                                onKeyPress={(event) => {
                                                    if (!/[0-9]?[0-9]?(\.[0-9][0-9]?)?/.test(event.key)) {
@@ -181,7 +256,7 @@ const NewProduct = () => {
                                                    }
                                                }}
                                         />
-                                        <p className={`text-red-500 text-xs italic ${validate.price ? "invisible" : ""}`}>Complete el precio.</p>
+                                    {errors.price &&  <p className={`text-red-500 text-xs italic`}>{errors.price}</p>}
                                     </div>
                                 </div>
                             </div>
@@ -191,29 +266,31 @@ const NewProduct = () => {
                                     Stocks
                                 </label>
                                 <input
-                                        id="Stock"
+                                        id="Stock" type="number"
                                         placeholder="Stocks"
                                         name="stock"
                                         autoComplete="off"
                                         className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                                         onChange={handleChange}
+                                        onBlur={handleBlur}
+                                        required
                                         onKeyPress={(event) => {
                                             if (!/[0-9]/.test(event.key)) {
                                                 event.preventDefault();
                                             }
                                         }}
                                 />
-                                <p className={`text-red-500 text-xs italic ${validate.stock ? "invisible" : ""}`}>Complete el stock.</p>
+                                {errors.stock &&  <p className={`text-red-500 text-xs italic`}>{errors.stock}</p>}
                             </div>
                         </div>
 
-                       <label>{product.points}</label>                 
-
-
-                        <button type="submit"
-                                className={`bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-8  ${activeSubmit ? "" : "select-none"}`}>
+                        <button type="submit"  disabled={errors && "disabled"}
+                                className={`bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-8`}
+                                >
                             Guardar
                         </button>
+                        <p className={`text-red-500 text-xs italic ${errors ? "visible": "" }`}>Complete los campos.</p>
+                        
                     </form>
             </div>
     )
