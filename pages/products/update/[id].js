@@ -12,10 +12,7 @@ const Update = ({product}) => {
     
     const validationsForm = (form) =>{
         console.log("Entro a valitacions")
-        console.log(form)
-        console.log(form.price)
         let errors ={};
-        let regexName =/^[A-Za-z]+$/;
 
         if (!form.name.trim()){
             errors.name = "El campo 'Nombre' es requerido";
@@ -41,7 +38,8 @@ const Update = ({product}) => {
             errors.stock = "El campo 'Stock' es requerido";
         }
 
-        if (!form.points == null){
+        if (form.points <0 &&  form.points.length() == 0){
+            console.log("Entro a points error")
             errors.points = "El campo 'Puntos' es requerido";
         }
         
