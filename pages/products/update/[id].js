@@ -1,102 +1,158 @@
-import {getProduct, save} from "../../../services/productService";
-import {useState} from "react";
+import {getProduct} from "../../../services/productService";
+import useForm from "../../../hooks/useForm";
+// import {useState} from "react";
 import {NotificationContainer, NotificationManager} from 'react-notifications';
 import 'react-notifications/lib/notifications.css';
+import { useEffect, useState } from "react";
 /*https://www.npmjs.com/package/react-notifications*/
 
 
 const Update = ({product}) => {
-    const [activeSubmit, setActiveSubmit] = useState(false)
-    const [productToEdit, setProduct]  = useState({
-        "id": product.id,
-        "name" : product.name,
-        "price" : product.price,
-        "description" : product.description,
-        "category" : {
-            "id" : product?.category?.id
-        },
-        "code" : product.code,
-        "stock" : product.stock,
-        "points": product.points
-    })
 
-    let [validate, setValidate] = useState({
-        "name" : false,
-        "price": false,
-        "description": false,
-        "category" : false,
-        "code" : false,
-        "stock" : false,
-        "points" : false
-    })
+    console.log(product)
+    
+    const validationsForm = (form) =>{
+        console.log("Entro a valitacions")
+        console.log(form)
+        console.log(form.price)
+        let errors ={};
+        let regexName =/^[A-Za-z]+$/;
 
-    const validateInputs = () => {
-        console.log("entro a validate")
-        console.log("validate points",validate.points)
-        setValidate({
-        name :productToEdit.name.length >= 2 ? true : false,
-        price : !isNaN( productToEdit.price) ? true : false,
-        description : productToEdit.description.length >= 5 ? true : false,
-        code : productToEdit.code.length >= 2 ? true : false,
-        stock : !isNaN(productToEdit.stock) ? true : false,
-        points : productToEdit.points >= 1 ? true : false,
-        category :  productToEdit.category.id > 0 ? true : false
-})}
+        if (!form.name.trim()){
+            errors.name = "El campo 'Nombre' es requerido";
+        }
 
-    const readyToSubmit = () => {
-        return  validate.name &&
-                validate.price &&
-                validate.description &&
-                validate.category &&
-                validate.code &&
-                validate.stock &&
-                validate.points
-    }
-    console.log(validate)
-    console.log(readyToSubmit())
-    const goToProductList = () => {
-        window.location.href = '/products'
-    }
+        if (form.price <= 0){
+            errors.price = "El campo 'Precio' es requerido";
+        }
 
-    const showOnShop = () => {
-        window.location.href = '/products/' + product.id
-    }
+        if (!form.description.trim()){
+            errors.description = "El campo 'Descripcion' es requerido";
+        }
 
-    const handleChange = (e) => {
-        validateInputs();
-        setActiveSubmit(readyToSubmit())
-        setProduct({
-            ...productToEdit,
-            [e.target.name]: e.target.value,
-        });
-    }
+        if (form.category.id == 0){
+            errors.category = "El campo 'Categoria' es requerido";
+        }
 
-    const handleChangeCategory = (e) => {
-        setActiveSubmit(readyToSubmit())
-        validateInputs();
-        setProduct({
-            ...product,
-            "category": {
-                "id": e.target.value
-            },
-        });
-    }
+        if (!form.code.trim()){
+            errors.code = "El campo 'Codigo' es requerido";
+        }
 
-    const submit =  (e) => {
-        e.preventDefault();
-        save(productToEdit).then((result) => {
-            if (result.status === 202) {
-                NotificationManager.info('Se guardaron los datos correctamente', ' Producto # ' + product.id);
-            }
-        });
-    }
+        if (form.stock <= 0){
+            errors.stock = "El campo 'Stock' es requerido";
+        }
+
+        if (!form.points == null){
+            errors.points = "El campo 'Puntos' es requerido";
+        }
+        
+        return errors
+    };
+    
+    const { 
+        form,
+        errors,
+        loading,
+        response,
+        handleChange,
+        handleBlur,
+        handleSubmit,} = useForm(product, validationsForm);
+        
+        const goToProductList = () => {
+            window.location.href = '/products'
+        }
+        
+        const showOnShop = () => {
+            window.location.href = '/products/' + product.id
+        }
+        
+        
+        
+
+//     const [activeSubmit, setActiveSubmit] = useState(false)
+//     const [productToEdit, setProduct]  = useState({
+//         "id": product.id,
+//         "name" : product.name,
+//         "price" : product.price,
+//         "description" : product.description,
+//         "category" : {
+//             "id" : product?.category?.id
+//         },
+//         "code" : product.code,
+//         "stock" : product.stock,
+//         "points": product.points
+//     })
+
+//     let [validate, setValidate] = useState({
+//         "name" : false,
+//         "price": false,
+//         "description": false,
+//         "category" : false,
+//         "code" : false,
+//         "stock" : false,
+//         "points" : false
+//     })
+
+//     const validateInputs = () => {
+//         console.log("entro a validate")
+//         console.log("validate points",validate.points)
+//         setValidate({
+//         name :productToEdit.name.length >= 2 ? true : false,
+//         price : !isNaN( productToEdit.price) ? true : false,
+//         description : productToEdit.description.length >= 5 ? true : false,
+//         code : productToEdit.code.length >= 2 ? true : false,
+//         stock : !isNaN(productToEdit.stock) ? true : false,
+//         points : productToEdit.points >= 1 ? true : false,
+//         category :  productToEdit.category.id > 0 ? true : false
+// })}
+
+//     const readyToSubmit = () => {
+//         return  validate.name &&
+//                 validate.price &&
+//                 validate.description &&
+//                 validate.category &&
+//                 validate.code &&
+//                 validate.stock &&
+//                 validate.points
+//     }
+//     console.log(validate)
+//     console.log(readyToSubmit())
+
+//     const handleChange = (e) => {
+//         validateInputs();
+//         setActiveSubmit(readyToSubmit())
+//         setProduct({
+//             ...productToEdit,
+//             [e.target.name]: e.target.value,
+//         });
+//     }
+
+//     const handleChangeCategory = (e) => {
+//         setActiveSubmit(readyToSubmit())
+//         validateInputs();
+//         setProduct({
+//             ...product,
+//             "category": {
+//                 "id": e.target.value
+//             },
+//         });
+//     }
+
+//     const submit =  (e) => {
+//         e.preventDefault();
+//         save(productToEdit).then((result) => {
+//             if (result.status === 202) {
+//                 NotificationManager.info('Se guardaron los datos correctamente', ' Producto # ' + product.id);
+//             }
+//         });
+//     }
 
 
     return (
         <>
             <NotificationContainer/>
             <div className="flex justify-center">
-                <form className="w-full max-w-lg" onSubmit={submit}>
+                <form className="w-full max-w-lg" onSubmit={handleSubmit}>
                     <div className="flex flex-wrap -mx-3 mb-6">
                         <div className="w-full">
                             <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2 mt-2 text-3xl" htmlFor="grid-first-name">
@@ -112,10 +168,12 @@ const Update = ({product}) => {
                                 id="name" type="text"
                                 placeholder="Nombre del Producto"
                                 name="name"
-                                value={productToEdit.name}
+                                value={form.name}
                                 onChange={handleChange}
-                            />
-                            <p className={`text-red-500 text-xs italic ${productToEdit.name ? "invisible" : ""}`}>Complete el nombre.</p>
+                                onBlur={handleBlur}
+                                required
+                            /> 
+                            {errors.name &&  <p className={`text-red-500 text-xs italic`}>{errors.name}</p>}
                         </div>
                         <div className="w-full">
                             <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
@@ -123,12 +181,14 @@ const Update = ({product}) => {
                                 Descripcion
                             </label>
                             <textarea
-                                autoComplete="off" value={productToEdit.description}
+                                autoComplete="off" value={form.description}
                                 className="resize-none appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                                 id="grid-last-name" placeholder="Descripci&oacute;n del producto" name="description" rows="3"
                                 onChange={handleChange}
+                                onBlur={handleBlur}
+                                required
                             />
-                            <p className={`text-red-500 text-xs italic ${validate.description ? "invisible" : ""}`}>Complete la descripci&oacute;n.</p>
+                            {errors.description &&  <p className={`text-red-500 text-xs italic`}>{errors.description}</p>}
                         </div>
 
                         <div className="w-full">
@@ -138,25 +198,28 @@ const Update = ({product}) => {
                             </label>
                             <input
                                 autoComplete="off"
-                                value={productToEdit.code}
+                                value={form.code}
                                 className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3  px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                                 id="codigo" type="text" placeholder="C&oacute;dido del producto"
                                 name="code"
                                 onChange={handleChange}
+                                onBlur={handleBlur}
+                                required
                             />
-                            <p className={`text-red-500 text-xs italic ${productToEdit.code ? "invisible" : ""}`}>Complete la c&oacute;digo.</p>
+                             {errors.code &&  <p className={`text-red-500 text-xs italic`}>{errors.code}</p>}
                         </div>
 
                         <div className="w-full">
                             <label className="block tracking-wide text-gray-700 text-xs font-bold mb-2"
-                                   htmlFor="categoria">
+                                   htmlFor="category">
                                 CATEGORIA
                             </label>
-                            <select onChange={handleChangeCategory} value={productToEdit.category.id} className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3    px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="categoria">
+                            <select onChange={handleChange} onBlur={handleChange} name="category" value={form.category.id} className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3    px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500">
                                 <option value="0">Seleccione</option>
                                 <option value="1">Jugueteria</option>
                                 <option value="2">Accesorios</option>
                             </select>
+                            {errors.category &&  <p className={`text-red-500 text-xs italic`}>{errors.category}</p>}
                         </div>
                     </div>
 
@@ -180,15 +243,17 @@ const Update = ({product}) => {
                                         className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-1 pl-6 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                                         placeholder="0.00" name="price"
                                         onChange={handleChange}
+                                        onBlur={handleBlur}
                                         maxLength = "7"
-                                        value={productToEdit.price}
+                                        required
+                                        value={form.price}
                                         onKeyPress={(event) => {
                                             if (!/[0-9]?[0-9]?(\.[0-9][0-9]?)?/.test(event.key)) {
                                                 event.preventDefault();
                                             }
                                         }}
                                     />
-                                    <p className={`text-red-500 text-xs italic ${validate.price ? "invisible" : ""}`}>Complete el precio.</p>
+                                    {errors.price &&  <p className={`text-red-500 text-xs italic`}>{errors.price}</p>}
                                 </div>
                             </div>
 
@@ -204,16 +269,18 @@ const Update = ({product}) => {
                                 placeholder="Stock"
                                 name="stock"
                                 autoComplete="off"
-                                value={productToEdit.stock}
+                                value={form.stock}
                                 className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                                 onChange={handleChange}
+                                onBlur={handleBlur}
+                                required
                                 onKeyPress={(event) => {
                                     if (!/[0-9]/.test(event.key)) {
                                         event.preventDefault();
                                     }
                                 }}
                             />
-                            <p className={`text-red-500 text-xs italic ${validate.stock ? "invisible" : ""}`}>Complete el stock.</p>
+                            {errors.stock &&  <p className={`text-red-500 text-xs italic`}>{errors.stock}</p>}
                         </div>
                     </div>
                     <div>
@@ -228,11 +295,12 @@ const Update = ({product}) => {
                                 id="puntos" type="number"
                                 placeholder="Puntos del producto"
                                 name="points"
-                                value={productToEdit.points}
+                                value={form.points}
                                 onChange={handleChange}
+                                onBlur={handleBlur}
+                                required
                             />
-                            <p className={`text-red-500 text-xs italic ${validate.points ? "invisible" : ""}`}>Complete los puntos.</p>
-
+                            {errors.points &&  <p className={`text-red-500 text-xs italic`}>{errors.points}</p>}
                     </div>
 
                     <div className="mt-8">
@@ -244,11 +312,11 @@ const Update = ({product}) => {
                             Ver en el Shop
                         </a>
 
-                        <button type="submit" onClick={submit} disabled={activeSubmit && "disabled"}
-                                className={`bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded  ${activeSubmit ? "" : "select-none"}`}>
+                        <button type="submit" onClick={handleSubmit}
+                                className={`bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded`}>
                             Guardar
                         </button>
-                        <p className={`text-red-500 text-xs italic ${activeSubmit ? "invisible" : ""} `}>Complete los campos.</p>
+                        <p className={`text-red-500 text-xs italic ${Object.keys(errors).length === 0 ? "invisible": "" } `}>Complete los campos.</p>
                     </div>
                 </form>
             </div>

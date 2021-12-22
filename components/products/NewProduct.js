@@ -1,7 +1,6 @@
-import {useState} from "react";
-import {save} from "../../services/productService";
-import {useRouter} from 'next/router'
-import useForm from "../../hooks/useForm"
+// import {useState} from "react";
+// import {useRouter} from 'next/router'
+import useForm from "../../hooks/useForm";
 
 
 const NewProduct = () => {
@@ -10,7 +9,9 @@ const NewProduct = () => {
         name: "",
         price: "",
         description: "",
-        category : "",
+        category : {
+            id  :  ""
+        },
         code : "",
         stock : "",
         points: ""
@@ -31,8 +32,7 @@ const NewProduct = () => {
         if (!form.description.trim()){
             errors.description = "El campo 'Descripcion' es requerido";
         }
-
-        if (!form.category.trim()){
+        if (!form.category.id.trim()){
             errors.category = "El campo 'Categoria' es requerido";
         }
 
@@ -62,19 +62,19 @@ const NewProduct = () => {
 
 
 
-    const router = useRouter()
-    const [activeSubmit, setActiveSubmit] = useState(true)
-    const [product, setProduct]  = useState({
-        "name" : "",
-        "price" : "",
-        "description" : "",
-        "category" : {
-            "id" : ""
-        },
-        "code" : "",
-        "stock" : "",
-        "points":""
-    })
+    // const router = useRouter()
+    // const [activeSubmit, setActiveSubmit] = useState(true)
+    // const [product, setProduct]  = useState({
+    //     "name" : "",
+    //     "price" : "",
+    //     "description" : "",
+    //     "category" : {
+    //         "id" : ""
+    //     },
+    //     "code" : "",
+    //     "stock" : "",
+    //     "points":""
+    // })
 
     // const [validate, setValidate] = useState({
     //     "name" : false,
@@ -96,16 +96,16 @@ const NewProduct = () => {
     // }
 
 
-    const handleChangeCategory = (e) => {
-        validateInputs()
-        setProduct({
-            ...product,
-            "category": {
-                "id": e.target.value
-            },
-        });
-        setActiveSubmit(readyToSubmit())
-    }
+    // const handleChangeCategory = (e) => {
+    //     validateInputs()
+    //     setProduct({
+    //         ...product,
+    //         "category": {
+    //             "id": e.target.value
+    //         },
+    //     });
+    //     setActiveSubmit(readyToSubmit())
+    // }
 
     // const readyToSubmit = () => {
     //     return  validate.name &&
@@ -129,14 +129,17 @@ const NewProduct = () => {
     // }
 
 
-    const submit =  (e) => {
-        e.preventDefault();
-        save(product).then((result) => {
-            if (result.status === 202) {
-                router.push('/')
-            }
-        });
-    }
+    // const submit =  (e) => {
+    //     e.preventDefault();
+
+
+        
+    //     save(form).then((result) => {
+    //         if (result.status === 202) {
+    //             router.push('/')
+    //         }
+    //     });
+    // }
 
     return (
             <div className="flex justify-center">
@@ -169,6 +172,7 @@ const NewProduct = () => {
                                     autoComplete="off"
                                     className="resize-none appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                                     id="descripcion" placeholder="Descripci&oacute;n del producto" name="description" rows="3"
+                                    value={form.description}
                                     onChange={handleChange}
                                     onBlur={handleBlur}
                                     required
@@ -186,6 +190,7 @@ const NewProduct = () => {
                                     className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3    px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                                     id="codigo" type="text" placeholder="Cod. del producto"
                                     name="code"
+                                    value={form.code}
                                     onChange={handleChange}
                                     onBlur={handleBlur}
                                     required
@@ -195,10 +200,10 @@ const NewProduct = () => {
 
                             <div className="w-full">
                                 <label className="block tracking-wide text-gray-700 text-xs font-bold mb-2"
-                                       htmlFor="categoria">
+                                       htmlFor="category">
                                     Categoria
                                 </label>
-                                <select onChange={handleChange} name="category" onBlur={handleBlur} className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3    px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500">
+                                <select onChange={handleChange} name="category" onBlur={handleBlur} value={form.category.id} className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3    px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="category">
                                     <option value="0">Seleccione</option>
                                     <option value="1">Jugueteria</option>
                                     <option value="2">Accesorios</option>
@@ -218,6 +223,7 @@ const NewProduct = () => {
                                 id="puntos" type="number"
                                 placeholder="Puntos del producto"
                                 name="points"
+                                value={form.points}
                                 onChange={handleChange}
                                 onBlur={handleBlur}
                                 required
@@ -246,6 +252,7 @@ const NewProduct = () => {
                                                autoComplete="off"
                                                className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-1 pl-6 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                                                placeholder="0.00" name="price"
+                                                value={form.price}
                                                onChange={handleChange}
                                                onBlur={handleBlur}
                                                required
@@ -271,6 +278,7 @@ const NewProduct = () => {
                                         name="stock"
                                         autoComplete="off"
                                         className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                                        value={form.stock}
                                         onChange={handleChange}
                                         onBlur={handleBlur}
                                         required
@@ -284,13 +292,12 @@ const NewProduct = () => {
                             </div>
                         </div>
 
-                        <button type="submit"  disabled={errors && "disabled"}
+                        <button type="submit" 
                                 className={`bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-8`}
                                 >
                             Guardar
                         </button>
-                        <p className={`text-red-500 text-xs italic ${errors ? "visible": "" }`}>Complete los campos.</p>
-                        
+                        <p className={`text-red-500 text-xs italic ${Object.keys(errors).length === 0 ? "invisible": "" }`}>Complete los campos.</p>
                     </form>
             </div>
     )
