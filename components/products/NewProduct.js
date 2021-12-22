@@ -1,5 +1,4 @@
-// import {useState} from "react";
-// import {useRouter} from 'next/router'
+
 import useForm from "../../hooks/useForm";
 
 
@@ -60,86 +59,6 @@ const NewProduct = () => {
         handleBlur,
         handleSubmit,} = useForm(initialForm, validationsForm);
 
-
-
-    // const router = useRouter()
-    // const [activeSubmit, setActiveSubmit] = useState(true)
-    // const [product, setProduct]  = useState({
-    //     "name" : "",
-    //     "price" : "",
-    //     "description" : "",
-    //     "category" : {
-    //         "id" : ""
-    //     },
-    //     "code" : "",
-    //     "stock" : "",
-    //     "points":""
-    // })
-
-    // const [validate, setValidate] = useState({
-    //     "name" : false,
-    //     "price": false,
-    //     "description": false,
-    //     "category" : false,
-    //     "code" : false,
-    //     "stock" : false,
-    //     "points": false
-    // })
-
-    // const handleChange = (e) => {
-    //     setProduct({
-    //         ...product,
-    //         [e.target.name]: e.target.value,
-    //     });
-    //     validateInputs()
-    //     setActiveSubmit(readyToSubmit())
-    // }
-
-
-    // const handleChangeCategory = (e) => {
-    //     validateInputs()
-    //     setProduct({
-    //         ...product,
-    //         "category": {
-    //             "id": e.target.value
-    //         },
-    //     });
-    //     setActiveSubmit(readyToSubmit())
-    // }
-
-    // const readyToSubmit = () => {
-    //     return  validate.name &&
-    //             validate.price &&
-    //             validate.description &&
-    //             validate.category &&
-    //             validate.code &&
-    //             validate.stock &&
-    //             validate.points
-    // }
-
-    
-    // const validateInputs = () => {
-    //     validate.name = product.name.length >= 2 ? true : false
-    //     validate.price = !isNaN( product.price) ? true : false
-    //     validate.description = product.description.length >= 5 ? true : false
-    //     validate.code = product.code.length >= 2 ? true : false
-    //     validate.stock = !isNaN(product.stock) ? true : false
-    //     validate.points = !isNaN(product.points) ? true : false
-    //     validate.category =  product.category.id > 0 ? true : false
-    // }
-
-
-    // const submit =  (e) => {
-    //     e.preventDefault();
-
-
-        
-    //     save(form).then((result) => {
-    //         if (result.status === 202) {
-    //             router.push('/')
-    //         }
-    //     });
-    // }
 
     return (
             <div className="flex justify-center">

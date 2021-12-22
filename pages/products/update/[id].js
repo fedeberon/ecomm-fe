@@ -1,9 +1,8 @@
 import {getProduct} from "../../../services/productService";
 import useForm from "../../../hooks/useForm";
-// import {useState} from "react";
 import {NotificationContainer, NotificationManager} from 'react-notifications';
 import 'react-notifications/lib/notifications.css';
-import { useEffect, useState } from "react";
+import {  useState } from "react";
 /*https://www.npmjs.com/package/react-notifications*/
 
 
@@ -66,87 +65,6 @@ const Update = ({product}) => {
             window.location.href = '/products/' + product.id
         }
         
-        
-        
-
-//     const [activeSubmit, setActiveSubmit] = useState(false)
-//     const [productToEdit, setProduct]  = useState({
-//         "id": product.id,
-//         "name" : product.name,
-//         "price" : product.price,
-//         "description" : product.description,
-//         "category" : {
-//             "id" : product?.category?.id
-//         },
-//         "code" : product.code,
-//         "stock" : product.stock,
-//         "points": product.points
-//     })
-
-//     let [validate, setValidate] = useState({
-//         "name" : false,
-//         "price": false,
-//         "description": false,
-//         "category" : false,
-//         "code" : false,
-//         "stock" : false,
-//         "points" : false
-//     })
-
-//     const validateInputs = () => {
-//         console.log("entro a validate")
-//         console.log("validate points",validate.points)
-//         setValidate({
-//         name :productToEdit.name.length >= 2 ? true : false,
-//         price : !isNaN( productToEdit.price) ? true : false,
-//         description : productToEdit.description.length >= 5 ? true : false,
-//         code : productToEdit.code.length >= 2 ? true : false,
-//         stock : !isNaN(productToEdit.stock) ? true : false,
-//         points : productToEdit.points >= 1 ? true : false,
-//         category :  productToEdit.category.id > 0 ? true : false
-// })}
-
-//     const readyToSubmit = () => {
-//         return  validate.name &&
-//                 validate.price &&
-//                 validate.description &&
-//                 validate.category &&
-//                 validate.code &&
-//                 validate.stock &&
-//                 validate.points
-//     }
-//     console.log(validate)
-//     console.log(readyToSubmit())
-
-//     const handleChange = (e) => {
-//         validateInputs();
-//         setActiveSubmit(readyToSubmit())
-//         setProduct({
-//             ...productToEdit,
-//             [e.target.name]: e.target.value,
-//         });
-//     }
-
-//     const handleChangeCategory = (e) => {
-//         setActiveSubmit(readyToSubmit())
-//         validateInputs();
-//         setProduct({
-//             ...product,
-//             "category": {
-//                 "id": e.target.value
-//             },
-//         });
-//     }
-
-//     const submit =  (e) => {
-//         e.preventDefault();
-//         save(productToEdit).then((result) => {
-//             if (result.status === 202) {
-//                 NotificationManager.info('Se guardaron los datos correctamente', ' Producto # ' + product.id);
-//             }
-//         });
-//     }
-
 
     return (
         <>
