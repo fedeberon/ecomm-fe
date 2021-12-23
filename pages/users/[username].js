@@ -4,10 +4,6 @@ import {useEffect} from "react";
 
 const Username = ({user})  => {
 
-    useEffect(() => {
-        console.log(user)
-    }, []);
-
     return (
             <>
               <UserDetail user={user} />
