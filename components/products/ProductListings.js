@@ -1,6 +1,6 @@
 import ProductCard from '@/components/products/ProductCard'
-import Filter from "@/components/filter/FilterComponent";
 import {useState} from "react";
+import FilterComponent from '../filter/FilterComponent';
 
 function ProductListings({ products }) {
   const [filter, isShowFilter] = useState(false)
@@ -48,7 +48,7 @@ function ProductListings({ products }) {
                   <div className={`rounded-md bg-white shadow-lg py-10 pl-4 px-20 border border-t-4 border-gray-600 shadow-2xl
                     inset-y-0 left-0 transform  transition duration-200 ease-in-out
                       ${filter ? "translate-x-0  w-1/4" : "-translate-x-full" }`}>
-                        <Filter/>
+                        <FilterComponent/>
                   </div>
                   <div className={`transition duration-200 ease-in-out 
                                     ${filter ? "w-3/4 -translate-x-full" : "translate-x-full"} `}>
