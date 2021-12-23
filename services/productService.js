@@ -141,18 +141,22 @@ export async function createCheckout(cart){
 export async function search(value) {
     const fetchUrl = `http://localhost:8888/eComm/product/search/${value}`;
     try {
-        const data = await axios.get(fetchUrl);
-        return data;
+        const response = await axios.get(fetchUrl);
+        return response.data;
     } catch (error) {
         throw new Error("Could not search products!");
     }
 }
 
 export async function filterProductsByBrands(brands) {
+    console.log("brands", brands);
+    debugger
     const fetchUrl = `http://localhost:8888/eComm/product/search/brands/`;
     try {
-        const data = await axios.post(fetchUrl, brands);
-        return data;
+        const response = await axios.post(fetchUrl, brands);
+        console.log("response", response);
+        debugger
+        return response.data;
     } catch (error) {
         throw new Error("Could not search products!");
     }
