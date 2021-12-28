@@ -4,7 +4,7 @@ import NewBrand from "@/components/brands/NewBrand";
 const Create = () => {
     return (
         <div className="min-h-screen">
-            <StoreHeading title="Nuevo Marca"/>
+            <StoreHeading title="añskfañlkgnñlfdkgsñdfkgn Marca"/>
             <NewBrand/>
         </div>
     );
