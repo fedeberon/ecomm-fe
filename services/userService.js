@@ -36,7 +36,6 @@ export async function findAll() {
 
 export async function getByUsername(username) {
     const fetchUrl = `http://localhost:8888/eComm/user/${username}`;
-
     try {
         let response = await axios.get(fetchUrl);
 

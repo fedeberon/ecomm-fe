@@ -1,5 +1,5 @@
 import ProductCard from '@/components/products/ProductCard'
-import Filter from "@/components/filter";
+import Filter from "@/components/filter/FilterComponent";
 import {useState} from "react";
 
 function ProductListings({ products }) {
