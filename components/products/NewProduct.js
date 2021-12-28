@@ -13,7 +13,8 @@ const NewProduct = () => {
             "id" : ""
         },
         "code" : "",
-        "stock" : ""
+        "stock" : "",
+        "points":""
     })
 
     const [validate, setValidate] = useState({
@@ -22,7 +23,8 @@ const NewProduct = () => {
         "description": false,
         "category" : false,
         "code" : false,
-        "stock" : false
+        "stock" : false,
+        "points": false
     })
 
     const handleChange = (e) => {
@@ -49,7 +51,8 @@ const NewProduct = () => {
                 validate.description &&
                 validate.category &&
                 validate.code &&
-                validate.stock
+                validate.stock &&
+                validate.points
     }
 
     const validateInputs = () => {
@@ -58,6 +61,7 @@ const NewProduct = () => {
         validate.description = product.description.length >= 5 ? true : false
         validate.code = product.code.length >= 5 ? true : false
         validate.stock = product.stock.length >= 5 ? true : false
+        validate.points = product.points.length >= 5 ? true : false
     }
 
     const submit =  (e) => {
@@ -76,7 +80,7 @@ const NewProduct = () => {
                         <div className="flex flex-wrap -mx-3 mb-6">
                             <div className="w-full">
                                 <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-                                       htmlFor="grid-first-name">
+                                       htmlFor="name">
                                     Nombre
                                 </label>
                                 <input
@@ -92,13 +96,13 @@ const NewProduct = () => {
                             </div>
                             <div className="w-full">
                                 <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-                                       htmlFor="grid-last-name">
+                                       htmlFor="descripcion">
                                     Descripcion
                                 </label>
                                 <textarea
                                     autoComplete="off"
                                     className="resize-none appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-                                    id="grid-last-name" placeholder="Descripci&oacute;n del producto" name="description" rows="3"
+                                    id="descripcion" placeholder="Descripci&oacute;n del producto" name="description" rows="3"
                                     onChange={handleChange}
                                 />
                                 <p className={`text-red-500 text-xs italic ${validate.description ? "invisible" : ""}`}>Complete la descripci&oacute;n.</p>
@@ -106,13 +110,13 @@ const NewProduct = () => {
 
                             <div className="w-full">
                                 <label className="block tracking-wide text-gray-700 text-xs font-bold mb-2"
-                                       htmlFor="grid-city">
+                                       htmlFor="codigo">
                                     C&oacute;digo
                                 </label>
                                 <input
                                     autoComplete="off"
                                     className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3    px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-                                    id="grid-city" type="text" placeholder="Cod. del producto"
+                                    id="codigo" type="text" placeholder="Cod. del producto"
                                     name="code"
                                     onChange={handleChange}
                                 />
@@ -121,7 +125,7 @@ const NewProduct = () => {
 
                             <div className="w-full">
                                 <label className="block tracking-wide text-gray-700 text-xs font-bold mb-2"
-                                       htmlFor="grid-city">
+                                       htmlFor="categoria">
                                     Categoria
                                 </label>
                                 <select onChange={handleChangeCategory} className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3    px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500">
@@ -131,6 +135,24 @@ const NewProduct = () => {
                                 </select>
                             </div>
                         </div>
+                        <div>
+
+                             <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+                                   htmlFor="puntos">
+                                Puntos de producto
+                            </label>
+                            <input
+                                autoComplete="off"
+                                className="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
+                                id="puntos" type="text"
+                                placeholder="Puntos del producto"
+                                name="points"
+                                onChange={handleChange}
+                            />
+                            <p className={`text-red-500 text-xs italic ${validate.points ? "invisible" : ""}`}>Complete los puntos.</p>
+
+                    </div>
+
 
                         <div className="flex flex-wrap -mx-3 mb-2">
                             <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
@@ -165,12 +187,12 @@ const NewProduct = () => {
                             </div>
                             <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
                                 <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-                                       htmlFor="grid-zip">
-                                    Stock
+                                       htmlFor="Stock">
+                                    Stocks
                                 </label>
                                 <input
-                                        id="grid-zip"
-                                        placeholder="Stock"
+                                        id="Stock"
+                                        placeholder="Stocks"
                                         name="stock"
                                         autoComplete="off"
                                         className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
@@ -184,6 +206,10 @@ const NewProduct = () => {
                                 <p className={`text-red-500 text-xs italic ${validate.stock ? "invisible" : ""}`}>Complete el stock.</p>
                             </div>
                         </div>
+
+                       <label>{product.points}</label>                 
+
+
                         <button type="submit"
                                 className={`bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-8  ${activeSubmit ? "" : "select-none"}`}>
                             Guardar

@@ -44,6 +44,7 @@ const Create = () => {
             "code" : item.code,
             "stock":  item.stock,
             "category" : item.category,
+            "points":item.points,
             "image":  item.images && item.images.length != 0 ? item.images[0].link : logo.src
         }];
         setList(updatedCarsArray)
