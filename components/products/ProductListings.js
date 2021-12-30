@@ -1,6 +1,7 @@
 import ProductCard from '@/components/products/ProductCard'
 import Filter from "@/components/filter/FilterComponent";
 import {useState} from "react";
+import FilterComponent from '../filter/FilterComponent';
 
 function ProductListings({ products }) {
   const [filter, isShowFilter] = useState(false)
