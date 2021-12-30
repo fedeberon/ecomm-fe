@@ -1,6 +1,6 @@
-import {getWalletUser} from "../../services/walletServices"
+import {getWalletUser} from "../../../services/walletService";
 
-const Wallet =()=>{
+const Wallet = (walllet) =>{
    
 
     return(
@@ -9,7 +9,7 @@ const Wallet =()=>{
                     <div className="flex justify-between">
                         <div>
                             <h2> Mis puntos</h2>
-                            <p className='text-2xl font-bold'> {0}</p>
+                            <p className='text-2xl font-bold'> {walllet.points}</p>
                         </div>
                         <div className="flex items-center ">
                             <div className='p-5 bg-gray-200 bg-opacity-40 rounded-full'></div>
@@ -36,3 +36,14 @@ const Wallet =()=>{
     )
 }
 export default Wallet
+
+
+export async function getStaticProps() {
+    const walllet = await getWalletUser();
+    return {
+      props: {
+        walllet
+      },
+    }
+  }
+  
