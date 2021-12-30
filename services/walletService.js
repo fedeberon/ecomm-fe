@@ -1,5 +1,6 @@
-export async function getWalletUser(userId) {
-    const fetchUrl = `http://localhost:8888/eComm/user/wallet/${userId}`
+export async function getWalletUser(username) {
+    const fetchUrl = `http://localhost:8888/eComm/user/wallet/${username}`
+
     const fetchOptions = {
         endpoint: fetchUrl,
         method: "GET",

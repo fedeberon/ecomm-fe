@@ -1,7 +1,6 @@
 import {getWalletUser} from "../../../services/walletService";
-import { getSession } from "next-auth/client";
 
-const Wallet = ({wallet}) => {
+const Wallet = (walllet) =>{
    
 
     return(
@@ -10,7 +9,7 @@ const Wallet = ({wallet}) => {
                     <div className="flex justify-between">
                         <div>
                             <h2> Mis puntos</h2>
-                            <p className='text-2xl font-bold'> {0}</p>
+                            <p className='text-2xl font-bold'> {walllet.points}</p>
                         </div>
                         <div className="flex items-center ">
                             <div className='p-5 bg-gray-200 bg-opacity-40 rounded-full'></div>
@@ -38,13 +37,12 @@ const Wallet = ({wallet}) => {
 }
 export default Wallet
 
-export async function getServerSideProps(ctx) {
-    const user = await getSession(ctx)
-    console.log('user', user)
-    const  wallet  = await getWalletUser(user.user.username)
+
+export async function getStaticProps() {
+    const walllet = await getWalletUser();
     return {
-        props: {
-            wallet
-        }
+      props: {
+        walllet
+      },
     }
-}
+  }
