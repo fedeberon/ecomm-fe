@@ -82,7 +82,7 @@ function CartPage() {
                         {
                             loading
                                 ?
-                                <Loading message={"Espere un segundo por favor"} />
+                                <Loading message={"Espere un momento por favor"} />
                                 :
                                 <></>
                         }

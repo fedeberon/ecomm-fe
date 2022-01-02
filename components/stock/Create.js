@@ -10,12 +10,6 @@ const Create = () => {
     const[show, isShow] = useState(false)
     const[result, setResult] = useState([])
 
-    useEffect(() => {
-
-        console.log("list" , list)
-
-    }, [list])
-
     const searchValue = async (e) => {
         if(e.target.value === '') return;
         const result = await search(e.target.value);
