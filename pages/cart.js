@@ -8,9 +8,12 @@ import {createCheckout, getPreference} from "../services/productService";
 import React, {useEffect, useState} from "react";
 import MercadoPago from "@/components/mercadoPago/MercadoPago";
 import Loading from "@/components/utils/Loading";
+import {getSession} from "next-auth/client";
+import getMyShopping from "../services/shoppingService";
+import {getPoints} from "../services/walletService";
 
 
-function CartPage() {
+function CartPage({myPoints}) {
   const pageTitle = `Cart | ${process.env.siteTitle}`  
   const [cart, checkoutUrl] = useCartContext()
   const [preference, setPreference] = useState();
@@ -63,9 +66,14 @@ function CartPage() {
                                 <>
                                     <a onClick={preparePreference}
                                        aria-label="checkout-products"
-                                       className="bg-blue-500 text-white text-lg font-primary font-semibold pt-2 pb-1 leading-relaxed flex cursor-pointer
+                                       className="w-1/2 bg-blue-500 text-white text-lg font-primary font-semibold pt-2 pb-1 leading-relaxed flex cursor-pointer
                                                   justify-center items-center focus:ring-1 focus:ring-palette-light focus:outline-none w-full hover:bg-blue-600 rounded-sm"
-                                    >Generar Pago de Meracado Pago</a>
+                                    >Meracado Pago</a>
+                                    <a onClick={preparePreference}
+                                       aria-label="checkout-products"
+                                       className="w-1/2 bg-gradient-to-r from-blue-900 to-blue-500 text-white text-lg font-primary font-semibold pt-2 pb-1 leading-relaxed flex cursor-pointer
+                                                  justify-center items-center focus:ring-1 focus:ring-palette-light focus:outline-none w-full hover:bg-blue-600 rounded-sm"
+                                    >Tarjeta de Puntos. Saldo: {myPoints}</a>
                                 </>
                         }
                         {
@@ -95,3 +103,13 @@ function CartPage() {
 }
 
 export default CartPage
+
+export async function getServerSideProps(context) {
+    const session = await getSession(context)
+    const myPoints = await getPoints(session.user.username);
+    return {
+        props: {
+            myPoints
+        },
+    }
+}
