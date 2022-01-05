@@ -1,6 +1,6 @@
 
 export async function findAll() {
-    const fetchUrl = `http://localhost:8888/eComm/checkout`;
+    const fetchUrl = `${process.env.BACKEND_SERVICE}/checkout`;
     const fetchOptions = {
         endpoint: fetchUrl,
         method: "GET",
@@ -21,7 +21,7 @@ export async function findAll() {
 }
 
 export async function getById(id) {
-    const fetchUrl = `http://localhost:8888/eComm/checkout/${id}`;
+    const fetchUrl = `${process.env.BACKEND_SERVICE}/checkout/${id}`;
     const fetchOptions = {
         endpoint: fetchUrl,
         method: "GET",

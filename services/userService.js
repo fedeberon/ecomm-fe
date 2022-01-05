@@ -1,7 +1,7 @@
 import axios from "axios";
 
 export async function save(user) {
-    const fetchUrl = `http://localhost:8888/eComm/user`;
+    const fetchUrl = `${process.env.BACKEND_SERVICE}/user`;
 
     try {
         let response = await axios.post(fetchUrl, user);
@@ -13,7 +13,7 @@ export async function save(user) {
 
 
 export async function login(credentials) {
-    const fetchUrl = `http://localhost:8888/eComm/user/login`;
+    const fetchUrl = `${process.env.BACKEND_SERVICE}/user/login`;
 
     try {
         let response = await axios.post(fetchUrl, credentials);
@@ -24,7 +24,7 @@ export async function login(credentials) {
 }
 
 export async function findAll() {
-    const fetchUrl = `http://localhost:8888/eComm/user`;
+    const fetchUrl = `${process.env.BACKEND_SERVICE}/user`;
 
     try {
         let response = await axios.get(fetchUrl);
@@ -35,7 +35,7 @@ export async function findAll() {
 }
 
 export async function getByUsername(username) {
-    const fetchUrl = `http://localhost:8888/eComm/user/${username}`;
+    const fetchUrl = `${process.env.BACKEND_SERVICE}/user/${username}`;
     try {
         let response = await axios.get(fetchUrl);
 
