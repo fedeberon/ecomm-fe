@@ -2,7 +2,7 @@ import {getWalletUser} from "../../../services/walletService";
 import { getSession } from "next-auth/client";
 import {useEffect} from "react";
 import PageTitle from "@/components/PageTitle";
-import WalletOfUser from "@/components/Wallet";
+import WalletOfUser from "./../../../components/wallet";
 
 const Wallet = ({walletOfUser}) => {
 
