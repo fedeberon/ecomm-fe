@@ -1,5 +1,9 @@
 import { useState } from "react";
 import { save } from "../services/productService";
+import {NotificationManager} from 'react-notifications';
+import 'react-notifications/lib/notifications.css';
+
+
 
  const useForm = (initialForm, validateForm) => {
   const [form, setForm] = useState(initialForm);
@@ -39,20 +43,22 @@ import { save } from "../services/productService";
 
 
     if (Object.keys(errors).length === 0) {
-
       save(form).then((result) => {
-
-        if (result.status === 202) {
-          // router.push("/");
-          alert("Los datos fueron guardados correctamente")
+        if (result.data.hasOwnProperty("name")) {
+          NotificationManager.info('El articulo: ' +'\"'+ form.name +'\"'+ "se cargo correctamente", 'Administracion de productos' , 1000);
           setForm(initialForm);
+        }else{
+          NotificationManager.info(result.status +'No fue posible cargar el articulo: ' +'\"'+ form.name +'\"', 'Administracion de productos' , 1000)
         }
-      });
-      alert("enviando fomulario");
+
+      });   
+
     } 
-    
+
     else {
+
       return;
+
     }
   };
 
