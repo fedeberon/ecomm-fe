@@ -26,7 +26,7 @@ const UploadFile = ({isOpen, setIsOpen, folder}) => {
             const formData = new FormData();
             formData.append("file", file);
             formData.append("folder", folder);
-            axios.post("http://localhost:8888/eComm/file/upload", formData)
+            axios.post("https://vps-2124680-x.dattaweb.com:8888/eComm/file/upload", formData)
                 .then(resp => {
                     return window.location.href = '/products/' + folder
                 }).catch(error => {
