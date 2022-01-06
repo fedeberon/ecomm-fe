@@ -1,4 +1,5 @@
 
+import { NotificationContainer } from "react-notifications";
 import useForm from "../../hooks/useForm";
 
 
@@ -61,6 +62,8 @@ const NewProduct = () => {
 
 
     return (
+    <>
+            <NotificationContainer/>
             <div className="flex justify-center">
                     <form className="w-full max-w-lg" onSubmit={handleSubmit}>
                         <div className="flex flex-wrap -mx-3 mb-6">
@@ -219,7 +222,7 @@ const NewProduct = () => {
                         <p className={`text-red-500 text-xs italic ${Object.keys(errors).length === 0 ? "invisible": "" }`}>Complete los campos.</p>
                     </form>
             </div>
-    )
+     </>)
 }
 
 export default NewProduct;
