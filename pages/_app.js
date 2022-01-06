@@ -1,7 +1,7 @@
 import Layout from '@/components/Layout'
 import SEO from '@/components/SEO'
 import '@/styles/globals.css'
-import {Provider} from 'next-auth/client'
+import {Provider, session} from 'next-auth/client'
 
 export default function MyApp({ Component, pageProps }) {
           return (
@@ -9,7 +9,7 @@ export default function MyApp({ Component, pageProps }) {
               <SEO
                 title={process.env.siteTitle}
               />
-                <Provider session={pageProps.session}>
+                <Provider session={session}>
                     <Component {...pageProps} />
                 </Provider>
             </Layout>
