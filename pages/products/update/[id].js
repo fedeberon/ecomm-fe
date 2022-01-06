@@ -1,17 +1,14 @@
 import {getProduct} from "../../../services/productService";
 import useForm from "../../../hooks/useForm";
-import {NotificationContainer, NotificationManager} from 'react-notifications';
+import {NotificationContainer} from 'react-notifications';
 import 'react-notifications/lib/notifications.css';
 import {  useState } from "react";
 /*https://www.npmjs.com/package/react-notifications*/
 
 
 const Update = ({product}) => {
-
-    console.log(product)
     
     const validationsForm = (form) =>{
-        console.log("Entro a valitacions")
         let errors ={};
 
         if (!form.name.trim()){
