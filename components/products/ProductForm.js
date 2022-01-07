@@ -8,6 +8,7 @@ import 'react-notifications/lib/notifications.css';
 import {useSession} from "next-auth/client";
 import Link from "next/link";
 import {useRouter} from "next/router";
+import { useEffect } from 'react/cjs/react.development';
 
 
 function ProductForm({ title, mainImg, id, images, price }) {
@@ -15,8 +16,8 @@ function ProductForm({ title, mainImg, id, images, price }) {
   const isLoading = useCartContext()[2]
   const addToCart = useAddToCartContext()
   const [openUploadFile, setOpenUploadFile] = useState(false);
-  const [session, loading] = useSession()
   const router = useRouter()
+  const [session, loading] = useSession()
 
   const atcBtnStyle = isLoading ?
     `pt-3 pb-2 bg-palette-primary text-white w-full mt-2 rounded-sm font-primary font-semibold text-xl flex 
@@ -88,7 +89,8 @@ function ProductForm({ title, mainImg, id, images, price }) {
 
         </div>
         {
-          session
+                session?.user?.role?.includes("ADMIN")
+          
             ?
               <>
                 <a

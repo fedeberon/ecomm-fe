@@ -7,14 +7,14 @@ import {faShoppingCart} from '@fortawesome/free-solid-svg-icons'
 import logo from '/images/logo.png';
 import UserSession from "@/components/users/UserSession";
 import Index from "./admin";
-import {getSession, useSession} from "next-auth/client";
+import {useSession} from "next-auth/client";
+
 import { getServerSideProps } from 'pages/login'
 
 function Nav() {
   const cart = useCartContext()[0]
   const [cartItems, setCartItems] = useState(0)
   const [session, loading] = useSession()
-
 
   useEffect(() => {
     let numItems = 0
