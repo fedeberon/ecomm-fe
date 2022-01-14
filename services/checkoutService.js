@@ -1,6 +1,6 @@
 
 export async function findAll() {
-    const fetchUrl = `${process.env.BACKEND_SERVICE}/checkout`;
+    const fetchUrl = `t/checkout`;
     const fetchOptions = {
         endpoint: fetchUrl,
         method: "GET",
