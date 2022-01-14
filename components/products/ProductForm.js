@@ -1,14 +1,12 @@
 import { useState } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import {faShoppingCart, faCloudUploadAlt, faArrowLeft, faEdit} from '@fortawesome/free-solid-svg-icons'
+import { faCloudUploadAlt, faEdit} from '@fortawesome/free-solid-svg-icons'
 import { useCartContext, useAddToCartContext } from '@/context/Store'
 import UploadFile from "@/components/products/UploadFile";
 import {NotificationContainer, NotificationManager} from 'react-notifications';
 import 'react-notifications/lib/notifications.css';
 import {useSession} from "next-auth/client";
-import Link from "next/link";
 import {useRouter} from "next/router";
-import { useEffect } from 'react/cjs/react.development';
 
 
 function ProductForm({ title, mainImg, id, images, price }) {
@@ -111,6 +109,8 @@ function ProductForm({ title, mainImg, id, images, price }) {
                 >
                   Modificar Datos
                   <FontAwesomeIcon icon={faEdit} className="w-5 ml-2" />
+
+                  
                 </a>
 
                 <UploadFile
