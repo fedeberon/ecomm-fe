@@ -2,9 +2,9 @@ import BackToProductButton from '@/components/products/BackToProductButton'
 import ProductInfo from '@/components/products/ProductInfo'
 import ProductForm from '@/components/products/ProductForm'
 import logo from "../../images/default.jpeg";
-import {useEffect} from "react";
 
-function ProductDetails({ productData }) {
+
+function ProductDetails({ productData}) {
     const defaultImage =
         {
             "url": "default.jpeg",

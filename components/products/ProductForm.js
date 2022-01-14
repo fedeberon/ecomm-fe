@@ -1,12 +1,11 @@
 import { useState } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import {faShoppingCart, faCloudUploadAlt, faArrowLeft, faEdit} from '@fortawesome/free-solid-svg-icons'
+import { faCloudUploadAlt, faEdit} from '@fortawesome/free-solid-svg-icons'
 import { useCartContext, useAddToCartContext } from '@/context/Store'
 import UploadFile from "@/components/products/UploadFile";
 import {NotificationContainer, NotificationManager} from 'react-notifications';
 import 'react-notifications/lib/notifications.css';
 import {useSession} from "next-auth/client";
-import Link from "next/link";
 import {useRouter} from "next/router";
 
 
@@ -15,8 +14,8 @@ function ProductForm({ title, mainImg, id, images, price }) {
   const isLoading = useCartContext()[2]
   const addToCart = useAddToCartContext()
   const [openUploadFile, setOpenUploadFile] = useState(false);
-  const [session, loading] = useSession()
   const router = useRouter()
+  const [session, loading] = useSession()
 
   const atcBtnStyle = isLoading ?
     `pt-3 pb-2 bg-palette-primary text-white w-full mt-2 rounded-sm font-primary font-semibold text-xl flex 
@@ -88,7 +87,8 @@ function ProductForm({ title, mainImg, id, images, price }) {
 
         </div>
         {
-          session
+                session?.user?.role?.includes("ADMIN")
+          
             ?
               <>
                 <a
@@ -109,6 +109,8 @@ function ProductForm({ title, mainImg, id, images, price }) {
                 >
                   Modificar Datos
                   <FontAwesomeIcon icon={faEdit} className="w-5 ml-2" />
+
+                  
                 </a>
 
                 <UploadFile
