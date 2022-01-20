@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 export async function getProducts() {
-    const fetchUrl = `https://vps-2124680-x.dattaweb.com:8888/eComm/product`;
+    const fetchUrl = `${process.env.BACKEND_SERVICE}/product`;
 
     const fetchOptions = {
         endpoint: fetchUrl,
@@ -23,7 +23,7 @@ export async function getProducts() {
 }
 
 export async function getProductsByType(type) {
-    const fetchUrl = `https://vps-2124680-x.dattaweb.com:8888/eComm/product/byType/${type}`;
+    const fetchUrl = `${process.env.BACKEND_SERVICE}/product/byType/${type}`;
 
     const fetchOptions = {
         endpoint: fetchUrl,
@@ -46,7 +46,7 @@ export async function getProductsByType(type) {
 
 
 export async function getProduct(id) {
-    const fetchUrl = `https://vps-2124680-x.dattaweb.com:8888/eComm/product/${id}`;
+    const fetchUrl = `${process.env.BACKEND_SERVICE}/product/${id}`;
 
     const fetchOptions = {
         endpoint: fetchUrl,
@@ -68,7 +68,7 @@ export async function getProduct(id) {
 }
 
 export async function save(product) {
-    const fetchUrl = `https://vps-2124680-x.dattaweb.com:8888/eComm/product`;
+    const fetchUrl = `${process.env.BACKEND_SERVICE}/product`;
     try {
         let response = await axios.post(fetchUrl, product);
         return response;
@@ -78,7 +78,7 @@ export async function save(product) {
 }
 
 export async function getPreference(cart) {
-    const fetchUrl = `https://vps-2124680-x.dattaweb.com:8888/eComm/payment/checkout`;
+    const fetchUrl = `${process.env.BACKEND_SERVICE}/payment/checkout`;
     let details = []
     cart.forEach(function(value, index, array) {
         let detail = {
@@ -96,7 +96,7 @@ export async function getPreference(cart) {
 }
 
 export async function callbackPayment(result) {
-    const fetchUrl = `https://vps-2124680-x.dattaweb.com:8888/eComm/payment/MP/callback` ;
+    const fetchUrl = `${process.env.BACKEND_SERVICE}/payment/MP/callback` ;
     try {
         let response = await axios.post(fetchUrl, result);
         return response.data;
@@ -107,7 +107,7 @@ export async function callbackPayment(result) {
 }
 
 export async function getCallback(id) {
-    const fetchUrl = `https://vps-2124680-x.dattaweb.com:8888/eComm/callback/${id}` ;
+    const fetchUrl = `${process.env.BACKEND_SERVICE}/callback/${id}` ;
     try {
         let response = await axios.get(fetchUrl);
         return response.data;
@@ -119,7 +119,7 @@ export async function getCallback(id) {
 
 
 export async function createCheckout(cart){
-    const fetchUrl = `https://vps-2124680-x.dattaweb.com:8888/eComm/checkout`;
+    const fetchUrl = `${process.env.BACKEND_SERVICE}/checkout`;
     let details = []
     cart.forEach(function(value, index, array) {
         let detail = {
@@ -137,7 +137,7 @@ export async function createCheckout(cart){
 }
 
 export async function search(value) {
-    const fetchUrl = `https://vps-2124680-x.dattaweb.com:8888/eComm/product/search/${value}`;
+    const fetchUrl = `${process.env.BACKEND_SERVICE}/product/search/${value}`;
     try {
         const response = await axios.get(fetchUrl);
         return response.data;
@@ -149,7 +149,7 @@ export async function search(value) {
 export async function filterProductsByBrands(brands) {
     console.log("brands", brands);
     debugger
-    const fetchUrl = `https://vps-2124680-x.dattaweb.com:8888/eComm/product/search/brands/`;
+    const fetchUrl = `${process.env.BACKEND_SERVICE}/search/brands/`;
     try {
         const response = await axios.post(fetchUrl, brands);
         console.log("response", response);
