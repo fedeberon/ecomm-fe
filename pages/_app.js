@@ -3,7 +3,6 @@ import SEO from '@/components/SEO'
 import '@/styles/globals.css'
 import { Provider } from 'next-auth/client'
 
-
 export default function MyApp({ Component, pageProps }) {
 
           return (
@@ -14,6 +13,7 @@ export default function MyApp({ Component, pageProps }) {
                     />
                           <Component {...pageProps} />
                   </Layout>
+
                 </Provider>
           )
 }
