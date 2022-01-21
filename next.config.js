@@ -15,6 +15,6 @@ module.exports = withPWA({
     twitterHandle: '@dulcebebe'
   },
   images: {
-    domains: ['localhost'],
+    domains: ['https://vps-2124680-x.dattaweb.com/'],
   },
 })

@@ -1,6 +1,6 @@
 
 export async function getPersonByCUIT(CUIT) {
-    const fetchUrl = `http://localhost:8888/eComm/billing/` + CUIT;
+    const fetchUrl = `${process.env.BACKEND_SERVICE}/billing/` + CUIT;
     const fetchOptions = {
         endpoint: fetchUrl,
         method: "GET",

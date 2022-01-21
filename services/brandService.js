@@ -1,7 +1,7 @@
 import axios from "axios";
 
 export async function findAll() {
-    const fetchUrl = `http://localhost:8888/eComm/brand`;
+    const fetchUrl = `${process.env.BACKEND_SERVICE}/brand`;
     const fetchOptions = {
         endpoint: fetchUrl,
         method: "GET",
@@ -23,7 +23,7 @@ export async function findAll() {
 
 
 export async function save(brand) {
-    const fetchUrl = `http://localhost:8888/eComm/brand`;
+    const fetchUrl = `${process.env.BACKEND_SERVICE}/brand`;
     try {
         let response = await axios.post(fetchUrl, brand);
         return response;
