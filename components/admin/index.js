@@ -8,8 +8,8 @@ const Index = ({session}) => {
                 session?.user?.role?.includes("ADMIN")
                     ?
                     <Link href="/admin">
-                        <a className=" cursor-pointer">
-                            <h1 className="flex no-underline">
+                        <a className=" text-smw block mt-4 lg:inline-block lg:mt-0 mr-4">
+                            <h1 >
                                   <span className="text-xl font-primary font-bold tracking-tight pt-1">
                                    Administracion
                                   </span>
