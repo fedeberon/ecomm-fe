@@ -18,7 +18,7 @@ const UserSession = ({session}) => {
     if (session) {
         return (
                 <div className="relative inline-block text-left">
-                        <div>
+                        <div className="text-smw block mt-4 lg:relative lg:-mt-2">
                             <button type="button"
                                     onClick={showOptionsSession}
                                     className="inline-flex justify-center w-full rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-indigo-500"
@@ -34,9 +34,9 @@ const UserSession = ({session}) => {
                         </div>
                         <div
                             ref={ref}
-                            className={`${isComponentVisible ? "" : "hidden"} origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none`}
+                            className={`${isComponentVisible ? "" : "hidden"}  absolute mt-2 w-46 lg:w-56 lg:right-0 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none`}
                             role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabIndex="-1">
-                            <div className="py-1" role="none">
+                            <div className="py-1 " role="none">
                                 <Link href="/shoping/mine">
                                 <a href="#" className="text-gray-700 block px-4 py-2 text-sm" role="menuitem"
                                    tabIndex="-1" id="menu-item-0">Mis Compras</a>
@@ -63,7 +63,7 @@ const UserSession = ({session}) => {
     } else {
         return (
                 <Link href="/api/auth/signin">
-                    <a className="relative" aria-label="login">
+                    <a className="mt-2 lg:inline-block lg:mt-0 mr-4" aria-label="login">
                         <FontAwesomeIcon className="text-palette-primary w-6 m-auto" icon={faUserCircle} />
                     </a>
                 </Link>

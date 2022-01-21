@@ -45,7 +45,7 @@ function ProductListings({ products }) {
               <input type="search" className="w-2/3 ml-12 bg-purple-white shadow rounded border-0 p-3"
                      placeholder="Buscar"/>
 
-              <div className={"flex"}>
+              <div className="flex">
                   <div className={`rounded-md bg-white shadow-lg py-10 pl-4 px-20 border border-t-4 border-gray-600 shadow-2xl
                     inset-y-0 left-0 transform  transition duration-200 ease-in-out
                       ${filter ? "translate-x-0  w-1/4" : "-translate-x-full" }`}>
