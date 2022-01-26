@@ -189,20 +189,8 @@ const Detail = ({bill}) => {
 
 }
 
-export async function getStaticPaths() {
-    return {
-        paths: [
-            {
-                params: {
-                    id: "2"
-                }
-            }
-        ],
-        fallback:  true,
-    };
-}
 
-export async function getStaticProps({ params }) {
+export async function getServerSideProps({ params }) {
     const bill = await getBillsById(params.id);
     return {
         props: {
