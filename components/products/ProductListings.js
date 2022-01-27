@@ -1,11 +1,13 @@
 import ProductCard from '@/components/products/ProductCard'
 import {useState} from "react";
 import FilterComponent from '../filter/FilterComponent';
+import {search} from "../../services/productService"
+
 
 function ProductListings({ products }) {
   const [filter, isShowFilter] = useState(false)
   const [productsToShow, setProductsToShow] = useState(products)
-
+ 
   const open = () => {
     isShowFilter(!filter)
   }
@@ -14,6 +16,12 @@ function ProductListings({ products }) {
         isShowFilter(false)
     }
 
+    const searchValue = async (e) => {
+      if(e.target.value.trim()==='')  return;
+      const result = await search(e.target.value);
+      if(result.length==0) {setProductsToShow(products); return};
+      setProductsToShow(result); 
+} 
   return (
           <>
                   <button className="text-purple-500
@@ -43,7 +51,7 @@ function ProductListings({ products }) {
               </button>
 
               <input type="search" className="w-2/3 ml-12 bg-purple-white shadow rounded border-0 p-3"
-                     placeholder="Buscar"/>
+                     placeholder="Buscar" onChange={searchValue}/>
 
               <div className="flex">
                   <div className={`rounded-md bg-white shadow-lg py-10 pl-4 px-20 border border-t-4 border-gray-600 shadow-2xl
