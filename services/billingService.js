@@ -15,7 +15,7 @@ export async function getBilling(user, checkout, type, session) {
         "comments" : "Comentarios ...",
         "checkoutId": checkout.id
     }
-    const fetchUrl = `https://vps-2124680-x.dattaweb.com:8888/eComm/billing`;
+    const fetchUrl = `${process.env.NEXT_PUBLIC_BACKEND_SERVICE}/billing`;
 
 
     try {
@@ -31,7 +31,7 @@ export async function getBilling(user, checkout, type, session) {
 
 
 export async function getBills() {
-    const fetchUrl = `https://vps-2124680-x.dattaweb.com:8888/eComm/billing`;
+    const fetchUrl = `${process.env.NEXT_PUBLIC_BACKEND_SERVICE}/billing`;
     const fetchOptions = {
         endpoint: fetchUrl,
         method: "GET",
@@ -51,7 +51,7 @@ export async function getBills() {
 }
 
 export async function getBillsById(id) {
-    const fetchUrl = `https://vps-2124680-x.dattaweb.com:8888/eComm/billing/` + id;
+    const fetchUrl = `${process.env.NEXT_PUBLIC_BACKEND_SERVICE}/billing/` + id;
     const fetchOptions = {
         endpoint: fetchUrl,
         method: "GET",
@@ -72,7 +72,7 @@ export async function getBillsById(id) {
 
 
 export async function findAllByUsername(username) {
-    const fetchUrl = `https://vps-2124680-x.dattaweb.com:8888/eComm/billing/user/` + username;
+    const fetchUrl = `${process.env.NEXT_PUBLIC_BACKEND_SERVICE}/billing/user/` + username;
     const fetchOptions = {
         endpoint: fetchUrl,
         method: "GET",
