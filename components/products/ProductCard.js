@@ -35,7 +35,7 @@ function ProductCard({ product }) {
         <div className="h-48 relative">
           <div>
             <span
-                className="absolute py-2 px-8 text-sm text-white top-0 right-0 bg-red-600 rounded-md transform translate-x-5 -translate-y-5 shadow-xl">Promo</span>
+                className="absolute py-2 px-8 text-sm text-white top-0 right-4 bg-red-600 rounded-md transform translate-x-5 -translate-y-5 shadow-xl">Promo</span>
           </div>
           <div className="font-primary text-palette-primary text-2xl pt-4 px-4 font-semibold">
             {title}
