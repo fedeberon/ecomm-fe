@@ -4,9 +4,9 @@ const Admin = () => {
     return (
 
             <div className="antialiased bg-gray-600  font-ssans flex flex-wrap">
-            <div className="mx-auto m-8 space-y-6 w-1/3">
+            <div className="flex flex-wrap w-96 container mx-auto">
                 <Link href="/bills">
-                    <div className="pl-1 w-96 h-20 bg-green-400 rounded-lg shadow-md cursor-pointer">
+                    <div className="pl-1 my-4 w-96 h-20 bg-green-400 rounded-lg shadow-md cursor-pointer">
                         <div className="flex w-full h-full py-2 px-4 bg-white rounded-lg justify-between">
                             <div className="my-auto">
                                 <p className="font-bold">Facturaci&oacute;n</p>
@@ -23,7 +23,7 @@ const Admin = () => {
                     </div>
                 </Link>
                 <Link href="/stock">
-                    <div className="pl-1 w-96 h-20 bg-blue-500 rounded-lg shadow-md cursor-pointer">
+                    <div className="pl-1 my-4 w-96 h-20 bg-blue-500 rounded-lg shadow-md cursor-pointer">
                         <div className="flex w-full h-full py-2 px-4 bg-white rounded-lg justify-between">
                             <div className="my-auto">
                                 <p className="font-bold">Stock</p>
@@ -40,7 +40,7 @@ const Admin = () => {
                     </div>
                 </Link>
                 <Link href="/products">
-                    <div className="pl-1 w-96 h-20 bg-yellow-400 rounded-lg shadow-md cursor-pointer">
+                    <div className="pl-1 my-4 w-96 h-20 bg-yellow-400 rounded-lg shadow-md cursor-pointer">
                         <div className="flex w-full h-full py-2 px-4 bg-white rounded-lg justify-between">
                             <div className="my-auto">
                                 <p className="font-bold">Articulos</p>
@@ -57,7 +57,7 @@ const Admin = () => {
                     </div>
                 </Link>
                 <Link href="/users">
-                    <div className="pl-1 w-96 h-20 bg-yellow-400 rounded-lg shadow-md cursor-pointer">
+                    <div className="pl-1 my-4 w-96 h-20 bg-yellow-400 rounded-lg shadow-md cursor-pointer">
                         <div className="flex w-full h-full py-2 px-4 bg-white rounded-lg justify-between">
                             <div className="my-auto">
                                 <p className="font-bold">Usuarios</p>
@@ -74,9 +74,9 @@ const Admin = () => {
                     </div>
                 </Link>
             </div>
-            <div className="mx-auto m-8 space-y-6 w-1/3">
+            <div className="flex flex-wrap w-96 container mx-auto">
                     <Link href="/checkout">
-                        <div className="pl-1 w-96 h-20 bg-green-400 rounded-lg shadow-md cursor-pointer">
+                        <div className="pl-1 my-4 w-96 h-20 bg-green-400 rounded-lg shadow-md cursor-pointer">
                             <div className="flex w-full h-full py-2 px-4 bg-white rounded-lg justify-between">
                                 <div className="my-auto">
                                     <p className="font-bold">Checkout</p>
@@ -93,7 +93,7 @@ const Admin = () => {
                         </div>
                     </Link>
                     <Link href="/brand">
-                        <div className="pl-1 w-96 h-20 bg-blue-500 rounded-lg shadow-md cursor-pointer">
+                        <div className="pl-1 my-4 w-96 h-20 bg-blue-500 rounded-lg shadow-md cursor-pointer">
                             <div className="flex w-full h-full py-2 px-4 bg-white rounded-lg justify-between">
                                 <div className="my-auto">
                                     <p className="font-bold">Marcas</p>
@@ -110,7 +110,7 @@ const Admin = () => {
                         </div>
                     </Link>
                     <Link href="/products">
-                        <div className="pl-1 w-96 h-20 bg-yellow-400 rounded-lg shadow-md cursor-pointer">
+                        <div className="pl-1 my-4 w-96 h-20 bg-yellow-400 rounded-lg shadow-md cursor-pointer">
                             <div className="flex w-full h-full py-2 px-4 bg-white rounded-lg justify-between">
                                 <div className="my-auto">
                                     <p className="font-bold">EN PROGRESO</p>
@@ -127,7 +127,7 @@ const Admin = () => {
                         </div>
                     </Link>
                     <Link href="/users">
-                        <div className="pl-1 w-96 h-20 bg-yellow-400 rounded-lg shadow-md cursor-pointer">
+                        <div className="pl-1 my-4 w-96 h-20 bg-yellow-400 rounded-lg shadow-md cursor-pointer">
                             <div className="flex w-full h-full py-2 px-4 bg-white rounded-lg justify-between">
                                 <div className="my-auto">
                                     <p className="font-bold">EN PROGRESO</p>

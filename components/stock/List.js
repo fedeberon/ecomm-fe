@@ -2,6 +2,7 @@ import Link from "next/link";
 import Moment from "react-moment";
 
 const List = ({stock}) => {
+    console.log(stock)
     return (
         <>
             <div className="flex flex-col">
@@ -12,16 +13,13 @@ const List = ({stock}) => {
                                 <thead className="bg-gray-50">
                                 <tr>
                                     <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                        Id
+                                        Orden
                                     </th>
                                     <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500  uppercase tracking-wider">
                                         Articulo
                                     </th>
                                     <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                        Tipo
-                                    </th>
-                                    <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                        Referencia
+                                        ID Producto
                                     </th>
                                     <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                         Cantidad
@@ -38,7 +36,7 @@ const List = ({stock}) => {
                                         <tr>
                                             <td className="px-6 py-4 whitespace-nowrap">
                                                 <div className="text-sm text-gray-900">
-                                                    #{item.id}
+                                                    #{item.order}
                                                 </div>
                                             </td>
 
@@ -47,13 +45,8 @@ const List = ({stock}) => {
                                                     {item.product.name}
                                                 </div>
                                             </td>
-                                            <td className="px-6 py-4 whitespace-nowrap">
-                                                <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
-                                                     {item.stockType}
-                                                </span>
-                                            </td>
                                             <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                                # {item.referenceId}
+                                                # {item.id}
                                             </td>
                                             <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                                                 <div className="text-sm text-gray-900">

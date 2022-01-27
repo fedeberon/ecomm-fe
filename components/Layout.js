@@ -6,7 +6,6 @@ function Layout({ children }) {
   
   return (
     <CartProvider>
-      <div className="flex flex-col justify-between min-h-screen">
         <Nav />
 
         <main>
@@ -14,7 +13,6 @@ function Layout({ children }) {
         </main>
 
         <Footer />
-      </div>
     </CartProvider>
   )
 }

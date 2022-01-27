@@ -127,7 +127,6 @@ const Billing = ({isShowing, checkout, type}) => {
                         <></>
                 }
             </div>
-        }
 
         </>
     );
