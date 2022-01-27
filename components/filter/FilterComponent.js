@@ -1,6 +1,7 @@
 const FilterComponent = ({ filterText, onFilter, onClear }) => (
     <>
         <input
+        className="w-full"
             id="search"
             type="text"
             placeholder="Buscar por id"
