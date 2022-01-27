@@ -43,3 +43,5 @@ yarn-error.log*
 **/public/workbox-*.js.map
 **/public/worker-*.js.map
 .vscode/settings.json
+
+package-lock.json

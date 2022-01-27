@@ -1,5 +1,5 @@
 export async function getWalletUser(username) {
-    const fetchUrl = `http://localhost:8888/eComm/user/wallet/${username}`
+    const fetchUrl = `${process.env.BACKEND_SERVICE}/user/wallet/${username}`
 
     const fetchOptions = {
         endpoint: fetchUrl,
@@ -20,7 +20,7 @@ export async function getWalletUser(username) {
 }
 
 export async function getPoints(username) {
-    const fetchUrl = `http://localhost:8888/eComm/user/wallet/points/${username}`
+    const fetchUrl = `${process.env.BACKEND_SERVICE}/user/wallet/points/${username}`
 
     const fetchOptions = {
         endpoint: fetchUrl,
