@@ -29,7 +29,7 @@ function Nav() {
   }, [cart]);
 
   return (
-    <header className=" border-b border-palette-lighter sticky top-0 z-20 bg-white">
+    <header className="border-b border-palette-lighter sticky top-0 z-20 bg-white">
       <div className="flex items-center  flex-wrap mx-2 lg:flex lg:flex-nowrap lg:px-12 lg:pl-1	 lg:max-w-screen-2xl xl:pr-20 xl:pl-4">
         <div className="flex flex-row items-center">
           <img src={logo.src} className={"w-16 lg:w-28"} />
@@ -87,7 +87,7 @@ function Nav() {
             </a>
           </Link>
 
-          <Link href="/">
+          <Link href="/shop/Puericultura">
             <a className="text-smw block mt-4 lg:inline-block lg:mt-0 mr-4">
               <h1>
                 <span className="text-xl font-primary font-bold tracking-tight pt-1">
@@ -97,7 +97,7 @@ function Nav() {
             </a>
           </Link>
 
-          <Link href="/">
+          <Link href="/shop/Lactancia">
             <a className="text-smw block mt-4 lg:inline-block lg:mt-0 mr-4">
               <h1>
                 <span className="text-xl font-primary font-bold tracking-tight pt-1">
