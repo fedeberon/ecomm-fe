@@ -30,7 +30,7 @@ function Nav() {
 
   return (
     <header className="border-b border-palette-lighter sticky top-0 z-20 bg-white">
-      <div className="flex items-center  flex-wrap mx-2 lg:flex lg:flex-nowrap lg:px-12 lg:max-w-screen-2xl xl:px-20">
+      <div className="flex items-center  flex-wrap mx-2 lg:flex lg:flex-nowrap lg:px-12 lg:pl-1	 lg:max-w-screen-2xl xl:pr-20 xl:pl-4">
         <div className="flex flex-row items-center">
           <img src={logo.src} className={"w-16 lg:w-28"} />
         <div className="block lg:hidden">
@@ -40,13 +40,13 @@ function Nav() {
           </button>
         </div>
         <Link href="/cart" passHref>
-          <a className=" lg:absolute lg:top-10 lg:right-8" aria-label="cart">
+          <a className="contents lg:inline lg:absolute lg:top-10 lg:right-8" aria-label="cart">
             <FontAwesomeIcon
               className="text-palette-primary w-6 m-auto"
               icon={faShoppingCart}
             />
             {cartItems === 0 ? null : (
-              <div className="absolute top-0 right-0 text-xs bg-yellow-300 text-gray-900 font-semibold rounded-full py-1 px-2 transform translate-x-10 -translate-y-3">
+              <div className="relative right-8 lg:right-2 lg:-top-6 text-xs bg-yellow-300 text-gray-900 font-semibold rounded-full py-1 px-2 transform translate-x-10 -translate-y-3">
                 {cartItems}
               </div>
             )}
@@ -87,7 +87,7 @@ function Nav() {
             </a>
           </Link>
 
-          <Link href="/">
+          <Link href="/shop/Puericultura">
             <a className="text-smw block mt-4 lg:inline-block lg:mt-0 mr-4">
               <h1>
                 <span className="text-xl font-primary font-bold tracking-tight pt-1">
@@ -97,7 +97,7 @@ function Nav() {
             </a>
           </Link>
 
-          <Link href="/">
+          <Link href="/shop/Lactancia">
             <a className="text-smw block mt-4 lg:inline-block lg:mt-0 mr-4">
               <h1>
                 <span className="text-xl font-primary font-bold tracking-tight pt-1">
