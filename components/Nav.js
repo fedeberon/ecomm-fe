@@ -40,13 +40,13 @@ function Nav() {
           </button>
         </div>
         <Link href="/cart" passHref>
-          <a className=" lg:absolute lg:top-10 lg:right-8" aria-label="cart">
+          <a className="contents lg:inline lg:absolute lg:top-10 lg:right-8" aria-label="cart">
             <FontAwesomeIcon
               className="text-palette-primary w-6 m-auto"
               icon={faShoppingCart}
             />
             {cartItems === 0 ? null : (
-              <div className="absolute top-0 right-0 text-xs bg-yellow-300 text-gray-900 font-semibold rounded-full py-1 px-2 transform translate-x-10 -translate-y-3">
+              <div className="relative right-8 lg:right-2 lg:-top-6 text-xs bg-yellow-300 text-gray-900 font-semibold rounded-full py-1 px-2 transform translate-x-10 -translate-y-3">
                 {cartItems}
               </div>
             )}
