@@ -29,8 +29,8 @@ function Nav() {
   }, [cart]);
 
   return (
-    <header className="container mx-auto border-b border-palette-lighter sticky top-0 z-20 bg-white">
-      <div className="flex items-center  flex-wrap mx-2 lg:flex lg:flex-nowrap lg:px-12 lg:max-w-screen-2xl xl:px-20">
+    <header className=" border-b border-palette-lighter sticky top-0 z-20 bg-white">
+      <div className="flex items-center  flex-wrap mx-2 lg:flex lg:flex-nowrap lg:px-12 lg:pl-1	 lg:max-w-screen-2xl xl:pr-20 xl:pl-4">
         <div className="flex flex-row items-center">
           <img src={logo.src} className={"w-16 lg:w-28"} />
         <div className="block lg:hidden">
