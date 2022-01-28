@@ -1,5 +1,5 @@
 import ProductCard from '@/components/products/ProductCard'
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import FilterComponent from '../filter/FilterComponent';
 import {search} from "../../services/productService"
 
@@ -8,7 +8,12 @@ function ProductListings({ products }) {
 
   const [filter, isShowFilter] = useState(false)
   const [productsToShow, setProductsToShow] = useState(products)
- 
+  useEffect(() => {
+    setProductsToShow(products)
+  }, products);
+  
+
+
   const open = () => {
     isShowFilter(!filter)
   }
