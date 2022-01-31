@@ -5,9 +5,7 @@ import logo from "../../images/default.jpeg";
 import {useEffect} from "react";
 
 function ProductCard({ product }) {
-  const title = product.name
-  const description = product.description
-  const price = product.price
+  const {title, description, price} = product;
 
   const defaultImage = {
         "url": "default.jpeg",

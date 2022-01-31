@@ -8,6 +8,7 @@ function ProductListings({ products }) {
 
   const [filter, isShowFilter] = useState(false)
   const [productsToShow, setProductsToShow] = useState(products)
+  
   useEffect(() => {
     setProductsToShow(products)
   }, products);
@@ -17,10 +18,6 @@ function ProductListings({ products }) {
   const open = () => {
     isShowFilter(!filter)
   }
-
-    const close = () => {
-        isShowFilter(false)
-    }
 
     const searchValue = async (e) => {
       if(e.target.value.trim()==='')  return;

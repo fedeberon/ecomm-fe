@@ -1,6 +1,5 @@
 export async function getWalletUser(username) {
     const fetchUrl = `${process.env.BACKEND_SERVICE}/user/wallet/${username}`
-
     const fetchOptions = {
         endpoint: fetchUrl,
         method: "GET",
