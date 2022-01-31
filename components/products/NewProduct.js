@@ -129,7 +129,10 @@ const NewProduct = () => {
                                     <option value="0">Seleccione</option>
                                     <option value="1">Jugueteria</option>
                                     <option value="2">Accesorios</option>
-                                </select>
+                                    <option value="3">Pa&ntilde;aleria</option>
+                                    <option value="4">Puericultura</option>
+                                    <option value="5">Lactancia</option>
+                                    </select>
                                 {errors.category &&  <p className={`text-red-500 text-xs italic`}>{errors.category}</p>}
                             </div>
                         </div>
