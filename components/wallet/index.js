@@ -2,8 +2,6 @@ import {useEffect, useState} from "react";
 
 
 const WalletOfUser = ({walletOfUser, user}) => {
-    const {user} = user;
-
     const [isWallet, setIsWallet] = useState(false);
     const [points, setPoints] = useState(0);
 
