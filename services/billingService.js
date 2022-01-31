@@ -15,7 +15,7 @@ export async function getBilling(user, checkout, type, session) {
         "comments" : "Comentarios ...",
         "checkoutId": checkout.id
     }
-    const fetchUrl = `${process.env.NEXT_PUBLIC_BACKEND_SERVICE}/billing`;
+    const fetchUrl = `${process.env.BACKEND_SERVICE}/billing`;
 
 
     try {
