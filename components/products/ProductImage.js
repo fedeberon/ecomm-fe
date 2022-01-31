@@ -5,7 +5,6 @@ import { faArrowLeft, faArrowRight } from '@fortawesome/free-solid-svg-icons'
 import logo  from '../../images/default.jpeg'
 
 function ProductImage({ images }) {
-
     const defaultImage =
         {
             "url": "Image 2021-08-10 at 11.20.24 (1).jpeg",
@@ -14,7 +13,7 @@ function ProductImage({ images }) {
         };
 
     const image = images && images.length != 0 ? images[0] : defaultImage
-    const [mainImg, setMainImg] = useState(image);
+    const [mainImg, setMainImg] = useState(images[0].link);
     const ref = useRef();
 
   function scroll(scrollOffset) {
@@ -25,7 +24,7 @@ function ProductImage({ images }) {
     <div className="w-full md:w-1/2 max-w-md border border-palette-lighter bg-white rounded shadow-lg">
       <div className="relative h-96">
         <Image
-          src={mainImg.link}
+          src={mainImg}
           layout="fill"
           className="transform duration-500 ease-in-out hover:scale-105"
         />
@@ -48,13 +47,14 @@ function ProductImage({ images }) {
               <button
                 key={index}
                 className="relative w-40 h-32 flex-shrink-0 rounded-sm "
-                onClick={() => setMainImg(imgItem)}
+               
               >
                 {
                   <Image
                       src={imgItem.link}
                       layout="fill"
                       className=""
+                      onClick={() => setMainImg(imgItem.link)}
                   />
                 }
               </button>

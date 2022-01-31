@@ -41,6 +41,6 @@ export async function getByUsername(username) {
 
         return response.data;
     } catch (error) {
-        throw new Error("Could not get users !");
+        throw new Error("Could not get users by username !");
     }
 }
