@@ -12,8 +12,8 @@ function ProductImage({ images }) {
             "main": false
         };
 
-    const image = images && images.length != 0 ? images[0] : defaultImage
-    const [mainImg, setMainImg] = useState(images[0].link);
+    const image = images && images.length != 0 ? images[0].link : defaultImage.link
+    const [mainImg, setMainImg] = useState(image);
     const ref = useRef();
 
   function scroll(scrollOffset) {
