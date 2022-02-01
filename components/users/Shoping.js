@@ -54,8 +54,8 @@ const Shopping = ({bills}) => {
                                     </thead>
                                     <tbody className="bg-white divide-y divide-gray-200">
                                     {
-                                        bills.map(bill =>
-                                            <tr>
+                                        bills.map((bill, index) =>
+                                            <tr key={index}>
                                                 <td className="px-6 py-4 whitespace-nowrap">
                                                     <div className="text-sm text-gray-900">
                                                         #{bill.id}
