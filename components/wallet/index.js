@@ -2,7 +2,8 @@ import {useEffect, useState} from "react";
 
 
 const WalletOfUser = ({walletOfUser, user}) => {
-    const {user} = user;
+
+    const {ofUser} = user;
 
     const [isWallet, setIsWallet] = useState(false);
     const [points, setPoints] = useState(0);
@@ -30,7 +31,7 @@ const WalletOfUser = ({walletOfUser, user}) => {
                   </div>
                   <div className='mt-5 flex justify-between items-center w-52'>
                       <span className='text-lg'> CUIL </span>
-                      <span>  {isWallet ? walletOfUser[0].user.cardId : user.username} </span>
+                      <span>  {isWallet ? walletOfUser[0].user.cardId : ofUser.username} </span>
                   </div>
                   <div className='flex justify-between mt-5 w-48 '>
                       <div>
@@ -39,7 +40,7 @@ const WalletOfUser = ({walletOfUser, user}) => {
                       </div>
                       <div>
                           <h3 className="text-xs"> Titular </h3>
-                          <p className="font-bold"> {isWallet ? walletOfUser[0].user.name : user.name }  {isWallet ? walletOfUser[0].user.lastName: ""} </p>
+                          <p className="font-bold"> {isWallet ? walletOfUser[0].user.name : ofUser.name }  {isWallet ? walletOfUser[0].user.lastName: ""} </p>
                       </div>
                   </div>
               </div>

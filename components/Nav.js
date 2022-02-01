@@ -55,10 +55,10 @@ function Nav() {
         </Link>
         <div
           id="menu"
-          className={`w-4/5 block flex-grow ${isShow ? "" : "hidden"} divide-y divide-y-reverse divide-gray-200 lg:flex lg:justify-around lg:w-auto`}
+          className={`w-4/5 block flex-grow ${isShow ? "" : "hidden"} divide-y divide-y-reverse divide-gray-200 lg:divide-none lg:flex lg:justify-around lg:w-auto`}
         >
           <Link href="/" >
-            <a className="text-smw border-b border-gray-200 block mt-4 lg:inline-block lg:mt-0 mr-4">
+            <a className="text-smw border-b border-gray-200 block mt-4 lg:inline-block lg:border-none lg:mt-0 mr-4">
               <h1>
                 <span className="text-xl font-primary font-bold tracking-tight pt-1">
                   Inicio
