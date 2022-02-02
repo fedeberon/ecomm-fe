@@ -40,8 +40,8 @@ const Products = ({products}) => {
                                 <tbody className="bg-white divide-y divide-gray-200">
 
                                 {
-                                    products.map(product =>
-                                        <tr>
+                                    products.map((product , index) =>
+                                        <tr key={index}> 
                                             <td className="px-6 py-4 whitespace-nowrap">
                                                 <div className="text-sm text-gray-900">
                                                     #{product.id}

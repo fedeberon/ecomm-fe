@@ -4,12 +4,12 @@ import {useEffect} from "react";
 import PageTitle from "@/components/PageTitle";
 import WalletOfUser from "../../../components/wallet/index";
 
-const Wallet = ({walletOfUser}) => {
+const Wallet = ({walletOfUser, user}) => {
 
     return (
         <div className="mx-auto max-w-6xl">
             <PageTitle text="Mi Billetera" />
-            <WalletOfUser walletOfUser={walletOfUser}/>
+            <WalletOfUser walletOfUser={walletOfUser} user={user}/>
         </div>
 
     )
@@ -22,7 +22,8 @@ export async function getServerSideProps(ctx) {
     const  walletOfUser  = await getWalletUser(user.user.username)
     return {
         props: {
-            walletOfUser
+            walletOfUser,
+            user
         }
     }
 }

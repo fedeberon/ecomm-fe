@@ -1,10 +1,14 @@
 import {useEffect, useState} from "react";
 
-const WalletOfUser = ({walletOfUser}) => {
 
+const WalletOfUser = ({walletOfUser, user}) => {
+    const [isWallet, setIsWallet] = useState(false);
     const [points, setPoints] = useState(0);
 
     useEffect(() => {
+
+        walletOfUser.length == 0 ? setIsWallet(false) : setIsWallet(true);
+
         setPoints(walletOfUser.reduce((a,v) =>  a = a + v.points , 0));
         }, [walletOfUser]);
 
@@ -24,7 +28,7 @@ const WalletOfUser = ({walletOfUser}) => {
                   </div>
                   <div className='mt-5 flex justify-between items-center w-52'>
                       <span className='text-lg'> CUIL </span>
-                      <span> {walletOfUser[0].user.cardId} </span>
+                      <span>  {isWallet ? walletOfUser[0].user.cardId : user.user.username} </span>
                   </div>
                   <div className='flex justify-between mt-5 w-48 '>
                       <div>
@@ -33,7 +37,7 @@ const WalletOfUser = ({walletOfUser}) => {
                       </div>
                       <div>
                           <h3 className="text-xs"> Titular </h3>
-                          <p className="font-bold"> {walletOfUser[0].user.name}  {walletOfUser[0].user.lastName} </p>
+                          <p className="font-bold"> {isWallet ? walletOfUser[0].user.name : user.user.name }  {isWallet ? walletOfUser[0].user.lastName: ""} </p>
                       </div>
                   </div>
               </div>
