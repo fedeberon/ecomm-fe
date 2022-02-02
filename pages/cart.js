@@ -106,6 +106,17 @@ export default CartPage
 
 export async function getServerSideProps(context) {
     const session = await getSession(context)
+
+    if(session == null) {
+        return {
+            redirect: {
+                permanent: false,
+                destination: "/login",
+            },
+            props:{},
+        };
+    }
+
     const myPoints = await getPoints(session.user.username);
     return {
         props: {
