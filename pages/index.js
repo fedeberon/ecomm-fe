@@ -4,7 +4,7 @@ import Carrusel from "@/components/Carrusel";
 
 function IndexPage({ products }) {
   return (
-    <div className="mx-auto max-w-full">
+    <div className=" max-w-full">
         <div className="flex justify-center">
             <Carrusel/>
         </div>

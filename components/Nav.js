@@ -30,35 +30,35 @@ function Nav() {
 
   return (
     <header className="border-b border-palette-lighter sticky top-0 z-20 bg-white">
-      <div className="flex items-center  flex-wrap mx-2 lg:flex lg:flex-nowrap lg:px-12 lg:max-w-screen-2xl xl:px-20">
+      <div className="flex items-center  flex-wrap mx-2 lg:flex lg:flex-nowrap lg:px-12	 lg:max-w-screen-2xl">
         <div className="flex flex-row items-center">
-          <img src={logo.src} className={"w-16 lg:w-28"} />
+          <img src={logo.src} className={"w-16 lg:w-24"} />
         <div className="block lg:hidden">
           <button onClick={handleMenu} className="flex items-center px-3 py-2 hover:border-grey">
             <FontAwesomeIcon icon={faBars} className="w-5 ml-2" />
             <span className="w-14 ml-2">MENU</span>
           </button>
         </div>
+        </div>
         <Link href="/cart" passHref>
-          <a className=" lg:absolute lg:top-10 lg:right-8" aria-label="cart">
+          <a className="flex flex-wrap relative lg:order-last" aria-label="cart">
             <FontAwesomeIcon
-              className="text-palette-primary w-6 m-auto"
+              className="text-palette-primary h-6"
               icon={faShoppingCart}
             />
             {cartItems === 0 ? null : (
-              <div className="absolute top-0 right-0 text-xs bg-yellow-300 text-gray-900 font-semibold rounded-full py-1 px-2 transform translate-x-10 -translate-y-3">
+              <div className="absolute -top-4 left-6  text-xs bg-yellow-300 text-gray-900 font-semibold rounded-full py-1 px-2 ">
                 {cartItems}
               </div>
             )}
           </a>
         </Link>
-        </div>
         <div
           id="menu"
-          className={`w-4/5 block flex-grow ${isShow ? "" : "hidden"} divide-y divide-y-reverse divide-gray-200 lg:flex lg:justify-between lg:w-auto`}
+          className={`w-4/5 block flex-grow ${isShow ? "" : "hidden"} divide-y divide-y-reverse divide-gray-200 lg:divide-none lg:flex lg:justify-around lg:w-auto`}
         >
           <Link href="/" >
-            <a className="text-smw border-b border-gray-200 block mt-4 lg:inline-block lg:mt-0 mr-4">
+            <a className="text-smw border-b border-gray-200 block mt-4 lg:inline-block lg:border-none lg:mt-0 mr-4">
               <h1>
                 <span className="text-xl font-primary font-bold tracking-tight pt-1">
                   Inicio
@@ -87,7 +87,7 @@ function Nav() {
             </a>
           </Link>
 
-          <Link href="/">
+          <Link href="/shop/Puericultura">
             <a className="text-smw block mt-4 lg:inline-block lg:mt-0 mr-4">
               <h1>
                 <span className="text-xl font-primary font-bold tracking-tight pt-1">
@@ -97,7 +97,7 @@ function Nav() {
             </a>
           </Link>
 
-          <Link href="/">
+          <Link href="/shop/Lactancia">
             <a className="text-smw block mt-4 lg:inline-block lg:mt-0 mr-4">
               <h1>
                 <span className="text-xl font-primary font-bold tracking-tight pt-1">
