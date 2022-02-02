@@ -4,9 +4,9 @@ import { getByUsername } from "services/userService";
 
 const Profile = ({userSession}) => {
     return (
-        <h1>Hola Mundo</h1>
-        // <UserDetail></UserDetail>
-        <UserDetail user={userSession}/>
+        <><h1>Hola Mundo</h1>
+            // <UserDetail></UserDetail>
+            <UserDetail user={userSession} /></>
     )
 }
 
