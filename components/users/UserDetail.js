@@ -1,8 +1,4 @@
-import {useEffect, useState} from "react";
-
 const UserDetail = ({user}) => { 
-    
-    const [session, loading] = useSession();
     
 
     return (
