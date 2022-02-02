@@ -107,7 +107,7 @@ export default CartPage
 export async function getServerSideProps(context) {
     const session = await getSession(context)
 
-    if(session.user) {
+    if(session == null) {
         return {
             redirect: {
                 permanent: false,
