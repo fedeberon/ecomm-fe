@@ -150,7 +150,7 @@ export async function search(value) {
 export async function filterProductsByBrands(brands) {
     console.log("brands", brands);
     debugger
-    const fetchUrl = `${process.env.NEXT_PUBLIC_BACKEND_SERVICE}/search/brands/`;
+    const fetchUrl = `${process.env.NEXT_PUBLIC_BACKEND_SERVICE}https://vps-2124680-x.dattaweb.com:8888/eComm/brand`;
     try {
         const response = await axios.post(fetchUrl, brands);
         console.log("response", response);
