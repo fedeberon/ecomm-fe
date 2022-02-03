@@ -2,9 +2,11 @@ import ProductCard from '@/components/products/ProductCard'
 import {useEffect, useState} from "react";
 import FilterComponent from '../filter/FilterComponent';
 import {search} from "../../services/productService"
+import BrandList from '../brands/BrandList';
+import BrandSearch from '../brands/BrandSearch';
 
 
-function ProductListings({ products }) {
+function ProductListings({ products, brands }) {
 
   const [filter, isShowFilter] = useState(false)
   const [productsToShow, setProductsToShow] = useState(products)
@@ -19,13 +21,19 @@ function ProductListings({ products }) {
     isShowFilter(!filter)
   }
 
-    const searchValue = async (e) => {
-      if(e.target.value.trim()==='')  return;
-      const result = await search(e.target.value);
-      if(result.length==0) {setProductsToShow(products); return};
-      setProductsToShow(result); 
-} 
-  return (
+  const searchValue = async (e) => {
+    if(e.target.value.trim() === '') {
+      return;
+    }   
+    const result = await search(e.target.value);
+    if(result.length == 0) {
+    setProductsToShow(products);
+      return
+    };
+    setProductsToShow(result); 
+  }  
+  
+   return (
           <>
                   <button className="text-purple-500
                                     bg-transparent
@@ -57,11 +65,17 @@ function ProductListings({ products }) {
                      placeholder="Buscar" onChange={searchValue}/>
 
               <div className="flex flex-row">
+                  
+
                   <div className={`rounded-md bg-white flex-shrink shadow-lg border-gray-600 shadow-2xl
-                    inset-y-0 left-0 transform  transition duration-200 ease-in-out
-                      ${filter ? "translate-x-0  w-1/4  py-10 pl-4 px-20 border border-t-4" : "-translate-x-full w-0 h-0" }`}>
-                        <FilterComponent products={setProductsToShow}/>
+                    inset-y-0 left-0 transform  transition duration-200 ease-in-out "
+                      ${filter ? "translate-x-0  w-1/4  py-10 pl-4 px-20 border border-t-4" : "-translate-x-full w-0 h-0 absolute inset -y-0 left-0 transform -translate-x-full transition" }`}>
+                        
+                       
+                       <BrandSearch brands={brands}/>
+
                   </div>
+                  
                   <div className={`transition duration-200 ease-in-out flex flex-col flex-wrap	 md:flex-row
                                     ${filter ? " -translate-x-full w-3/4" : "translate-x-full w-full xl:3/4"} `}>
                       <div className={`py-2 contents`}>
