@@ -4,6 +4,8 @@ import FilterComponent from '../filter/FilterComponent';
 import {search} from "../../services/productService"
 import BrandList from '../brands/BrandList';
 import BrandSearch from '../brands/BrandSearch';
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faTimes} from "@fortawesome/free-solid-svg-icons";
 
 
 function ProductListings({ products, brands }) {
@@ -16,6 +18,9 @@ function ProductListings({ products, brands }) {
   }, products);
   
 
+  const close = () => {
+    isShowFilter(false)
+  }
 
   const open = () => {
     isShowFilter(!filter)
@@ -27,9 +32,9 @@ function ProductListings({ products, brands }) {
     }   
     const result = await search(e.target.value);
     if(result.length == 0) {
-    setProductsToShow(products);
-      return
-    };
+        setProductsToShow(products);
+        return;
+    }
     setProductsToShow(result); 
   }  
   
@@ -61,37 +66,49 @@ function ProductListings({ products, brands }) {
                       {filter ? "Cerrar" : "Filtros" }
               </button>
 
-              <input type="search" className="w-2/3 ml-12 bg-purple-white shadow rounded border-0 p-3"
-                     placeholder="Buscar" onChange={searchValue}/>
+              <input type="search"
+                     className="w-2/3 ml-12 bg-purple-white shadow rounded border-0 p-3"
+                     placeholder="Buscar"
+                     onChange={searchValue}/>
 
-              <div className="flex flex-row">
-                  
 
-                  <div className={`rounded-md bg-white flex-shrink shadow-lg border-gray-600 shadow-2xl
-                    inset-y-0 left-0 transform  transition duration-200 ease-in-out "
-                      ${filter ? "translate-x-0  w-1/4  py-10 pl-4 px-20 border border-t-4" : "-translate-x-full w-0 h-0 absolute inset -y-0 left-0 transform -translate-x-full transition" }`}>
-                        
-                       
-                       <BrandSearch brands={brands}/>
+              <>
+                  <div className={`fixed z-10 overflow-y-auto top-0 w-full left-0 ${filter ? "" : "hidden"}  `} id="modal">
 
-                  </div>
-                  
-                  <div className={`transition duration-200 ease-in-out flex flex-col flex-wrap	 md:flex-row
-                                    ${filter ? " -translate-x-full w-3/4" : "translate-x-full w-full xl:3/4"} `}>
-                      <div className={`py-2 contents`}>
-                          {
-                              productsToShow
-                              ?
-                              productsToShow.map((product, index) => (
-                                  <ProductCard key={index} product={product} />
-                              ))
-                              :
-                              <></>
-                          }
+                      <div
+                          className="flex items-center justify-center min-height-100vh pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+                          <div className="fixed inset-0 transition-opacity">
+                              <div className="absolute inset-0 bg-gray-700 opacity-75"/>
+                          </div>
+                          <span className="hidden sm:inline-block sm:align-middle sm:h-screen">&#8203;</span>
+                          <div
+                              className="inline-block align-center bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full"
+                              role="dialog" aria-modal="true" aria-labelledby="modal-headline">
+                              <div className="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                                  <button className="absolute top-0 right-0 h-19 w-6 " >
+                                      <FontAwesomeIcon icon={faTimes} className="w-5" onClick={()=>close()}/>
+                                  </button>
+                                  <BrandSearch brands={brands}/>
+                              </div>
+                          </div>
                       </div>
                   </div>
-              </div>
+              </>
 
+
+              <div className="mx-auto max-w-6xl">
+                  <div className={`grid grid-cols-3`}>
+                      {
+                          productsToShow
+                          ?
+                          productsToShow.map((product, index) => (
+                              <ProductCard key={index} product={product} />
+                          ))
+                          :
+                          <></>
+                      }
+                  </div>
+              </div>
           </>
   )
 }
