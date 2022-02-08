@@ -1,5 +1,3 @@
-import index from "@/components/filter";
-
 const BrandSearch = ({brands, onclick}) => {
 
     return (
