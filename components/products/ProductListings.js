@@ -1,7 +1,7 @@
 import ProductCard from '@/components/products/ProductCard'
 import {useEffect, useState} from "react";
 import FilterComponent from '../filter/FilterComponent';
-import {search} from "../../services/productService"
+import {filterProductsByBrands, search} from "../../services/productService"
 import BrandList from '../brands/BrandList';
 import BrandSearch from '../brands/BrandSearch';
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
@@ -12,7 +12,10 @@ function ProductListings({ products, brands }) {
 
   const [filter, isShowFilter] = useState(false)
   const [productsToShow, setProductsToShow] = useState(products)
-  
+  const [brandsToSearch, setBrandsToSearch] = useState([]);
+
+
+
   useEffect(() => {
     setProductsToShow(products)
   }, products);
@@ -25,6 +28,28 @@ function ProductListings({ products, brands }) {
   const open = () => {
     isShowFilter(!filter)
   }
+
+  const handleChangeBrand = (e) => {
+      debugger
+      if(e.target.checked) {
+          setBrandsToSearch(brandsToSearch =>  [
+              ...brandsToSearch,
+              {
+                  "id": e.target.value
+              }
+          ]);
+      } else {
+          const brands = brandsToSearch.filter((brand) => brand.id !== e.target.value)
+          setBrandsToSearch(brands);
+      }
+  }
+
+  const searchBrands = async () => {
+      const products = await filterProductsByBrands(brandsToSearch)
+      setProductsToShow(products)
+      close();
+  }
+
 
   const searchValue = async (e) => {
     if(e.target.value.trim() === '') {
@@ -88,12 +113,13 @@ function ProductListings({ products, brands }) {
                                   <button className="absolute top-0 right-0 h-19 w-6" >
                                       <FontAwesomeIcon icon={faWindowClose} className="w-5" onClick={()=>close()}/>
                                   </button>
-                                  <BrandSearch brands={brands}/>
+                                  <BrandSearch brands={brands} onclick={handleChangeBrand}/>
+
                               </div>
 
                               <div class="flex justify-end pt-2 pb-2 pr-2">
                                   <button class="px-4 bg-transparent p-3 rounded-lg text-indigo-500 hover:bg-gray-100 hover:text-indigo-400 mr-2" onClick={close}>Cerrar</button>
-                                  <button class="modal-close px-4 bg-indigo-500 p-3 rounded-lg text-white hover:bg-indigo-400">Buscar</button>
+                                  <button class="modal-close px-4 bg-indigo-500 p-3 rounded-lg text-white hover:bg-indigo-400" onClick={searchBrands}>Buscar</button>
                               </div>
 
                           </div>
