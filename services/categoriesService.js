@@ -1,8 +1,7 @@
-
-    import axios from "axios";
+import axios from "axios";
 
     export async function findAll() {
-        const fetchUrl = `${process.env.BACKEND_SERVICE}/brand`;
+        const fetchUrl = `${process.env.BACKEND_SERVICE}/categories`;
         const fetchOptions = {
             endpoint: fetchUrl,
             method: "GET",
@@ -18,19 +17,18 @@
                 .catch(error => console.log(error));
             return data;
         } catch (error) {
-            throw new Error("Could not fetch brands!");
+            throw new Error("Could not fetch categories!");
         }
     }
     
     
-    export async function save(brand) {
-        const fetchUrl = `${process.env.BACKEND_SERVICE}/brand`;
+    export async function save(category) {
+        const fetchUrl = `${process.env.BACKEND_SERVICE}/categories`;
         try {
-            let response = await axios.post(fetchUrl, brand);
+            let response = await axios.post(fetchUrl, category);
             return response;
         } catch (error) {
             console.log(error);
-            throw new Error("Could not create brand!");
+            throw new Error("Could not create categories!");
         }
     }
-
