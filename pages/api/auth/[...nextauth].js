@@ -10,7 +10,7 @@ const options = {
             name: 'credentials',
             async authorize (credentials) {
                 const {username, password} = credentials;
-                const res = await axios.post("https://vps-2124680-x.dattaweb.com:8888/eComm/login", {
+                const res = await axios.post(`${process.env.BACKEND_SERVICE}/login`, {
                     "username": username,
                     "password": password
                 });

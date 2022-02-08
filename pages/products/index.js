@@ -19,7 +19,9 @@ const ProductsManager = ({products}) => {
     )
 
 }
-export async function getStaticProps() {
+
+
+export async function getServerSideProps() {
     const products = await getProducts()
     return {
         props: {

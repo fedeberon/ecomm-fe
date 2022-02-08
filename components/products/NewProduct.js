@@ -166,8 +166,8 @@ const NewProduct = () => {
                                     </label>
                                     <div className="mt-1 relative rounded-md shadow-sm">
                                         <div
-                                            className="absolute inset-y-0 left-0 pl-2 pb-4 flex items-center pointer-events-none">
-                                          <span className="text-gray-500 sm:text-sm">
+                                            className="absolute inset-y-0 left-0 pl-2 pb-4 flex items-center pointer-events-none shadow-lg">
+                                          <span className="text-center text-gray-500 sm:text-sm align-middle">
                                             $
                                           </span>
                                         </div>

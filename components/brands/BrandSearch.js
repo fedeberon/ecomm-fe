@@ -1,4 +1,4 @@
-const BrandSearch = ({brands}) => {
+const BrandSearch = ({brands, onclick}) => {
 
     return (
  
@@ -8,7 +8,16 @@ const BrandSearch = ({brands}) => {
                     brands
                     ?
                     brands.map((brand, index) => (
-                    <li key={index}>{brand.name}</li>
+                        <div key={index}>
+                            <div className="block">
+                                <div className="mt-2">
+                                        <label className="inline-flex items-center">
+                                            <input type="checkbox" className="form-checkbox text-green-500" onClick={onclick} value={brand.id}/>
+                                            <span className="ml-2">{brand.name}</span>
+                                        </label>
+                                </div>
+                            </div>
+                        </div>
                     ))
                     :
                     <></>

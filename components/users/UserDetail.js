@@ -1,6 +1,5 @@
-import {useEffect} from "react";
-
-const UserDetail = ({user}) => {
+const UserDetail = ({user}) => { 
+    
 
     return (
 

@@ -99,8 +99,7 @@ const Create = () => {
 
       <>
       <NotificationContainer/>
-        <div className="flex"
-        >
+        <div className="flex">
             <span className="text-sm border border-2 rounded-l px-4 py-2 bg-white w-32 whitespace-no-wrap">Orden #</span>
             <input name="order" className="border border-2 rounded-r px-4 py-2 w-full" type="text"
                     placeholder="Ingrese el n&uacute;mero de comprobante ..." onChange={(e)=>handleChange(e)} />

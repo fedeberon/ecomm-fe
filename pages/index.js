@@ -5,13 +5,13 @@ import { findAll } from 'services/brandService';
 
 function IndexPage({ products, brands }) {
   return (
-    <div className=" max-w-full">
-        <div className="flex justify-center">
+      <>
+        <div className="flex">
             <Carrusel/>
         </div>
 
         <ProductListings products={products}  brands={brands} />
-    </div>
+     </>
   )
 }
 

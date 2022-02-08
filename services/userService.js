@@ -1,7 +1,7 @@
 import axios from "axios";
 
 export async function save(user) {
-    const fetchUrl = `https://vps-2124680-x.dattaweb.com:8888/eComm/user`;
+    const fetchUrl = `${process.env.NEXT_PUBLIC_BACKEND_SERVICE}/user`;
 
     try {
         let response = await axios.post(fetchUrl, user);
@@ -13,7 +13,7 @@ export async function save(user) {
 
 
 export async function login(credentials) {
-    const fetchUrl = `https://vps-2124680-x.dattaweb.com:8888/eComm/user/login`;
+    const fetchUrl = `${process.env.NEXT_PUBLIC_BACKEND_SERVICE}/user/login`;
 
     try {
         let response = await axios.post(fetchUrl, credentials);
@@ -24,7 +24,7 @@ export async function login(credentials) {
 }
 
 export async function findAll() {
-    const fetchUrl = `https://vps-2124680-x.dattaweb.com:8888/eComm/user`;
+    const fetchUrl = `${process.env.NEXT_PUBLIC_BACKEND_SERVICE}/user`;
 
     try {
         let response = await axios.get(fetchUrl);
@@ -35,7 +35,8 @@ export async function findAll() {
 }
 
 export async function getByUsername(username) {
-    const fetchUrl = `https://vps-2124680-x.dattaweb.com:8888/eComm/user/${username}`;
+    const fetchUrl = `${process.env.NEXT_PUBLIC_BACKEND_SERVICE}/user/${username}`;
+    console.log("fetchUrl", fetchUrl);
     try {
         let response = await axios.get(fetchUrl);
 
