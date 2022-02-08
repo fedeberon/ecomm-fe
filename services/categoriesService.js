@@ -1,7 +1,7 @@
 import axios from "axios";
 
     export async function findAll() {
-        const fetchUrl = `${process.env.BACKEND_SERVICE}/categories`;
+        const fetchUrl = `${process.env.BACKEND_SERVICE}/category`;
         const fetchOptions = {
             endpoint: fetchUrl,
             method: "GET",

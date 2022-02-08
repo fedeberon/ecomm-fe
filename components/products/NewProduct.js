@@ -3,7 +3,7 @@ import { NotificationContainer } from "react-notifications";
 import useForm from "../../hooks/useForm";
 
 
-const NewProduct = () => {
+const NewProduct = ({categories,brands}) => {
 
     const initialForm={
         name: "",
@@ -132,11 +132,11 @@ const NewProduct = () => {
                                     Categoria
                                 </label>
                                 <select onChange={handleChange} name="category" onBlur={handleBlur} value={form.category.id} className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3    px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="category">
-                                {/* {
+                                {
                                     categories.map(category => (
                                         <option value={category.id}>{category.name}</option>
                                     ))
-                                } */}
+                                }
                                     </select>
                                 {errors.category &&  <p className={`text-red-500 text-xs italic`}>{errors.category}</p>}
                             </div>     
