@@ -5,7 +5,7 @@ import {search} from "../../services/productService"
 import BrandList from '../brands/BrandList';
 import BrandSearch from '../brands/BrandSearch';
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faTimes} from "@fortawesome/free-solid-svg-icons";
+import {faTimes, faWindowClose} from "@fortawesome/free-solid-svg-icons";
 
 
 function ProductListings({ products, brands }) {
@@ -84,12 +84,18 @@ function ProductListings({ products, brands }) {
                           <div
                               className="inline-block align-center bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full"
                               role="dialog" aria-modal="true" aria-labelledby="modal-headline">
-                              <div className="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
-                                  <button className="absolute top-0 right-0 h-19 w-6 " >
-                                      <FontAwesomeIcon icon={faTimes} className="w-5" onClick={()=>close()}/>
+                              <div className="bg-white px-4 pt-6 pb-2 sm:p-6 sm:pb-4">
+                                  <button className="absolute top-0 right-0 h-19 w-6" >
+                                      <FontAwesomeIcon icon={faWindowClose} className="w-5" onClick={()=>close()}/>
                                   </button>
                                   <BrandSearch brands={brands}/>
                               </div>
+
+                              <div class="flex justify-end pt-2 pb-2 pr-2">
+                                  <button class="px-4 bg-transparent p-3 rounded-lg text-indigo-500 hover:bg-gray-100 hover:text-indigo-400 mr-2" onClick={close}>Cerrar</button>
+                                  <button class="modal-close px-4 bg-indigo-500 p-3 rounded-lg text-white hover:bg-indigo-400">Buscar</button>
+                              </div>
+
                           </div>
                       </div>
                   </div>
