@@ -95,13 +95,13 @@ const Billing = ({isShowing, checkout, type}) => {
                                 Direcci&oacute;n
                             </label>
                             <div className="relative mb-5 mt-2">
-                                <input id="address" name="address"  onChange={handleChange}  value={person.address} className="text-gray-600 focus:outline-none focus:border focus:border-indigo-700 font-normal w-full h-10 flex items-center pl-3 text-sm border-gray-300 rounded border" placeholder="MM/YY" />
+                                <input id="address" name="address"  onChange={handleChange}  value={person.address} className="text-gray-600 focus:outline-none focus:border focus:border-indigo-700 font-normal w-full h-10 flex items-center pl-3 text-sm border-gray-300 rounded border" placeholder="Direccion" />
                             </div>
                             <label htmlFor="email" className="text-gray-800 text-sm font-bold leading-tight tracking-normal">
                                 e-Mail
                             </label>
                             <div className="relative mb-5 mt-2">
-                                <input id="email"  name="email" className="mb-8 text-gray-600 focus:outline-none focus:border focus:border-indigo-700 font-normal w-full h-10 flex items-center pl-3 text-sm border-gray-300 rounded border" placeholder="MM/YY" />
+                                <input id="email"  name="email" className="mb-8 text-gray-600 focus:outline-none focus:border focus:border-indigo-700 font-normal w-full h-10 flex items-center pl-3 text-sm border-gray-300 rounded border" placeholder="e-Mail" />
                             </div>
                             <div className="flex items-center justify-start w-full">
                                 <button className="focus:outline-none transition duration-150 ease-in-out hover:bg-indigo-600 bg-indigo-700 rounded text-white px-8 py-2 text-sm" onClick={submit}>Crear Factura</button>
