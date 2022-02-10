@@ -1,4 +1,4 @@
-import UserDetail from "@/components/users/UserDetail";
+import UserNav from "@/components/users/UserNav";
 import {getByUsername} from "../../services/userService";
 import {useEffect} from "react";
 
@@ -6,7 +6,7 @@ const Username = ({user})  => {
 
     return (
             <>
-              <UserDetail user={user} />
+              <UserNav user={user} />
             </>
         )
 }
