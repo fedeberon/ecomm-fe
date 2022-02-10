@@ -1,5 +1,5 @@
 import {useEffect, useState} from "react";
-
+import logo from "/images/Logo Dulce bb.png";
 
 const WalletOfUser = ({walletOfUser, user}) => {
     const [isWallet, setIsWallet] = useState(false);
@@ -22,19 +22,18 @@ const WalletOfUser = ({walletOfUser, user}) => {
                           <p className='text-2xl font-bold'> {points}</p>
                       </div>
                       <div className="flex items-center ">
-                          <div className='p-5 bg-gray-200 bg-opacity-40 rounded-full'></div>
-                          <div className='p-5 bg-gray-200 bg-opacity-30 rounded-full -ml-4'></div>
+                        <img src={logo.src} className={"w-16 lg:w-24"} />
                       </div>
                   </div>
-                  <div className='mt-5 flex justify-between items-center w-52'>
+                  <div className='mt-5 flex justify-between items-center w-40'>
                       <span className='text-lg'> CUIL </span>
-                      <span>  {isWallet ? walletOfUser[0].user.cardId : user.user.username} </span>
+                      <span> {isWallet ? walletOfUser[0].user.cardId : user.user.username}</span>
                   </div>
                   <div className='flex justify-between mt-5 w-48 '>
-                      <div>
+                      {/* <div>
                           <h3 className="text-xs"> Vencimiento </h3>
                           <p className="font-bold"> 10/21 </p>
-                      </div>
+                      </div> */}
                       <div>
                           <h3 className="text-xs"> Titular </h3>
                           <p className="font-bold"> {isWallet ? walletOfUser[0].user.name : user.user.name }  {isWallet ? walletOfUser[0].user.lastName: ""} </p>
