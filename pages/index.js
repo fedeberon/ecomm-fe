@@ -6,7 +6,7 @@ import * as brandsService from 'services/brandService';
 function IndexPage({products, brands}) {
   return (
       <>
-        <div className="flex">
+        <div className="flex  container mx-auto min-h-full">
             <Carrusel/>
         </div>
 
