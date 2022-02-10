@@ -10,6 +10,7 @@ import Index from "./admin";
 import { useSession } from "next-auth/client";
 
 import { getServerSideProps } from "pages/login";
+import { padding } from "tailwindcss/defaultTheme";
 
 function Nav() {
   const cart = useCartContext()[0];
@@ -32,7 +33,7 @@ function Nav() {
     <header className="border-b border-palette-lighter sticky top-0 z-20 bg-white">
       <div className="flex items-center  flex-wrap mx-2 lg:flex lg:flex-nowrap lg:px-12	 lg:max-w-screen-2xl">
         <div className="flex flex-row items-center">
-          <img src={logo.src} className={"w-16 lg:w-24"} />
+          <img src={logo.src} class="w-16 py-2 lg:w-24" />
         <div className="block lg:hidden">
           <button onClick={handleMenu} className="flex items-center px-3 py-2 hover:border-grey">
             <FontAwesomeIcon icon={faBars} className="w-5 ml-2" />
