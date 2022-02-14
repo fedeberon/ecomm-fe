@@ -4,12 +4,13 @@ import { useCartContext } from "@/context/Store";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars } from "@fortawesome/free-solid-svg-icons";
 import { faShoppingCart } from "@fortawesome/free-solid-svg-icons";
-import logo from "/images/logo.png";
+import logo from "/images/Logo Dulce bb.png";
 import UserSession from "@/components/users/UserSession";
 import Index from "./admin";
 import { useSession } from "next-auth/client";
 
 import { getServerSideProps } from "pages/login";
+import { padding } from "tailwindcss/defaultTheme";
 
 function Nav() {
   const cart = useCartContext()[0];
@@ -29,6 +30,7 @@ function Nav() {
   }, [cart]);
 
   return (
+
     <header className="border-b border-palette-lighter sticky top-0 z-20 bg-white">
       <div className="flex items-center left  flex-wrap mx-2 p-6lg:flex lg:flex-nowrap lg:px-12	 lg:max-w-screen-2xl">
         <div className="flex flex-row items-center">

@@ -6,7 +6,7 @@ import React from "react";
 const Brand = ({brands}) => {
   return (
         <div className="mx-auto max-w-6xl">
-            <PageTitle text="CUalquiercosa" />
+            <PageTitle text="MARCAS" />
             <BrandList brands={brands}/>
         </div>
   );

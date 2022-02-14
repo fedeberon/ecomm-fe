@@ -148,16 +148,13 @@ export async function search(value) {
 }
 
 export async function filterProductsByBrands(brands) {
-    console.log("brands", brands);
-    debugger
-    const fetchUrl = `${process.env.NEXT_PUBLIC_BACKEND_SERVICE}/search/brands/`;
+    const fetchUrl = `${process.env.NEXT_PUBLIC_BACKEND_SERVICE}/product/search/brands`;
     try {
         const response = await axios.post(fetchUrl, brands);
-        console.log("response", response);
         debugger
         return response.data;
     } catch (error) {
-        throw new Error("Could not search products!");
+        throw new Error("Could not search products by brands!");
     }
 }
 

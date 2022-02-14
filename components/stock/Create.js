@@ -1,7 +1,7 @@
 import {search} from "../../services/productService";
 import { useState} from "react";
 import SearchProduct from "@/components/stock/SearchProduct";
-import {save} from "/services/stockService"
+import {save} from "../../services/stockService"
 import { NotificationManager, NotificationContainer } from "react-notifications";
 import 'react-notifications/lib/notifications.css';
 
@@ -66,9 +66,7 @@ const Create = () => {
     }
 
 
-    const saveStocks = () => {
- 
-
+    const saveStocks = () => { 
       if(errors.order == undefined && errors.quantity == undefined){
         save(stocks).then((result) => {
           if (result.status == 200) {
@@ -99,8 +97,7 @@ const Create = () => {
 
       <>
       <NotificationContainer/>
-        <div className="flex"
-        >
+        <div className="flex">
             <span className="text-sm border border-2 rounded-l px-4 py-2 bg-white w-32 whitespace-no-wrap">Orden #</span>
             <input name="order" className="border border-2 rounded-r px-4 py-2 w-full" type="text"
                     placeholder="Ingrese el n&uacute;mero de comprobante ..." onChange={(e)=>handleChange(e)} />

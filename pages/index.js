@@ -1,24 +1,28 @@
 import ProductListings from '@/components/products/ProductListings'
 import {getProducts} from "../services/productService";
 import Carrusel from "@/components/Carrusel";
+import * as brandsService from 'services/brandService';
 
-function IndexPage({ products }) {
+function IndexPage({products, brands}) {
   return (
-    <div className=" max-w-full">
-        <div className="flex justify-center">
+      <>
+        <div className="flex  container mx-auto min-h-full">
             <Carrusel/>
         </div>
 
-        <ProductListings products={products} />
-    </div>
+        <ProductListings products={products} brands={brands}/>
+     </>
   )
 }
 
-export async function getStaticProps() {
+export async function getServerSideProps() {
   const products = await getProducts();
+  const brands = await brandsService.findAll();
+   
   return {
     props: {
-      products
+      products,
+      brands, 
     },
   }
 }
