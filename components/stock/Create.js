@@ -1,7 +1,7 @@
 import {search} from "../../services/productService";
 import { useState} from "react";
 import SearchProduct from "@/components/stock/SearchProduct";
-import {save} from "/services/stockService"
+import {save} from "../../services/stockService"
 import { NotificationManager, NotificationContainer } from "react-notifications";
 import 'react-notifications/lib/notifications.css';
 
@@ -66,9 +66,7 @@ const Create = () => {
     }
 
 
-    const saveStocks = () => {
- 
-
+    const saveStocks = () => { 
       if(errors.order == undefined && errors.quantity == undefined){
         save(stocks).then((result) => {
           if (result.status == 200) {
