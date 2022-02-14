@@ -30,14 +30,15 @@ function Nav() {
   }, [cart]);
 
   return (
-    <header className="border-b container mx-auto min-h-full border-palette-lighter sticky top-0 z-20 bg-white">
-      <div className="flex items-center  flex-wrap mx-2 lg:flex lg:flex-nowrap lg:px-12	 lg:max-w-screen-2xl">
+
+    <header className="border-b border-palette-lighter sticky top-0 z-20 bg-white">
+      <div className="flex items-center left  flex-wrap mx-2 p-6lg:flex lg:flex-nowrap lg:px-12	 lg:max-w-screen-2xl">
         <div className="flex flex-row items-center">
-          <img src={logo.src} class="w-16 py-2 lg:w-24" />
+          <img src={logo.src} className="w-16 invisible sm:visible lg:w-24" />
         <div className="block lg:hidden">
-          <button onClick={handleMenu} className="flex items-center px-3 py-2 hover:border-grey">
+          <button onClick={handleMenu} className="flex px-16 py-2 hover:border-grey">
             <FontAwesomeIcon icon={faBars} className="w-5 ml-2" />
-            <span className="w-14 ml-2">MENU</span>
+            <span className="w-14 items-center ml-2">MENU</span>
           </button>
         </div>
         </div>
@@ -48,7 +49,7 @@ function Nav() {
               icon={faShoppingCart}
             />
             {cartItems === 0 ? null : (
-              <div className="absolute -top-4 left-6  text-xs bg-yellow-300 text-gray-900 font-semibold rounded-full py-1 px-2 ">
+              <div className="absolute top-4 left-6  text-xs bg-yellow-300 text-gray-900 font-semibold rounded-full py-1 px-2 ">
                 {cartItems}
               </div>
             )}
