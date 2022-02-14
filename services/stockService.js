@@ -1,7 +1,7 @@
 import axios from "axios";
 
 export async function findAll() {
-    const fetchUrl = `${process.env.BACKEND_SERVICE}/stock`;
+    const fetchUrl = `${process.env.NEXT_PUBLIC_BACKEND_SERVICE}/stock`;
 
     const fetchOptions = {
         endpoint: fetchUrl,
@@ -23,7 +23,7 @@ export async function findAll() {
 }
 
 export async function save(stock){
-    const fetchUrl = `${process.env.BACKEND_SERVICE}/stock/list`;
+    const fetchUrl = `${process.env.NEXT_PUBLIC_BACKEND_SERVICE}/stock/list`;
     try {
         let response = await axios.post(fetchUrl, stock);
         return response;
