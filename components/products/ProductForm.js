@@ -94,7 +94,7 @@ function ProductForm({ title, mainImg, id, images, price }) {
                 <a
                     aria-label="upload-images"
                     className="pt-3 pb-2 bg-red-600 text-white w-full mt-2 rounded-sm font-primary font-semibold text-xl flex
-                      justify-center items-baseline  hover:bg-red-400"
+                      justify-center items-baseline  hover:bg-red-400 cursor-pointer"
                     onClick={() => setOpenUploadFile(true)}
                 >
                   Subir Imagenes
@@ -104,7 +104,7 @@ function ProductForm({ title, mainImg, id, images, price }) {
                 <a
                     aria-label="edit-data"
                     className="pt-3 pb-2 bg-red-600 text-white w-full mt-2 rounded-sm font-primary font-semibold text-xl flex
-                      justify-center items-baseline  hover:bg-red-400"
+                      justify-center items-baseline  hover:bg-red-400 cursor-pointer"
                     onClick={goToEdit}
                 >
                   Modificar Datos
