@@ -40,9 +40,10 @@ import 'react-notifications/lib/notifications.css';
   const handleSubmit = (e) => {
     e.preventDefault();
     setErrors(validateForm(form));
+    let tal = validateForm(form);
 
 
-    if (Object.keys(errors).length === 0) {
+    if (Object.keys(tal).length === 0) {
       save(form).then((result) => {
         if (result.data.hasOwnProperty("name")) {
           NotificationManager.info('El articulo: ' +'\"'+ form.name +'\"'+ "se cargo correctamente", 'Administracion de productos' , 1000);

@@ -47,8 +47,7 @@ const NewProduct = () => {
         if (!form.points.trim()){
             errors.points = "El campo 'Puntos' es requerido";
         }
-
-        return errors
+        return errors;
     };
 
     const { 
@@ -125,7 +124,9 @@ const NewProduct = () => {
                                        htmlFor="category">
                                     Categoria
                                 </label>
-                                <select onChange={handleChange} name="category" onBlur={handleBlur} value={form.category.id} className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3    px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="category">
+                                <select onChange={handleChange} name="category"
+                                // onBlur={handleBlur}
+                                 value={form.category.id} className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3    px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="category">
                                     <option value="0">Seleccione</option>
                                     <option value="1">Jugueteria</option>
                                     <option value="2">Accesorios</option>
@@ -165,12 +166,10 @@ const NewProduct = () => {
                                         Precio
                                     </label>
                                     <div className="mt-1 relative rounded-md shadow-sm">
-                                        <div
-                                            className="absolute inset-y-0 left-0 pl-2 pb-4 flex items-center pointer-events-none shadow-lg">
-                                          <span className="text-center text-gray-500 sm:text-sm align-middle">
+                                        <div>
+                                        <span className="text-center flex p-3 absolute text-gray-500 sm:text-sm align-middle">
                                             $
-                                          </span>
-                                        </div>
+                                        </span>
                                         <input
                                                type="number"
                                                id="price"
@@ -179,8 +178,8 @@ const NewProduct = () => {
                                                placeholder="0.00" name="price"
                                                 value={form.price}
                                                onChange={handleChange}
-                                               onBlur={handleBlur}
-                                               required
+                                                onBlur={handleBlur}
+                                                required
                                                maxLength = "7"
                                                onKeyPress={(event) => {
                                                    if (!/[0-9]?[0-9]?(\.[0-9][0-9]?)?/.test(event.key)) {
@@ -188,6 +187,7 @@ const NewProduct = () => {
                                                    }
                                                }}
                                         />
+                                        </div>
                                     {errors.price &&  <p className={`text-red-500 text-xs italic`}>{errors.price}</p>}
                                     </div>
                                 </div>
