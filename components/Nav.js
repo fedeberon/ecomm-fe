@@ -35,7 +35,7 @@ function Nav() {
     
       <div className="flex items-center left  flex-wrap mx-2 p-6lg:flex lg:flex-nowrap lg:px-12	 lg:max-w-screen-2xl">
         <Link href="/">
-        <div className="flex flex-row items-center"> 
+        <div className="flex cursor-pointer flex-row items-center"> 
             <img src={logo.src} className="w-16 invisible sm:visible lg:w-24"/>
             <div className="block lg:hidden"> 
               <button onClick={handleMenu} className="flex px-16 py-2 hover:border-grey">
