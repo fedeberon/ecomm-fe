@@ -1,6 +1,6 @@
-import {createRef, useEffect, useState} from "react";
+import {createRef, useEffect, useState} from "react"; 
 
-const images = ['/images/tienda-bebe-mobiliario-cochecitos.jpg', '/images/tienda-bebe-zona-rebajas.jpg']
+const images = ['/images/tienda-bebe-mobiliario-cochecitos.jpg', '/images/tienda-bebe-zona-rebajas.jpg']  
 // images must be an array of urls , if using Next JS this could something like
 // const images = ['/img/img1.png', '/img/img2.png', '/img/img3.png']
 // images must be an array of urls , if using Next JS this could something like
@@ -72,8 +72,12 @@ const Carousel = () => {
             className={`${arrowStyle} ${isLeft ? 'left-2' : 'right-2'}`}
             style={{ top: '40%' }}
         >
-      <span role="img" aria-label={`Arrow ${isLeft ? 'left' : 'right'}`}>
-        {isLeft ? '◀' : '▶'}
+      <span role="img" aria-label={`Arrow ${isLeft ? 'left' : 'right'}`} className={"bg-slate-900"}>
+        {isLeft ? <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+</svg> : <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+</svg>} 
       </span>
         </button>
     );
