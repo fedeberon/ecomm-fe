@@ -129,7 +129,7 @@ function ProductListings({ products, brands }) {
 
 
               <div className="mx-auto max-w-6xl">
-                  <div className="grid sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-9">
+                  <div className="grid gap -9 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-9 ">
                       {
                           productsToShow
                           ?
