@@ -14,6 +14,7 @@ const Create = () => {
         "email": ""
     })
 
+
     const handleChange = (e) => {
         setUser({
             ...user,
@@ -25,7 +26,7 @@ const Create = () => {
         e.preventDefault();
         save(user).then((result) => {
             if (result.status === 202) {
-                window.location.href = '/users/' + result.data.username
+                window.location.href = '/login'
             }
         });
     }
@@ -106,8 +107,8 @@ const Create = () => {
                                 type="text" placeholder="Ingrese una contraseña"/>
                         </div>
                     </div>
-
-                    <button type="submit" onClick={submit} href=""
+                    
+                    <button type="submit" onClick={submit}
                             className={`bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded `}>
                         Listo !
                     </button>

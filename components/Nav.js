@@ -30,30 +30,22 @@ function Nav() {
   }, [cart]);
 
   return (
-    <header className="border-b container mx-auto min-h-full border-palette-lighter sticky top-0 z-20 bg-white">
-      <div className="flex items-center  flex-wrap mx-2 lg:flex lg:flex-nowrap lg:px-12	 lg:max-w-screen-2xl">
-        <div className="flex flex-row items-center">
-          <img src={logo.src} class="w-16 py-2 lg:w-24" />
-        <div className="block lg:hidden">
-          <button onClick={handleMenu} className="flex items-center px-3 py-2 hover:border-grey">
-            <FontAwesomeIcon icon={faBars} className="w-5 ml-2" />
-            <span className="w-14 ml-2">MENU</span>
-          </button>
-        </div>
-        </div>
-        <Link href="/cart" passHref>
-          <a className="flex flex-wrap relative lg:order-last" aria-label="cart">
-            <FontAwesomeIcon
-              className="text-palette-primary h-6"
-              icon={faShoppingCart}
-            />
-            {cartItems === 0 ? null : (
-              <div className="absolute -top-4 left-6  text-xs bg-yellow-300 text-gray-900 font-semibold rounded-full py-1 px-2 ">
-                {cartItems}
-              </div>
-            )}
-          </a>
-        </Link>
+
+    <header className="border-b border-palette-lighter sticky top-0 z-20 bg-white"> 
+    
+      <div className="flex items-center left flex-wrap mx-2 p-6lg:flex lg:flex-nowrap lg:px-12 lg:max-w-screen-2xl">
+        <Link href="/">
+
+        <div className="flex cursor-pointer flex-row items-center"> 
+            <img src={logo.src} className="w-16 invisible sm:visible lg:w-24"/>
+            <div className="block lg:hidden"> 
+              <button onClick={handleMenu} className="flex px-16 py-2 hover:border-grey">
+                <FontAwesomeIcon icon={faBars} className="w-5 left-1 top-6 ml-2 items-center" />
+                <span className="w-14 left-8 top-6 ml-2">MENU</span>
+              </button> 
+            </div>
+        </div>   
+        </Link>  
         <div
           id="menu"
           className={`w-4/5 block flex-grow ${isShow ? "" : "hidden"} divide-y divide-y-reverse divide-gray-200 lg:divide-none lg:flex lg:justify-around lg:w-auto`}
@@ -107,9 +99,10 @@ function Nav() {
               </h1>
             </a>
           </Link>
+           
           {session?.user?.role?.includes("ADMIN") ? (
             <Link href="/admin">
-              <a className=" text-smw block mt-4 lg:inline-block lg:mt-0 mr-4">
+              <a className="flex flex-wrap top-4 right-3 lg:order-last">
                 <h1>
                   <span className="text-xl font-primary font-bold tracking-tight pt-1">
                     Administracion
@@ -120,8 +113,27 @@ function Nav() {
           ) : (
             ""
           )}
-          <UserSession session={session} />
-        </div>
+          </div>
+          <div className="">
+            <UserSession session={session} />
+          </div>
+          <div className="">
+            <Link href="/cart" passHref>
+              <a className="flex flex-wrap object-right-top p-6 lg:order-last" aria-label="cart"> 
+                <FontAwesomeIcon
+                  className="text-palette-primary h-6"
+                  icon={faShoppingCart}
+                />
+                {cartItems === 0 ? null : (
+                  <div className=" text-xs bg-yellow-300 text-gray-900 font-semibold py-1 px-2 ">
+                    {cartItems}
+                  </div>
+                )}
+              </a>
+            </Link>
+          </div>
+        
+        
       </div>
     </header>
   );
