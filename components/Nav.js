@@ -36,7 +36,7 @@ function Nav() {
       <div className="flex items-center justify-between flex-wrap mx-2 p-2 lg:flex lg:flex-nowrap lg:px-12 ">
         <Link href="/">
           <div className="flex cursor-pointer flex-row items-center"> 
-              <img src={logo.src} className="w-16 hidden sm:block lg:w-24"/>
+              <img src={logo.src} className="w-16 mx-4 hidden sm:block lg:w-24"/>
           </div>
         </Link>  
         <div className="block lg:hidden"> 
@@ -66,7 +66,7 @@ function Nav() {
         
         <div
           id="menu"
-          className={`w-4/5 block flex-grow ${isShow ? "" : "hidden"} divide-y divide-y-reverse divide-gray-200 lg:divide-none lg:flex lg:justify-self-center lg:w-auto`}
+          className={`w-4/5 block flex-grow ${isShow ? "" : "hidden"} divide-y divide-y-reverse justify-between divide-gray-200 lg:divide-none lg:flex lg:justify-self-center lg:w-auto`}
         >
             <Link href="/" >
               <a className="text-smw border-b border-gray-200 block mt-4 lg:inline-block lg:border-none lg:mt-0 mr-4">
