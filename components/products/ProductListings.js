@@ -98,7 +98,7 @@ function ProductListings({ products, brands }) {
 
 
               <>
-                  <div className={`fixed z-10 overflow-y-auto top-0 w-full left-0 ${filter ? "" : "hidden"}  `} id="modal">
+                  <div className={`fixed z-50 overflow-y-auto top-0 w-full left-0 ${filter ? "" : "hidden"}  `} id="modal">
 
                       <div
                           className="flex items-center justify-center min-height-100vh pt-4 px-4 pb-20 text-center sm:block sm:p-0">
@@ -107,12 +107,11 @@ function ProductListings({ products, brands }) {
                           </div>
                           <span className="hidden sm:inline-block sm:align-middle sm:h-screen">&#8203;</span>
                           <div
-                              className="inline-block align-center bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full"
+                              className="inline-block  bg-white overflow-y-auto rounded-lg text-left overflow-hidden shadow-xl transform transition-all my-8 align-middle max-w-lg "
                               role="dialog" aria-modal="true" aria-labelledby="modal-headline">
-                              <div className="bg-white px-4 pt-6 pb-2 sm:p-6 sm:pb-4">
-                                  <button className="absolute top-0 right-0 h-19 w-6" >
-                                      <FontAwesomeIcon icon={faWindowClose} className="w-5" onClick={()=>close()}/>
-                                  </button>
+                              <div className="grid gap-4 px-4 pt-6 pb-2 sm:p-6 sm:pb-4">
+                                  <BrandSearch brands={brands} onclick={handleChangeBrand}/>
+                                  <BrandSearch brands={brands} onclick={handleChangeBrand}/>
                                   <BrandSearch brands={brands} onclick={handleChangeBrand}/>
 
                               </div>
