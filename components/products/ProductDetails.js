@@ -16,12 +16,18 @@ function ProductDetails({ productData}) {
 
   return (
     <div className="flex flex-col justify-between h-full w-full md:w-1/2 max-w-xs mx-auto space-y-4 min-h-128">
-      <BackToProductButton />
-      <ProductInfo 
-        title={productData.name}
-        description={productData.description}
-        price={productData.price}
-      />
+      <div>
+        <BackToProductButton />
+      </div>
+        
+      <div>
+        <ProductInfo 
+          title={productData.name}
+          description={productData.description}
+          price={productData.price}
+        />
+      </div>
+
       <ProductForm 
         title={productData.name}
         mainImg={image}
