@@ -6,7 +6,7 @@ const Admin = () => {
             <div className="antialiased bg-gray-600 w-full font-ssans flex flex-wrap">
                 <div className="flex flex-wrap m-2 w-full justify-self-center grid grid-cold-1 md:grid-cols-2 container mx-auto">
                     <Link href="/bills">
-                        <div className="pl-1 my-4 w-80 h-24 flex  justify-self-center bg-green-400 rounded-lg shadow-md cursor-pointer">
+                        <div className="pl-1 my-4 w-80 h-24 flex lg:w-3/4 justify-self-center bg-green-400 rounded-lg shadow-md cursor-pointer">
                             <div className="flex w-full h-full py-2 px-4 bg-white rounded-lg justify-between">
                                 <div className="my-auto">
                                     <p className="font-bold">Facturaci&oacute;n</p>
@@ -21,7 +21,7 @@ const Admin = () => {
                         </div>
                     </Link>
                     <Link href="/stock">
-                        <div className="pl-1 my-4 w-80 h-24 justify-self-center bg-blue-500 rounded-lg shadow-md cursor-pointer">
+                        <div className="pl-1 my-4 w-80 h-24 lg:w-3/4 justify-self-center bg-blue-500 rounded-lg shadow-md cursor-pointer">
                             <div className="flex w-full h-full py-2 px-4 bg-white rounded-lg justify-between">
                                 <div className="my-auto">
                                     <p className="font-bold">Stock</p>
@@ -36,7 +36,7 @@ const Admin = () => {
                         </div>
                     </Link>
                     <Link href="/products">
-                        <div className="pl-1 my-4 w-80 h-24 justify-self-center bg-yellow-400 rounded-lg shadow-md cursor-pointer">
+                        <div className="pl-1 my-4 w-80 h-24 lg:w-3/4 justify-self-center bg-yellow-400 rounded-lg shadow-md cursor-pointer">
                             <div className="flex w-full h-full py-2 px-4 bg-white rounded-lg justify-between">
                                 <div className="my-auto">
                                     <p className="font-bold">Articulos</p>
@@ -51,7 +51,7 @@ const Admin = () => {
                         </div>
                     </Link>
                     <Link href="/users">
-                        <div className="pl-1 my-4 w-80 h-24 justify-self-center bg-yellow-400 rounded-lg shadow-md cursor-pointer">
+                        <div className="pl-1 my-4 w-80 h-24 lg:w-3/4 justify-self-center bg-yellow-400 rounded-lg shadow-md cursor-pointer">
                             <div className="flex w-full h-full py-2 px-4 bg-white rounded-lg justify-between">
                                 <div className="my-auto">
                                     <p className="font-bold">Usuarios</p>
@@ -66,7 +66,7 @@ const Admin = () => {
                         </div>
                     </Link>
                     <Link href="/checkout">
-                        <div className="pl-1 my-4 w-80 h-24 justify-self-center bg-green-400 rounded-lg shadow-md cursor-pointer">
+                        <div className="pl-1 my-4 w-80 h-24 lg:w-3/4 justify-self-center bg-green-400 rounded-lg shadow-md cursor-pointer">
                             <div className="flex w-full h-full py-2 px-4 bg-white rounded-lg justify-between">
                                 <div className="my-auto">
                                     <p className="font-bold">Checkout</p>
@@ -81,7 +81,7 @@ const Admin = () => {
                         </div>
                     </Link>
                     <Link href="/brand">
-                        <div className="pl-1 my-4 w-80 h-24 justify-self-center bg-blue-500 rounded-lg shadow-md cursor-pointer">
+                        <div className="pl-1 my-4 w-80 h-24 lg:w-3/4 justify-self-center bg-blue-500 rounded-lg shadow-md cursor-pointer">
                             <div className="flex w-full h-full py-2 px-4 bg-white rounded-lg justify-between">
                                 <div className="my-auto">
                                     <p className="font-bold">Marcas</p>
@@ -96,7 +96,7 @@ const Admin = () => {
                         </div>
                     </Link>
                     <Link href="/products">
-                        <div className="pl-1 my-4 w-80 h-24 justify-self-center bg-yellow-400 rounded-lg shadow-md cursor-pointer">
+                        <div className="pl-1 my-4 w-80 h-24 lg:w-3/4 justify-self-center bg-yellow-400 rounded-lg shadow-md cursor-pointer">
                             <div className="flex w-full h-full py-2 px-4 bg-white rounded-lg justify-between">
                                 <div className="my-auto">
                                     <p className="font-bold">EN PROGRESO</p>
@@ -111,7 +111,7 @@ const Admin = () => {
                         </div>
                     </Link>
                     <Link href="/users">
-                        <div className="pl-1 my-4 w-80 h-24 justify-self-center bg-yellow-400 rounded-lg shadow-md cursor-pointer">
+                        <div className="pl-1 my-4 w-80 h-24 lg:w-3/4 justify-self-center bg-yellow-400 rounded-lg shadow-md cursor-pointer">
                             <div className="flex w-full h-full py-2 px-4 bg-white rounded-lg justify-between">
                                 <div className="my-auto">
                                     <p className="font-bold">EN PROGRESO</p>

@@ -17,7 +17,8 @@ const NewProduct = ({categories,brands}) => {
         },
         code : "",
         stock : "",
-        points: ""
+        points: "",
+        promo:false,
     }
     
     const validationsForm = (form) =>{
