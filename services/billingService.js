@@ -15,7 +15,7 @@ export async function getBilling(user, checkout, type, session) {
         "comments" : "Comentarios ...",
         "checkoutId": checkout.id
     }
-    const fetchUrl = `http://localhost:8888/eComm/billing`;
+    const fetchUrl = `${process.env.NEXT_PUBLIC_BACKEND_SERVICE}/billing`;
 
     debugger;
 
