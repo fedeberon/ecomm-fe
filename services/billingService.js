@@ -15,8 +15,9 @@ export async function getBilling(user, checkout, type, session) {
         "comments" : "Comentarios ...",
         "checkoutId": checkout.id
     }
-    const fetchUrl = `${process.env.NEXT_PUBLIC_BACKEND_SERVICE}/billing`;
+    const fetchUrl = `http://localhost:8888/eComm/billing`;
 
+    debugger;
 
     try {
         let response = await axios.post(fetchUrl, bill, {

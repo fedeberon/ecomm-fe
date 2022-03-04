@@ -29,6 +29,7 @@ function Nav() {
   }, [cart]);
 
   return (
+
     <header className="border-b border-palette-lighter sticky top-0 z-20 bg-white">
       <div className="flex items-center  flex-wrap mx-2 lg:flex lg:flex-nowrap lg:px-12	 lg:max-w-screen-2xl">
         <div className="flex flex-row items-center">
