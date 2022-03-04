@@ -18,7 +18,6 @@ const Index = ({stock}) => {
 
 export async function getServerSideProps() {
     const stock = await findAll();
-
     return {
         props: {
             stock

@@ -7,16 +7,31 @@ import {NotificationContainer, NotificationManager} from 'react-notifications';
 import 'react-notifications/lib/notifications.css';
 import {useSession} from "next-auth/client";
 import {useRouter} from "next/router";
+import { updateAsAPromotion } from 'services/productService';
 
 
 function ProductForm({ title, mainImg, id, images, price }) {
-  const [quantity, setQuantity] = useState(1)
-  const isLoading = useCartContext()[2]
-  const addToCart = useAddToCartContext()
+  const [quantity, setQuantity] = useState(1);
+  const isLoading = useCartContext()[2];
+  const addToCart = useAddToCartContext();
   const [openUploadFile, setOpenUploadFile] = useState(false);
-  const router = useRouter()
-  const [session, loading] = useSession()
+  const router = useRouter();
+  const [session, loading] = useSession();
+  const [promo, setPromo] = useState();
 
+   
+   
+  
+  const handlePromo = () => {
+    setPromo(!promo)
+    let producToUpdate = {
+      id: id,
+      promo: promo 
+    }
+    updateAsAPromotion(producToUpdate);
+  }
+
+  
   const atcBtnStyle = isLoading ?
     `pt-3 pb-2 bg-palette-primary text-white w-full mt-2 rounded-sm font-primary font-semibold text-xl flex 
                       justify-center items-baseline  hover:bg-palette-dark opacity-25 cursor-none`
@@ -94,7 +109,7 @@ function ProductForm({ title, mainImg, id, images, price }) {
                 <a
                     aria-label="upload-images"
                     className="pt-3 pb-2 bg-red-600 text-white w-full mt-2 rounded-sm font-primary font-semibold text-xl flex
-                      justify-center items-baseline  hover:bg-red-400"
+                      justify-center items-baseline  hover:bg-red-400 cursor-pointer"
                     onClick={() => setOpenUploadFile(true)}
                 >
                   Subir Imagenes
@@ -104,19 +119,39 @@ function ProductForm({ title, mainImg, id, images, price }) {
                 <a
                     aria-label="edit-data"
                     className="pt-3 pb-2 bg-red-600 text-white w-full mt-2 rounded-sm font-primary font-semibold text-xl flex
-                      justify-center items-baseline  hover:bg-red-400"
-                    onClick={goToEdit}
-                >
+                      justify-center items-baseline  hover:bg-red-400 cursor-pointer"
+                    onClick={goToEdit}>
                   Modificar Datos
                   <FontAwesomeIcon icon={faEdit} className="w-5 ml-2" />
-
-                  
                 </a>
+
+                {
+
+                    promo
+                    ?
+                      <imput type='checkbox'
+                      className="pt-3 pb-2 bg-blue-600 text-white w-full mt-2 rounded-sm font-primary font-semibold text-xl flex
+                        justify-center items-baseline  hover:bg-blue-400 cursor-pointer"
+                        onClick={handlePromo} >
+                        Sin Promocion
+                      </imput>
+
+                    :
+                      <imput type='checkbox'
+                      className="pt-3 pb-2 bg-red-600 text-white w-full mt-2 rounded-sm font-primary font-semibold text-xl flex
+                        justify-center items-baseline  hover:bg-red-400 cursor-pointer"
+                        onClick={handlePromo} >
+                        En Promocion
+                      </imput>
+                }
+
+                
 
                 <UploadFile
                     isOpen={openUploadFile}
                     setIsOpen={setOpenUploadFile}
                     folder={id}
+
                 />
               </>
               :

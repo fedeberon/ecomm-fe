@@ -17,7 +17,8 @@ const NewProduct = ({categories,brands}) => {
         },
         code : "",
         stock : "",
-        points: ""
+        points: "",
+        promo:false,
     }
     
     const validationsForm = (form) =>{
@@ -53,8 +54,7 @@ const NewProduct = ({categories,brands}) => {
         if (!form.points.trim()){
             errors.points = "El campo 'Puntos' es requerido";
         }
-
-        return errors
+        return errors;
     };
 
     const { 
@@ -131,7 +131,7 @@ const NewProduct = ({categories,brands}) => {
                                        htmlFor="category">
                                     Categoria
                                 </label>
-                                <select onChange={handleChange} name="category" onBlur={handleBlur} value={form.category.id} className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3    px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="category">
+                                <select onChange={handleChange} name="category" onBlur={handleBlur} value={form.category.id} className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="category">
                                 {
                                     categories.map(category => (
                                         <option value={category.id}>{category.name}</option>
@@ -140,14 +140,14 @@ const NewProduct = ({categories,brands}) => {
                                     </select>
                                 {errors.category &&  <p className={`text-red-500 text-xs italic`}>{errors.category}</p>}
                             </div>     
-                        </div>
-                        <div>
-                            <div clame="w-full">
-                                <label className=" block uppercase block tracking-wide text-gray-700 text-xs font-bold mb-3"
+                        
+                        
+                            <div className="w-full">
+                                <label className="block uppercase block tracking-wide text-gray-700 text-xs font-bold mb-3"
                                        htmlFor="brand">
                                     Marcas
                                 </label>
-                                <select onChange={handleChange} name="brand" onBlur={handleBlur} value={form.brand.id} className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="brand">
+                                <select onChange={handleChange} name="brand" onBlur={handleBlur} value={form.brand.id} className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="brand">
                                 {
                                     brands.map(brand => (
                                         <option value={brand.id}>{brand.name}</option>
@@ -155,16 +155,17 @@ const NewProduct = ({categories,brands}) => {
                                 }
                                 </select>
                                 {errors.brand &&  <p className={`text-red-500 text-xs italic`}>{errors.brand}</p>}
-                            </div>
-                        <div>
+                            </div> 
 
-                             <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-                                   htmlFor="puntos">
-                                Puntos de producto
-                            </label>
+                        
+                            <div className="w-full">
+                                <label className="block uppercase block tracking-wide text-gray-700 text-xs font-bold mb-3"
+                                        htmlFor="puntos">
+                                    Puntos de producto
+                            </label> 
                             <input
                                 autoComplete="off"
-                                className="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
+                                className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                                 id="puntos" type="number"
                                 placeholder="Puntos del producto"
                                 name="points"
@@ -174,9 +175,9 @@ const NewProduct = ({categories,brands}) => {
                                 required
                             />
                             {errors.points &&  <p className={`text-red-500 text-xs italic`}>{errors.points}</p>}
-
-                    </div>
                         </div>
+                    
+                        
 
                         <div className="flex flex-wrap -mx-3 mb-2">
                             <div className="block uppercase w-full md:w-1/2 px-3 mb-6 md:mb-0">
@@ -185,12 +186,10 @@ const NewProduct = ({categories,brands}) => {
                                         Precio
                                     </label>
                                     <div className="mt-1 relative rounded-md shadow-sm">
-                                        <div
-                                            className="absolute inset-y-0 left-0 pl-2 pb-4 flex items-center pointer-events-none shadow-lg">
-                                          <span className="text-center text-gray-500 sm:text-sm align-middle">
+                                        <div>
+                                        <span className="text-center flex p-3 absolute text-gray-500 sm:text-sm align-middle">
                                             $
-                                          </span>
-                                        </div>
+                                        </span>
                                         <input
                                                type="number"
                                                id="price"
@@ -199,8 +198,8 @@ const NewProduct = ({categories,brands}) => {
                                                placeholder="0.00" name="price"
                                                 value={form.price}
                                                onChange={handleChange}
-                                               onBlur={handleBlur}
-                                               required
+                                                onBlur={handleBlur}
+                                                required
                                                maxLength = "7"
                                                onKeyPress={(event) => {
                                                    if (!/[0-9]?[0-9]?(\.[0-9][0-9]?)?/.test(event.key)) {
@@ -208,6 +207,7 @@ const NewProduct = ({categories,brands}) => {
                                                    }
                                                }}
                                         />
+                                        </div>
                                     {errors.price &&  <p className={`text-red-500 text-xs italic`}>{errors.price}</p>}
                                     </div>
                                 </div>
@@ -236,6 +236,7 @@ const NewProduct = ({categories,brands}) => {
                                 {errors.stock &&  <p className={`text-red-500 text-xs italic`}>{errors.stock}</p>}
                             </div>
                         </div>
+                    </div>
 
                         <button type="submit" 
                                 className={`bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-8`}

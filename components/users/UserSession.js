@@ -18,7 +18,7 @@ const UserSession = ({session}) => {
     if (session) {
         return (
                 <div className="relative inline-block text-left">
-                        <div className="text-smw block mt-4 lg:relative lg:-mt-2">
+                        <div className="text-smw block lg:relative lg:-mt-2">
                             <button type="button"
                                     onClick={showOptionsSession}
                                     className="inline-flex justify-center w-full rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-indigo-500"
@@ -63,7 +63,7 @@ const UserSession = ({session}) => {
     } else {
         return (
                 <Link href="/api/auth/signin">
-                    <a className="mt-2 lg:inline-block lg:mt-0 mr-4" aria-label="login">
+                    <a className="p-6 m-6" aria-label="login">
                         <FontAwesomeIcon className="text-palette-primary w-6 m-auto" icon={faUserCircle} />
                     </a>
                 </Link>

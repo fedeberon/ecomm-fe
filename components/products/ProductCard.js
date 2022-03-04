@@ -2,12 +2,16 @@ import Image from 'next/image'
 import Link from 'next/link'
 import Price from '@/components/products/Price'
 import logo from "../../images/default.jpeg";
-import {useEffect} from "react";
+import { useState } from "react";
+
 
 function ProductCard({ product }) {
-  const title = product.name
-  const description = product.description
-  const price = product.price
+  const title = product.name;
+  const description = product.description;
+  const price = product.price;
+  const promo = product.promo;
+
+  
 
   const defaultImage = {
         "url": "default.jpeg",
@@ -23,7 +27,7 @@ function ProductCard({ product }) {
       passHref
     >
       <a className="h-120 w-72 rounded shadow-lg mx-auto border border-palette-lighter">
-        <div className="h-72 border-b-2 border-palette-lighter relative">
+        <div className="h-72 border-b-2 m-2 border-palette-lighter relative">
           {
             <Image
                 src={image}
@@ -33,10 +37,20 @@ function ProductCard({ product }) {
           }
         </div>
         <div className="h-48 relative">
-          <div>
-            <span
-                className="absolute py-2 px-8 text-sm text-white top-0 right-0 bg-red-600 rounded-md transform translate-x-5 -translate-y-5 shadow-xl">Promo</span>
-          </div>
+
+            {
+
+              promo
+              ?
+                <div>
+                  <span className={'absolute py-2 px-8 text-sm text-white top-0 right-0 bg-red-600 rounded-md transform translate-x-5 -translate-y-5 shadow-xl'}>Promo</span>
+                </div>
+              :
+                <div></div>
+            }
+
+          
+
           <div className="font-primary text-palette-primary text-2xl pt-4 px-4 font-semibold">
             {title}
           </div>

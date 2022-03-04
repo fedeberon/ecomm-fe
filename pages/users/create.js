@@ -14,6 +14,7 @@ const Create = () => {
         "email": ""
     })
 
+
     const handleChange = (e) => {
         setUser({
             ...user,
@@ -25,7 +26,7 @@ const Create = () => {
         e.preventDefault();
         save(user).then((result) => {
             if (result.status === 202) {
-                window.location.href = '/users/' + result.data.username
+                window.location.href = '/login'
             }
         });
     }
@@ -46,7 +47,7 @@ const Create = () => {
                             <input
                                 onChange={handleChange}
                                 name={"name"}
-                                className="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
+                                className="appearance-none block w-full capitalize bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
                                 type="text"
                                 placeholder="Nombre"/>
                                 <p className="text-red-500 text-xs italic">Complete su Nombre.</p>
@@ -59,7 +60,7 @@ const Create = () => {
                             <input
                                 onChange={handleChange}
                                 name={"lastName"}
-                                className="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
+                                className="appearance-none block capitalize w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
                                 type="text" placeholder="Ingrese su Apellido"/>
                             <p className="text-red-500 text-xs italic">Complete su Apellido.</p>
 
@@ -106,7 +107,7 @@ const Create = () => {
                                 type="text" placeholder="Ingrese una contraseña"/>
                         </div>
                     </div>
-
+                    
                     <button type="submit" onClick={submit}
                             className={`bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded `}>
                         Listo !

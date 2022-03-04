@@ -12,7 +12,6 @@ const Profile = ({userSession}) => {
         <div class="bg-indigo-50 h-screen md:px-20 pt-6">
             <div class="bg-white h-full w-full rounded-md flex">
                 <UserNav/>
-                <UserData user={userSession}/> 
             </div>
         </div>
     )
