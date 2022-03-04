@@ -77,6 +77,16 @@ export async function save(product) {
     }
 }
 
+export async function updateAsAPromotion(product) {
+    const fetchUrl = `${process.env.NEXT_PUBLIC_BACKEND_SERVICE}/product/promotion`;
+    try {
+        let response = await axios.post(fetchUrl, product);
+        return response;
+    } catch (error) {
+        throw new Error("Could not save  promotion of a product!");
+    }
+}
+
 export async function getPreference(cart) {
     const fetchUrl = `${process.env.NEXT_PUBLIC_BACKEND_SERVICE}/payment/checkout`;
     let details = []
