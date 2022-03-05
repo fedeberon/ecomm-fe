@@ -3,11 +3,13 @@ import CreditCard from "@/components/cart/CreditCard";
 import {getSession} from "next-auth/client";
 import {getBilling} from "../../services/billingService";
 import {useRouter} from "next/router";
-import {createCheckout} from "../../services/productService";
+import {buyWithPoints, createCheckout} from "../../services/productService";
 import {useCartContext, useCleanCartContext} from "@/context/Store";
 import Loading from "@/components/utils/Loading";
+import {getPoints} from "../../services/walletService";
+import logo from "../../images/Logo Dulce bb.png";
 
-const Payment = () => {
+const Payment = ({user, myPoints}) => {
     const [checkout, setCheckout] = useState()
     const [error, setError] = useState();
     const router = useRouter()
@@ -66,6 +68,20 @@ const Payment = () => {
         setPerson({
             ...person,
             [e.target.name]: e.target.value,
+        });
+    }
+
+    const handleCreditPoints = () => {
+        setLoading(true);
+        let walletDiscount = {
+            "username": user.username,
+            "checkoutId": checkout.id,
+        };
+        buyWithPoints(walletDiscount).then((res) => {
+            setCheckout(res.data);
+            setLoading(false);
+            router.push('/users/wallet')
+            cleanCart();
         });
     }
 
@@ -162,7 +178,31 @@ const Payment = () => {
                             <CreditCard name={person.name}/>
                         </div>
                         <div id="third" className={`${tabs.pointCard ? `` : `hidden`}   p-4`}>
-                            Third tab
+
+                            <div className='text-white max-w-xs my-auto mx-auto bg-gradient-to-r from-pink-500 to-purple-500 p-4 py-5 px-5 rounded-xl'>
+                                <div className="flex justify-between">
+                                    <div>
+                                        <h2> Mis puntos</h2>
+                                        <p className='text-2xl font-bold'> {myPoints}</p>
+                                    </div>
+                                    <div className="flex items-center ">
+                                        <img src={logo.src} className={"w-16 relative lg:w-24"} />
+                                    </div>
+                                </div>
+                                <div className='flex justify-between mt-5 w-48 '>
+                                    <div>
+                                        <h3 className="text-xs"> Titular </h3>
+                                        <p className="font-bold"> {user.name} { user.lastName} </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <hr className='my-5'/>
+
+                            <a onClick={handleCreditPoints}
+                               aria-label="checkout-products"
+                               className="mt-8 w-1/2 bg-gradient-to-r from-blue-900 to-blue-500 text-white text-lg font-primary font-semibold pt-2 pb-1 leading-relaxed flex cursor-pointer
+                                                  justify-center items-center focus:ring-1 focus:ring-palette-light focus:outline-none w-full hover:bg-blue-600 rounded-sm"
+                            >Tarjeta de Puntos. Saldo: {myPoints}</a>
                         </div>
                     </div>
                 </div>
@@ -183,3 +223,27 @@ const Payment = () => {
 
 
 export default Payment;
+
+
+export async function getServerSideProps(context) {
+    const session = await getSession(context)
+
+    if(session == null) {
+        return {
+            redirect: {
+                permanent: false,
+                destination: "/login",
+            },
+            props:{},
+        };
+    }
+    const myPoints = await getPoints(session.user.username);
+    const user = session.user;
+    return {
+        props: {
+            myPoints,
+            user
+        },
+    }
+}
+
