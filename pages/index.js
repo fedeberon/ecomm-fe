@@ -15,7 +15,7 @@ function IndexPage({products, brands}) {
   )
 }
 
-export async function getServerSideProps() {
+export async function getStaticProps() {
   const products = await getProducts();
   const brands = await brandsService.findAll();
    

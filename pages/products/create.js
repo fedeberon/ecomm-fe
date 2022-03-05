@@ -14,9 +14,7 @@ const Create = ({brands, categories}) => {
 
 export async function getServerSideProps() {
     const categories = await categoriesService.findAll();
-    console.log("categories", categories);
     const brands = await brandsService.findAll();
-    console.log("brands", brands);
     return {
       props: {
         brands,

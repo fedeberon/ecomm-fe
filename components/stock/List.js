@@ -2,7 +2,6 @@ import Link from "next/link";
 import Moment from "react-moment";
 
 const List = ({stock}) => {
-    console.log(stock)
     return (
         <>
             <div className="flex flex-col">
