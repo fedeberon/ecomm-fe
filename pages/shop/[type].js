@@ -22,7 +22,6 @@ function Shop({title, products }) {
 
 export async function getServerSideProps({ params }) {
     const products = await getProductsByType(params.type);
-    console.log(products);
 
     return {
         props: {

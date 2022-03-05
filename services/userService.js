@@ -36,7 +36,6 @@ export async function findAll() {
 
 export async function getByUsername(username) {
     const fetchUrl = `${process.env.NEXT_PUBLIC_BACKEND_SERVICE}/user/${username}`;
-    console.log("fetchUrl", fetchUrl);
     try {
         let response = await axios.get(fetchUrl);
 

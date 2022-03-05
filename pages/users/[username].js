@@ -22,7 +22,6 @@ export default Username;
 
 export async function getServerSideProps(ctx) {
     const user = await getSession(ctx);
-    console.log(user);
     const userSession = await getByUsername(user.user.username);
   
     return {
