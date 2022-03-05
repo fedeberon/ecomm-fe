@@ -6,6 +6,7 @@ import Loading from "@/components/utils/Loading";
 import {getBilling} from "../../services/billingService";
 import {useCleanCartContext} from "@/context/Store";
 import {getSession} from "next-auth/client";
+import CreditCard from "@/components/cart/CreditCard";
 
 const Billing = ({isShowing, checkout, type}) => {
     const [show, setShow] = useState(false);
@@ -47,7 +48,6 @@ const Billing = ({isShowing, checkout, type}) => {
         setShow(true);
         const response = await getBilling(person, checkout, type, session);
         if (response.status === 200) {
-            cleanCart();
             window.location.href = '/bills/' + response.data.id
         }
         if(response.status === 500) {
@@ -55,7 +55,7 @@ const Billing = ({isShowing, checkout, type}) => {
             setError(response.data)
             console.log(response.data)
         }
-
+        cleanCart();
     }
 
     return (
@@ -103,6 +103,9 @@ const Billing = ({isShowing, checkout, type}) => {
                             <div className="relative mb-5 mt-2">
                                 <input id="email"  name="email" className="mb-8 text-gray-600 focus:outline-none focus:border focus:border-indigo-700 font-normal w-full h-10 flex items-center pl-3 text-sm border-gray-300 rounded border" placeholder="e-Mail" />
                             </div>
+
+                            {/*<CreditCard />*/}
+
                             <div className="flex items-center justify-start w-full">
                                 <button className="focus:outline-none transition duration-150 ease-in-out hover:bg-indigo-600 bg-indigo-700 rounded text-white px-8 py-2 text-sm" onClick={submit}>Crear Factura</button>
                                 <button className="focus:outline-none ml-3 bg-gray-100 transition duration-150 text-gray-600 ease-in-out hover:border-gray-400 hover:bg-gray-300 border rounded px-8 py-2 text-sm" onClick={closeBillingModal}>
