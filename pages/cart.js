@@ -13,6 +13,7 @@ import getMyShopping from "../services/shoppingService";
 import {getPoints} from "../services/walletService";
 import {useRouter} from "next/router";
 import {NotificationManager} from "react-notifications";
+import Link from "next/link";
 
 
 function CartPage({myPoints, user}) {
@@ -93,7 +94,12 @@ function CartPage({myPoints, user}) {
                                     >Meracado Pago</a>
                                 </>
                         }
-                        {
+
+                        <Link href={"/checkout/payment"} passHref>
+                            <a href="#" className="text-indigo-600 hover:text-indigo-900">Checkout</a>
+                        </Link>
+
+                       {/* {
                             checkout == null
                                 ?
                                 <a onClick={handleCheckout}
@@ -111,7 +117,7 @@ function CartPage({myPoints, user}) {
                                                   justify-center items-center focus:ring-1 focus:ring-palette-light focus:outline-none w-full hover:bg-blue-600 rounded-sm"
                                     >Tarjeta de Puntos. Saldo: {myPoints}</a>
                                 </>
-                        }
+                        }*/}
                         {
                             loading
                                 ?

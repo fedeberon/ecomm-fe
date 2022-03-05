@@ -1,7 +1,5 @@
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
-import {faArrowRight} from '@fortawesome/free-solid-svg-icons'
 import Billing from "@/components/bill/Billing";
-import {useEffect, useState} from "react";
+import {useState} from "react";
 import Loading from "@/components/utils/Loading";
 
 function CheckOutButton({checkout}) {
