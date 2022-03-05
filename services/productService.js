@@ -129,7 +129,6 @@ export async function getCallback(id) {
 
 
 export async function createCheckout(cart){
-    console.log("cart", cart);
     const fetchUrl = `${process.env.NEXT_PUBLIC_BACKEND_SERVICE}/checkout`;
     let details = []
     cart.forEach(function(value, index, array) {
@@ -144,6 +143,17 @@ export async function createCheckout(cart){
         return response;
     } catch (error) {
         throw new Error("Could not create preference!");
+    }
+}
+
+
+export async function buyWithPoints(walletDiscount){
+    const fetchUrl = `${process.env.NEXT_PUBLIC_BACKEND_SERVICE}/wallet`;
+    try {
+        let response = await axios.post(fetchUrl, walletDiscount);
+        return response;
+    } catch (error) {
+        throw new Error("Could not process purchased with points!");
     }
 }
 

@@ -66,8 +66,8 @@ function ProductListings({ products, brands }) {
    return (
           <div className=''>
                 <div>
-                    <div className='flex justify-around py-2'>    
-                        <div className='justify-around m-4'>
+                    <div className='flex justify-center py-2'>    
+                        <div className='justify-between m-4'>
                             <button className="text-purple-500 bg-transparent border border-solid border-purple-500 hover:bg-purple-500 hover:text-white active:bg-purple-600 font-bold 
                                             uppercase 
                                             text-xs
@@ -87,7 +87,7 @@ function ProductListings({ products, brands }) {
                         
                         
                         <input type="search"
-                            className="w-3/4 m-3 bg-gray-100 shadow-lg shadow-indigo-500/50 outline-none rounded-full p-3"
+                            className="w-2/3 m-3 bg-gray-100 shadow-lg shadow-indigo-500/50 outline-none rounded-full p-3"
                             placeholder="Buscar"
                             onChange={searchValue}/>
                         
@@ -102,7 +102,6 @@ function ProductListings({ products, brands }) {
                               role="dialog" aria-modal="true" aria-labelledby="modal-headline">
                                 <div className="grid gap-4 px-4 pt-6 pb-2 sm:p-6 sm:pb-4">
                                   <BrandSearch brands={brands} onclick={handleChangeBrand}/>
-
                                 </div>
 
                                 <div class="flex justify-end pt-2 pb-2 pr-2">
