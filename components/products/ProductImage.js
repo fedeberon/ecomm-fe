@@ -21,18 +21,19 @@ function ProductImage({ images }) {
   }
 
   return (
-    <div className="w-full md:w-1/2 max-w-md border border-palette-lighter bg-white rounded shadow-lg">
-      <div className="relative h-96">
+
+    <div className="w-96 p-2 max-w-md rounded-lg border border-palette-lighter">
+      <div className="container relative  h-96">
         <Image
           src={mainImg}
           layout="fill"
-          className="transform duration-500 ease-in-out hover:scale-105"
+          className="w-96 h-96 transform transform:rounded-lg duration-500 ease-in-out hover:scale-105"
         />
       </div>
       <div className="relative flex border-t border-palette-lighter">
         <button
           aria-label="left-scroll"
-          className="h-32 bg-palette-lighter hover:bg-palette-light  absolute left-0 z-10 opacity-75"
+          className="h-32 bg-palette-lighter hover:bg-palette-light  relative left-0 z-10 opacity-75"
           onClick={() => scroll(-300)}
         >
           <FontAwesomeIcon icon={faArrowLeft} className="w-3 mx-1 text-palette-primary" />
