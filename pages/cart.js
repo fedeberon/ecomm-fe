@@ -96,7 +96,8 @@ function CartPage({myPoints, user}) {
                         }
 
                         <Link href={"/checkout/payment"} passHref>
-                            <a href="#" className="text-indigo-600 hover:text-indigo-900">Checkout</a>
+                            <a href="#" className="w-1/2 bg-blue-500 text-white text-lg font-primary font-semibold pt-2 pb-1 leading-relaxed flex cursor-pointer
+                                                  justify-center items-center focus:ring-1 focus:ring-palette-light focus:outline-none w-full hover:bg-blue-600 rounded-sm">Checkout</a>
                         </Link>
 
                        {/* {
