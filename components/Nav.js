@@ -33,16 +33,15 @@ function Nav() {
 
     <header className="border-b border-palette-lighter w-full sticky top-0 z-20 bg-white"> 
     
-      <div className="flex items-center justify-between flex-wrap mx-2 p-2 lg:flex lg:flex-nowrap lg:px-12 ">
+      <div className="flex items-center justify-between flex-wrap p-2 lg:flex lg:flex-nowrap  ">
         <Link href="/">
-          <div className="flex cursor-pointer flex-row items-center"> 
-              <img src={logo.src} className="w-16 mx-4 hidden sm:block lg:w-24"/>
+          <div className="flex hidden sm:block cursor-pointer flex-row items-center"> 
+              <img src={logo.src} className="w-16 mx-4  lg:w-24"/>
           </div>
         </Link>  
         <div className="block lg:hidden"> 
           <button onClick={handleMenu} className="flex py-2 hover:border-grey">
-            <FontAwesomeIcon icon={faBars} className="w-5 left-1 top-6 ml-2 items-center" />
-            <span className="w-14 ml-2">MENU</span>
+            <FontAwesomeIcon icon={faBars} className="w-5 top-6 ml-2 items-center" />
           </button> 
         </div> 
         <div className="lg:order-2">
@@ -50,7 +49,7 @@ function Nav() {
           </div>
           <div className="lg:order-3">
             <Link href="/cart" passHref>
-              <a className="flex flex-wrap object-right p-6 justify-self-end lg:order-last" aria-label="cart"> 
+              <a className="flex flex-wrap object-right p-6 justify-end lg:order-last" aria-label="cart"> 
                 <FontAwesomeIcon
                   className="text-palette-primary h-6"
                   icon={faShoppingCart}
