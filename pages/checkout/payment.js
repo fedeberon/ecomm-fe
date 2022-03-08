@@ -16,6 +16,9 @@ const Payment = ({user, myPoints}) => {
     const [cart, checkoutUrl] = useCartContext()
     const [loading, setLoading] = useState(false)
     const cleanCart = useCleanCartContext()
+    const [card, setCard] = useState("visa");
+    const [coupon, setCoupon] = useState("")
+
 
     useEffect(async () => {
         setLoading(true)
@@ -52,7 +55,7 @@ const Payment = ({user, myPoints}) => {
     const submit = async (type) => {
         setLoading(true)
         let session =  await getSession()
-        const response = await getBilling(person, checkout, type, session);
+        const response = await getBilling(person, checkout, type, session, coupon, card);
         if (response.status === 200) {
             router.push('/bills/' + response.data.id)
             cleanCart();
@@ -175,7 +178,7 @@ const Payment = ({user, myPoints}) => {
 
                         </div>
                         <div id="second" className={`${tabs.creditCard ? `` : `hidden`}   p-4`}>
-                            <CreditCard name={person.name}/>
+                            <CreditCard name={person.name} setCard={setCard} card={card} coupon={coupon} setCoupon={setCoupon}/>
                         </div>
                         <div id="third" className={`${tabs.pointCard ? `` : `hidden`}   p-4`}>
 
