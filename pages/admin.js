@@ -3,7 +3,7 @@ import Link from "next/link";
 const Admin = () => {
     return (
 
-            <div className="antialiased bg-gray-600 w-full font-ssans flex flex-wrap">
+            <div className="antialiased bg-blue-100 w-full font-ssans flex flex-wrap">
                 <div className="flex flex-wrap m-2 w-full justify-self-center grid grid-cold-1 md:grid-cols-2 container mx-auto">
                     <Link href="/bills">
                         <div className="pl-1 my-4 w-80 h-24 flex lg:w-3/4 justify-self-center bg-green-400 rounded-lg shadow-md cursor-pointer">

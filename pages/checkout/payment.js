@@ -93,26 +93,27 @@ const Payment = ({user, myPoints}) => {
             {
                 checkout
                 ?
-                    <div className="w-1/2 mx-auto mt-4  rounded">
-                        <h1>#{checkout.id}</h1>
-                    <ul id="tabs" className="inline-flex w-full px-1 pt-2 ">
-                        <li className={`px-4 py-2 -mb-px font-semibold text-gray-800 border-b-2 ${tabs.data ? `border-blue-400` : ``} rounded-t opacity-50`}>
-                            <a id="default-tab" name={`data`} href="#" onClick={handleClick}>Datos Personales</a>
-                        </li>
+                <div className="bg-blue-100 lg:px-3">
+                    <div className="lg:mx-6 bg-white  min-h-screen">
+                        
+                        <ul id="tabs" className="inline-flex w-full px-1 pt-2 ">
+                            <li className={`px-4 py-2 -mb-px font-semibold text-gray-800 border-b-2 ${tabs.data ? `border-blue-400` : ``} rounded-t opacity-50`}>
+                                <a id="default-tab" name={`data`} href="#" onClick={handleClick}>Datos Personales</a>
+                            </li>
 
-                        <li className={`px-4 py-2 font-semibold text-gray-800 rounded-t opacity-50 ${tabs.creditCard ? `border-blue-400` : ``}`}>
-                            <a name={`creditCard`} href="#" onClick={handleClick}>Tarjeta Credito</a>
-                        </li>
+                            <li className={`px-4 py-2 font-semibold text-gray-800 rounded-t opacity-50 border-b-2 ${tabs.creditCard ? `border-blue-400` : ``}`}>
+                                <a name={`creditCard`} href="#" onClick={handleClick}>Tarjeta Credito</a>
+                            </li>
 
-                        <li className={`px-4 py-2 font-semibold text-gray-800 rounded-t opacity-50 ${tabs.pointCard ? `border-blue-400` : ``}`}>
-                            <a name={`pointCard`} href="#" onClick={handleClick}>Tarjeta Puntos</a>
-                        </li>
-                    </ul>
+                            <li className={`px-4 py-2 font-semibold text-gray-800 rounded-t opacity-50 border-b-2 ${tabs.pointCard ? `border-blue-400` : ``}`}>
+                                <a name={`pointCard`} href="#" onClick={handleClick}>Tarjeta Puntos</a>
+                            </li>
+                        </ul>
 
-                    <div id="tab-contents">
+                    <div>
                         <div id="first" className={`${tabs.data ? `` : `hidden`} p-4`}>
 
-                            <div className="relative py-8 px-5 md:px-10 bg-white shadow-md rounded border border-gray-400">
+                            <div className=" py-8 px-5 md:px-10 bg-white ">
                                 <div className="w-full flex justify-start text-gray-600 mb-3">
                                     <svg xmlns="http://www.w3.org/2000/svg" className="icon icon-tabler icon-tabler-wallet" width={52} height={52} viewBox="0 0 24 24" strokeWidth={1} stroke="currentColor" fill="none" strokeLinecap="round" strokeLinejoin="round">
                                         <path stroke="none" d="M0 0h24v24H0z" />
@@ -177,10 +178,10 @@ const Payment = ({user, myPoints}) => {
                             </div>
 
                         </div>
-                        <div id="second" className={`${tabs.creditCard ? `` : `hidden`}   p-4`}>
+                        <div id="second" className={`${tabs.creditCard ? `` : `hidden`}  flex bg-white justify-center p-2 `}>
                             <CreditCard name={person.name} setCard={setCard} card={card} coupon={coupon} setCoupon={setCoupon}/>
                         </div>
-                        <div id="third" className={`${tabs.pointCard ? `` : `hidden`}   p-4`}>
+                        <div id="third" className={`${tabs.pointCard ? `` : `hidden`}  p-4`}>
 
                             <div className='text-white max-w-xs my-auto mx-auto bg-gradient-to-r from-pink-500 to-purple-500 p-4 py-5 px-5 rounded-xl'>
                                 <div className="flex justify-between">
@@ -200,14 +201,17 @@ const Payment = ({user, myPoints}) => {
                                 </div>
                             </div>
                             <hr className='my-5'/>
-
-                            <a onClick={handleCreditPoints}
-                               aria-label="checkout-products"
-                               className="mt-8 w-1/2 bg-gradient-to-r from-blue-900 to-blue-500 text-white text-lg font-primary font-semibold pt-2 pb-1 leading-relaxed flex cursor-pointer
-                                                  justify-center items-center focus:ring-1 focus:ring-palette-light focus:outline-none w-full hover:bg-blue-600 rounded-sm"
-                            >Tarjeta de Puntos. Saldo: {myPoints}</a>
+                            <div className="justify-center">
+                                
+                                <a onClick={handleCreditPoints}
+                                aria-label="checkout-products"
+                                className="mt-8 w-1/2 bg-gradient-to-r from-blue-900 to-blue-500 mx-auto text-white text-lg font-primary font-semibold pt-2 pb-1 leading-relaxed flex cursor-pointer
+                                                    justify-center items-center focus:ring-1 focus:ring-palette-light focus:outline-none w-1/3 hover:bg-blue-600 rounded-sm"
+                                >Tarjeta de Puntos. Saldo: {myPoints}</a>
+                            </div>
                         </div>
                     </div>
+                </div>
                 </div>
                 :
                     <></>
