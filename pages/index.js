@@ -6,11 +6,15 @@ import * as brandsService from 'services/brandService';
 function IndexPage({products, brands}) {
   return (
       <>
-        <div className="flex  container mx-auto min-h-full">
-            <Carrusel/>
-        </div>
+        <div className='bg-blue-100 lg:px-6'>
+          <div className='bg-white'>
+            <div className="flex container mx-auto min-h-full">
+              <Carrusel/>
+            </div>
 
-        <ProductListings products={products} brands={brands}/>
+            <ProductListings products={products} brands={brands}/>
+          </div>
+        </div>
      </>
   )
 }
