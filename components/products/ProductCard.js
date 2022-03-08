@@ -26,7 +26,7 @@ function ProductCard({ product }) {
       href={`/products/${product.id}`}
       passHref
     >
-      <a className="h-120 w-72 rounded shadow-lg mx-auto border border-palette-lighter">
+      <a className="h-120 w-80 rounded shadow-lg mx-auto border border-palette-lighter">
         <div className="h-72 border-b-2 m-2 border-palette-lighter relative">
           {
             <Image
@@ -43,7 +43,7 @@ function ProductCard({ product }) {
               promo
               ?
                 <div>
-                  <span className={'absolute py-2 px-8 text-sm text-white top-0 right-0 bg-red-600 rounded-md transform translate-x-5 -translate-y-5 shadow-xl'}>Promo</span>
+                  <span className={'absolute py-2 px-8 text-sm text-white -top-2 right-4 bg-red-600 rounded-md transform translate-x-5 -translate-y-5 shadow-xl'}>Promo</span>
                 </div>
               :
                 <div></div>
