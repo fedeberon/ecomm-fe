@@ -91,10 +91,14 @@ const Payment = ({user, myPoints, users}) => {
     }
 
     const handleChangeUsers = (e) => {
+        debugger
         const {value, name} = e.target;
         getPoints(value).then((res) => {
             setPoints(res)
-            person.name = name
+            setPerson({
+                ...person,
+                "name": name
+            });
         })
     }
 
@@ -189,7 +193,7 @@ const Payment = ({user, myPoints, users}) => {
 
                         </div>
                         <div id="second" className={`${tabs.creditCard ? `` : `hidden`}  flex bg-white justify-center p-2 `}>
-                            <CreditCard name={person.name} setCard={setCard} card={card} coupon={coupon} setCoupon={setCoupon}/>
+                            <CreditCard person={person} setCard={setCard} card={card} coupon={coupon} setCoupon={setCoupon}/>
                         </div>
                         <div id="third" className={`${tabs.pointCard ? `` : `hidden`}  p-4`}>
 
@@ -206,7 +210,7 @@ const Payment = ({user, myPoints, users}) => {
                                 <div className='flex justify-between mt-5 w-48 '>
                                     <div>
                                         <h3 className="text-xs"> Titular </h3>
-                                        <p className="font-bold"> {user.name} { user.lastName} </p>
+                                        <p className="font-bold"> {person.name} { person.lastName} </p>
                                     </div>
                                 </div>
                             </div>
@@ -227,7 +231,7 @@ const Payment = ({user, myPoints, users}) => {
                                     {
                                         users.map((user, index) => {
                                             return (
-                                                <option key={index} value={user.username} name={`${user.name}${user.lastName}`}>{user.name}</option>
+                                                <option key={index} value={user.username} name={`${user.name}`}>{user.name}</option>
                                             )
                                         })
                                     }

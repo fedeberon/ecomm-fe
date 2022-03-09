@@ -1,9 +1,6 @@
 import {useState} from "react";
 
-const CreditCard = ({name, setCard, card , coupon, setCoupon}) => {
-
-
-
+const CreditCard = ({person, setCard, card , coupon, setCoupon}) => {
 
 
     return (
@@ -36,7 +33,7 @@ const CreditCard = ({name, setCard, card , coupon, setCoupon}) => {
 
                             <div className="w-full flex flex-col">
                                 <label htmlFor="">Titular</label>
-                                <input type="text" id="" value={`${name}`} readOnly
+                                <input type="text" id="" value={`${person.name}`} readOnly
                                     className="outline-none bg-transparent"/>
                             </div>
 
