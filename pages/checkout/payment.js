@@ -8,8 +8,9 @@ import {useCartContext, useCleanCartContext} from "@/context/Store";
 import Loading from "@/components/utils/Loading";
 import {getPoints} from "../../services/walletService";
 import logo from "../../images/Logo Dulce bb.png";
+import {findAll} from "../../services/userService";
 
-const Payment = ({user, myPoints}) => {
+const Payment = ({user, myPoints, users}) => {
     const [checkout, setCheckout] = useState()
     const [error, setError] = useState();
     const router = useRouter()
@@ -18,6 +19,7 @@ const Payment = ({user, myPoints}) => {
     const cleanCart = useCleanCartContext()
     const [card, setCard] = useState("visa");
     const [coupon, setCoupon] = useState("")
+    const [points, setPoints] = useState(myPoints)
 
 
     useEffect(async () => {
@@ -86,6 +88,14 @@ const Payment = ({user, myPoints}) => {
             router.push('/users/wallet')
             cleanCart();
         });
+    }
+
+    const handleChangeUsers = (e) => {
+        const {value, name} = e.target;
+        getPoints(value).then((res) => {
+            setPoints(res)
+            person.name = name
+        })
     }
 
     return(
@@ -204,10 +214,26 @@ const Payment = ({user, myPoints}) => {
                             <div className="justify-center">
                                 
                                 <a onClick={handleCreditPoints}
-                                aria-label="checkout-products"
-                                className="mt-8 w-1/2 bg-gradient-to-r from-blue-900 to-blue-500 mx-auto text-white text-lg font-primary font-semibold pt-2 pb-1 leading-relaxed flex cursor-pointer
+                                    aria-label="checkout-products"
+                                    className="mt-8 w-1/2 bg-gradient-to-r from-blue-900 to-blue-500 mx-auto text-white text-lg font-primary font-semibold pt-2 pb-1 leading-relaxed flex cursor-pointer
                                                     justify-center items-center focus:ring-1 focus:ring-palette-light focus:outline-none w-1/3 hover:bg-blue-600 rounded-sm"
-                                >Tarjeta de Puntos. Saldo: {myPoints}</a>
+                                >Tarjeta de Puntos. Saldo: {points}</a>
+
+                                <select id="user"
+                                        className="m-6 w-80 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block  p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                        onChange={handleChangeUsers}
+                                >
+                                    <option value="">Seleccione el usuario </option>
+                                    {
+                                        users.map((user, index) => {
+                                            return (
+                                                <option key={index} value={user.username} name={`${user.name}${user.lastName}`}>{user.name}</option>
+                                            )
+                                        })
+                                    }
+                                </select>
+
+
                             </div>
                         </div>
                     </div>
@@ -234,7 +260,7 @@ export default Payment;
 
 export async function getServerSideProps(context) {
     const session = await getSession(context)
-
+    const users = await findAll();
     if(session == null) {
         return {
             redirect: {
@@ -249,7 +275,8 @@ export async function getServerSideProps(context) {
     return {
         props: {
             myPoints,
-            user
+            user,
+            users
         },
     }
 }

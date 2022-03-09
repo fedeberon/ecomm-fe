@@ -68,7 +68,7 @@ const CreditCard = ({name, setCard, card , coupon, setCoupon}) => {
                         <label htmlFor="countries"
                                className="mx-6 block text-sm font-medium text-gray-900 dark:text-gray-400">
                             Seleccione la tarjeta de cr&eacute;dito</label>
-                        <select id="countries"
+                        <select id="cards"
                                 onChange={(e) => {
                                     setCard(e.target.value)
                                 }}
