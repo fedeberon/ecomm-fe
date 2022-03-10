@@ -8,7 +8,7 @@ import {useCartContext, useCleanCartContext} from "@/context/Store";
 import Loading from "@/components/utils/Loading";
 import {getPoints} from "../../services/walletService";
 import logo from "../../images/Logo Dulce bb.png";
-import {findAll} from "../../services/userService";
+import {findAll, getByUsername} from "../../services/userService";
 
 const Payment = ({user, myPoints, users}) => {
     const [checkout, setCheckout] = useState()
@@ -76,10 +76,10 @@ const Payment = ({user, myPoints, users}) => {
         });
     }
 
-    const handleCreditPoints = () => {
+    const handleCreditPoints = (user) => {
         setLoading(true);
         let walletDiscount = {
-            "username": user.username,
+            "username": user,
             "checkoutId": checkout.id,
         };
         buyWithPoints(walletDiscount).then((res) => {
@@ -91,14 +91,18 @@ const Payment = ({user, myPoints, users}) => {
     }
 
     const handleChangeUsers = (e) => {
-        debugger
-        const {value, name} = e.target;
+        const {value} = e.target;
         getPoints(value).then((res) => {
             setPoints(res)
+        })
+
+        getByUsername(value).then((res) => {
             setPerson({
-                ...person,
-                "name": name
-            });
+                "name": res.name,
+                "lastName": res.lastName,
+                "address": res.address,
+                "cuit": res.cuit
+            })
         })
     }
 
@@ -201,7 +205,7 @@ const Payment = ({user, myPoints, users}) => {
                                 <div className="flex justify-between">
                                     <div>
                                         <h2> Mis puntos</h2>
-                                        <p className='text-2xl font-bold'> {myPoints}</p>
+                                        <p className='text-2xl font-bold'> {points}</p>
                                     </div>
                                     <div className="flex items-center ">
                                         <img src={logo.src} className={"w-16 relative lg:w-24"} />
@@ -217,7 +221,7 @@ const Payment = ({user, myPoints, users}) => {
                             <hr className='my-5'/>
                             <div className="justify-center">
                                 
-                                <a onClick={handleCreditPoints}
+                                <a onClick={() => handleCreditPoints(person.username)}
                                     aria-label="checkout-products"
                                     className="mt-8 w-1/2 bg-gradient-to-r from-blue-900 to-blue-500 mx-auto text-white text-lg font-primary font-semibold pt-2 pb-1 leading-relaxed flex cursor-pointer
                                                     justify-center items-center focus:ring-1 focus:ring-palette-light focus:outline-none w-1/3 hover:bg-blue-600 rounded-sm"
