@@ -3,14 +3,15 @@ import {useState} from "react";
 const CreditCard = ({person, setCard, card , coupon, setCoupon}) => {
 
 
+
     return (
 
             <div className="justify-between">
                 
-                <div id="card" className="m-auto w-80 h-48 rounded-2xl font-mono text-white overflow-hidden cursor-pointer transition-all duration-500"
+                <div id="card" className={"m-auto w-80 h-48 rounded-2xl font-mono text-white overflow-hidden cursor-pointer transition-all duration-500"}
                     style={{transition: "0.6s", transformStyle: "preserve-3d;"}}>
 
-                    <div className="w-full h-full flex flex-col gap-6 p-6 bg-gradient-to-tr from-gray-900 to-gray-500 transition-all duration-100 delay-200 z-20"
+                    <div className={` w-full h-full flex flex-col gap-6 p-6 ${ card == "amex" ? "bg-gradient-to-br from-green-500 via-gray-300 to-green-500" : "" } ${ card == "visa" ? "bg-gradient-to-tr from-blue-900 to-blue-500" : "" } ${ card == "mastercard" ? "bg-gradient-to-tr from-yellow-800 to-yellow-700" : "" } transition-all duration-100 delay-200 z-20`}
                         style={{transform: "rotateY(0deg);"}}>
 
                         <div className="flex justify-between items-center">
@@ -23,21 +24,21 @@ const CreditCard = ({person, setCard, card , coupon, setCoupon}) => {
                                 alt="Visa image" className="w-12"/>
                         </div>
 
-                        <div className="">
+                        <div className={`${ card == "amex" ? "text-black" : "text-white" }`}>
                             <label htmlFor="" className="hidden">Card Number</label>
                             <input type="text" id="" value="**** **** **** ****" readOnly
-                                className="outline-none w-full bg-transparent text-center text-2xl"/>
+                                className="outline-none w-full  bg-transparent text-center text-2xl"/>
                         </div>
 
                         <div className="w-full flex flex-row justify-between">
 
-                            <div className="w-full flex flex-col">
+                            <div className={`${ card == "amex" ? "text-black" : "text-white" } w-full flex flex-col`}>
                                 <label htmlFor="">Titular</label>
                                 <input type="text" id="" value={`${person.name}`} readOnly
                                     className="outline-none bg-transparent"/>
                             </div>
 
-                            <div className="w-1/4 flex flex-col">
+                            <div className={`${ card == "amex" ? "text-black" : "text-white" } w-1/4 flex flex-col`}>
                                 <label htmlFor="">Expires</label>
                                 <input type="text" id="" value="**/**" readOnly className="outline-none bg-transparent"/>
                             </div>
