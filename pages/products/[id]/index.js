@@ -4,7 +4,7 @@ import {getProduct, getProducts} from "../../../services/productService";
 function Index({ productData }) {
 
     return (
-        <div className="bg-blue-100 lg:px-10 lg:py-2">
+        <div className="bg-blue-100 lg:px-6">
             <div className="justify-center">
                 <ProductSection productData={productData} />
             </div>

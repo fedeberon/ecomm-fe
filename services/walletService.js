@@ -19,7 +19,7 @@ export async function getWalletUser(username) {
 }
 
 export async function getPoints(username) {
-    const fetchUrl = `${process.env.BACKEND_SERVICE}/user/wallet/points/${username}`
+    const fetchUrl = `${process.env.NEXT_PUBLIC_BACKEND_SERVICE}/user/wallet/points/${username}`
 
     const fetchOptions = {
         endpoint: fetchUrl,

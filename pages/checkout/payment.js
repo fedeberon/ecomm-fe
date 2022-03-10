@@ -8,14 +8,19 @@ import {useCartContext, useCleanCartContext} from "@/context/Store";
 import Loading from "@/components/utils/Loading";
 import {getPoints} from "../../services/walletService";
 import logo from "../../images/Logo Dulce bb.png";
+import {findAll, getByUsername} from "../../services/userService";
 
-const Payment = ({user, myPoints}) => {
+const Payment = ({user, myPoints, users}) => {
     const [checkout, setCheckout] = useState()
     const [error, setError] = useState();
     const router = useRouter()
     const [cart, checkoutUrl] = useCartContext()
     const [loading, setLoading] = useState(false)
     const cleanCart = useCleanCartContext()
+    const [card, setCard] = useState("visa");
+    const [coupon, setCoupon] = useState("")
+    const [points, setPoints] = useState(myPoints)
+
 
     useEffect(async () => {
         setLoading(true)
@@ -52,7 +57,7 @@ const Payment = ({user, myPoints}) => {
     const submit = async (type) => {
         setLoading(true)
         let session =  await getSession()
-        const response = await getBilling(person, checkout, type, session);
+        const response = await getBilling(person, checkout, type, session, coupon, card);
         if (response.status === 200) {
             router.push('/bills/' + response.data.id)
             cleanCart();
@@ -71,10 +76,10 @@ const Payment = ({user, myPoints}) => {
         });
     }
 
-    const handleCreditPoints = () => {
+    const handleCreditPoints = (user) => {
         setLoading(true);
         let walletDiscount = {
-            "username": user.username,
+            "username": user,
             "checkoutId": checkout.id,
         };
         buyWithPoints(walletDiscount).then((res) => {
@@ -85,31 +90,48 @@ const Payment = ({user, myPoints}) => {
         });
     }
 
+    const handleChangeUsers = (e) => {
+        const {value} = e.target;
+        getPoints(value).then((res) => {
+            setPoints(res)
+        })
+
+        getByUsername(value).then((res) => {
+            setPerson({
+                "name": res.name,
+                "lastName": res.lastName,
+                "address": res.address,
+                "cuit": res.cuit
+            })
+        })
+    }
+
     return(
         <>
             {
                 checkout
                 ?
-                    <div className="w-1/2 mx-auto mt-4  rounded">
-                        <h1>#{checkout.id}</h1>
-                    <ul id="tabs" className="inline-flex w-full px-1 pt-2 ">
-                        <li className={`px-4 py-2 -mb-px font-semibold text-gray-800 border-b-2 ${tabs.data ? `border-blue-400` : ``} rounded-t opacity-50`}>
-                            <a id="default-tab" name={`data`} href="#" onClick={handleClick}>Datos Personales</a>
-                        </li>
+                <div className="bg-blue-100 lg:px-3">
+                    <div className="lg:mx-6 bg-white  min-h-screen">
+                        
+                        <ul id="tabs" className="inline-flex w-full px-1 pt-2 ">
+                            <li className={`px-4 py-2 -mb-px font-semibold text-gray-800 border-b-2 ${tabs.data ? `border-blue-400` : ``} rounded-t opacity-50`}>
+                                <a id="default-tab" name={`data`} href="#" onClick={handleClick}>Datos Personales</a>
+                            </li>
 
-                        <li className={`px-4 py-2 font-semibold text-gray-800 rounded-t opacity-50 ${tabs.creditCard ? `border-blue-400` : ``}`}>
-                            <a name={`creditCard`} href="#" onClick={handleClick}>Tarjeta Credito</a>
-                        </li>
+                            <li className={`px-4 py-2 font-semibold text-gray-800 rounded-t opacity-50 border-b-2 ${tabs.creditCard ? `border-blue-400` : ``}`}>
+                                <a name={`creditCard`} href="#" onClick={handleClick}>Tarjeta Credito</a>
+                            </li>
 
-                        <li className={`px-4 py-2 font-semibold text-gray-800 rounded-t opacity-50 ${tabs.pointCard ? `border-blue-400` : ``}`}>
-                            <a name={`pointCard`} href="#" onClick={handleClick}>Tarjeta Puntos</a>
-                        </li>
-                    </ul>
+                            <li className={`px-4 py-2 font-semibold text-gray-800 rounded-t opacity-50 border-b-2 ${tabs.pointCard ? `border-blue-400` : ``}`}>
+                                <a name={`pointCard`} href="#" onClick={handleClick}>Tarjeta Puntos</a>
+                            </li>
+                        </ul>
 
-                    <div id="tab-contents">
+                    <div>
                         <div id="first" className={`${tabs.data ? `` : `hidden`} p-4`}>
 
-                            <div className="relative py-8 px-5 md:px-10 bg-white shadow-md rounded border border-gray-400">
+                            <div className=" py-8 px-5 md:px-10 bg-white ">
                                 <div className="w-full flex justify-start text-gray-600 mb-3">
                                     <svg xmlns="http://www.w3.org/2000/svg" className="icon icon-tabler icon-tabler-wallet" width={52} height={52} viewBox="0 0 24 24" strokeWidth={1} stroke="currentColor" fill="none" strokeLinecap="round" strokeLinejoin="round">
                                         <path stroke="none" d="M0 0h24v24H0z" />
@@ -174,16 +196,16 @@ const Payment = ({user, myPoints}) => {
                             </div>
 
                         </div>
-                        <div id="second" className={`${tabs.creditCard ? `` : `hidden`}   p-4`}>
-                            <CreditCard name={person.name}/>
+                        <div id="second" className={`${tabs.creditCard ? `` : `hidden`}  flex bg-white justify-center p-2 `}>
+                            <CreditCard person={person} setCard={setCard} card={card} coupon={coupon} setCoupon={setCoupon}/>
                         </div>
-                        <div id="third" className={`${tabs.pointCard ? `` : `hidden`}   p-4`}>
+                        <div id="third" className={`${tabs.pointCard ? `` : `hidden`}  p-4`}>
 
                             <div className='text-white max-w-xs my-auto mx-auto bg-gradient-to-r from-pink-500 to-purple-500 p-4 py-5 px-5 rounded-xl'>
                                 <div className="flex justify-between">
                                     <div>
-                                        <h2> Mis puntos</h2>
-                                        <p className='text-2xl font-bold'> {myPoints}</p>
+                                        <h2>Puntos: </h2>
+                                        <p className='text-2xl font-bold'> {points}</p>
                                     </div>
                                     <div className="flex items-center ">
                                         <img src={logo.src} className={"w-16 relative lg:w-24"} />
@@ -192,19 +214,38 @@ const Payment = ({user, myPoints}) => {
                                 <div className='flex justify-between mt-5 w-48 '>
                                     <div>
                                         <h3 className="text-xs"> Titular </h3>
-                                        <p className="font-bold"> {user.name} { user.lastName} </p>
+                                        <p className="font-bold"> {person.name} { person.lastName} </p>
                                     </div>
                                 </div>
                             </div>
                             <hr className='my-5'/>
+                            <div className="justify-center">
+                                
+                                <a onClick={() => handleCreditPoints(person.username)}
+                                    aria-label="checkout-products"
+                                    className="mt-8 w-80 bg-gradient-to-r from-blue-900 to-blue-500 mx-auto text-white text-lg font-primary font-semibold pt-2 pb-1 leading-relaxed flex cursor-pointer
+                                                    justify-center items-center focus:ring-1 focus:ring-palette-light focus:outline-none w-1/3 hover:bg-blue-600 rounded-sm"
+                                >Tarjeta de Puntos. Saldo: {points}</a>
 
-                            <a onClick={handleCreditPoints}
-                               aria-label="checkout-products"
-                               className="mt-8 w-1/2 bg-gradient-to-r from-blue-900 to-blue-500 text-white text-lg font-primary font-semibold pt-2 pb-1 leading-relaxed flex cursor-pointer
-                                                  justify-center items-center focus:ring-1 focus:ring-palette-light focus:outline-none w-full hover:bg-blue-600 rounded-sm"
-                            >Tarjeta de Puntos. Saldo: {myPoints}</a>
+                                <select id="user"
+                                        className="mx-auto my-3 w-80 text-white text-lg font-primary font-semibold bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded block  p-2.5"
+                                        onChange={handleChangeUsers}
+                                >
+                                    <option value="">Seleccione el usuario </option>
+                                    {
+                                        users.map((user, index) => {
+                                            return (
+                                                <option key={index} value={user.username} name={`${user.name}`}>{user.name}</option>
+                                            )
+                                        })
+                                    }
+                                </select>
+
+
+                            </div>
                         </div>
                     </div>
+                </div>
                 </div>
                 :
                     <></>
@@ -227,7 +268,7 @@ export default Payment;
 
 export async function getServerSideProps(context) {
     const session = await getSession(context)
-
+    const users = await findAll();
     if(session == null) {
         return {
             redirect: {
@@ -242,7 +283,8 @@ export async function getServerSideProps(context) {
     return {
         props: {
             myPoints,
-            user
+            user,
+            users
         },
     }
 }
