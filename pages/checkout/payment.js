@@ -204,7 +204,7 @@ const Payment = ({user, myPoints, users}) => {
                             <div className='text-white max-w-xs my-auto mx-auto bg-gradient-to-r from-pink-500 to-purple-500 p-4 py-5 px-5 rounded-xl'>
                                 <div className="flex justify-between">
                                     <div>
-                                        <h2> Mis puntos</h2>
+                                        <h2>Puntos: </h2>
                                         <p className='text-2xl font-bold'> {points}</p>
                                     </div>
                                     <div className="flex items-center ">
@@ -223,12 +223,12 @@ const Payment = ({user, myPoints, users}) => {
                                 
                                 <a onClick={() => handleCreditPoints(person.username)}
                                     aria-label="checkout-products"
-                                    className="mt-8 w-1/2 bg-gradient-to-r from-blue-900 to-blue-500 mx-auto text-white text-lg font-primary font-semibold pt-2 pb-1 leading-relaxed flex cursor-pointer
+                                    className="mt-8 w-80 bg-gradient-to-r from-blue-900 to-blue-500 mx-auto text-white text-lg font-primary font-semibold pt-2 pb-1 leading-relaxed flex cursor-pointer
                                                     justify-center items-center focus:ring-1 focus:ring-palette-light focus:outline-none w-1/3 hover:bg-blue-600 rounded-sm"
                                 >Tarjeta de Puntos. Saldo: {points}</a>
 
                                 <select id="user"
-                                        className="m-6 w-80 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block  p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                        className="mx-auto my-3 w-80 text-white text-lg font-primary font-semibold bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded block  p-2.5"
                                         onChange={handleChangeUsers}
                                 >
                                     <option value="">Seleccione el usuario </option>
