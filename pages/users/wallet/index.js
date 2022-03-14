@@ -18,7 +18,6 @@ export default Wallet
 
 export async function getServerSideProps(ctx) {
     const user = await getSession(ctx)
-    console.log('user', user)
     const  walletOfUser  = await getWalletUser(user.user.username)
     return {
         props: {

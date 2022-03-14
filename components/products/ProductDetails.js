@@ -1,7 +1,7 @@
-import BackToProductButton from '@/components/products/BackToProductButton'
 import ProductInfo from '@/components/products/ProductInfo'
 import ProductForm from '@/components/products/ProductForm'
 import logo from "../../images/default.jpeg";
+import BackToProductButton from './BackToProductButton';
 
 
 function ProductDetails({ productData}) {
@@ -15,13 +15,16 @@ function ProductDetails({ productData}) {
    const image = productData.images && productData.images.length != 0 ? productData.images[0].link : defaultImage.link
 
   return (
-    <div className="flex flex-col justify-between h-full w-full md:w-1/2 max-w-xs mx-auto space-y-4 min-h-128">
-      <BackToProductButton />
-      <ProductInfo 
-        title={productData.name}
-        description={productData.description}
-        price={productData.price}
-      />
+
+    <div className="flex py-6 flex-col justify-between h-full w-full max-w-xs mx-auto space-y-4 min-h-128">  
+      <div>
+        <ProductInfo 
+          title={productData.name}
+          description={productData.description}
+          price={productData.price}
+        />
+      </div>
+
       <ProductForm 
         title={productData.name}
         mainImg={image}
@@ -29,7 +32,11 @@ function ProductDetails({ productData}) {
         images={productData.images}
         price={productData.price}
       />
+      <div className=''>
+        <BackToProductButton />
+      </div>
     </div>
+    
   )
 }
 

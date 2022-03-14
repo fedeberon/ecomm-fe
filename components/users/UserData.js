@@ -1,10 +1,4 @@
-import { useEffect } from "react";
-
 const UserData = ({user}) => {
-
-    useEffect(() => {
-        console.log(user);   
-   }, [])
 
     return (
 

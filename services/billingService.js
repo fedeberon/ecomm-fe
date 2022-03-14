@@ -1,22 +1,24 @@
 import axios from "axios";
 
 
-export async function getBilling(user, checkout, type, session) {
+export async function getBilling(user, checkout, type, session, coupon, card) {
     const headers = {
         'Content-Type': 'application/json',
         'Authorization': session.user.token
     }
     const bill = {
-        "id": 1,
-        "cardId": "28564066",
+        "cardId": user.cuit,
         "cuit": user.cuit,
         "billType": type,
         "puntoDeVenta" : 1,
         "comments" : "Comentarios ...",
-        "checkoutId": checkout.id
+        "checkoutId": checkout.id,
+        "coupon": coupon,
+        "creditCard": coupon ? card : null
     }
     const fetchUrl = `${process.env.NEXT_PUBLIC_BACKEND_SERVICE}/billing`;
 
+    debugger;
 
     try {
         let response = await axios.post(fetchUrl, bill, {

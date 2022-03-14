@@ -17,7 +17,8 @@ const NewProduct = ({categories,brands}) => {
         },
         code : "",
         stock : "",
-        points: ""
+        points: "",
+        promo:false,
     }
     
     const validationsForm = (form) =>{
@@ -53,8 +54,7 @@ const NewProduct = ({categories,brands}) => {
         if (!form.points.trim()){
             errors.points = "El campo 'Puntos' es requerido";
         }
-
-        return errors
+        return errors;
     };
 
     const { 
@@ -186,12 +186,10 @@ const NewProduct = ({categories,brands}) => {
                                         Precio
                                     </label>
                                     <div className="mt-1 relative rounded-md shadow-sm">
-                                        <div
-                                            className="absolute inset-y-0 left-0 pl-2 pb-4 flex items-center pointer-events-none shadow-lg">
-                                          <span className="text-center text-gray-500 sm:text-sm align-middle">
+                                        <div>
+                                        <span className="text-center flex p-3 absolute text-gray-500 sm:text-sm align-middle">
                                             $
-                                          </span>
-                                        </div>
+                                        </span>
                                         <input
                                                type="number"
                                                id="price"
@@ -200,8 +198,8 @@ const NewProduct = ({categories,brands}) => {
                                                placeholder="0.00" name="price"
                                                 value={form.price}
                                                onChange={handleChange}
-                                               onBlur={handleBlur}
-                                               required
+                                                onBlur={handleBlur}
+                                                required
                                                maxLength = "7"
                                                onKeyPress={(event) => {
                                                    if (!/[0-9]?[0-9]?(\.[0-9][0-9]?)?/.test(event.key)) {
@@ -209,6 +207,7 @@ const NewProduct = ({categories,brands}) => {
                                                    }
                                                }}
                                         />
+                                        </div>
                                     {errors.price &&  <p className={`text-red-500 text-xs italic`}>{errors.price}</p>}
                                     </div>
                                 </div>

@@ -82,20 +82,20 @@ const Create = () => {
 
     }
 
-    const handleChange = (e,index)=>{
-    const { name, value } = e.target;
-      if(name == "order"){
-        stocks.map((stock)=>{
-          stock[name] = value
-        })
-      } else{
-        const stock = stocks[index];
-        stock[name]= value;
-      }
-      validateStock(stocks);
+    const handleChange = (e, index) => {
+        const { name, value } = e.target;
+          if(name == "order"){
+            stocks.map((stock)=>{
+              stock[name] = value
+            })
+          } else{
+            const stock = stocks[index];
+            stock[name]= value;
+          }
+          validateStock(stocks);
     }
-    return (
 
+    return (
       <>
       <NotificationContainer/>
         <div className="flex">

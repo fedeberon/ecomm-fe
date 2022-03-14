@@ -77,6 +77,16 @@ export async function save(product) {
     }
 }
 
+export async function updateAsAPromotion(product) {
+    const fetchUrl = `${process.env.NEXT_PUBLIC_BACKEND_SERVICE}/product/promotion`;
+    try {
+        let response = await axios.post(fetchUrl, product);
+        return response;
+    } catch (error) {
+        throw new Error("Could not save  promotion of a product!");
+    }
+}
+
 export async function getPreference(cart) {
     const fetchUrl = `${process.env.NEXT_PUBLIC_BACKEND_SERVICE}/payment/checkout`;
     let details = []
@@ -119,7 +129,6 @@ export async function getCallback(id) {
 
 
 export async function createCheckout(cart){
-    console.log("cart", cart);
     const fetchUrl = `${process.env.NEXT_PUBLIC_BACKEND_SERVICE}/checkout`;
     let details = []
     cart.forEach(function(value, index, array) {
@@ -134,6 +143,17 @@ export async function createCheckout(cart){
         return response;
     } catch (error) {
         throw new Error("Could not create preference!");
+    }
+}
+
+
+export async function buyWithPoints(walletDiscount){
+    const fetchUrl = `${process.env.NEXT_PUBLIC_BACKEND_SERVICE}/wallet`;
+    try {
+        let response = await axios.post(fetchUrl, walletDiscount);
+        return response;
+    } catch (error) {
+        throw new Error("Could not process purchased with points!");
     }
 }
 

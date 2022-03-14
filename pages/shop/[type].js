@@ -6,15 +6,19 @@ function Shop({title, products }) {
 
     return (
         <>
-            <StoreHeading title={title}/>
+            <div className="bg-blue-100 lg:px-6">
+                <div className="bg-white ">
+                    <StoreHeading title={title}/>
 
-            {
-                products == null
-                ?
-                    <>Not found</>
-                :
-                    <ProductListings products={products} />
-            }
+                    {
+                        products == null
+                        ?
+                            <>Not found</>
+                        :
+                            <ProductListings products={products} />
+                    }
+                </div>
+            </div>
         </>
     )
 
@@ -22,7 +26,6 @@ function Shop({title, products }) {
 
 export async function getServerSideProps({ params }) {
     const products = await getProductsByType(params.type);
-    console.log(products);
 
     return {
         props: {
