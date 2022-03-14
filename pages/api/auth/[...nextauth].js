@@ -10,7 +10,7 @@ const options = {
             name: 'credentials',
             async authorize (credentials) {
                 const {username, password} = credentials;
-                const res = await axios.post(`${process.env.BACKEND_SERVICE}/login`, {
+                const res = await axios.post(`${process.env.NEXT_PUBLIC_BACKEND_SERVICE}/login`, {
                     "username": username,
                     "password": password
                 });

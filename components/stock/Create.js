@@ -13,9 +13,11 @@ const Create = () => {
     const[result, setResult] = useState([])
 
     const searchValue = async (e) => {
-        if(e.target.value === '') return;
-        const resultSearch = await search(e.target.value);
-        setResult(resultSearch);
+      if(e.target.value.trim() === '') {
+        return;
+      }  
+      const resultSearch = await search(e.target.value);
+      setResult(resultSearch);
     }
 
     const remove = (id) => {
@@ -79,7 +81,6 @@ const Create = () => {
       return;
 
     }
-
 
     const handleChange = (e,index)=>{
     const { name, value } = e.target;
