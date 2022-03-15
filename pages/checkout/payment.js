@@ -30,6 +30,7 @@ const Payment = ({user, myPoints, users}) => {
     }, [])
 
     const [person, setPerson] = useState({
+        "username": "",
         "name": "",
         "lastName": "",
         "address" : "",
@@ -98,6 +99,7 @@ const Payment = ({user, myPoints, users}) => {
 
         getByUsername(value).then((res) => {
             setPerson({
+                "username": res.username,
                 "name": res.name,
                 "lastName": res.lastName,
                 "address": res.address,
