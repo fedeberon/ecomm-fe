@@ -24,7 +24,7 @@ export async function login(credentials) {
 }
 
 export async function findAll() {
-    const fetchUrl = `${process.env.NEXT_PUBLIC_BACKEND_SERVICE}/user`;
+    const fetchUrl = `${process.env.BACKEND_SERVICE}/user`;
 
     try {
         let response = await axios.get(fetchUrl);
