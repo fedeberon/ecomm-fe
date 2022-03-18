@@ -44,12 +44,12 @@ function Nav() {
             <FontAwesomeIcon icon={faBars} className="w-5 top-6 ml-2 items-center" />
           </button> 
         </div> 
-        <div className="lg:order-2">
+        <div className="lg:order-2 m-auto">
             <UserSession session={session} />
           </div>
           <div className="lg:order-3">
             <Link href="/cart" passHref>
-              <a className="flex flex-wrap object-right p-6 justify-end lg:order-last" aria-label="cart"> 
+              <a className="flex flex-wrap object-right p-6 lg:order-last" aria-label="cart"> 
                 <FontAwesomeIcon
                   className="text-palette-primary h-6"
                   icon={faShoppingCart}
@@ -65,7 +65,7 @@ function Nav() {
         
         <div
           id="menu"
-          className={`w-4/5 block flex-grow ${isShow ? "" : "hidden"} divide-y divide-y-reverse justify-between divide-gray-200 lg:divide-none lg:flex lg:justify-self-center lg:w-auto`}
+          className={`w-auto block flex-grow ${isShow ? "" : "hidden"} divide-y divide-y-reverse justify-around divide-gray-200 lg:divide-none lg:flex lg:justify-self-center lg:w-auto`}
         >
             <Link href="/" >
               <a className="text-smw border-b border-gray-200 block mt-4 lg:inline-block lg:border-none lg:mt-0 mr-4">

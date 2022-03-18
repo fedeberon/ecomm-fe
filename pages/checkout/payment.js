@@ -129,9 +129,9 @@ const Payment = ({user, myPoints, users}) => {
                         </ul>
 
                     <div>
-                        <div id="first" className={`${tabs.data ? `` : `hidden`} p-4`}>
+                        <div id="first" className={`${tabs.data ? `` : `hidden`} justify-center  p-4`}>
 
-                            <div className=" py-8 px-5 md:px-10 bg-white ">
+                            <div className=" py-8 px-5 md:px-10 bg-white m-auto w-full md:w-1/2">
                                 <div className="w-full flex justify-start text-gray-600 mb-3">
                                     <svg xmlns="http://www.w3.org/2000/svg" className="icon icon-tabler icon-tabler-wallet" width={52} height={52} viewBox="0 0 24 24" strokeWidth={1} stroke="currentColor" fill="none" strokeLinecap="round" strokeLinejoin="round">
                                         <path stroke="none" d="M0 0h24v24H0z" />
@@ -164,7 +164,7 @@ const Payment = ({user, myPoints, users}) => {
                                     <input id="email"  name="email" className="mb-8 text-gray-600 focus:outline-none focus:border focus:border-indigo-700 font-normal w-full h-10 flex items-center pl-3 text-sm border-gray-300 rounded border" placeholder="e-Mail" />
                                 </div>
 
-                                <div className="flex items-center justify-start w-full">
+                                <div className="flex items-center justify-center m-auto w-full">
                                     <a onClick={() => submit('A')}
                                        aria-label="checkout-products"
                                        className="bg-gray-500 text-white text-lg font-primary font-semibold pt-2 pb-1 leading-relaxed flex cursor-pointer
