@@ -6,7 +6,8 @@ import PageTitle from "@/components/PageTitle";
 const ProductsManager = ({products}) => {
 
     return (
-        <div className="mx-auto max-w-6xl">
+        <div className="bg-blue-100 ">
+        <div className="mx-auto bg-white max-w-6xl">
             <PageTitle text="Articulos" />
 
             <Products products={products}/>
@@ -15,6 +16,7 @@ const ProductsManager = ({products}) => {
                     Nuevo Producto
                 </button>
             </Link>
+        </div>
         </div>
     )
 
