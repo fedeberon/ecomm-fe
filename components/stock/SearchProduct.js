@@ -19,7 +19,7 @@ const SearchProduct = ({show, isShow, searchValue, add, showOnShop, result}) => 
                         <button className="absolute top-0 right-0 h-19 w-6 " >
                         <FontAwesomeIcon icon={faTimes} className="w-5" onClick={()=>isShow(false)}/>
                         </button>
-                        <input type="text" id={"search"} placeholder={"Buscar producto por nombre ..."} onChange={searchValue}
+                        <input name="stock" type="text" id={"search"} placeholder={"Buscar producto por nombre..."} onKeyDown={searchValue}
                                className="w-full bg-gray-100 p-2 mt-2 mb-3"/>
                         <div
                             className="right-0 w-full rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none"
