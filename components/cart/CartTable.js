@@ -40,7 +40,7 @@ function CartTable({ cart }) {
             <th className="font-primary font-normal px-6 py-4">Eliminar</th>
           </tr>
         </thead>
-        <tbody className="divide-y divide-palette-lighter">
+        <tbody className="divide-y overscroll-auto justify-between divide-palette-lighter">
           {cartItems.map((item, index) => (
             <tr key={index} className="text-sm sm:text-base text-gray-600 text-center">
               <td className="font-primary font-medium px-4 sm:px-6 py-4 flex items-center">
@@ -94,7 +94,11 @@ function CartTable({ cart }) {
           ))}
           {
             subtotal === 0 ?
-              0
+            <div className='m-auto bg-black justify-center'>
+              <h1 className="leading-relaxed font-primary justify-between m-auto font-extrabold text-3xl text-center text-palette-primary py-2 sm:py-4">
+                  No hay Art&iacute;culos por aqu&iacute;
+              </h1>
+            </div>
               :
               <tr className="text-center">
                 <td></td>

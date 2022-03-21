@@ -9,6 +9,7 @@ import Loading from "@/components/utils/Loading";
 import {getPoints} from "../../services/walletService";
 import logo from "../../images/Logo Dulce bb.png";
 import {findAll, getByUsername} from "../../services/userService";
+import CartTable from '@/components/cart/CartTable'
 
 const Payment = ({user, myPoints, users}) => {
     const [checkout, setCheckout] = useState()
@@ -45,6 +46,7 @@ const Payment = ({user, myPoints, users}) => {
     const handleClick = (e) => {
         const {name} = e.target;
         setTabs({
+            factura: false,
             data: false,
             creditCard: false,
             pointCard: false
@@ -115,6 +117,9 @@ const Payment = ({user, myPoints, users}) => {
                     <div className="lg:mx-6 bg-white  min-h-screen">
                         
                         <ul id="tabs" className="inline-flex w-full px-1 pt-2 ">
+                            <li className={`px-4 py-2 font-semibold text-gray-800 rounded-t opacity-50 border-b-2 ${tabs.factura ? `border-blue-400` : ``}`}>
+                                <a name={`factura`} href="#" onClick={handleClick}>Detalle</a>
+                            </li>
                             <li className={`px-4 py-2 -mb-px font-semibold text-gray-800 border-b-2 ${tabs.data ? `border-blue-400` : ``} rounded-t opacity-50`}>
                                 <a id="default-tab" name={`data`} href="#" onClick={handleClick}>Datos Personales</a>
                             </li>
@@ -129,7 +134,10 @@ const Payment = ({user, myPoints, users}) => {
                         </ul>
 
                     <div>
-                        <div id="first" className={`${tabs.data ? `` : `hidden`} justify-center  p-4`}>
+                        <div id="first" className={`${tabs.factura ? `` : `hidden`}  flex bg-white justify-center p-2 `}>
+                        <CartTable cart={cart}/>  
+                        </div>
+                        <div id="second" className={`${tabs.data ? `` : `hidden`} justify-center  p-4`}>
 
                             <div className=" py-8 px-5 md:px-10 bg-white m-auto w-full md:w-1/2">
                                 <div className="w-full flex justify-start text-gray-600 mb-3">
@@ -196,10 +204,10 @@ const Payment = ({user, myPoints, users}) => {
                             </div>
 
                         </div>
-                        <div id="second" className={`${tabs.creditCard ? `` : `hidden`}  flex bg-white justify-center p-2 `}>
+                        <div id="third" className={`${tabs.creditCard ? `` : `hidden`}  flex bg-white justify-center p-2 `}>
                             <CreditCard person={person} setCard={setCard} card={card} coupon={coupon} setCoupon={setCoupon}/>
                         </div>
-                        <div id="third" className={`${tabs.pointCard ? `` : `hidden`}  p-4`}>
+                        <div id="quarter" className={`${tabs.pointCard ? `` : `hidden`}  p-4`}>
 
                             <div className='text-white max-w-xs my-auto mx-auto bg-gradient-to-r from-pink-500 to-purple-500 p-4 py-5 px-5 rounded-xl'>
                                 <div className="flex justify-between">
