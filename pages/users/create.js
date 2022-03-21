@@ -4,6 +4,9 @@ import {save} from "../../services/userService";
 
 const Create = () => {
 
+
+    const [enable, setEnable] = useState(false)
+
     const [user, setUser] = useState({
         "name": "",
         "lastName": "",
@@ -20,7 +23,28 @@ const Create = () => {
             ...user,
             [e.target.name]: e.target.value,
         });
+        validate();
     }
+
+
+    function validate() {
+        let isValidEmail = /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i.test(user.email);
+        let isValidPassword = /^(?=\w*\d)(?=\w*[A-Z])(?=\w*[a-z])\S{8,16}$/i.test(user.password);  
+        let isValidDNIoCUIT = /^[0-9.-]*$/i.test(user.cuit);  
+
+        console.log(user.name != "", user.lastName != "",  isValidDNIoCUIT, isValidPassword, isValidEmail);
+
+
+        if (user.name && user.lastName != "" && isValidDNIoCUIT && isValidPassword && isValidEmail){
+            setEnable(true)  
+        }  
+        else {
+            setEnable(false)
+        }
+                
+    } 
+
+     
 
     const submit = (e) => {
         e.preventDefault();
@@ -47,6 +71,7 @@ const Create = () => {
                             <input
                                 onChange={handleChange}
                                 name={"name"}
+                                value={user.name}
                                 className="appearance-none block w-full capitalize bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
                                 type="text"
                                 placeholder="Nombre"/>
@@ -60,6 +85,7 @@ const Create = () => {
                             <input
                                 onChange={handleChange}
                                 name={"lastName"}
+                                value={user.lastName}
                                 className="appearance-none block capitalize w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
                                 type="text" placeholder="Ingrese su Apellido"/>
                             <p className="text-red-500 text-xs italic">Complete su Apellido.</p>
@@ -73,10 +99,12 @@ const Create = () => {
                                 E-mail
                             </label>
                             <input
-                                onChange={handleChange}
+                                onChange={handleChange} 
+                                value={user.email}
                                 name={"email"}
                                 className="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
-                                type="text" placeholder="Ingrese un e-mail"/>
+                                type="text" placeholder="Ingrese un e-mail"/> 
+                                <p className="text-red-500 text-xs italic">Ingrese Una Direccion De Correo Electronico.</p>
                         </div>
                     </div>
                     <div className="flex flex-wrap -mx-3 mb-6">
@@ -86,7 +114,8 @@ const Create = () => {
                                 DNI ó CUIT
                              </label>
                             <input
-                                onChange={handleChange}
+                                onChange={handleChange} 
+                                value={user.cuit}
                                 name={"cuit"}
                                 className="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
                                 type="text" placeholder="Ingrese su DNI &oacute; CUIT"/>
@@ -101,17 +130,28 @@ const Create = () => {
                                 Contraseña
                             </label>
                             <input
-                                onChange={handleChange}
+                                onChange={handleChange} 
+                                value={user.password}
                                 name={"password"}
                                 className="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
-                                type="text" placeholder="Ingrese una contraseña"/>
+                                type="text" placeholder="Ingrese una contraseña"/> 
+                                <p className="text-red-500 text-xs italic">Complete su Contraseña</p>
                         </div>
-                    </div>
+                    </div>                    
+                    {
+                        enable
+                            ?    
+                            <button type="submit" onClick={submit}
+                                    className={`bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded `}>
+                                Listo !
+                            </button> 
+                            : 
+                        <></>
+                    }  
+                   
+
                     
-                    <button type="submit" onClick={submit}
-                            className={`bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded `}>
-                        Listo !
-                    </button>
+
 
                 </form>
 
