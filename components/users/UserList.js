@@ -29,6 +29,7 @@ const UserList = ({users}) => {
                                             <span className="sr-only">Editar</span>
                                         </th>
                                         <th></th>
+                                        <th></th>
                                     </tr>
                                     </thead>
                                     <tbody className="bg-white divide-y divide-gray-200">
@@ -43,7 +44,7 @@ const UserList = ({users}) => {
                                                 </td>
                                                 <td className="px-6 py-4 whitespace-nowrap">
                                                     <div className="flex items-center uppercase">
-                                                        <div className="ml-4">
+                                                        <div className="margin auto">
                                                                 {user.name}
                                                         </div>
                                                     </div>
@@ -67,12 +68,17 @@ const UserList = ({users}) => {
                                                 </td>
                                                 <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                                                     <Link href={`/bills/user/${user.username}`} passHref>
-                                                        <a href="#" className="text-indigo-600 hover:text-indigo-900">facturaci&oacute;n</a>
+                                                        <a href="#" className="text-indigo-600 hover:text-indigo-900">Facturaci&oacute;n</a>
                                                     </Link>
                                                 </td>
                                                 <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                                                     <Link href={`/users/${user.username}`} passHref>
-                                                        <a href="#" className="text-indigo-600 hover:text-indigo-900">mas ...</a>
+                                                        <a href="#" className="text-indigo-600 hover:text-indigo-900">Mas ...</a>
+                                                    </Link>
+                                                </td>
+                                                <td className="px-6 py-4 whitespace-nowrap text-rigth text-sm font-medium">
+                                                    <Link href={`/users/wallet/${user.username}`} passHref>
+                                                        <a href="#" className="text-indigo-600 hover:text.-indigo-900"> Puntos</a>
                                                     </Link>
                                                 </td>
                                             </tr>

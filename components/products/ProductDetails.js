@@ -11,7 +11,7 @@ function ProductDetails({ productData}) {
             "link": logo,
             "main": false
         };
-
+        true
    const image = productData.images && productData.images.length != 0 ? productData.images[0].link : defaultImage.link
 
   return (
@@ -31,6 +31,7 @@ function ProductDetails({ productData}) {
         id={productData.id}
         images={productData.images}
         price={productData.price}
+        isPromo={productData.promo}
       />
       <div className=''>
         <BackToProductButton />

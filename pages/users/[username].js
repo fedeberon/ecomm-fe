@@ -5,7 +5,7 @@ import { useEffect } from "react";
 import { getByUsername } from "services/userService";
 
 const Username = ({userSession})  => {
-
+    
     return (
       <div class="bg-indigo-50 h-screen md:px-20 pt-6">
           <div class="bg-white h-full w-full rounded-md flex">
@@ -18,15 +18,11 @@ const Username = ({userSession})  => {
 
 export default Username;
 
- 
-
-export async function getServerSideProps(ctx) {
-    const user = await getSession(ctx);
-    const userSession = await getByUsername(user.user.username);
-  
+export async function getServerSideProps({query}) {
+    const userSession = await getByUsername(query.username);
     return {
         props: {
-            userSession
+            userSession,
         }
     }
 }
