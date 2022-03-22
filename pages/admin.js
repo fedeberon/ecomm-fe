@@ -3,7 +3,7 @@ import Link from "next/link";
 const Admin = () => {
     return (
 
-            <div className="antialiased bg-blue-100 w-full font-ssans flex flex-wrap">
+            <div className="antialiased bg-blue-200 w-full font-ssans flex flex-wrap">
                 <div className="flex flex-wrap m-2 w-full justify-self-center grid grid-cold-1 md:grid-cols-2 container mx-auto">
                     <Link href="/bills">
                         <div className="pl-1 my-4 w-80 h-24 flex lg:w-3/4 justify-self-center bg-green-400 rounded-lg shadow-md cursor-pointer">
@@ -95,36 +95,7 @@ const Admin = () => {
                             </div>
                         </div>
                     </Link>
-                    <Link href="/products">
-                        <div className="pl-1 my-4 w-80 h-24 lg:w-3/4 justify-self-center bg-yellow-400 rounded-lg shadow-md cursor-pointer">
-                            <div className="flex w-full h-full py-2 px-4 bg-white rounded-lg justify-between">
-                                <div className="my-auto">
-                                    <p className="font-bold">EN PROGRESO</p>
-                                    <p className="text-lg"></p>
-                                </div>
-                                <div className="my-auto">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
-                                    </svg>
-                                </div>
-                            </div>
-                        </div>
-                    </Link>
-                    <Link href="/users">
-                        <div className="pl-1 my-4 w-80 h-24 lg:w-3/4 justify-self-center bg-yellow-400 rounded-lg shadow-md cursor-pointer">
-                            <div className="flex w-full h-full py-2 px-4 bg-white rounded-lg justify-between">
-                                <div className="my-auto">
-                                    <p className="font-bold">EN PROGRESO</p>
-                                    <p className="text-lg"></p>
-                                </div>
-                                <div className="my-auto">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
-                                    </svg>
-                                </div>
-                            </div>
-                        </div>
-                    </Link>
+                    
                 </div>
         </div>
     )
