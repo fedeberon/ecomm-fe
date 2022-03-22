@@ -243,7 +243,6 @@ const NewProduct = ({categories,brands}) => {
                                 >
                             Guardar
                         </button>
-                        <p className={`text-red-500 text-xs italic ${Object.keys(errors).length === 0 ? "invisible": "" }`}>Complete los campos.</p>
                     </form>
             </div>
      </>)
