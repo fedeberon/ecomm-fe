@@ -3,8 +3,15 @@ import Bills from "../index";
 import StoreHeading from "@/components/StoreHeading";
 
 const Username = ({bills, username}) => {
-
-    return (
+     return (
+      bills.length == 0
+      ? 
+      <>
+        <div className="min-h-screen">
+          <StoreHeading title={`No hay facturas para el usuario ${username}`}/> 
+        </div>
+      </>
+      :
         <div className="min-h-screen">
           <StoreHeading title={`Facturas para ${username}`}/>
           <Bills bills={bills}/>

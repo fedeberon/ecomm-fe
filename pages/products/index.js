@@ -2,6 +2,7 @@ import Products from "@/components/products/Products";
 import {getProducts} from "../../services/productService";
 import Link from "next/link";
 import PageTitle from "@/components/PageTitle";
+import {updateAsAPromotion} from "../../services/productService"
 
 const ProductsManager = ({products}) => {
 
@@ -13,7 +14,7 @@ const ProductsManager = ({products}) => {
             <Link href="/products/create" passHref>
                 <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 mt-10 ml-10 rounded">
                     Nuevo Producto
-                </button>
+                </button>    
             </Link>
         </div>
     )
@@ -23,9 +24,11 @@ const ProductsManager = ({products}) => {
 
 export async function getServerSideProps() {
     const products = await getProducts()
+    const promo = await updateAsAPromotion()
     return {
         props: {
-            products
+            products,
+            promo,
         },
     }
 }
