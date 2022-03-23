@@ -60,7 +60,7 @@ const Carousel = () => {
 
     // Tailwind styles. Most importantly notice position absolute, this will sit relative to the carousel's outer div.
     const arrowStyle =
-        'absolute text-white text-2xl z-10 bg-black h-10 w-10 rounded-full opacity-75 flex items-center justify-center';
+        'absolute text-white text-2xl z-10 bg-white h-10 w-10 rounded-full opacity-75 flex items-center justify-center';
 
     // Let's create dynamic buttons. It can be either left or right. Using
     // isLeft boolean we can determine which side we'll be rendering our button
@@ -70,13 +70,13 @@ const Carousel = () => {
             type="button"
             onClick={isLeft ? previousImage : nextImage}
             className={`${arrowStyle} ${isLeft ? 'left-2' : 'right-2'}`}
-            style={{ top: '40%' }}
+            style={{ top: '40%' }}  
         >
       <span role="img" aria-label={`Arrow ${isLeft ? 'left' : 'right'}`} className={"bg-slate-900"}>
-        {isLeft ? <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
-</svg> : <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+        {isLeft ? <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" hover="scale-125" fill="none" viewBox="0 0 24 24" stroke="#5b21b6">
+  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="7" d="M15 19l-7-7 7-7" />
+</svg> : <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="#5b21b6">
+  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="7" d="M9 5l7 7-7 7" />
 </svg>} 
       </span>
         </button>
