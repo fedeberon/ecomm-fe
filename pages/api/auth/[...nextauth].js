@@ -21,7 +21,7 @@ const options = {
                     //return Promise.reject('localhost:3000')
                     // Redirect to a URL
                     // If you return null or false then the credentials will be rejected
-                    return Promise.reject(new Error('Datos incorrectos'))
+                    return Promise.reject(`${process.env.NEXT_PUBLIC_BACKEND_SERVICE}/login/error`)
                     // You can also Reject this callback with an Error or with a URL:
                     // return Promise.reject(new Error('error message')) // Redirect to error page
                 }
@@ -31,7 +31,7 @@ const options = {
     pages: {
         signIn: '/login',
         signOut: '/auth/signout',
-        error: '/error', // Error code passed in query string as ?error=
+        error: '/login/error', // Error code passed in query string as ?error=
         verifyRequest: '/auth/verify-request', // (used for check email message)
         newUser: null // If set, new users will be directed here on first sign in
     },
