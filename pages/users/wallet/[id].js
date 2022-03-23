@@ -1,8 +1,9 @@
 import {getWalletUser} from "../../../services/walletService";
-import { getSession } from "next-auth/client";
 import {useEffect} from "react";
 import PageTitle from "@/components/PageTitle";
-import WalletOfUser from "../../../components/wallet/index";
+import WalletOfUser from "../../../components/wallet";
+import { getByUsername } from "services/userService";
+
 
 const Wallet = ({walletOfUser, user}) => {
 
@@ -16,13 +17,14 @@ const Wallet = ({walletOfUser, user}) => {
 }
 export default Wallet
 
-export async function getServerSideProps(ctx) {
-    const user = await getSession(ctx)
-    const  walletOfUser  = await getWalletUser(user.user.username)
+export async function getServerSideProps({query}) {
+    const user = await getByUsername(query.id)
+    const walletOfUser  = await getWalletUser(query.id)
     return {
         props: {
-            walletOfUser,
-            user
+            user,
+            walletOfUser, 
         }
     }
 }
+

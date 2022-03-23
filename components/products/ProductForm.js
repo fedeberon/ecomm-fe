@@ -10,25 +10,24 @@ import {useRouter} from "next/router";
 import { updateAsAPromotion } from 'services/productService';
 
 
-function ProductForm({ title, mainImg, id, images, price }) {
+function ProductForm({ title, mainImg, id, images, price, isPromo }) {
   const [quantity, setQuantity] = useState(1);
   const isLoading = useCartContext()[2];
   const addToCart = useAddToCartContext();
   const [openUploadFile, setOpenUploadFile] = useState(false);
   const router = useRouter();
   const [session, loading] = useSession();
-  const [promo, setPromo] = useState();
-
-   
-   
+  const [promo, setPromo] = useState(isPromo);
   
-  const handlePromo = () => {
-    setPromo(!promo)
+   
+ 
+  const handlePromo = async () => {
     let producToUpdate = {
       id: id,
-      promo: promo 
+      promo: !promo 
     }
-    updateAsAPromotion(producToUpdate);
+    let product = await updateAsAPromotion(producToUpdate);
+    setPromo(product.data.promo)
   }
 
   
@@ -133,7 +132,7 @@ function ProductForm({ title, mainImg, id, images, price }) {
                       className="pt-3 pb-2 bg-blue-600 text-white w-full mt-2 rounded-sm font-primary font-semibold text-xl flex
                         justify-center items-baseline  hover:bg-blue-400 cursor-pointer"
                         onClick={handlePromo} >
-                        Sin Promocion
+                        Promocion
                       </imput>
 
                     :
@@ -141,7 +140,7 @@ function ProductForm({ title, mainImg, id, images, price }) {
                       className="pt-3 pb-2 bg-red-600 text-white w-full mt-2 rounded-sm font-primary font-semibold text-xl flex
                         justify-center items-baseline  hover:bg-red-400 cursor-pointer"
                         onClick={handlePromo} >
-                        En Promocion
+                        Sin Promocion
                       </imput>
                 }
 

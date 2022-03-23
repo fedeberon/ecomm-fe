@@ -36,7 +36,7 @@ const WalletOfUser = ({walletOfUser, user}) => {
                       </div> */}
                       <div>
                           <h3 className="text-xs"> Titular </h3>
-                          <p className="font-bold"> {isWallet ? walletOfUser[0].user.name : user.user.name }  {isWallet ? walletOfUser[0].user.lastName: ""} </p>
+                          <p className="font-bold"> {user.name} {user.lastName} </p>
                       </div>
                   </div>
               </div>
@@ -98,3 +98,5 @@ const WalletOfUser = ({walletOfUser, user}) => {
   );
 }
 export default WalletOfUser;
+
+
