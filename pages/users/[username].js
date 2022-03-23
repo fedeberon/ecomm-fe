@@ -6,6 +6,8 @@ import { useEffect ,useState} from "react";
 import { getByUsername } from "services/userService";
 
 const Username = ({userSession})  => {
+   
+    console.log(userSession);
 
     const [tabs, setTabs] = useState({
         usuarios: true,
@@ -81,11 +83,14 @@ const Username = ({userSession})  => {
 
 export default Username;
 
+ 
+
 export async function getServerSideProps({query}) {
     const userSession = await getByUsername(query.username);
+  
     return {
         props: {
-            userSession,
+            userSession
         }
     }
 }
