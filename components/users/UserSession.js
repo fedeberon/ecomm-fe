@@ -45,7 +45,7 @@ const UserSession = ({session}) => {
                                 <a href="#" className="text-gray-700 block px-4 py-2 text-sm" role="menuitem"
                                    tabIndex="-1" id="menu-item-1">Mi Billetera</a>
                                 </Link>
-                                <Link href="/users/profile">
+                                <Link href={`/users/${session.username}`}>
                                     <a className="text-gray-700 block px-4 py-2 text-sm" role="menuitem"
                                        tabIndex="-1" id="menu-item-2">Mis Datos</a>
                                 </Link>
