@@ -1,11 +1,12 @@
 import ProductCard from '@/components/products/ProductCard'
 import {useEffect, useState} from "react";
 import FilterComponent from '../filter/FilterComponent';
-import {filterProductsByBrands, search} from "../../services/productService"
+import {filterProductsByBrands, search, getProducts} from "../../services/productService"
 import BrandList from '../brands/BrandList';
 import BrandSearch from '../brands/BrandSearch';
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faTimes, faWindowClose} from "@fortawesome/free-solid-svg-icons";
+import * as brandsService from 'services/brandService';
 
 
 function ProductListings({ products, brands }) {
@@ -30,7 +31,7 @@ function ProductListings({ products, brands }) {
   }
 
   const handleChangeBrand = (e) => {
-      debugger
+      // debugger
       if(e.target.checked) {
           setBrandsToSearch(brandsToSearch =>  [
               ...brandsToSearch,
@@ -45,9 +46,14 @@ function ProductListings({ products, brands }) {
   }
 
   const searchBrands = async () => {
-      const products = await filterProductsByBrands(brandsToSearch)
-      setProductsToShow(products)
-      close();
+    const products = []
+    if(brandsToSearch.length == 0) {
+      products = await getProducts()
+    } else {
+      products = await filterProductsByBrands(brandsToSearch)
+    }
+    setProductsToShow(products)
+    close();
   }
 
 
