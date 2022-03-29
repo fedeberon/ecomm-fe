@@ -20,6 +20,7 @@ function SEO({ title }) {
       <meta name="twitter:creator" content={twitterHandle} key="twhandle" />
 
       {/* Open Graph */}
+      
       <meta property="og:url" content={siteURL} key="ogurl" />
       <meta property="og:image" content={imagePreview} key="ogimage" />
       <meta property="og:site_name" content={siteURL} key="ogsitename" />
@@ -27,23 +28,31 @@ function SEO({ title }) {
       <meta property="og:description" content={description} key="ogdesc" />
       <title>{title}</title>
 
-      <link rel="manifest" href="/manifest.json" />
+      <link rel="manifest" href="manifest.json" />
       <link
-        href="/icons/icon-16x16.png"
+        href="/icons/favicon-16x16.png"
         rel="icon"
         type="image/png"
         sizes="16x16"
         purpose="any maskable"
       />
       <link
-        href="/icons/icon-32x32.png"
+        href="/icons/favicon-32x32.png"
         rel="icon"
         type="image/png"
         sizes="32x32"
         purpose="any maskable"
+
       />
       <link rel="apple-touch-icon" href="/apple-icon.png"></link>
       <meta name="theme-color" content="#EF4444" />
+      <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"></link>
+      <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png"></link>
+      <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"></link>
+      <link rel="manifest" href="/site.webmanifest"></link>
+      <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"></link>
+      <meta name="msapplication-TileColor" content="#da532c"></meta>
+      <meta name="theme-color" content="#ffffff"></meta>
     </Head>
   )
 }

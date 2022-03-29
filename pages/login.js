@@ -1,4 +1,5 @@
-import { getCsrfToken } from "next-auth/client"
+import { getCsrfToken } from "next-auth/client";
+import login from "/images/login.png";
 
 const Login = ({csrfToken}) => {
 
@@ -7,7 +8,7 @@ const Login = ({csrfToken}) => {
             <div className="max-w-md w-full space-y-8">
                 <div>
                     <img className="mx-auto h-12 w-auto"
-                         src="https://tailwindui.com/img/logos/workflow-mark-indigo-600.svg" alt="Workflow"/>
+                         src={login.src} alt="Workflow"/>
                         <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
                             Registrese
                         </h2>
