@@ -184,7 +184,10 @@ const Create = () => {
                                    
                                 }
                         </div>
-                    </div>                    
+                    </div>  
+
+                    <div
+                        className="grid justify-items-center ">               
                     {
                         enable
                             ?    
@@ -195,7 +198,7 @@ const Create = () => {
                             : 
                         <></>
                     }  
-                   
+                    </div>    
 
                     
 
