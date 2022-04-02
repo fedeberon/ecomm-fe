@@ -23,6 +23,7 @@
     "prop-types": "^15.7.2",
     "react": "^17.0.1",
     "react-data-table-component": "^7.4.5",
+    "react-date-object": "^2.1.5",
     "react-dom": "^17.0.1",
     "react-dropzone": "^11.4.2",
     "react-moment": "^1.1.1",

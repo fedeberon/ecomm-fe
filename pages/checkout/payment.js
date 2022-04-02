@@ -100,6 +100,7 @@ const Payment = ({user, myPoints, users}) => {
 
         getByUsername(value).then((res) => {
             setPerson({
+                "username": res.username,
                 "name": res.name,
                 "lastName": res.lastName,
                 "address": res.address,
