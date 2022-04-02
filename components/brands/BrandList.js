@@ -38,8 +38,8 @@ const BrandList = ({ brands }) => {
     return (
 
         <div className="flex flex-col">
-            <div className="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
-                <div className="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
+            <div className="overflow-x-auto flex justify-center w-auto lg:w-3/4 m-auto">
+                <div className="py-2  align-middle inline-block min-w-full sm:px-6 lg:px-8">
                     <div className="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
                         <DataTable
                             columns={columns}
@@ -54,9 +54,11 @@ const BrandList = ({ brands }) => {
                     </div>
 
                     <Link href="/brand/create" passHref>
-                        <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 mt-10 ml-10 rounded">
-                            Nueva Marca
-                        </button>
+                        <div className="flex justify-between">
+                            <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 mt-8 m-auto rounded">
+                                Nueva Marca
+                            </button>
+                        </div>
                     </Link>
                 </div>
             </div>

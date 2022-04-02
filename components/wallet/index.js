@@ -1,16 +1,64 @@
 import {useEffect, useState} from "react";
 import logo from "/images/Logo Dulce bb.png";
+import {useMemo} from "react";
+import FilterComponent from "@/components/filter/FilterComponent";
+import {paginationComponentOptions} from "../../DataTableUtils";
+import DataTable from "react-data-table-component";
+import DateObject from "react-date-object";
 
 const WalletOfUser = ({walletOfUser, user}) => {
     const [isWallet, setIsWallet] = useState(false);
     const [points, setPoints] = useState(0);
+    
+    const [filterText, setFilterText] = useState('');
+    const filteredItems = walletOfUser.filter(item => filterText == '' || filterText.toLowerCase().includes(item.id));
+    
 
     useEffect(() => {
-
         walletOfUser.length == 0 ? setIsWallet(false) : setIsWallet(true);
-
         setPoints(walletOfUser.reduce((a,v) =>  a = a + v.points , 0));
         }, [walletOfUser]);
+        const columns = [
+            
+            {
+                name: 'id',
+                selector: row => row.id,
+                sortable: true
+            },
+            {
+                name: 'Producto',
+                selector: row => row.product.name,
+                sortable: true
+            },
+            {
+                name:'Puntos',
+                selector: row => row.points,
+                sortable: true
+            },
+            {
+                name:'cantidad',
+                selector: row => row.quantity,
+                sortable: true
+            },
+            {
+                name: 'Fecha',
+                selector: row =>row.date,
+                sortable: true
+                
+            }
+        ]
+    const subHeaderComponentMemo = useMemo(() => {
+        const handleClear = () => {
+            if (filterText) {
+                setFilterText('');
+            }
+        };
+        return (
+            <FilterComponent onFilter={e => setFilterText(e.target.value)} onClear={handleClear} filterText={filterText} />
+        );
+    }, [filterText]);
+
+
 
   return (
       <div className='justify-between'>
@@ -47,48 +95,16 @@ const WalletOfUser = ({walletOfUser, user}) => {
                   <div className="overflow-x-auto sm:-mx-6 lg:-mx-8">
                       <div className="py-2 inline-block min-w-full sm:px-6 lg:px-8">
                           <div className="overflow-hidden">
-                              <table className="min-w-full border-solid border-2 rounded">
-                                  <thead className="border-b py-8">
-                                  <tr>
-                                      <th scope="col"
-                                          className="text-sm text-center font-medium text-gray-900 py-4 text-left">
-                                          #
-                                      </th>
-                                      <th scope="col"
-                                          className="text-sm text-center font-medium text-gray-900 py-4 text-left">
-                                          Producto
-                                      </th>
-                                      <th scope="col"
-                                          className="text-sm text-center font-medium text-gray-900 py-4 text-left">
-                                          Cantidad
-                                      </th>
-                                      <th scope="col"
-                                          className="text-sm text-center font-medium justify-center text-gray-900 py-4 text-left">
-                                          Puntos
-                                      </th>
-                                  </tr>
-                                  </thead>
-                                  <tbody className="bg-gray-100 items-center">
-                                  {
-                                      walletOfUser.map((w, index) => (
-                                          <tr className="border-b" key={index}>
-                                              <td className="px-6 py-4 whitespace-nowrap text-center text-sm font-medium text-gray-900">
-                                                  {w.id}
-                                              </td>
-                                              <td className="text-sm text-center text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                                                  {w.product.name}
-                                              </td>
-                                              <td className="text-sm text-center text-gray-900 font-light text-center">
-                                                  {w.quantity}
-                                              </td>
-                                              <td className="text-sm text-center text-gray-900 font-light text-center">
-                                                  {w.points}
-                                              </td>
-                                          </tr>
-                                      ))
-                                  }
-                                  </tbody>
-                              </table>
+
+                          <DataTable
+                            columns={columns}
+                            data={filteredItems} 
+                            pagination
+                            subHeader
+                            subHeaderComponent={subHeaderComponentMemo}
+                          />
+
+
                           </div>
                       </div>
                   </div>

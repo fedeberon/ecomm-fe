@@ -1,10 +1,79 @@
 import Link from "next/link";
 import Moment from "react-moment";
+import FilterComponent from "../filter/FilterComponent";
+import DataTable  from "react-data-table-component";
+import {useState, useMemo} from "react"
 
 const Bills = ({bills}) => {
+    const[filterText, setFilterText]= useState ('')
+    const filteredItems =bills.filter(item=> filterText == '' || filterText.toLowerCase().includes(item.id));
+    const columns = [
+            
+        {
+            name: 'id',
+            selector: row => row.id,
+            sortable: true
+        },
+        {
+            name: 'TIPO',
+            selector: row => row.billTypeName,
+            sortable: true
+        },
+        {
+            name:'CUIT',
+            selector: row => row.cuit,
+            sortable: true
+        },
+        {
+            name:'PTO VENTAS',
+            selector: row => row.pointNumber,
+            sortable: true
+        },
+        {
+            name: 'N°',
+            selector: row =>row.number,
+            sortable: true
+            
+        },
+        {
+            name: 'FECHA',
+            selector:row=>row.date,
+            sortable: true
+        },
+        {
+            name: 'CAE',
+            selector:row=>row.cae,
+            sortable: true
+        },
+        {
+            name:'IMPORTE',
+            selector:row=>row.totalAmount,
+            sortable: true
+        }
+    ]
+    const subHeaderComponentMemo = useMemo(() => {
+        const handleClear = () => {
+            if (filterText) {
+                setFilterText('');
+            }
+        };
+        return (
+            <FilterComponent onFilter={e => setFilterText(e.target.value)} onClear={handleClear} filterText={filterText} />
+        );
+    }, [filterText]);
     return (
         <div className="min-h-80 max-w-12 my-4 sm:my-8 mx-auto w-full">
-            <table className="mx-auto">
+             <div className="overflow-hidden">
+
+            <DataTable
+                columns={columns}
+                data={filteredItems} 
+                pagination
+                subHeader
+                subHeaderComponent={subHeaderComponentMemo}
+            />
+        </div>
+            {/* <table className="mx-auto">
                 <thead>
                 <tr className="uppercase text-xs sm:text-sm text-palette-primary border-b border-palette-light">
                     <th className="font-primary font-normal px-6 py-4">Id</th>
@@ -57,7 +126,7 @@ const Bills = ({bills}) => {
                 }
 
                 </tbody>
-            </table>
+            </table> */}
         </div>
     )
 }

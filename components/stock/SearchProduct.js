@@ -10,12 +10,12 @@ const SearchProduct = ({show, isShow, searchValue, add, showOnShop, result}) => 
                 className="flex items-center justify-center min-height-100vh pt-4 px-4 pb-20 text-center sm:block sm:p-0">
                 <div className="fixed inset-0 transition-opacity">
                     <div className="absolute inset-0 bg-gray-700 opacity-75"/>
-                </div>
+                    </div>
                 <span className="hidden sm:inline-block sm:align-middle sm:h-screen">&#8203;</span>
                 <div
-                    className="inline-block align-center bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full"
+                    className="inline-block align-center bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full mt-64"
                     role="dialog" aria-modal="true" aria-labelledby="modal-headline">
-                    <div className="bg-white border-solid  border-4 px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                    <div className="bg-white border-solid border-4 px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
                         <button className="absolute top-0 right-0 h-19 w-6 " >
                         <FontAwesomeIcon icon={faTimes} className="w-5" onClick={()=>isShow(false)}/>
                         </button>
@@ -28,7 +28,7 @@ const SearchProduct = ({show, isShow, searchValue, add, showOnShop, result}) => 
                                 <ul className="bg-white rounded-lg border border-gray-200 text-gray-900 text-sm font-medium">
                                     {
                                         result.map((item, index) => (
-                                            <li className="px-4 py-2 border-b border-gray-200 w-full rounded-t-lg  hover:bg-blue-700 hover:text-white cursor-pointer"
+                                            <li className="px-4 py-2 border-b border-gray-200 w-full rounded-t-lg hover:bg-blue-700 hover:text-white cursor-pointer"
                                                 key={index} href="#"
                                                 tabIndex="-1" onClick={() => add(item)} tabIndex={index}>
                                                 {item.name}
