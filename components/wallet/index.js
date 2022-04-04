@@ -6,6 +6,8 @@ import {paginationComponentOptions} from "../../DataTableUtils";
 import DataTable from "react-data-table-component";
 import DateObject from "react-date-object";
 
+
+
 const WalletOfUser = ({walletOfUser, user}) => {
     const [isWallet, setIsWallet] = useState(false);
     const [points, setPoints] = useState(0);
@@ -42,7 +44,7 @@ const WalletOfUser = ({walletOfUser, user}) => {
             },
             {
                 name: 'Fecha',
-                selector: row =>row.date,
+                selector: row => new DateObject(row.date).format('DD/MM/YYYY hh:mm:ss.'),
                 sortable: true
                 
             }

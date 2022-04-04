@@ -3,6 +3,7 @@ import Moment from "react-moment";
 import FilterComponent from "../filter/FilterComponent";
 import DataTable  from "react-data-table-component";
 import {useState, useMemo} from "react"
+import DateObject from "react-date-object";
 
 const Bills = ({bills}) => {
     const[filterText, setFilterText]= useState ('')
@@ -37,7 +38,7 @@ const Bills = ({bills}) => {
         },
         {
             name: 'FECHA',
-            selector:row=>row.date,
+            selector:row=>new DateObject(row.date).format("DD/MM/YYYY hh:mm:ss."),
             sortable: true
         },
         {
