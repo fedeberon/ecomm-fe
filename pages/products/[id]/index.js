@@ -11,23 +11,8 @@ function Index({ productData }) {
         </div>
     )
 }
-
-
-export async function getStaticPaths() {
-    const products = await getProducts();
-    const paths = products.map((product) => ({
-        params: {
-            id: product.id + '',
-        },
-    }))
-
-    return {
-        paths,
-        fallback: false
-    }
-}
-
-export async function getStaticProps({ params }) {
+ 
+export async function getServerSideProps({ params }) {
     const productData = await getProduct(params.id)
 
     return {
