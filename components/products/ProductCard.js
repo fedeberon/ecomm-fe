@@ -3,7 +3,7 @@ import Link from 'next/link'
 import Price from '@/components/products/Price'
 import logo from "../../images/default.jpeg";
 import { useState } from "react";
-
+// import styles from "styles/globals.css";
 
 function ProductCard({ product }) {
   const title = product.name;
@@ -30,9 +30,10 @@ function ProductCard({ product }) {
         <div className="h-72 border-b-2 m-2 border-palette-lighter relative">
           {
             <Image
+                // className={`img-fluid ${styles.img}`}
                 src={image}
                 layout="fill"
-                className="transform duration-500 ease-in-out hover:scale-110"
+                className="transform imgproduct duration-500 ease-in-out hover:scale-110"
             />
           }
         </div>
