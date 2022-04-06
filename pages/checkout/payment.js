@@ -78,16 +78,16 @@ const Payment = ({user, myPoints, users}) => {
         });
     }
 
-    const handleCreditPoints = (user) => {
+    const handleCreditPoints = (username) => {
         setLoading(true);
         let walletDiscount = {
-            "username": user,
+            "username": username,
             "checkoutId": checkout.id,
         };
         buyWithPoints(walletDiscount).then((res) => {
             setCheckout(res.data);
             setLoading(false);
-            router.push('/users/wallet')
+            router.push(`/users/wallet/${username}`)
             cleanCart();
         });
     }
