@@ -71,11 +71,16 @@ const UploadFile = ({isOpen, setIsOpen, folder}) => {
                                                             <div {...getRootProps({className: 'dropzone'})}>
                                                                 <input {...getInputProps()} />
                                                                 <p>Arrastre y suelte algunos archivos aquí, o haga clic para seleccionar archivos</p>
-                                                            </div>
+                                                            </div> 
+                                                            
                                                             <aside>
-                                                                <h4>Files</h4>
-                                                                <ul>{files}</ul>
-                                                            </aside>
+                                                                <h4>Archivo: </h4> 
+                                                                <div class="border-2 border-dashed border-slate mx-1">
+                                                                <ul>{files}</ul> 
+                                                                </div>
+                                                            </aside>  
+                                                            
+                                                            
                                                         </section>
 
                                                     </p>
