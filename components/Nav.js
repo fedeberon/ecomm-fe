@@ -55,7 +55,7 @@ function Nav() {
                   icon={faShoppingCart}
                 />
                 {cartItems === 0 ? null : (
-                  <div className=" text-xs bg-yellow-300 text-gray-900 font-semibold py-1 px-2 ">
+                  <div className=" text-xs bg-yellow-300 rounded-full text-gray-900 font-semibold py-1 px-2 ">
                     {cartItems}
                   </div>
                 )}

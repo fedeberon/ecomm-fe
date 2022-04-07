@@ -96,7 +96,7 @@ function CartPage({myPoints, user}) {
                                             aria-label="checkout-products"
                                             className="w-1/2 bg-blue-500 text-white text-lg font-primary font-semibold pt-2 pb-1 leading-relaxed flex cursor-pointer
                                                         justify-center items-center focus:ring-1 focus:ring-palette-light focus:outline-none w-full hover:bg-blue-600 rounded-sm"
-                                            >Meracado Pago</a>
+                                            >Mercado Pago</a>
                                         </>
                                 }
                                 
