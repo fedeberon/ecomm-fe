@@ -2,11 +2,11 @@ import {getProduct} from "../../../services/productService";
 import useForm from "../../../hooks/useForm";
 import {NotificationContainer} from 'react-notifications';
 import 'react-notifications/lib/notifications.css';
-import {  useState } from "react";
-/*https://www.npmjs.com/package/react-notifications*/
+import * as brandsService from 'services/brandService';
+import {  useState } from "react"; 
 
 
-const Update = ({product}) => {
+const Update = ({product, brands}) => {
     
     const validationsForm = (form) =>{
         let errors ={};
@@ -138,6 +138,20 @@ const Update = ({product}) => {
                             {errors.category &&  <p className={`text-red-500 text-xs italic`}>{errors.category}</p>}
                         </div>
                     </div>
+                    <div className="w-full">
+                        <label className="block uppercase block tracking-wide text-gray-700 text-xs font-bold mb-3"
+                                htmlFor="brand">
+                            Marcas
+                        </label>
+                        <select onChange={handleChange} name="brand" onBlur={handleBlur} value={form?.brand.id}  className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="brand">
+                        {
+                            brands.map(brand => (
+                                <option value={brand.id}>{brand.name}</option>
+                            ))
+                        }
+                        </select>
+                        {errors.brand &&  <p className={`text-red-500 text-xs italic`}>{errors.brand}</p>}
+                    </div> 
 
                     <div className="flex flex-wrap -mx-3 mb-2">
                         <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
@@ -245,10 +259,12 @@ const Update = ({product}) => {
 
 export async function getServerSideProps({ params }) {
     const product = await getProduct(params.id)
+    const brands = await brandsService.findAll();
 
     return {
         props: {
             product,
+            brands
         },
     }
 }
