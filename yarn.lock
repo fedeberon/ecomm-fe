@@ -1717,6 +1717,11 @@
     "strip-ansi" "^6.0.0"
     "wrap-ansi" "^7.0.0"
 
+"clsx@^1.1.1":
+  "integrity" "sha512-6/bPho624p3S2pMyvP5kKBPXnI3ufHLObBFCfgx+LkeR5lg2XYy2hqZqUf45ypD8COn2bhgGJSUE+l5dhNBieA=="
+  "resolved" "https://registry.npmjs.org/clsx/-/clsx-1.1.1.tgz"
+  "version" "1.1.1"
+
 "color-convert@^1.9.0":
   "integrity" "sha512-QfAUtd+vFdAtFQcC8CCyYt1fYWxSqAiK2cSD6zDB8N3cpsEBAvRxp9zOGg6G/SHHJYAT88/az/IuDGALsNVbGg=="
   "resolved" "https://registry.npmjs.org/color-convert/-/color-convert-1.9.3.tgz"
@@ -2895,9 +2900,9 @@
     "brace-expansion" "^1.1.7"
 
 "minimist@^1.1.1", "minimist@^1.2.0", "minimist@^1.2.5":
-  "integrity" "sha512-FM9nNUYrRBAELZQT3xeZQ7fmMOBg6nWNmJKTcgsJeaLstP/UODVpGsr5OhXhhXg6f+qtJ8uiZ+PUxkDWcgIXLw=="
-  "resolved" "https://registry.npmjs.org/minimist/-/minimist-1.2.5.tgz"
-  "version" "1.2.5"
+  "integrity" "sha512-Jsjnk4bw3YJqYzbdyBiNsPWHPfO++UGG749Cxs6peCu5Xg4nrena6OVxOYxrQTqww0Jmwt+Ref8rggumkTLz9Q=="
+  "resolved" "https://registry.npmjs.org/minimist/-/minimist-1.2.6.tgz"
+  "version" "1.2.6"
 
 "mkdirp@^1.0.4":
   "integrity" "sha512-vVqVZQyf3WLx2Shd0qJ9xuvqgAyKPLAiqITEtqW0oIUjzo3PePDd6fW9iFz30ef7Ysp/oiWqbhszeGWW2T6Gzw=="
@@ -3342,6 +3347,11 @@
   dependencies:
     "deepmerge" "^4.2.2"
 
+"react-date-object@^2.1.5":
+  "integrity" "sha512-iAtF2nz+jZjy3w36qKx2MsxXqbiL7UgGljz9jPjLWxWCl4rDTZUMS/i7hKKiVbL1lJlmubz1Xu6W3i6CW06kTg=="
+  "resolved" "https://registry.npmjs.org/react-date-object/-/react-date-object-2.1.5.tgz"
+  "version" "2.1.5"
+
 "react-dom@^16.13.1 || ^17", "react-dom@^17.0.1", "react-dom@^17.0.2 || ^18.0.0-0", "react-dom@>= 16.8.0", "react-dom@>=16.6.0":
   "integrity" "sha512-s4h96KtLDUQlsENhMn1ar8t2bEa+q/YAtj8pPPdIjPDGBDIVNsrD9aXNWqspUe6AzKCIG0C1HZZLqLV7qpOBGA=="
   "resolved" "https://registry.npmjs.org/react-dom/-/react-dom-17.0.2.tgz"
@@ -3359,6 +3369,13 @@
     "attr-accept" "^2.2.1"
     "file-selector" "^0.2.2"
     "prop-types" "^15.7.2"
+
+"react-image-crop@^10.0.0":
+  "integrity" "sha512-KyNIY66R6T5LqDKDivXcFkvgy6MOjRvZQxURQDhGfW5AFDx/Mw+I32kGlR8g4657ArxHAHKPFhNsao440yAdow=="
+  "resolved" "https://registry.npmjs.org/react-image-crop/-/react-image-crop-10.0.0.tgz"
+  "version" "10.0.0"
+  dependencies:
+    "clsx" "^1.1.1"
 
 "react-is@^16.6.0", "react-is@^16.7.0", "react-is@^16.8.1", "react-is@>= 16.8.0":
   "integrity" "sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ=="
@@ -3413,7 +3430,7 @@
     "loose-envify" "^1.4.0"
     "prop-types" "^15.6.2"
 
-"react@^0.14.0 || ^15.0.0 || ^16.0.0", "react@^0.14.0 || ^15.0.0 || ^16.0.0 || ^17.0.0", "react@^16.0 || ^17.0.0", "react@^16.13.1 || ^17", "react@^16.8.0 || ^17.0.0", "react@^17.0.1", "react@^17.0.2 || ^18.0.0-0", "react@>= 16.8", "react@>= 16.8.0", "react@>= 16.8.0 || 17.x.x || 18.x.x", "react@>= 16.8.3", "react@>=15", "react@>=16.6.0", "react@>=16.x", "react@17.0.2":
+"react@^0.14.0 || ^15.0.0 || ^16.0.0", "react@^0.14.0 || ^15.0.0 || ^16.0.0 || ^17.0.0", "react@^16.0 || ^17.0.0", "react@^16.13.1 || ^17", "react@^16.8.0 || ^17.0.0", "react@^17.0.1", "react@^17.0.2 || ^18.0.0-0", "react@>= 16.8", "react@>= 16.8.0", "react@>= 16.8.0 || 17.x.x || 18.x.x", "react@>= 16.8.3", "react@>=15", "react@>=16.13.1", "react@>=16.6.0", "react@>=16.x", "react@17.0.2":
   "integrity" "sha512-gnhPt75i/dq/z3/6q/0asP78D0u592D5L1pd7M8P+dck6Fu/jJeL6iVVK23fptSUZj8Vjf++7wXA8UNclGQcbA=="
   "resolved" "https://registry.npmjs.org/react/-/react-17.0.2.tgz"
   "version" "17.0.2"
