@@ -1,6 +1,7 @@
 import React, {useState} from "react";
 import axios from "axios";
 import {useDropzone} from "react-dropzone";
+import { ReactCrop } from "react-image-crop";
 
 const UploadFile = ({isOpen, setIsOpen, folder}) => {
     const [file, setFile] = useState();
@@ -26,7 +27,7 @@ const UploadFile = ({isOpen, setIsOpen, folder}) => {
             const formData = new FormData();
             formData.append("file", file);
             formData.append("folder", folder);
-            axios.post("https://vps-2124680-x.dattaweb.com:8888/eComm/file/upload", formData)
+            axios.post(`${process.env.NEXT_PUBLIC_BACKEND_SERVICE}/file/upload`, formData)
                 .then(resp => {
                     return window.location.href = '/products/' + folder
                 }).catch(error => {
