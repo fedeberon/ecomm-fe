@@ -33,6 +33,7 @@ const Payment = ({user, myPoints, users}) => {
     const [person, setPerson] = useState({
         "name": "",
         "lastName": "",
+        "username": "",
         "address" : "",
         "cuit": ""
     })
@@ -109,6 +110,8 @@ const Payment = ({user, myPoints, users}) => {
         })
     }
 
+    console.log(person);
+
     return(
         <>
             {
@@ -149,6 +152,21 @@ const Payment = ({user, myPoints, users}) => {
                                     </svg>
                                 </div>
                                 <h1 className="text-gray-800 font-lg font-bold tracking-normal leading-tight mb-4">Detalle de Facturaci&oacute;n</h1>
+
+                                <select id="user"
+                                        className="mx-auto my-3 w-80 text-gray-800 text-sm font-primary font-bold bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded block  p-2.5"
+                                        onChange={handleChangeUsers}
+                                >
+                                    <option value="">Seleccione el usuario </option>
+                                    {
+                                        users.map((user, index) => {
+                                            return (
+                                                <option key={index} value={user.username} name={`${user.name}`}>{user.name}</option>
+                                            )
+                                        })
+                                    }
+                                </select>
+
                                 <label htmlFor="cuit" className="text-gray-800 text-sm font-bold leading-tight tracking-normal">
                                     CUIT
                                 </label>
@@ -163,15 +181,17 @@ const Payment = ({user, myPoints, users}) => {
                                     Nombre y Apellido
                                 </label>
                                 <div className="relative mb-5 mt-2">
-                                    <input id="name" name="name"  onChange={handleChange} value={person.name} className="text-gray-600 focus:outline-none focus:border focus:border-indigo-700 font-normal w-full h-10 flex items-center pl-3 text-sm border-gray-300 rounded border" placeholder="Nombre y Apellido" />
+                                    <input id="name" name="name"  onChange={handleChange} value={person.name +" "+ person.lastName} className="text-gray-600 focus:outline-none focus:border focus:border-indigo-700 font-normal w-full h-10 flex items-center pl-3 text-sm border-gray-300 rounded border" placeholder="Nombre y Apellido" />
                                 </div>
 
-                                <label htmlFor="email" className="text-gray-800 text-sm font-bold leading-tight tracking-normal">
+                                <label htmlFor="email"  className="text-gray-800 text-sm font-bold leading-tight tracking-normal">
                                     e-Mail
                                 </label>
                                 <div className="relative mb-5 mt-2">
-                                    <input id="email"  name="email" className="mb-8 text-gray-600 focus:outline-none focus:border focus:border-indigo-700 font-normal w-full h-10 flex items-center pl-3 text-sm border-gray-300 rounded border" placeholder="e-Mail" />
+                                    <input id="email"  name="email" onChange={handleChange} value={person.username} className="mb-8 text-gray-600 focus:outline-none focus:border focus:border-indigo-700 font-normal w-full h-10 flex items-center pl-3 text-sm border-gray-300 rounded border" placeholder="e-Mail" />
                                 </div>
+
+                                
 
                                 <div className="flex items-center justify-center m-auto w-full">
                                     <a onClick={() => submit('A')}
@@ -236,19 +256,7 @@ const Payment = ({user, myPoints, users}) => {
                                                     justify-center items-center focus:ring-1 focus:ring-palette-light focus:outline-none w-1/3 hover:bg-blue-600 rounded-sm"
                                 >Tarjeta de Puntos. Saldo: {points}</a>
 
-                                <select id="user"
-                                        className="mx-auto my-3 w-80 text-white text-lg font-primary font-semibold bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded block  p-2.5"
-                                        onChange={handleChangeUsers}
-                                >
-                                    <option value="">Seleccione el usuario </option>
-                                    {
-                                        users.map((user, index) => {
-                                            return (
-                                                <option key={index} value={user.username} name={`${user.name}`}>{user.name}</option>
-                                            )
-                                        })
-                                    }
-                                </select>
+                                
 
 
                             </div>
