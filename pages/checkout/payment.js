@@ -154,7 +154,7 @@ const Payment = ({user, myPoints, users}) => {
                                 <h1 className="text-gray-800 font-lg font-bold tracking-normal leading-tight mb-4">Detalle de Facturaci&oacute;n</h1>
 
                                 <select id="user"
-                                        className="mx-auto my-3 w-80 text-gray-800 text-sm font-primary font-bold bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded block  p-2.5"
+                                        className="text-gray-600 focus:outline-none  font-normal w-full h-10 flex items-center pl-3 text-sm border-gray-300 rounded border"
                                         onChange={handleChangeUsers}
                                 >
                                     <option value="">Seleccione el usuario </option>
