@@ -178,3 +178,13 @@ export async function filterProductsByBrands(brands) {
     }
 }
 
+export async function filterProductsByCategories(categories) {
+    const fetchUrl = `${process.env.NEXT_PUBLIC_BACKEND_SERVICE}/product/search/categories`;
+    try {
+        const response = await axios.post(fetchUrl, categories);
+        debugger
+        return response.data;
+    } catch (error) {
+        throw new Error("Could not search products by categories!");
+    }
+}
