@@ -28,6 +28,10 @@ import 'react-notifications/lib/notifications.css';
         category: {
           id: e.target.value,
         },
+        //? se rompera?
+        brand: {
+          id: e.target.value,
+        },
       });
     }
   };

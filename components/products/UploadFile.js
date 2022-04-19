@@ -1,12 +1,15 @@
 import React, {useState} from "react";
 import axios from "axios";
 import {useDropzone} from "react-dropzone";
+// import ReactCrop from 'react-image-crop'
+// import 'react-image-crop/dist/ReactCrop.css'
 
 const UploadFile = ({isOpen, setIsOpen, folder}) => {
     const [file, setFile] = useState();
+    console.log(file);
     const {acceptedFiles, getRootProps, getInputProps} = useDropzone({
         maxFiles : 1,
-        accept: 'image/jpeg, image/png',
+        accept: 'image/jpeg, image/png, image/jpg',
         onDrop: acceptedFiles => {
             setFile(acceptedFiles[0]);
         }
@@ -26,7 +29,7 @@ const UploadFile = ({isOpen, setIsOpen, folder}) => {
             const formData = new FormData();
             formData.append("file", file);
             formData.append("folder", folder);
-            axios.post("https://vps-2124680-x.dattaweb.com:8888/eComm/file/upload", formData)
+            axios.post(`${process.env.NEXT_PUBLIC_BACKEND_SERVICE}/file/upload`, formData)
                 .then(resp => {
                     return window.location.href = '/products/' + folder
                 }).catch(error => {
@@ -34,6 +37,7 @@ const UploadFile = ({isOpen, setIsOpen, folder}) => {
                 });
 
         };
+    // const[crop,setCrop]=useState()
 
             return (
                 isOpen === false
@@ -71,11 +75,22 @@ const UploadFile = ({isOpen, setIsOpen, folder}) => {
                                                             <div {...getRootProps({className: 'dropzone'})}>
                                                                 <input {...getInputProps()} />
                                                                 <p>Arrastre y suelte algunos archivos aquí, o haga clic para seleccionar archivos</p>
-                                                            </div>
+                                                            </div> 
+                                                            
                                                             <aside>
-                                                                <h4>Files</h4>
-                                                                <ul>{files}</ul>
-                                                            </aside>
+                                                                <h4>Archivo: </h4> 
+                                                                <div class="border-2 border-dashed border-slate mx-1">
+                                                                {/* <div>
+                                                                
+                                                                <ReactCrop src={file} crop={crop} onChange={c => setCrop(c)}>
+                                                                    <img src={file}></img>
+                                                                </ReactCrop>
+                                                                </div> */}
+                                                                <ul>{files}</ul> 
+                                                                </div>
+                                                            </aside>  
+                                                            
+                                                            
                                                         </section>
 
                                                     </p>

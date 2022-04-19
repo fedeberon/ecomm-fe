@@ -1,6 +1,6 @@
 import {createRef, useEffect, useState} from "react"; 
 
-const images = ['/images/tienda-bebe-mobiliario-cochecitos.jpg', '/images/tienda-bebe-zona-rebajas.jpg']  
+const images = ['/images/PañalesCarousel.jpg', '/images/productocarousel5.jpg','images/carp1.png','images/carp2.png']  
 // images must be an array of urls , if using Next JS this could something like
 // const images = ['/img/img1.png', '/img/img2.png', '/img/img3.png']
 // images must be an array of urls , if using Next JS this could something like
@@ -89,8 +89,8 @@ const Carousel = () => {
         // set with position relative, so we can place our cotrol buttons using
         // absolute positioning on each side of the image.
         <div className="flex justify-center w-screen md:w-full items-center">
-            <div className="relative w-full">
-                <div className="carousel">
+            <div className=" relative w-full max-h-80">
+                <div className="carousel max-h-80 overflow-hidden">
                     {sliderControl(true)}
                     {images.map((img, i) => (
                         <div className="w-full flex-shrink-0" key={img} ref={refs[i]}>

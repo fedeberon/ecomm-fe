@@ -26,6 +26,7 @@
     "react-date-object": "^2.1.5",
     "react-dom": "^17.0.1",
     "react-dropzone": "^11.4.2",
+    "react-image-crop": "^10.0.0",
     "react-moment": "^1.1.1",
     "react-notifications": "^1.7.2",
     "react-router": "^5.2.1",
