@@ -18,7 +18,7 @@ const BrandSearch = ({brands, onclick}) => {
                     <button className=" bg-purple-600 flex hover:bg-purple-500 rounded  px-2 w-full h-auto" onClick={handleMenu}>
                         <div className="m-2 text-2xl">Marcas</div>
                     </button>
-                        <div id="menu" className={`overflow-y-scroll max-h-36 bg-purple-200 pb-2 ${isMenu ? "" : `hidden`}`}>
+                        <div id="menu" className={`overflow-y-scroll max-h-80 bg-purple-200 pb-2 ${isMenu ? "" : `hidden`}`}>
                         {
                             brands
                             ?
