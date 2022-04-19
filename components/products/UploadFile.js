@@ -1,13 +1,15 @@
 import React, {useState} from "react";
 import axios from "axios";
 import {useDropzone} from "react-dropzone";
-import { ReactCrop } from "react-image-crop";
+// import ReactCrop from 'react-image-crop'
+// import 'react-image-crop/dist/ReactCrop.css'
 
 const UploadFile = ({isOpen, setIsOpen, folder}) => {
     const [file, setFile] = useState();
+    console.log(file);
     const {acceptedFiles, getRootProps, getInputProps} = useDropzone({
         maxFiles : 1,
-        accept: 'image/jpeg, image/png',
+        accept: 'image/jpeg, image/png, image/jpg',
         onDrop: acceptedFiles => {
             setFile(acceptedFiles[0]);
         }
@@ -35,6 +37,7 @@ const UploadFile = ({isOpen, setIsOpen, folder}) => {
                 });
 
         };
+    // const[crop,setCrop]=useState()
 
             return (
                 isOpen === false
@@ -77,6 +80,12 @@ const UploadFile = ({isOpen, setIsOpen, folder}) => {
                                                             <aside>
                                                                 <h4>Archivo: </h4> 
                                                                 <div class="border-2 border-dashed border-slate mx-1">
+                                                                {/* <div>
+                                                                
+                                                                <ReactCrop src={file} crop={crop} onChange={c => setCrop(c)}>
+                                                                    <img src={file}></img>
+                                                                </ReactCrop>
+                                                                </div> */}
                                                                 <ul>{files}</ul> 
                                                                 </div>
                                                             </aside>  
