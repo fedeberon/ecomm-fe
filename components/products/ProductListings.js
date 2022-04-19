@@ -10,14 +10,12 @@ import {faTimes, faWindowClose} from "@fortawesome/free-solid-svg-icons";
 import * as brandsService from 'services/brandService';
 
 
-
 function ProductListings({ products, brands, categories}) {
 
   const [filter, isShowFilter] = useState(false)
   const [productsToShow, setProductsToShow] = useState(products)
   const [brandsToSearch, setBrandsToSearch] = useState([]);
   const [categoriesToSearch, setCategoriesToSearch] = useState([]);
-
 
 
   useEffect(() => {
@@ -64,7 +62,7 @@ function ProductListings({ products, brands, categories}) {
   const handleChangeCategory = (e) => {
 
     if(e.target.checked) {
-      debugger
+      
         setCategoriesToSearch(categoriesToSearch =>  [
             ...categoriesToSearch,
             {
@@ -72,7 +70,7 @@ function ProductListings({ products, brands, categories}) {
             }
         ]);
     } else {
-      debugger
+     
         const categories = categoriesToSearch.filter((category) => category.id !== e.target.value)
         setCategoriesToSearch(categories);
     }
@@ -89,9 +87,6 @@ const searchCategories = async () => {
   close();
 }
 
-  
-
-
   const searchValue = async (e) => {
     if(e.target.value.trim() === '') {
       return;
@@ -102,7 +97,12 @@ const searchCategories = async () => {
         return;
     }
     setProductsToShow(result); 
-  }  
+  } 
+  
+  const Search = () => {
+    searchBrands();
+    searchCategories();
+  }
   
    return (
           <div className=''>
@@ -133,7 +133,7 @@ const searchCategories = async () => {
                             onChange={searchValue}/>
                         
                     </div>
-                    <div className={`fixed z-50 overflow-y-auto top-0 w-full left-0 ${filter ? "" : "hidden"}  `} onClick={close} id="modal">
+                    <div className={`fixed z-50 overflow-y-auto top-0 w-full left-0 ${filter ? "" : "hidden"}  `} id="modal">
                         <div className="flex items-center justify-center min-height-100vh pt-4 px-4 pb-20 text-center sm:block sm:p-0">
                             <div className="fixed inset-0 transition-opacity">
                                 <div className="absolute inset-0 bg-gray-700 opacity-75"/>
@@ -149,7 +149,7 @@ const searchCategories = async () => {
 
                                 <div class="flex justify-end pt-2 pb-2 pr-2">
                                   <button class="px-4 bg-transparent p-3 rounded-lg text-indigo-500 hover:bg-gray-100 hover:text-indigo-400 mr-2" onClick={close}>Cerrar</button>
-                                  <button class="modal-close px-4 bg-indigo-500 p-3 rounded-lg text-white hover:bg-indigo-400" onClick={searchCategories}>Buscar</button>
+                                  <button class="modal-close px-4 bg-indigo-500 p-3 rounded-lg text-white hover:bg-indigo-400" onClick={Search}>Buscar</button>
                                 </div>
                             </div>
                         </div>
