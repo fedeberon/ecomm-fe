@@ -13,11 +13,11 @@ const CategorySearch = ({categories, onclick}) => {
  
            
                 
-            <div className="rounded w-40 bg-indigo-200 ">
+            <div className="rounded w-40  ">
             <button className=" bg-indigo-600 flex hover:bg-indigo-500 rounded  px-2 w-full h-auto" onClick={handleMenu}>
                 <div className="m-2 text-2xl">Categoria</div>
             </button>
-                <div id="menu" className={`overflow-y-auto  pb-2 ${isMenu ? "" : `hidden`}`}>
+                <div id="menu" className={`overflow-y-scroll bg-indigo-200 pb-2 ${isMenu ? "" : `hidden`}`}>
                         {
                             categories
                             ?

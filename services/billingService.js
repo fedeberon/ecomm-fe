@@ -9,6 +9,7 @@ export async function getBilling(user, checkout, type, session, coupon, card) {
     const bill = {
         "cardId": user.cuit,
         "cuit": user.cuit,
+        "username": user.username,
         "billType": type,
         "puntoDeVenta" : 1,
         "comments" : "Comentarios ...",
