@@ -66,7 +66,7 @@ const Payment = ({user, myPoints, users}) => {
             router.push('/bills/' + response.data.id)
             cleanCart();
         }
-        if(response.status === 500) {
+        if(response.status === 500 || response.status === 400){
             setError(response.data)
             console.log(response.data)
             setLoading(false)
