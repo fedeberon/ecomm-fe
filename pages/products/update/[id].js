@@ -143,7 +143,7 @@ const Update = ({product, brands}) => {
                                 htmlFor="brand">
                             Marcas
                         </label>
-                        <select onChange={handleChange} name="brand" onBlur={handleBlur} value={form?.brand.id}  className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="brand">
+                        <select onChange={handleChange} name="brand" onBlur={handleBlur} value={form.brand}  className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="brand">
                         {
                             brands.map(brand => (
                                 <option value={brand.id}>{brand.name}</option>
@@ -233,17 +233,17 @@ const Update = ({product, brands}) => {
                             {errors.points &&  <p className={`text-red-500 text-xs italic`}>{errors.points}</p>}
                     </div>
 
-                    <div className="mt-8">
-                        <a onClick={goToProductList} className={`hover:bg-gray-400 hover:text-white  text-black py-2 px-4 mr-2 rounded cursor-pointer`}>
+                    <div className="justify-between mt-8">
+                        <a onClick={goToProductList} className={`hover:bg-gray-400 hover:text-white  text-black py-2 px-4 m-auto mr-2 rounded cursor-pointer`}>
                             Ir a la lista
                         </a>
 
-                        <a onClick={showOnShop} className={`hover:bg-gray-400 hover:text-white  text-black py-2 px-4 mr-2 rounded cursor-pointer`}>
+                        <a onClick={showOnShop} className={`hover:bg-gray-400 hover:text-white  text-black py-2 px-4 mr-2 m-autorounded cursor-pointer`}>
                             Ver en el Shop
                         </a>
 
                         <button type="submit" onClick={handleSubmit}
-                                className={`bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded`}>
+                                className={`bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 m-auto rounded`}>
                             Guardar
                         </button>
                         <p className={`text-red-500 text-xs italic ${Object.keys(errors).length === 0 ? "invisible": "" } `}>Complete los campos.</p>
