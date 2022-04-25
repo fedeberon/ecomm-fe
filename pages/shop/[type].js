@@ -1,8 +1,10 @@
 import {getProductsByType} from "../../services/productService";
 import ProductListings from "@/components/products/ProductListings";
 import StoreHeading from "@/components/StoreHeading";
+import * as brandsService from 'services/brandService';
+import * as categoriesService from 'services/categoriesService'
 
-function Shop({title, products }) {
+function Shop({title, products, brands, categories }) {
 
     return (
         <>
@@ -15,7 +17,7 @@ function Shop({title, products }) {
                         ?
                             <>Not found</>
                         :
-                            <ProductListings products={products} />
+                            <ProductListings products={products} brands={brands} categories={categories}/>
                     }
                 </div>
             </div>
@@ -26,11 +28,16 @@ function Shop({title, products }) {
 
 export async function getServerSideProps({ params }) {
     const products = await getProductsByType(params.type);
+    const brands = await brandsService.findAll();
+    const categories = await categoriesService.findAll();
+
 
     return {
         props: {
             title: params.type,
-            products
+            products,
+            brands,
+            categories,
         },
     }
 }

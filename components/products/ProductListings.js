@@ -49,13 +49,8 @@ function ProductListings({ products, brands, categories}) {
   }
 
   const searchBrands = async () => {
-    const products = []
-    if(brandsToSearch.length == 0) {
-      products = await getProducts()
-    } else {
-      products = await filterProductsByBrands(brandsToSearch)
-    }
-    setProductsToShow(products)
+    const products = await filterProductsByBrands(brandsToSearch)
+    setProductsToShow(products);
     close();
   }
 
@@ -77,12 +72,7 @@ function ProductListings({ products, brands, categories}) {
 }
 
 const searchCategories = async () => {
-  const products = []
-  if(categoriesToSearch.length == 0) {
-    products = await getProducts()
-  } else {
-    products = await filterProductsByCategories(categoriesToSearch)
-  }
+  const products =  await filterProductsByCategories(categoriesToSearch)
   setProductsToShow(products)
   close();
 }
@@ -98,10 +88,10 @@ const searchCategories = async () => {
     }
     setProductsToShow(result); 
   } 
-  
-  const Search = () => {
+
+  const searchAll = () => {
+    searchCategories(); 
     searchBrands();
-    searchCategories();
   }
   
    return (
@@ -131,25 +121,26 @@ const searchCategories = async () => {
                             className="w-2/3 m-3 bg-gray-100 shadow-lg shadow-indigo-500/50 outline-none rounded-full p-3"
                             placeholder="Buscar"
                             onChange={searchValue}/>
+                      </div>
                         
-                    </div>
+
                     <div className={`fixed z-50 overflow-y-auto top-0 w-full left-0 ${filter ? "" : "hidden"}  `} id="modal">
                         <div className="flex items-center justify-center min-height-100vh pt-4 px-4 pb-20 text-center sm:block sm:p-0">
-                            <div className="fixed inset-0 transition-opacity">
+                            <div onClick={close} className="fixed inset-0 transition-opacity">
                                 <div className="absolute inset-0 bg-gray-700 opacity-75"/>
                             </div>
-                                <span className="hidden sm:inline-block sm:align-middle sm:h-screen">&#8203;</span>
-                            <div className=" w-auto inline-block bg-white overflow-y-auto rounded-lg text-left overflow-hidden shadow-xl transform transition-all my-8 align-middle max-w-lg "
+                                <span className=" sm:inline-block sm:align-middle sm:h-screen">&#8203;</span>
+                            <div className="w-auto inline-block bg-white overflow-y-auto rounded-lg text-left overflow-hidden shadow-xl transform transition-all my-8 align-middle"
                               role="dialog" aria-modal="true" aria-labelledby="modal-headline">
-                                <div className="flex grid-cols-2 gap-4 m-auto px-4 pt-6 pb-2 sm:p-6 sm:pb-4">
-                                  <BrandSearch brands={brands} onclick={handleChangeBrand}/>
-                                  <CategorySearch categories={categories} onclick={handleChangeCategory}/>
-                                  
+                                <div className=' absolute mt-20 w-full border-b-2 border-indigo-100 '></div>
+                                <div className="flex grid-cols-2 gap-8 m-auto px-4 pt-6 pb-2 sm:p-6 sm:pb-4">
+                                    <CategorySearch categories={categories} onclick={handleChangeCategory}/>
+                                    <BrandSearch brands={brands} onclick={handleChangeBrand}/>
                                 </div>
 
-                                <div class="flex justify-end pt-2 pb-2 pr-2">
-                                  <button class="px-4 bg-transparent p-3 rounded-lg text-indigo-500 hover:bg-gray-100 hover:text-indigo-400 mr-2" onClick={close}>Cerrar</button>
-                                  <button class="modal-close px-4 bg-indigo-500 p-3 rounded-lg text-white hover:bg-indigo-400" onClick={Search}>Buscar</button>
+                                <div class="p-3  mt-2 text-center space-x-4 md:block">
+                                  <button class="mb-2 md:mb-0 bg-red-500 border border-black-500 px-5 py-2 text-sm shadow-sm font-medium tracking-wider text-white hover:text-white rounded-full hover:shadow-lg hover:bg-red-700" onClick={close}>Cerrar</button>
+                                  <button class="mb-2 md:mb-0 bg-red-500 border border-black-500 px-5 py-2 text-sm shadow-sm font-medium tracking-wider text-white hover:text-white rounded-full hover:shadow-lg hover:bg-red-700" onClick={searchAll}>Buscar</button>
                                 </div>
                             </div>
                         </div>
