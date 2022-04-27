@@ -74,6 +74,7 @@ const Detail = ({bill}) => {
                                                              </div>
                                                          </div>
 
+
                                                          <div className="border border-t-2 border-gray-200 mb-8 px-3"></div>
 
 
