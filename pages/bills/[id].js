@@ -59,11 +59,20 @@ const Detail = ({bill}) => {
 
                                                          <div className="flex justify-between mb-8 px-3">
                                                              <div>
-                                                                 {bill.person.name} {bill.person.lastName} <br/>
-                                                                 {bill.person.addresses[0].direccion}<br/>
-                                                                 {bill.person.addresses[0].localidad}, {bill.person.addresses[0].descripcionProvincia}<br/>
-                                                                 juanperez@gmail.com<br/>
-                                                                 351 123 456 789
+                                                                 {
+                                                                     bill.person
+                                                                         ?
+                                                                         <>
+                                                                           {bill.person.name} {bill.person.lastName} <br/>
+                                                                           {bill.person.addresses[0].direccion}<br/>
+                                                                           {bill.person.addresses[0].localidad}, {bill.person.addresses[0].descripcionProvincia}<br/>
+                                                                         </>
+                                                                         :
+                                                                         <>
+                                                                           Sin Datos asociados.
+                                                                         </>
+                                                                 }
+
                                                              </div>
                                                              <div className="text-right">
                                                                  Dulce Bebe<br/>
