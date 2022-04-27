@@ -63,7 +63,7 @@ const Payment = ({user, myPoints, users}) => {
         let session =  await getSession()
         const response = await getBilling(person, checkout, type, session, coupon, card);
         if (response.status === 200) {
-            router.push('/bills/' + response.data.id)
+            await router.push('/bills/' + response.data.id)
             cleanCart();
         }
         if(response.status === 500 || response.status === 400){
