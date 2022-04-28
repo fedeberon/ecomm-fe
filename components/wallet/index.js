@@ -67,8 +67,9 @@ const WalletOfUser = ({walletOfUser, user}) => {
         let today  = new Date();
         let buydate = new Date(date);
         let expiredate = new Date(date)
-        expiredate.setMonth(buydate.getMonth() +2)
-        console.log(date);
+        expiredate.setMonth(buydate.getMonth() +3);
+        expiredate.setDate(1)
+        // console.log(date);
         // console.log(today+"hoy");
         // console.log(buydate+"compra");
         // console.log(expiredate+"vencimiento");
