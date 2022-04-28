@@ -13,10 +13,11 @@ const CategorySearch = ({categories, onclick}) => {
  
            
                 
-            <div className=" flex-center w- rounded md:w-40 ">
-                <div className="w-auto bg-white text-sm text-gray-500 font-bold px-5 py-2 ">
+            <div className="flex-center col-span-2 w-auto rounded ">
+                <div className="w-auto bg-white text-sm text-gray-500 font-bold px-5 py-2">
                     <div className="m-2 text-2xl">Categorias</div>
                 </div>
+                    <div id="menu" className={`overflow-y-auto max-h-96 no-scrollbar`}>
                         {
                             categories
                             ?
@@ -35,8 +36,8 @@ const CategorySearch = ({categories, onclick}) => {
                             :
                             <></>
                         } 
-
-                        </div>
+                    </div>
+            </div>
 
                     
             
