@@ -43,8 +43,9 @@ const WalletOfUser = ({walletOfUser, user}) => {
                 sortable: true
             },
             {
+                
                 name: 'Fecha',
-                selector: row => new DateObject(row.date).format('DD/MM/YYYY hh:mm:ss.'),
+                selector: row => testDuePoints(row.date),
                 sortable: true
                 
             }
@@ -59,6 +60,32 @@ const WalletOfUser = ({walletOfUser, user}) => {
             <FilterComponent onFilter={e => setFilterText(e.target.value)} onClear={handleClear} filterText={filterText} />
         );
     }, [filterText]);
+
+
+    const testDuePoints = (date) => {
+
+        let today  = new Date();
+        let buydate = new Date(date);
+        let expiredate = new Date(date)
+        expiredate.setMonth(buydate.getMonth() +2)
+        console.log(date);
+        // console.log(today+"hoy");
+        // console.log(buydate+"compra");
+        // console.log(expiredate+"vencimiento");
+        // console.log( new DateObject(buydate).format('DD/MM/YYYY hh:mm:ss.')+"este dia se  compro");
+        // console.log( new DateObject (expiredate).format('DD/MM/YYYY hh:mm:ss.')+"este dia expira");
+
+        let result = today > expiredate
+        if (result) {
+            return "Vencido: " + new DateObject(date).format('DD/MM/YYYY hh:mm:ss.') ;  
+            
+            
+        } else {
+            return new DateObject(date).format('DD/MM/YYYY hh:mm:ss.')
+            
+        }
+
+    }
 
 
 
