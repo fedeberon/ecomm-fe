@@ -250,7 +250,23 @@ const Payment = ({user, myPoints, users}) => {
                             </div>
                             <hr className='my-5'/>
                             <div className="justify-center">
-                                
+
+                                <h1 className="text-gray-800 font-lg font-bold tracking-normal leading-tight mb-4">Detalle de Facturaci&oacute;n</h1>
+
+                                <select id="user"
+                                        className="text-gray-600 focus:outline-none  font-normal w-full h-10 flex items-center pl-3 text-sm border-gray-300 rounded border"
+                                        onChange={handleChangeUsers}
+                                >
+                                    <option value="">Seleccione el usuario </option>
+                                    {
+                                        users.map((user, index) => {
+                                            return (
+                                                <option key={index} value={user.username} name={`${user.name}`}>{user.name}</option>
+                                            )
+                                        })
+                                    }
+                                </select>
+
                                 <a onClick={() => handleCreditPoints(person.username)}
                                     aria-label="checkout-products"
                                     className="mt-8 w-80 bg-gradient-to-r from-blue-900 to-blue-500 mx-auto text-white text-lg font-primary font-semibold pt-2 pb-1 leading-relaxed flex cursor-pointer

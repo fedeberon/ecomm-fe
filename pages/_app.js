@@ -6,6 +6,8 @@ import NextNProgress from "nextjs-progressbar";
 
 export default function MyApp({ Component, pageProps }) {
 
+
+
           return (
               <Provider session={pageProps.session} >
                   <Layout>
