@@ -1,7 +1,8 @@
 
 export async function getPersonByCUIT(CUIT) {
-    const fetchUrl = `${process.env.BACKEND_SERVICE}/billing/` + CUIT;
+    const fetchUrl = `${process.env.NEXT_PUBLIC_BACKEND_SERVICE}/billing/person/` + CUIT;
     const fetchOptions = {
+        
         endpoint: fetchUrl,
         method: "GET",
         headers: {
@@ -9,6 +10,8 @@ export async function getPersonByCUIT(CUIT) {
             "Content-Type": "application/json",
         },
     };
+    console.log(fetchUrl)
+
 
     try {
         const data = await fetch(fetchUrl, fetchOptions)
