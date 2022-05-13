@@ -94,7 +94,7 @@ function CartTable({ cart }) {
           ))}
           {
             subtotal === 0 ?
-            <div className='m-auto bg-black justify-center'>
+            <div className='m-auto justify-center'>
               <h1 className="leading-relaxed font-primary justify-between m-auto font-extrabold text-3xl text-center text-palette-primary py-2 sm:py-4">
                   No hay Art&iacute;culos por aqu&iacute;
               </h1>

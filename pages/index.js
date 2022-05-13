@@ -8,14 +8,12 @@ import * as categoriesService from 'services/categoriesService'
 function IndexPage({products, brands, categories}) {
   return (
       <>
-        <div className='bg-blue-100 lg:px-6'>
           <div className='bg-white'>
-            <div className="flex container mx-auto min-h-full">
+            <div className="h-screen max-h-full">
               <Carrusel/>
             </div>
             <ProductListings products={products} brands={brands} categories={categories}/>
           </div>
-        </div>
      </>
   )
 }
