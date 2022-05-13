@@ -8,6 +8,7 @@ import CategorySearch from '../filter/CategorySearch';
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faTimes, faWindowClose} from "@fortawesome/free-solid-svg-icons";
 import * as brandsService from 'services/brandService';
+import Banner from './ProductBanner';
 
 
 function ProductListings({ products, brands, categories}) {
@@ -95,7 +96,7 @@ const searchCategories = async () => {
   }
   
    return (
-          <div className=''>
+          <div className='w-full'>
                 <div>
                     <div className='flex justify-center py-2'>    
                         <div className='justify-between m-4'>
@@ -118,12 +119,18 @@ const searchCategories = async () => {
                         
                         
                         <input type="search"
-                            className="w-2/3 m-3 bg-gray-100 shadow-lg shadow-indigo-500/50 outline-none rounded-full p-3"
+                            className="w-2/3 m-3 bg-purple-200 shadow-lg shadow-indigo-500/50 outline-none rounded-full p-3"
                             placeholder="Buscar"
                             onChange={searchValue}/>
                       </div>
+                      <div className="w-full h-screen my-20">
+                        <div className="w-full mx-auto leading-relaxed shadow-lg font-primary font-extrabold text-4xl text-center text-palette-primary py-2 sm:py-4">Dulce BeBe Promos
+                        </div>
+                        <div className='flex justify-center'>
+                          <Banner/>
+                          </div>
                         
-
+                      </div>
                     <div className={`fixed z-50  top-0 w-full left-0 ${filter ? "" : "hidden"}  `} id="modal">
                         <div className="flex items-center justify-center min-height-100vh pt-4 px-4 pb-20 text-center sm:block sm:p-0">
                             <div onClick={close} className="fixed inset-0 transition-opacity">
