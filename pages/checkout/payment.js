@@ -10,6 +10,7 @@ import {getPoints} from "../../services/walletService";
 import logo from "../../images/Logo Dulce bb.png";
 import {findAll, getByUsername} from "../../services/userService";
 import CartTable from '@/components/cart/CartTable'
+import {getPersonByCUIT}from "../../services/personService.js"
 
 const Payment = ({user, myPoints, users}) => {
     const [checkout, setCheckout] = useState()
@@ -109,9 +110,15 @@ const Payment = ({user, myPoints, users}) => {
             })
         })
     }
-
-    console.log(person);
-
+    const [check,setCheck]=useState(false)
+    const [cross,setCross]= useState(false)
+    const handleCUIT = async (cuit)=>{
+        let dataCuit = await getPersonByCUIT(cuit)
+        console.log(dataCuit)
+        console.log(dataCuit.status);
+         if (dataCuit.status === undefined){setCheck(true)}else{setCheck(false)}
+         if (dataCuit.status === 400){setCross(true)}else{setCross(false)}
+    } 
     return(
         <>
             {
@@ -175,7 +182,33 @@ const Payment = ({user, myPoints, users}) => {
                                     {error ? error : ""}
                                 </label>
                                 <div className="relative mb-5 mt-2">
-                                    <input id="cuit"  name="cuit" onChange={handleChange} value={person.cuit} className="mb-5 mt-2 text-gray-600 focus:outline-none focus:border focus:border-indigo-700 font-normal w-full h-10 flex items-center pl-3 text-sm border-gray-300 rounded border" placeholder="XX-XXXXXXXX-X" />
+                                    {/* <div className="absolute w-10 right-0 bg-green-600 h-10"></div> */}
+                                    <input id="cuit"  name="cuit" onChange={handleChange} value={person.cuit} className="mb-5 mt-2 text-gray-600 focus:outline-none focus:border focus:border-indigo-700 font-normal w-full h-10 flex items-center pl-3 text-sm border-gray-300 rounded border" placeholder="XX-XXXXXXXX-X"></input>
+                                    <button 
+                                        type="button"
+                                        className="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
+                                        onClick={() => {handleCUIT(person.cuit)}}> 
+                                        Verificar CUIT
+                                    </button>
+                                    {
+                                        cross
+                                        ?
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 absolute right-1 top-2" fill="none" viewBox="0 0 24 24" stroke="red" stroke-width="2">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                        </svg>
+                                        
+                                        :
+                                        <></>
+                                    }
+                                    {
+                                        check
+                                        ?
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 absolute right-1 top-2" fill="none" viewBox="0 0 24 24" stroke="green" stroke-width="2">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                        </svg>
+                                        :
+                                        <></>
+                                    }
                                 </div>
                                 <label htmlFor="name" className="text-gray-800 text-sm font-bold leading-tight tracking-normal">
                                     Nombre y Apellido

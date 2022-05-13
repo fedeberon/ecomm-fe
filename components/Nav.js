@@ -4,7 +4,7 @@ import { useCartContext } from "@/context/Store";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars } from "@fortawesome/free-solid-svg-icons";
 import { faShoppingCart } from "@fortawesome/free-solid-svg-icons";
-import logo from "/images/Logo Dulce bb.png";
+import logo from "/images/logoMati.png";
 import UserSession from "@/components/users/UserSession";
 import Index from "./admin";
 import { useSession } from "next-auth/client";

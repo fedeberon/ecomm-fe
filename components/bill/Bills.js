@@ -1,13 +1,13 @@
 import Link from "next/link";
 import Moment from "react-moment";
-import FilterComponent from "../filter/FilterComponent";
+import FilterCuitComponent from "../filter/FilterCuitComponent";
 import DataTable  from "react-data-table-component";
 import {useState, useMemo} from "react"
 import DateObject from "react-date-object";
 
 const Bills = ({bills}) => {
     const[filterText, setFilterText]= useState ('')
-    const filteredItems =bills.filter(item=> filterText == '' || filterText.toLowerCase().includes(item.id));
+    const filteredItems =bills.filter(item=> filterText == '' || filterText.toLowerCase().includes(item.cuit));
     
     const columns = [
             
@@ -60,7 +60,7 @@ const Bills = ({bills}) => {
             }
         };
         return (
-            <FilterComponent onFilter={e => setFilterText(e.target.value)} onClear={handleClear} filterText={filterText} />
+            <FilterCuitComponent onFilter={e => setFilterText(e.target.value)} onClear={handleClear} filterText={filterText} />
         );
     }, [filterText]);
     return (
