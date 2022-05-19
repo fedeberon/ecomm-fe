@@ -1,52 +1,63 @@
 import { useState } from "react";
+import { getByUsername ,save } from "services/userService";
 
 const UserData = ({user}) => {
  
     const [userToUpdate, setUserToUpdate] = useState(user);
 
-    const [enable, setEnabled] = useState("disabled");
+    const [enable, setEnabled] = useState(true);
 
  
-    const enableFields = (event) => {
-        event.preventDefault();
-        setEnabled("");
-        document.querySelector("#name").focus();
+    const enableFields = (e) => {
+        e.preventDefault();
+        setEnabled(false);
+        
     }    
 
 
     const handleChange = (e) => {
+        debugger    
         setUserToUpdate({
             ...userToUpdate,
             [e.target.name]: e.target.value,
         });
-    } 
+    }  
+
+    const submit = (e) => {
+        e.preventDefault();
+        save(userToUpdate).then((result) => {
+            if (result.status === 202) {
+                window.location.href = '/users/' + user.cardId
+            }
+        }); 
+    }
     
     return (
 
         <>
             <form class="flex-initial shrink w-full max-w-lg p-6">
 
-            <div class="flex flex-wrap mx-3 mb-6">
+            <div class="flex flex-wrap mx-3 mb-6"
+            onDoubleClick={enableFields}>
                 <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
                 <label
-                htmlFor="name" 
                 class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" >
                     Nombre
                 </label>
                 <input 
-                 onClick={handleChange}
+                 onChange={handleChange} 
+                 
                  disabled = {enable}
                  class={`appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white`}
                  value={userToUpdate?.name} 
-                 autoFocus
                  type="text" 
                  id="name" 
                  name="name" 
-                 onChange={(e) => setUserToUpdate(e.target.value) }
                  /> 
                 </div>
 
-                <div class="w-full md:w-1/2 px-3">
+                <div class="w-full md:w-1/2 px-3"
+                onDoubleClick={enableFields}>
                 <label 
                 htmlFor="lastName"
                 class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" 
@@ -54,19 +65,19 @@ const UserData = ({user}) => {
                     Apellido
                 </label>
                 <input 
-                onClick={handleChange} 
+                onChange={handleChange} 
                 disabled = {enable}
                 class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" 
                 value={userToUpdate?.lastName}
                 type="text" 
                 id="lastName" 
-                name="lastName" 
-                onChange={(e) => setUserToUpdate(e.target.value)} 
+                name="lastName"  
                 />
                 </div>    
             </div> 
 
-            <div class="flex flex-wrap mx-3 mb-6">
+            <div class="flex flex-wrap mx-3 mb-6"
+            onDoubleClick={enableFields}>
                 <div class="w-full px-3">
                 <label 
                 htmlFor="email"
@@ -74,20 +85,20 @@ const UserData = ({user}) => {
                     Email
                 </label>
                 <input 
-                onClick={handleChange} 
+                onChange={handleChange} 
                 disabled = {enable}
                 class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" 
                 value={userToUpdate?.email} 
                 type="text"
                 id="email" 
                 name="email" 
-                onChange={(e) => setUserToUpdate(e.target.value)} 
                 />    
             </div>
             </div>
 
             
-            <div class="flex flex-wrap mx-3 mb-6">
+            <div class="flex flex-wrap mx-3 mb-6"
+            onDoubleClick={enableFields}>
                 <div class="w-full px-3">
                 <label  
                 htmlFor="phone"
@@ -96,42 +107,42 @@ const UserData = ({user}) => {
                     Telefono
                 </label>
                 <input 
-                onClick={handleChange}
+                onChange={handleChange}
                 disabled = {enable}
                 class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" 
                 value={userToUpdate?.phone} 
                 type="text"
                 id="phone" 
                 name="phone" 
-                onChange={(e) => setUserToUpdate(e.target.value)} 
                 />
                 </div>
             </div>
 
 
-            <div class="flex flex-wrap mx-3 mb-6">
+            <div class="flex flex-wrap mx-3 mb-6"
+            onDoubleClick={enableFields}>
                 <div class="w-full px-3">
                 <label 
-                htmlFor="address"
+                htmlFor="direction"
                 class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" 
                 for="grid-password">
                     Direccion
                 </label>
                 <input 
-                onClick={handleChange}
+                onChange={handleChange}
                 disabled = {enable}
                 class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" 
-                value={userToUpdate?.direcction} 
+                value={userToUpdate?.direction} 
                 type="text" 
-                id="address" 
-                name="address" 
-                onChange={(e) => setUserToUpdate(e.target.value)} 
+                id="direction" 
+                name="direction"
                 />
                 </div>
             </div>
 
 
-            <div class="flex flex-wrap mx-3 mb-2">
+            <div class="flex flex-wrap mx-3 mb-2"
+            onDoubleClick={enableFields}>
                 <div class="w-full md:w-1/3 px-3 mb-6 md:mb-0">
                 <label  
                 class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" 
@@ -140,64 +151,52 @@ const UserData = ({user}) => {
                     Ciudad
                 </label>
                 <input 
-                    onClick={handleChange}
+                    onChange={handleChange}
                     disabled = {enable}
                     class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" 
                     type="text"  
-                    
                     value={userToUpdate?.city}
                     id="city" 
                     name="city" 
-                    onChange={(e) => setUserToUpdate(e.target.value)} 
                 /> 
                 </div>
-                <div class="w-full md:w-1/3 px-3 mb-6 md:mb-0">
+                <div class="w-full md:w-1/3 px-3 mb-6 md:mb-0"
+                onDoubleClick={enableFields}>
                 <label 
                 class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-                htmlFor="postalCode" 
+                htmlFor="postal" 
                 for="grid-zip">
                     Codigo postal
                 </label>
                 <input 
-                    onClick={handleChange}
+                    onChange={handleChange}
                     disabled = {enable}
                     class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" 
                     type="text" 
                     value={userToUpdate?.postal}
-                    id="postalCode" 
-                    name="postalCode"
-                    onChange={(e) => setUserToUpdate(e.target.value)}
+                    id="postal" 
+                    name="postal"
                 />
                 </div>
             </div>
-           
-            <button onClick={enableFields}
-            id="Editar"
-            class="bg-green-500 hover:bg-green-700 ml-6 rounded text-white font-bold mt-2 py-2 px-4">
-                Editar Campos
-            </button>  
             
-
-
-            <button
+            <button onClick={submit}
                 class="bg-blue-500 hover:bg-blue-700 ml-6 rounded text-white font-bold mt-2 py-2 px-4">
                     Guardar  
-            </button>    
-
-            <div class="font-medium text-sm text-red-600 mt-2 ml-2" 
-            id="Esconder"
-            > 
-            (Doble click para habilitar)
-            </div>
-            
-
+            </button> 
             </form>
-            
-        
-            </>   
+    
+        </>   
     )
 }
  
-
-
-export default UserData;
+export async function getServerSideProps({query}) {
+    const user  = await getByUsername(query.username);
+  
+    return {
+        props: {
+            user
+        }
+    }
+}
+export default UserData; 
