@@ -123,14 +123,6 @@ const searchCategories = async () => {
                             placeholder="Buscar"
                             onChange={searchValue}/>
                       </div>
-                      <div className="w-full h-screen my-20">
-                        <div className="w-full mx-auto leading-relaxed shadow-lg font-primary font-extrabold text-4xl text-center text-palette-primary py-2 sm:py-4">Dulce BeBe Promos
-                        </div>
-                        <div className='flex justify-center'>
-                          <Banner/>
-                          </div>
-                        
-                      </div>
                     <div className={`fixed z-50  top-0 w-full left-0 ${filter ? "" : "hidden"}  `} id="modal">
                         <div className="flex items-center justify-center min-height-100vh pt-4 px-4 pb-20 text-center sm:block sm:p-0">
                             <div onClick={close} className="fixed inset-0 transition-opacity">
@@ -155,8 +147,8 @@ const searchCategories = async () => {
                 </div>
 
 
-              <div className="mx-auto max-w-6xl">
-                  <div className="grid sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-9 2xl:gap-40 ">
+              <div className="mx-auto w-11/12">
+                  <div className="grid sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-9 2xl:gap-4 ">
                       {
                           productsToShow
                           ?
