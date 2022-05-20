@@ -89,7 +89,7 @@ const Carousel = () => {
         // set with position relative, so we can place our cotrol buttons using
         // absolute positioning on each side of the image.
         <div className="flex justify-center w-screen md:w-full items-center">
-            <div className=" relative w-full xl:max-h-80">
+            <div className=" relative w-full max-h-96 min-h-96">
                 <div className="carousel">
                     {sliderControl(true)}
                     {images.map((img, i) => (

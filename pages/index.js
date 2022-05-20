@@ -10,11 +10,10 @@ function IndexPage({products, brands, categories}) {
   return (
       <>
           <div className='bg-white'>
-            <div className="h-full overflow-hidden max-h-full">
+            <div className="h-full overflow-hidden shadow-lg max-h-full">
               <Carrusel/>
             </div>
-            <div className="w-full h-full my-20">
-              <div className="w-full mx-auto leading-relaxed shadow-lg font-primary font-extrabold text-4xl text-center text-palette-primary py-2 sm:py-4">Dulce BeBe Promos</div>
+            <div className="w-full h-full">
               <div className='flex justify-center'>
                 <Banner/>
               </div>

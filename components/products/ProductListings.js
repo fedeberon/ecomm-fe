@@ -102,9 +102,9 @@ const searchCategories = async () => {
                         <div className='justify-between m-4'>
                             <button className="text-purple-500 bg-transparent border border-solid border-purple-500 hover:bg-purple-500 hover:text-white active:bg-purple-600 font-bold 
                                             uppercase 
-                                            text-xs
-                                            p-4
-                                            rounded-full
+                                            text-xl
+                                            p-6
+                                            rounded-xl
                                             shadow-lg shadow-indigo-500/50
                                             outline-none
                                             focus:outline-none
@@ -119,7 +119,7 @@ const searchCategories = async () => {
                         
                         
                         <input type="search"
-                            className="w-2/3 m-3 bg-purple-200 shadow-lg shadow-indigo-500/50 outline-none rounded-full p-3"
+                            className="w-2/3 m-3 text-2xl bg-purple-200 shadow-lg shadow-indigo-500/50 outline-none rounded-xl p-6"
                             placeholder="Buscar"
                             onChange={searchValue}/>
                       </div>
