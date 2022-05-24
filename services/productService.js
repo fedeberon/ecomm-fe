@@ -1,7 +1,7 @@
 import axios from 'axios';
 
-export async function getProducts() {
-    const fetchUrl = `${process.env.NEXT_PUBLIC_BACKEND_SERVICE}/product`;
+export async function getProducts(page) {
+    const fetchUrl = `${process.env.NEXT_PUBLIC_BACKEND_SERVICE}/product?page=${page}`;
 
     const fetchOptions = {
         endpoint: fetchUrl,

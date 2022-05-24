@@ -25,7 +25,8 @@ function IndexPage({products, brands, categories}) {
 }
 
 export async function getServerSideProps() {
-  const products = await getProducts();
+  const products = await getProducts(1);
+  console.log(products);
   const brands = await brandsService.findAll();
   const categories = await categoriesService.findAll();
 

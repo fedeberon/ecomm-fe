@@ -1,30 +1,35 @@
 import ProductCard from '@/components/products/ProductCard'
 import {useEffect, useState} from "react";
-import FilterComponent from '../filter/FilterComponent';
-import {filterProductsByBrands, search, getProducts, filterProductsByCategories} from "../../services/productService"
-import BrandList from '../brands/BrandList';
+import {filterProductsByBrands, filterProductsByCategories, getProducts, search} from "../../services/productService"
 import BrandSearch from '../brands/BrandSearch';
 import CategorySearch from '../filter/CategorySearch';
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faTimes, faWindowClose} from "@fortawesome/free-solid-svg-icons";
-import * as brandsService from 'services/brandService';
-import Banner from './ProductBanner';
-
+import Loading from "@/components/utils/Loading";
 
 function ProductListings({ products, brands, categories}) {
 
   const [filter, isShowFilter] = useState(false)
-  const [productsToShow, setProductsToShow] = useState(products)
+  const [productsToShow, setProductsToShow] = useState(products.content)
   const [brandsToSearch, setBrandsToSearch] = useState([]);
   const [categoriesToSearch, setCategoriesToSearch] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+  let page = 1;
 
+  let handleScroll = async (e) => {
+      if(window.innerHeight + e.target.documentElement.scrollTop + 1  >= e.target.documentElement.scrollHeight && !isLoading) {
+          setIsLoading(true)
+          page = page + 1;
+          let products = await getProducts(page);
+          setProductsToShow(productsToShow => [
+              ...productsToShow,
+              products.content
+          ]);
+          setIsLoading(false)
+      }
+  }
 
-  useEffect(() => {
-
-    setProductsToShow(products)
-     
-  }, products);
-  
+  useEffect( ()  => {
+      window.addEventListener('scroll', handleScroll);
+  }, [products])
 
   const close = () => {
     isShowFilter(false)
@@ -94,14 +99,14 @@ const searchCategories = async () => {
     searchCategories(); 
     searchBrands();
   }
-  
+
    return (
           <div className='w-full'>
                 <div>
-                    <div className='flex justify-center py-2'>    
+                    <div className='flex justify-center py-2'>
                         <div className='justify-between m-4'>
-                            <button className="text-purple-500 bg-transparent border border-solid border-purple-500 hover:bg-purple-500 hover:text-white active:bg-purple-600 font-bold 
-                                            uppercase 
+                            <button className="text-purple-500 bg-transparent border border-solid border-purple-500 hover:bg-purple-500 hover:text-white active:bg-purple-600 font-bold
+                                            uppercase
                                             text-xl
                                             p-6
                                             rounded-xl
@@ -116,8 +121,8 @@ const searchCategories = async () => {
                             {filter ? "Cerrar" : "Filtros" }
                             </button>
                         </div>
-                        
-                        
+
+
                         <input type="search"
                             className="w-2/3 m-3 text-2xl bg-purple-200 shadow-lg shadow-indigo-500/50 outline-none rounded-xl p-6"
                             placeholder="Buscar"
@@ -160,6 +165,15 @@ const searchCategories = async () => {
                       }
                   </div>
               </div>
+
+              {
+
+                  isLoading ?
+                      <Loading loading={'Buscando mas articulos'}/>
+                        :
+                        <></>
+
+              }
           </div>
   )
 }
