@@ -19,9 +19,9 @@ function ProductListings({ products, brands, categories}) {
           setIsLoading(true)
           page = page + 1;
           let products = await getProducts(page);
+          console.log(products.content)
           setProductsToShow(productsToShow => [
-              ...productsToShow,
-              products.content
+              ...productsToShow.concat(products.content)
           ]);
           setIsLoading(false)
       }
@@ -170,7 +170,7 @@ const searchCategories = async () => {
 
                   isLoading ?
                       <Loading loading={'Buscando mas articulos'}/>
-                        :
+                        : 
                         <></>
 
               }
