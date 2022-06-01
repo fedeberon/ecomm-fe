@@ -21,7 +21,7 @@ function ProductListings({ products, brands, categories}) {
           let products = await getProducts(page);
           console.log(products.content)
           setProductsToShow(productsToShow => [
-              ...productsToShow.concat(products.content)
+              ...productsToShow.concat (products.content)
           ]);
           setIsLoading(false)
       }
