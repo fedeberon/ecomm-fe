@@ -21,7 +21,7 @@ function ProductListings({ products, brands, categories}) {
           let products = await getProducts(page);
           console.log(products.content)
           setProductsToShow(productsToShow => [
-              ...productsToShow.concat(products.content)
+              ...productsToShow.concat (products.content)
           ]);
           setIsLoading(false)
       }
@@ -169,7 +169,9 @@ const searchCategories = async () => {
               {
 
                   isLoading ?
-                      <Loading loading={'Buscando mas articulos'}/>
+                        <div className='flex items-center justify-center py-6'>
+                            <div className='w-16 h-16 border-b-2 border-purple-900 rounded-full animate-spin'></div>
+                        </div>
                         : 
                         <></>
 
