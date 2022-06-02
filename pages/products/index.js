@@ -24,10 +24,10 @@ const ProductsManager = ({products}) => {
 
 
 export async function getServerSideProps() {
-    const products = await getProducts()
+    const products = await getProducts(1)
     return {
         props: {
-            products,
+            products: products.content,
         },
     }
 }

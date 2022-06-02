@@ -77,7 +77,7 @@ function Nav() {
               </a>
             </Link>
 
-            <Link href="/shop/Panialeria">
+            <Link href="/shop/Pañaleria">
               <a className="text-smw block mt-4 lg:inline-block lg:mt-0 mr-4">
                 <h1>
                   <span className="text-xl font-primary font-bold tracking-tight pt-1">
@@ -101,17 +101,7 @@ function Nav() {
               <a className="text-smw block mt-4 lg:inline-block lg:mt-0 mr-4">
                 <h1>
                   <span className="text-xl font-primary font-bold tracking-tight pt-1">
-                    Puericultura
-                  </span>
-                </h1>
-              </a>
-            </Link>
-
-            <Link href="/shop/Lactancia">
-              <a className="text-smw block mt-4 lg:inline-block lg:mt-0 mr-4">
-                <h1>
-                  <span className="text-xl font-primary font-bold tracking-tight pt-1">
-                    Lactancia
+                    Puericultura y Lactancia
                   </span>
                 </h1>
               </a>
