@@ -1,6 +1,30 @@
 import Link from "next/link";
+import { useState } from "react";
+import { update } from "services/userService";  
 
 const UserList = ({users}) => {
+    const [twins, setTwins]= useState(false)
+
+    const handleTwins = async (e) => { 
+        console.log(e);
+    }
+    //     setTwins(e)
+
+
+
+    //     const user = {
+    //         "id": e.target.id,
+    //         "value": e.target.value
+    //     }  
+        
+    //     console.log("user", user);
+        
+    //     let result = await update(user);
+        
+        
+    // } 
+    
+
     return (
                 <div className="flex flex-col">
                     <div className="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
@@ -13,7 +37,7 @@ const UserList = ({users}) => {
                                         <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                             Nombre
                                         </th>
-                                        <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500  tracking-wider">
+                                        <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                             Apellido
                                         </th>
                                         <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
@@ -24,6 +48,9 @@ const UserList = ({users}) => {
                                         </th>
                                         <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                             Contacto
+                                        </th> 
+                                        <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"> 
+                                            Mellizos
                                         </th>
                                         <th scope="col" className="relative px-6 py-3">
                                             <span className="sr-only">Editar</span>
@@ -65,6 +92,15 @@ const UserList = ({users}) => {
                                                 </td>
                                                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                                                     {user.phone}
+                                                </td> 
+                                                <td>
+                                                   <select
+                                                //    id={`${user.username}`}
+                                                   onChange={handleTwins} 
+                                                   > 
+                                                       <option value={false}>no</option>
+                                                       <option value={true}>si</option>   
+                                                    </select> 
                                                 </td>
                                                 <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                                                     <Link href={`/bills/user/${user.username}`} passHref>
