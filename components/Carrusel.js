@@ -1,6 +1,6 @@
 import {createRef, useEffect, useState} from "react"; 
 
-const images = ['/images/carousel01.png','/images/carousel02.png','/images/carousel03.png']  
+const images = ['/images/panaleria.png','/images/lactancia.png']  
 // images must be an array of urls , if using Next JS this could something like
 // const images = ['/img/img1.png', '/img/img2.png', '/img/img3.png']
 // images must be an array of urls , if using Next JS this could something like
