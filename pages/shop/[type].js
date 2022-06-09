@@ -1,8 +1,8 @@
 import {getProductsByType} from "../../services/productService";
-import ProductListings from "@/components/products/ProductListings";
 import StoreHeading from "@/components/StoreHeading";
 import * as brandsService from 'services/brandService';
 import * as categoriesService from 'services/categoriesService'
+import ProductListings from "@/components/products/ProductListings";
 
 function Shop({title, products, brands, categories }) {
 
@@ -13,11 +13,11 @@ function Shop({title, products, brands, categories }) {
                     <StoreHeading title={title}/>
 
                     {
-                        products == null
+                        products == null 
                         ?
                             <>Not found</>
                         :
-                            <ProductListings products={products} brands={brands} categories={categories}/>
+                            <ProductListings products={products} brands={brands} categories={categories} type={title} />
                     }
                 </div>
             </div>
@@ -31,7 +31,6 @@ export async function getServerSideProps({ params }) {
     const brands = await brandsService.findAll();
     const categories = await categoriesService.findAll();
 
-
     return {
         props: {
             title: params.type,
@@ -41,6 +40,5 @@ export async function getServerSideProps({ params }) {
         },
     }
 }
-
 
 export default Shop;
