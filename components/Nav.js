@@ -19,8 +19,6 @@ function Nav() {
   const [session, loading] = useSession();
   const [isShow, setIsShow] = useState(false)
   const [load, setLoad] = useState(false)
-  const [ignored, forceUpdate] = useReducer(x => x + 1, 0);
-
 
   const handleMenu=()=>{
     setIsShow(!isShow)
