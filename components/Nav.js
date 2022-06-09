@@ -1,4 +1,4 @@
-import { useEffect, useState,useReducer } from "react";
+import { useEffect, useState} from "react";
 import Link from "next/link";
 import { useCartContext } from "@/context/Store";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
