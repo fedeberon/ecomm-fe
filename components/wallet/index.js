@@ -18,7 +18,8 @@ const WalletOfUser = ({walletOfUser, user}) => {
 
     useEffect(() => {
         walletOfUser.length == 0 ? setIsWallet(false) : setIsWallet(true);
-        setPoints(walletOfUser.reduce((a,v) =>  a = a + v.points , 0));
+        let active = walletOfUser.filter(walletOfUser => testDuePoints(walletOfUser.date))
+        setPoints(active.reduce((a,v) =>  a = a + v.points , 0));
         }, [walletOfUser]);
         const columns = [
             
@@ -69,12 +70,6 @@ const WalletOfUser = ({walletOfUser, user}) => {
         let expiredate = new Date(date)
         expiredate.setMonth(buydate.getMonth() +3);
         expiredate.setDate(1)
-        // console.log(date);
-        // console.log(today+"hoy");
-        // console.log(buydate+"compra");
-        // console.log(expiredate+"vencimiento");
-        // console.log( new DateObject(buydate).format('DD/MM/YYYY hh:mm:ss.')+"este dia se  compro");
-        // console.log( new DateObject (expiredate).format('DD/MM/YYYY hh:mm:ss.')+"este dia expira");
 
         let result = today > expiredate
         if (result) {
