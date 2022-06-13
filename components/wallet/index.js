@@ -152,7 +152,7 @@ const WalletOfUser = ({walletOfUser, user}) => {
               </>
                 }
 
-                <button onClick={handleTwins} className="w-10 h-10 bg-indigo-500 rounded-full"></button>
+                
           <div className={""}>
               <div className="leading-relaxed font-primary font-extrabold text-2xl text-center text-palette-primary mt-4 py-2 sm:py-4">Adquisicion de puntos</div>
               <div className="flex flex-col">

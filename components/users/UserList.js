@@ -5,24 +5,19 @@ import { update } from "services/userService";
 const UserList = ({users}) => {
     const [twins, setTwins]= useState(false)
 
-    const handleTwins = async (e) => { 
-        console.log(e);
+    const handleTwins = async (e) => {  
+        console.log();
+        setTwins(e)
+
+        const user = {
+            "id" : e.target.id,
+            "twins" : e.target.value,
+        }
+
+         let result = await update(user);
+         console.log(result);
     }
-    //     setTwins(e)
-
-
-
-    //     const user = {
-    //         "id": e.target.id,
-    //         "value": e.target.value
-    //     }  
-        
-    //     console.log("user", user);
-        
-    //     let result = await update(user);
-        
-        
-    // } 
+           
     
 
     return (
@@ -94,9 +89,10 @@ const UserList = ({users}) => {
                                                     {user.phone}
                                                 </td> 
                                                 <td>
-                                                   <select
-                                                //    id={`${user.username}`}
-                                                   onChange={handleTwins} 
+                                                   <select 
+                                                   className="rounded-full bg-blue-200"
+                                                    id={`${user.username}`}
+                                                    onChange={handleTwins} 
                                                    > 
                                                        <option value={false}>no</option>
                                                        <option value={true}>si</option>   
