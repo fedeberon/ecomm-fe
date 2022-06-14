@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState} from "react";
 import Link from "next/link";
 import { useCartContext } from "@/context/Store";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -8,6 +8,7 @@ import logo from "/images/logoMati.png";
 import UserSession from "@/components/users/UserSession";
 import Index from "./admin";
 import { useSession } from "next-auth/client";
+import Loading from "./utils/Loading";
 
 import { getServerSideProps } from "pages/login";
 import { padding } from "tailwindcss/defaultTheme";
@@ -17,6 +18,7 @@ function Nav() {
   const [cartItems, setCartItems] = useState(0);
   const [session, loading] = useSession();
   const [isShow, setIsShow] = useState(false)
+  const [load, setLoad] = useState(false)
 
   const handleMenu=()=>{
     setIsShow(!isShow)
@@ -28,6 +30,25 @@ function Nav() {
     });
     setCartItems(numItems);
   }, [cart]);
+
+  const refreshPañaleria=()=>{ 
+    setLoad(true)
+    window.location.href = "/shop/Pañaleria"
+    setLoad(false) 
+  } 
+  
+  const refreshAccesorios=()=>{
+    setLoad(true)
+    window.location.href ="/shop/Accesorios"
+    setLoad(false)
+  }
+
+  const refreshPueri=()=>{
+    setLoad(true)
+    window.location.href="/shop/Puericultura"
+  setLoad(false)
+}
+
 
   return (
 
@@ -75,10 +96,11 @@ function Nav() {
                   </span>
                 </h1>
               </a>
+
             </Link>
 
             <Link href="/shop/Pañaleria">
-              <a className="text-smw block mt-4 lg:inline-block lg:mt-0 mr-4">
+              <a className="text-smw block mt-4 lg:inline-block lg:mt-0 mr-4" onClick={refreshPañaleria}>
                 <h1>
                   <span className="text-xl font-primary font-bold tracking-tight pt-1">
                     Pa&ntilde;aleria
@@ -88,9 +110,9 @@ function Nav() {
             </Link>
 
             <Link href="/shop/Accesorios">
-              <a className=" text-smw block mt-4 lg:inline-block lg:mt-0 mr-4">
+              <a className=" text-smw block mt-4 lg:inline-block lg:mt-0 mr-4" onClick={refreshAccesorios}>
                 <h1>
-                  <span className="text-xl font-primary font-bold tracking-tight pt-1">
+                  <span className="text-xl font-primary font-bold tracking-tight pt-1" >
                     Accesorios
                   </span>
                 </h1>
@@ -98,9 +120,9 @@ function Nav() {
             </Link>
 
             <Link href="/shop/Puericultura">
-              <a className="text-smw block mt-4 lg:inline-block lg:mt-0 mr-4">
+              <a className="text-smw block mt-4 lg:inline-block lg:mt-0 mr-4" onClick={refreshPueri}>
                 <h1>
-                  <span className="text-xl font-primary font-bold tracking-tight pt-1">
+                  <span className="text-xl font-primary font-bold tracking-tight pt-1" >
                     Puericultura y Lactancia
                   </span>
                 </h1>
@@ -123,7 +145,14 @@ function Nav() {
           </div>
          
         
-        
+        {
+          load?
+         <Loading>
+          </Loading>
+          :
+          <></>
+         
+        }
       </div>
     </header>
   );
