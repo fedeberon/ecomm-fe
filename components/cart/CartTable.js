@@ -92,27 +92,19 @@ function CartTable({ cart }) {
               </td>
             </tr>
           ))}
-          {
-            subtotal === 0 ?
-            <div className='m-auto justify-center'>
-              <h1 className="leading-relaxed font-primary justify-between m-auto font-extrabold text-3xl text-center text-palette-primary py-2 sm:py-4">
-                  No hay Art&iacute;culos por aqu&iacute;
-              </h1>
-            </div>
-              :
-              <tr className="text-center">
-                <td></td>
-                <td className="font-primary text-base text-gray-600 font-semibold uppercase px-4 sm:px-6 py-4">Subtotal</td>
-                <td className="font-primary text-lg text-palette-primary font-medium px-4 sm:px-6 py-4">
-                  <Price
-                    currency="$"
-                    num={subtotal}
-                    numSize="text-xl"
-                  />
-                </td>
-                <td></td>
-              </tr>
-          }
+
+            <tr className="text-center">
+              <td></td>
+              <td className="font-primary text-base text-gray-600 font-semibold uppercase px-4 sm:px-6 py-4">Subtotal</td>
+              <td className="font-primary text-lg text-palette-primary font-medium px-4 sm:px-6 py-4">
+                <Price
+                  currency="$"
+                  num={subtotal}
+                  numSize="text-xl"
+                />
+              </td>
+              <td></td>
+            </tr>
         </tbody>
       </table>
     </div>
