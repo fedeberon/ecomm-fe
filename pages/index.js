@@ -6,6 +6,8 @@ import * as categoriesService from 'services/categoriesService'
 import Banner from '@/components/products/ProductBanner.js';
 
 
+
+
 function IndexPage({products, brands, categories}) {
   return (
       <>
@@ -18,7 +20,7 @@ function IndexPage({products, brands, categories}) {
                 <Banner/>
               </div>
             </div>
-            <ProductListings products={products} brands={brands} categories={categories}/>
+            <ProductListings products={products} brands={brands} categories={categories} type={"all"}/>
           </div>
      </>
   )
@@ -31,7 +33,7 @@ export async function getServerSideProps() {
 
   return {
     props: {
-      products,
+      products: products.content,
       brands, 
       categories,
     },

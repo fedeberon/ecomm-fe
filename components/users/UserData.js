@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { getByUsername ,save } from "services/userService";
+import { getByUsername ,save } from "services/userService"; 
+
 
 const UserData = ({user}) => {
  
@@ -177,8 +178,8 @@ const UserData = ({user}) => {
                     id="postal" 
                     name="postal"
                 />
-                </div>
-            </div>
+                </div> 
+            </div> 
             
             <button onClick={submit}
                 class="bg-blue-500 hover:bg-blue-700 ml-6 rounded text-white font-bold mt-2 py-2 px-4">
