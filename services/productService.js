@@ -77,6 +77,17 @@ export async function save(product) {
     }
 }
 
+
+export async function update(product) {
+    const fetchUrl = `${process.env.NEXT_PUBLIC_BACKEND_SERVICE}/product`;
+    try {
+        let response = await axios.put(fetchUrl, product);
+        return response;
+    } catch (error) {
+        throw new Error("Could not create product!");
+    }
+}
+
 export async function updateAsAPromotion(product) {
     const fetchUrl = `${process.env.NEXT_PUBLIC_BACKEND_SERVICE}/product/promotion`;
     try {

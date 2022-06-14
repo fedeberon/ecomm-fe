@@ -12,6 +12,18 @@ export async function save(user) {
 }
 
 
+export async function update(user) {
+    const fetchUrl = `${process.env.NEXT_PUBLIC_BACKEND_SERVICE}/user`;
+
+    try {
+        let response = await axios.put(fetchUrl, user);
+        return response;
+    } catch (error) {
+        throw new Error("Could not create user !");
+    }
+}
+
+
 export async function login(credentials) {
     const fetchUrl = `${process.env.NEXT_PUBLIC_BACKEND_SERVICE}/user/login`;
 

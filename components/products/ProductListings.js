@@ -1,14 +1,14 @@
 import ProductCard from '@/components/products/ProductCard'
 import {useEffect, useState} from "react";
-import {filterProductsByBrands, filterProductsByCategories, getProducts, search} from "../../services/productService"
+import {filterProductsByBrands, filterProductsByCategories, getProducts, getProductsByType, search} from "../../services/productService"
 import BrandSearch from '../brands/BrandSearch';
 import CategorySearch from '../filter/CategorySearch';
 import Loading from "@/components/utils/Loading";
 
-function ProductListings({ products, brands, categories}) {
+function ProductListings({ products, brands, categories, type}) {
 
   const [filter, isShowFilter] = useState(false)
-  const [productsToShow, setProductsToShow] = useState(products.content)
+  const [productsToShow, setProductsToShow] = useState(products)
   const [brandsToSearch, setBrandsToSearch] = useState([]);
   const [categoriesToSearch, setCategoriesToSearch] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -17,13 +17,24 @@ function ProductListings({ products, brands, categories}) {
   let handleScroll = async (e) => {
       if(window.innerHeight + e.target.documentElement.scrollTop + 1  >= e.target.documentElement.scrollHeight && !isLoading) {
           setIsLoading(true)
+            const products = await getProducts(page++)
           page = page + 1;
-          let products = await getProducts(page);
-          console.log(products.content)
-          setProductsToShow(productsToShow => [
-              ...productsToShow.concat (products.content)
-          ]);
+         
+        if (type === "all") { 
+            let product = await getProducts(page);
+            setProductsToShow(productsToShow => [
+                ...productsToShow.concat (product.content)
+            ]);
+        } else {
+            let product = await getProductsByType(type);
+            setProductsToShow(product);
+        }
+       
           setIsLoading(false)
+
+        if (products.content == products.content.length) {
+            setIsLoading(false)
+        }
       }
   }
 
