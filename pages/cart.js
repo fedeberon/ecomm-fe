@@ -27,7 +27,7 @@ function CartPage({myPoints, user}) {
   const cleanCart = useCleanCartContext();
   const [session] = useSession()
   const [totalAmount, setTotalAmount] = useState(0)
-    const [items, setItems] = useState(cart.length);
+  const [items, setItems] = useState(cart.length);
 
    useEffect(() => {
        let total = cart.reduce((a,v) => a + v.price, 0);
@@ -77,12 +77,12 @@ function CartPage({myPoints, user}) {
             <PageTitle text="Tu Compra" />
 
                 {
-                    totalAmount == 0
+                    totalAmount  == 0 && cart.length >=1 
                         ?
                         <div
-                            className="bg-red-100 rounded-lg py-5 px-6 mb-4 text-base text-red-700 mb-3"
+                            className="flex items-center justify-center m-auto w-3/6 bg-red-100 rounded-lg py-5 px-6 mb-4 text-base text-center text-red-700 mb-3"
                             role="alert">
-                            Encontramos el items en el carro con importes igual a CERO !!
+                            Encontramos el item en el carro con importes igual a CERO !!
                         </div>
                         :
                         <></>
