@@ -33,6 +33,7 @@ const Payment = ({user, myPoints, users}) => {
     }, [])
 
     const [person, setPerson] = useState({
+        "username": "",
         "name": "",
         "lastName": "",
         "username": "",
@@ -64,10 +65,10 @@ const Payment = ({user, myPoints, users}) => {
         let session =  await getSession()
         const response = await getBilling(person, checkout, type, session, coupon, card);
         if (response.status === 200) {
-            router.push('/bills/' + response.data.id)
+            await router.push('/bills/' + response.data.id)
             cleanCart();
         }
-        if(response.status === 500) {
+        if(response.status === 500 || response.status === 400){
             setError(response.data)
             console.log(response.data)
             setLoading(false)
@@ -283,7 +284,23 @@ const Payment = ({user, myPoints, users}) => {
                             </div>
                             <hr className='my-5'/>
                             <div className="justify-center">
-                                
+
+                                <h1 className="text-gray-800 font-lg font-bold tracking-normal leading-tight mb-4">Detalle de Facturaci&oacute;n</h1>
+
+                                <select id="user"
+                                        className="text-gray-600 focus:outline-none  font-normal w-full h-10 flex items-center pl-3 text-sm border-gray-300 rounded border"
+                                        onChange={handleChangeUsers}
+                                >
+                                    <option value="">Seleccione el usuario </option>
+                                    {
+                                        users.map((user, index) => {
+                                            return (
+                                                <option key={index} value={user.username} name={`${user.name}`}>{user.name}</option>
+                                            )
+                                        })
+                                    }
+                                </select>
+
                                 <a onClick={() => handleCreditPoints(person.username)}
                                     aria-label="checkout-products"
                                     className="mt-8 w-80 bg-gradient-to-r from-blue-900 to-blue-500 mx-auto text-white text-lg font-primary font-semibold pt-2 pb-1 leading-relaxed flex cursor-pointer
