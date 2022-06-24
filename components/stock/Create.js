@@ -4,6 +4,7 @@ import SearchProduct from "@/components/stock/SearchProduct";
 import {save} from "../../services/stockService"
 import { NotificationManager, NotificationContainer } from "react-notifications";
 import 'react-notifications/lib/notifications.css';
+import Loading from "../utils/Loading";
 
 const Create = () => {
 
@@ -11,6 +12,7 @@ const Create = () => {
     const [stocks, setStocks] = useState([])
     const[show, isShow] = useState(false)
     const[result, setResult] = useState([])
+    const[isLoad, setIsLoad] = useState(false)
 
     const searchValue = async (e) => {
       if(e.target.value.trim() === '') {
@@ -21,6 +23,7 @@ const Create = () => {
     }
 
     const remove = (id) => {
+        setIsLoad(true)
         const array = [...stocks];
         stocks.forEach((item, index) => {
             if(item.id = id) {
@@ -28,9 +31,11 @@ const Create = () => {
             }
         })
         setStocks(array)
+        setIsLoad(false)
     }
 
     const add = (product) => {
+        setIsLoad(true)
         const updatedCarsArray = [...stocks, {
           "quantity": null,
             "order" : null,
@@ -40,6 +45,7 @@ const Create = () => {
         toggleModal();
         setResult([])
         document.getElementById('search').value = ""
+        setIsLoad(false)
     }
 
     const showOnShop = (product) => {
@@ -69,6 +75,7 @@ const Create = () => {
 
 
     const saveStocks = () => { 
+      setIsLoad(true)
       if(errors.order == undefined && errors.quantity == undefined){
         save(stocks).then((result) => {
           if (result.status == 200) {
@@ -78,6 +85,7 @@ const Create = () => {
           }
         });   
       }
+      setIsLoad(false)
       return;
 
     }
@@ -205,6 +213,13 @@ const Create = () => {
           showOnShop={showOnShop}
           result={result}
         />
+
+        {
+          isLoad?
+          <Loading></Loading>
+          :
+          <></>
+        }
       </>
     );
 }
