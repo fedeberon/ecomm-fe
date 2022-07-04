@@ -12,47 +12,26 @@ function ProductListings({ products, brands, categories, type}) {
   const [brandsToSearch, setBrandsToSearch] = useState([]);
   const [categoriesToSearch, setCategoriesToSearch] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-    const [lastProducts, setLastProducts] = useState(false);
-  const [shouldFindMoreProducts, setShouldFindMoreProducts] = useState(true);
-
-
-  useEffect(() => {
-    debugger;  
-    if (categoriesToSearch.length > 0 || brandsToSearch.length > 0) {
-        setShouldFindMoreProducts(false);
-    }
-  }, [categoriesToSearch, brandsToSearch]);
-
 
   let page = 1;
 
-  let handleScroll =  (e) => {
+  let handleScroll = async (e) => {
       if(window.innerHeight + e.target.documentElement.scrollTop + 1  >= e.target.documentElement.scrollHeight && !isLoading) {
-              
-        console.log("shouldFindMoreProducts ", shouldFindMoreProducts);
-         
-        if(!shouldFindMoreProducts) {
-            return;
-        }
-        
-        if(lastProducts.last === true){
-            page = page + 1;
+          const products = await getProducts(page++)
+          page = page + 1;
+          if(products.last===false){
             setIsLoading(true)
             if (type === "all") { 
-                let product = getProducts(page++).then(response => {
-                    setProductsToShow(productsToShow => [
-                        ...productsToShow.concat (product.content)
-                    ]);
-                });
-                
+                let product = await getProducts(page);
+                setProductsToShow(productsToShow => [
+                    ...productsToShow.concat (product.content)
+                ]);
             } else {
-                let product = getProductsByType(type).then(response => {
-                    setProductsToShow(product);
-            });
-                
+                let product = await getProductsByType(type);
+                setProductsToShow(product);
             }
             setIsLoading(false)
-       }
+          }
     }
   }
 
@@ -108,7 +87,6 @@ function ProductListings({ products, brands, categories, type}) {
 
 const searchCategories = async () => {
   const products =  await filterProductsByCategories(categoriesToSearch)
-  console.log("On search ", categoriesToSearch);
   setProductsToShow(products)
   close();
 }
