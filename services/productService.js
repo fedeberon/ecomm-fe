@@ -88,7 +88,7 @@ export async function update(product) {
     }
 }
 
-export async function updateAsAPromotion(product) {
+export async function updateAsAPromotion(product) { 
     const fetchUrl = `${process.env.NEXT_PUBLIC_BACKEND_SERVICE}/product/promotion`;
     try {
         let response = await axios.post(fetchUrl, product);
@@ -198,4 +198,16 @@ export async function filterProductsByCategories(categories) {
     } catch (error) {
         throw new Error("Could not search products by categories!");
     }
+}
+
+
+export async function updateTwinsCard(user) {             
+    debugger                             
+    const fetchUrl = `${process.env.NEXT_PUBLIC_BACKEND_SERVICE}/Mellizos`;       
+    try {                                                                                        
+        let response = await axios.post(fetchUrl, user);                                         
+        return response;                                                                               
+    } catch (error) {                                                                                       
+        throw new Error("Could not update twings of user !" , user.username , ". Error:" , error);                                     
+    }                                                                                               
 }
