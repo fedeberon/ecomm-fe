@@ -84,7 +84,7 @@ function CartPage({myPoints, user}) {
                             />
                             <div className="max-w-sm mx-auto space-y-4 px-2">
                                 <BackToProductButton />
-                                {
+                                {/* {
                                     preference != null
                                         ?
                                         <>
@@ -98,7 +98,7 @@ function CartPage({myPoints, user}) {
                                                         justify-center items-center focus:ring-1 focus:ring-palette-light focus:outline-none w-full hover:bg-blue-600 rounded-sm"
                                             >Mercado Pago</a>
                                         </>
-                                }
+                                } */}
                                 
                                 {
                                 session?.user?.role?.includes("ADMIN") 
