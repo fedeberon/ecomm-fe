@@ -2,6 +2,7 @@ import {findAll} from "../../services/stockService";
 import React from "react";
 import PageTitle from "@/components/PageTitle";
 import List from "@/components/stock/List";
+import Link from "next/link";
 
 const Index = ({stock}) => {
 
@@ -10,6 +11,11 @@ const Index = ({stock}) => {
         <div className="mx-auto max-w-6xl">
             <PageTitle text="Stock" />
             <List stock={stock}/>
+            <div>
+                <Link href="/stock/new">
+                    <button className="py-2 px-4 ml-4 bg-green-500 text-white rounded hover:bg-blue-700">Agregar Stock</button>
+                </Link>
+            </div>
         </div>
     )
 

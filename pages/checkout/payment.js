@@ -22,8 +22,10 @@ const Payment = ({user, myPoints, users}) => {
     const [card, setCard] = useState("visa");
     const [coupon, setCoupon] = useState("")
     const [points, setPoints] = useState(myPoints)
-
-
+    const [check,setCheck]=useState(false)
+    const [cross,setCross]= useState(false)
+    const [totalAmount, setTotalAmount] = useState(0)
+  
     useEffect(async () => {
         setLoading(true)
         let checkout = await createCheckout(cart);
@@ -31,7 +33,13 @@ const Payment = ({user, myPoints, users}) => {
         setLoading(false)
     }, [])
 
+    useEffect(() => {
+        let total = cart.reduce((a,v) => a + v.price, 0);
+        setTotalAmount(total);
+    }, [cart] );
+
     const [person, setPerson] = useState({
+        "username": "",
         "name": "",
         "lastName": "",
         "username": "",
@@ -63,10 +71,10 @@ const Payment = ({user, myPoints, users}) => {
         let session =  await getSession()
         const response = await getBilling(person, checkout, type, session, coupon, card);
         if (response.status === 200) {
-            router.push('/bills/' + response.data.id)
+            await router.push('/bills/' + response.data.id)
             cleanCart();
         }
-        if(response.status === 500) {
+        if(response.status === 500 || response.status === 400){
             setError(response.data)
             console.log(response.data)
             setLoading(false)
@@ -110,15 +118,15 @@ const Payment = ({user, myPoints, users}) => {
             })
         })
     }
-    const [check,setCheck]=useState(false)
-    const [cross,setCross]= useState(false)
+
     const handleCUIT = async (cuit)=>{
         let dataCuit = await getPersonByCUIT(cuit)
-        console.log(dataCuit)
-        console.log(dataCuit.status);
          if (dataCuit.status === undefined){setCheck(true)}else{setCheck(false)}
          if (dataCuit.status === 400){setCross(true)}else{setCross(false)}
     } 
+    
+    
+
     return(
         <>
             {
@@ -223,39 +231,47 @@ const Payment = ({user, myPoints, users}) => {
                                 <div className="relative mb-5 mt-2">
                                     <input id="email"  name="email" onChange={handleChange} value={person.username} className="mb-8 text-gray-600 focus:outline-none focus:border focus:border-indigo-700 font-normal w-full h-10 flex items-center pl-3 text-sm border-gray-300 rounded border" placeholder="e-Mail" />
                                 </div>
-
                                 
-
-                                <div className="flex items-center justify-center m-auto w-full">
-                                    <a onClick={() => submit('A')}
-                                       aria-label="checkout-products"
-                                       className="bg-gray-500 text-white text-lg font-primary font-semibold pt-2 pb-1 leading-relaxed flex cursor-pointer
-                                                          justify-center items-center focus:ring-1 focus:ring-palette-light focus:outline-none w-1/3 hover:bg-gray-700 rounded-md mr-4">
-                                        Factura A
-                                    </a>
+                            {
+                                totalAmount == 0
+                                    ?
+                                    <div
+                                        className="bg-red-100 rounded-lg py-5 px-6 mb-4 text-base text-red-700 mb-3"
+                                        role="alert">
+                                            Encontramos el item en el carro con importes igual a CERO !!
+                                    </div>
+                                    :
+                                    <div className="flex items-center justify-center m-auto w-full">
+                                        <a onClick={() => submit('A')}
+                                        aria-label="checkout-products"
+                                        className="bg-gray-500 text-white text-lg font-primary font-semibold pt-2 pb-1 leading-relaxed flex cursor-pointer
+                                                            justify-center items-center focus:ring-1 focus:ring-palette-light focus:outline-none w-1/3 hover:bg-gray-700 rounded-md mr-4">
+                                            Factura A
+                                        </a>
 
                                     <a onClick={() => submit('B')}
-                                       aria-label="checkout-products"
-                                       className="bg-yellow-600 text-white text-lg font-primary font-semibold pt-2 pb-1 leading-relaxed flex cursor-pointer
-                                                          justify-center items-center focus:ring-1 focus:ring-palette-light focus:outline-none w-1/3 hover:bg-yellow-700 rounded-md ml-4">
+                                    aria-label="checkout-products"
+                                    className="bg-yellow-600 text-white text-lg font-primary font-semibold pt-2 pb-1 leading-relaxed flex cursor-pointer
+                                                        justify-center items-center focus:ring-1 focus:ring-palette-light focus:outline-none w-1/3 hover:bg-yellow-700 rounded-md ml-4">
                                         Factura B
                                     </a>
 
                                     <a onClick={() => submit('C')}
-                                       aria-label="checkout-products"
-                                       className="bg-yellow-600 text-white text-lg font-primary font-semibold pt-2 pb-1 leading-relaxed flex cursor-pointer
-                                                         justify-center items-center focus:ring-1 focus:ring-palette-light focus:outline-none w-1/3 hover:bg-yellow-700 rounded-md ml-4">
+                                    aria-label="checkout-products"
+                                    className="bg-yellow-600 text-white text-lg font-primary font-semibold pt-2 pb-1 leading-relaxed flex cursor-pointer
+                                                        justify-center items-center focus:ring-1 focus:ring-palette-light focus:outline-none w-1/3 hover:bg-yellow-700 rounded-md ml-4">
                                         Consumidor Final
                                     </a>
                                 </div>
+                            }
                                 <div className="cursor-pointer absolute top-0 right-0 mt-4 mr-5 text-gray-400 hover:text-gray-600 transition duration-150 ease-in-out">
                                     <svg xmlns="http://www.w3.org/2000/svg" aria-label="Close" className="icon icon-tabler icon-tabler-x" width={20} height={20} viewBox="0 0 24 24" strokeWidth="2.5" stroke="currentColor" fill="none" strokeLinecap="round" strokeLinejoin="round">
                                         <path stroke="none" d="M0 0h24v24H0z" />
                                         <line x1={18} y1={6} x2={6} y2={18} />
                                         <line x1={6} y1={6} x2={18} y2={18} />
                                     </svg>
+                                    </div>
                                 </div>
-                            </div>
 
                         </div>
                         <div id="third" className={`${tabs.creditCard ? `` : `hidden`}  flex bg-white justify-center p-2 `}>
@@ -282,7 +298,23 @@ const Payment = ({user, myPoints, users}) => {
                             </div>
                             <hr className='my-5'/>
                             <div className="justify-center">
-                                
+
+                                <h1 className="text-gray-800 font-lg font-bold tracking-normal leading-tight mb-4">Detalle de Facturaci&oacute;n</h1>
+
+                                <select id="user"
+                                        className="text-gray-600 focus:outline-none  font-normal w-full h-10 flex items-center pl-3 text-sm border-gray-300 rounded border"
+                                        onChange={handleChangeUsers}
+                                >
+                                    <option value="">Seleccione el usuario </option>
+                                    {
+                                        users.map((user, index) => {
+                                            return (
+                                                <option key={index} value={user.username} name={`${user.name}`}>{user.name}</option>
+                                            )
+                                        })
+                                    }
+                                </select>
+
                                 <a onClick={() => handleCreditPoints(person.username)}
                                     aria-label="checkout-products"
                                     className="mt-8 w-80 bg-gradient-to-r from-blue-900 to-blue-500 mx-auto text-white text-lg font-primary font-semibold pt-2 pb-1 leading-relaxed flex cursor-pointer

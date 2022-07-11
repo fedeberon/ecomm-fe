@@ -26,16 +26,25 @@ function CartPage({myPoints, user}) {
   const router = useRouter();
   const cleanCart = useCleanCartContext();
   const [session] = useSession()
-  const [points, setPoints] = useState(myPoints)
+  const [totalAmount, setTotalAmount] = useState(0)
+  const [items, setItems] = useState(cart.length);
+
+   useEffect(() => {
+       let total = cart.reduce((a,v) => a + v.price, 0);
+       setTotalAmount(total);
+   }, [cart] );
+
+   useEffect(() => {
+       setItems(cart.length);
+   }, [cart]);
 
 
-
-    const preparePreference = () => {
-      setLoading(true);
-      getPreference(cart).then((res) => {
-          setPreference(res.data);
-          setLoading(false);
-      });
+  const preparePreference = () => {
+    setLoading(true);
+    getPreference(cart).then((res) => {
+      setPreference(res.data);
+      setLoading(false);
+    });
   }
 
   const handleCheckout = () => {
@@ -66,8 +75,20 @@ function CartPage({myPoints, user}) {
             <div className="container bg-white mx-auto mb-20 min-h-screen">
             <SEO title={pageTitle} />
             <PageTitle text="Tu Compra" />
+
                 {
-                    cart.length == 0
+                    totalAmount  == 0 && cart.length >=1 
+                        ?
+                        <div
+                            className="flex items-center justify-center m-auto w-3/6 bg-red-100 rounded-lg py-5 px-6 mb-4 text-base text-center text-red-700 mb-3"
+                            role="alert">
+                            Encontramos el item en el carro con importes igual a CERO !!
+                        </div>
+                        :
+                        <></>
+                }
+                {
+                    items == 0
                     ?
                         <>
                             <h1 className="leading-relaxed font-primary justify-between font-extrabold text-3xl text-center text-palette-primary mt-4 py-2 sm:py-4">
@@ -84,6 +105,7 @@ function CartPage({myPoints, user}) {
                             />
                             <div className="max-w-sm mx-auto space-y-4 px-2">
                                 <BackToProductButton />
+
                                 {/* {
                                     preference != null
                                         ?
@@ -98,18 +120,23 @@ function CartPage({myPoints, user}) {
                                                         justify-center items-center focus:ring-1 focus:ring-palette-light focus:outline-none w-full hover:bg-blue-600 rounded-sm"
                                             >Mercado Pago</a>
                                         </>
+
                                 } */}
                                 
                                 {
                                 session?.user?.role?.includes("ADMIN") 
-                                    ? 
-                                        (
+                                    ?
                                         <Link href={"/checkout/payment"} passHref>
-                                        <a href="#" className="w-1/2 bg-blue-500 text-white text-lg font-primary font-semibold pt-2 pb-1 leading-relaxed flex cursor-pointer
-                                                            justify-center items-center focus:ring-1 focus:ring-palette-light focus:outline-none w-full hover:bg-blue-600 rounded-sm">Checkout</a>
+                                                <a href="#" className="w-1/2 bg-blue-500 text-white text-lg font-primary
+                                                               font-semibold pt-2 pb-1 leading-relaxed flex cursor-pointer
+                                                               justify-center items-center focus:ring-1 focus:ring-palette-light
+                                                               focus:outline-none w-full hover:bg-blue-600 rounded-sm">
+                                                    Checkout
+
+
+                                                </a>
                                         </Link>
-                                        ) 
-                                    : 
+                                    :
                                         <>
                                         {
                                         checkout == null
@@ -121,26 +148,16 @@ function CartPage({myPoints, user}) {
                                             >Checkout</a>
                                             :
                                             <>
-                                                
-                                                
                                                 <a onClick={handleCreditPoints}
                                                 aria-label="checkout-products"
                                                 className="w-1/2 bg-gradient-to-r from-blue-900 to-blue-500 text-white text-lg font-primary font-semibold pt-2 pb-1 leading-relaxed flex cursor-pointer
                                                             justify-center items-center focus:ring-1 focus:ring-palette-light focus:outline-none w-full hover:bg-blue-600 rounded-sm"
                                                 >Tarjeta de Puntos. Saldo: {myPoints}</a>
-                                                
                                             </>
                                         }
                                         </>
                                 }
-                                
-                                
-                             
-
-
-
-
-                                {
+`                               {
                                     loading
                                         ?
                                         <Loading message={"Espere un momento por favor"} />

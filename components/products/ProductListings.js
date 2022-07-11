@@ -12,30 +12,28 @@ function ProductListings({ products, brands, categories, type}) {
   const [brandsToSearch, setBrandsToSearch] = useState([]);
   const [categoriesToSearch, setCategoriesToSearch] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+
   let page = 1;
 
+  
   let handleScroll = async (e) => {
       if(window.innerHeight + e.target.documentElement.scrollTop + 1  >= e.target.documentElement.scrollHeight && !isLoading) {
-          setIsLoading(true)
-            const products = await getProducts(page++)
+          const products = await getProducts(page++)
           page = page + 1;
-         
-        if (type === "all") { 
-            let product = await getProducts(page);
-            setProductsToShow(productsToShow => [
-                ...productsToShow.concat (product.content)
-            ]);
-        } else {
-            let product = await getProductsByType(type);
-            setProductsToShow(product);
-        }
-       
-          setIsLoading(false)
-
-        if (products.content == products.content.length) {
+          if(products.last===false){
+            setIsLoading(true)
+            if (type === "all") { 
+                let product = await getProducts(page);
+                setProductsToShow(productsToShow => [
+                    ...productsToShow.concat (product.content)
+                ]);
+            } else {
+                let product = await getProductsByType(type);
+                setProductsToShow(product);
+            }
             setIsLoading(false)
-        }
-      }
+          }
+    }
   }
 
   useEffect( ()  => {
@@ -63,7 +61,7 @@ function ProductListings({ products, brands, categories, type}) {
           const brands = brandsToSearch.filter((brand) => brand.id !== e.target.value)
           setBrandsToSearch(brands);
       }
-  }
+  } 
 
   const searchBrands = async () => {
     const products = await filterProductsByBrands(brandsToSearch)
@@ -110,6 +108,7 @@ const searchCategories = async () => {
     searchCategories(); 
     searchBrands();
   }
+
 
    return (
           <div className='w-full'>
@@ -178,15 +177,15 @@ const searchCategories = async () => {
               </div>
 
               {
-
-                  isLoading ?
+                        isLoading 
+                        ?
                         <div className='flex items-center justify-center py-6'>
                             <div className='w-16 h-16 border-b-2 border-purple-900 rounded-full animate-spin'></div>
-                        </div>
+                        </div> 
                         : 
-                        <></>
-
+                       <></>
               }
+
           </div>
   )
 }
