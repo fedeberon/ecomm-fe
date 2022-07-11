@@ -15,6 +15,7 @@ function ProductListings({ products, brands, categories, type}) {
 
   let page = 1;
 
+  
   let handleScroll = async (e) => {
       if(window.innerHeight + e.target.documentElement.scrollTop + 1  >= e.target.documentElement.scrollHeight && !isLoading) {
           const products = await getProducts(page++)
