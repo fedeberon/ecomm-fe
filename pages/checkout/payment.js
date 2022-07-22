@@ -279,7 +279,7 @@ const Payment = ({user, myPoints, users}) => {
                         </div>
                         <div id="quarter" className={`${tabs.pointCard ? `` : `hidden`}  p-4`}>
 
-                            <div className='text-white max-w-xs my-auto mx-auto bg-gradient-to-r from-pink-500 to-purple-500 p-4 py-5 px-5 rounded-xl'>
+                            <div className='m-auto w-80 h-48 rounded-2xl font-mono text-white overflow-hidden cursor-pointer transition-all duration-500 bg-gradient-to-r from-pink-500 to-purple-500 p-4 py-5 px-5'>
                                 <div className="flex justify-between">
                                     <div>
                                         <h2>Puntos: </h2>
@@ -289,7 +289,7 @@ const Payment = ({user, myPoints, users}) => {
                                         <img src={logo.src} className={"w-16 relative lg:w-24"} />
                                     </div>
                                 </div>
-                                <div className='flex justify-between mt-5 w-48 '>
+                                <div className='flex justify-between mt-8 w-48 '>
                                     <div>
                                         <h3 className="text-xs"> Titular </h3>
                                         <p className="font-bold"> {person.name} { person.lastName} </p>
@@ -318,7 +318,7 @@ const Payment = ({user, myPoints, users}) => {
                                 <a onClick={() => handleCreditPoints(person.username)}
                                     aria-label="checkout-products"
                                     className="mt-8 w-80 bg-gradient-to-r from-blue-900 to-blue-500 mx-auto text-white text-lg font-primary font-semibold pt-2 pb-1 leading-relaxed flex cursor-pointer
-                                                    justify-center items-center focus:ring-1 focus:ring-palette-light focus:outline-none w-1/3 hover:bg-blue-600 rounded-sm"
+                                                    justify-center items-center focus:ring-1 focus:ring-palette-light focus:outline-none w-1/3 hover:bg-blue-600 rounded-sm min-w-full"
                                 >Tarjeta de Puntos. Saldo: {points}</a>
 
                                 

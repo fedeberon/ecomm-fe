@@ -15,7 +15,7 @@ const UserList = ({ users }) => {
         setTwins(e)
 
         const user = {
-            "id": e.target.id,
+            "cardId": e.target.id,
             "twins": e.target.value,
         }
 
