@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 export async function getProducts(page) {
-    const fetchUrl = `${process.env.NEXT_PUBLIC_BACKEND_SERVICE}/product?page=${page}`;
+    const fetchUrl = `${process.env.NEXT_PUBLIC_BACKEND_SERVICE}/product?page=${page}&size=4`;
 
     const fetchOptions = {
         endpoint: fetchUrl,
@@ -203,7 +203,7 @@ export async function filterProductsByCategories(categories) {
 
 export async function updateTwinsCard(user) {             
     debugger                             
-    const fetchUrl = `${process.env.NEXT_PUBLIC_BACKEND_SERVICE}/Mellizos`;       
+    const fetchUrl = `${process.env.NEXT_PUBLIC_BACKEND_SERVICE}/user/twins`;       
     try {                                                                                        
         let response = await axios.post(fetchUrl, user);                                         
         return response;                                                                               
