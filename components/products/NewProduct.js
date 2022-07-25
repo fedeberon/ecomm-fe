@@ -1,14 +1,12 @@
 
 import { NotificationContainer } from "react-notifications";
 import useForm from "../../hooks/useForm";
-import {useEffect, useState} from "react";
+import {useEffect, useState, useMemo } from "react";
 
 
 const NewProduct = ({ categories, brands, sizes }) => {
-    const [sizeToCheck,setsizeToCheck]= useState([])
-    
-
-    const initialForm = {
+    const [ sizeToCheck, setsizeToCheck ] = useState([]);
+    const initialForm = useMemo(() => ({
         name: "",
         price: "",
         description: "",
@@ -25,7 +23,27 @@ const NewProduct = ({ categories, brands, sizes }) => {
         stock: "",
         points: "",
         promo: false,
-    }
+    })
+);
+
+    // const initialForm = {
+    //     name: "",
+    //     price: "",
+    //     description: "",
+    //     category: {
+    //         id: ""
+    //     },
+    //     brand: {
+    //         id: ""
+    //     },
+    //     sizes: [{
+    //         id: ""
+    //     }],
+    //     code: "",
+    //     stock: "",
+    //     points: "",
+    //     promo: false,
+    // }
 
     const validationsForm = (form) => {
         let errors = {};
@@ -74,16 +92,20 @@ const NewProduct = ({ categories, brands, sizes }) => {
 
     const handleChangeSize =(e)=>{
         if(e.target.checked) {
-            setsizeToCheck(sizeToCheck =>  [
+            const final = [
                 ...sizeToCheck,
                 {
                     "id": e.target.value
                 }
-            ])
-            initialForm.size = sizeToCheck;
+            ];
+            setsizeToCheck(final);
+            form.sizes = final;
         } else {
-            const sizes = sizeToCheck.filter((size) => size.id !== e.target.value)
+            console.log(sizeToCheck);
+            console.log(e.target.value);
+            const sizes = sizeToCheck.filter((size) => size.id !== e.target.value);
             setsizeToCheck(sizes);
+            form.sizes = sizes;
         }
     }
     
