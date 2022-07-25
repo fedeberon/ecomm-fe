@@ -1,7 +1,7 @@
 const FilterCuitComponent = ({filterText, onFilter, onClear})=> (
     <>
         <input
-        className="w-full"
+        className="w-full p-2 bg-gray-100 border border-purple-500 border-gray-200 rounded-lg"
             id="search"
             type="text"
             placeholder="Buscar por CUIT"
