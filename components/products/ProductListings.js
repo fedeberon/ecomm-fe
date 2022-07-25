@@ -8,33 +8,42 @@ import Loading from "@/components/utils/Loading";
 function ProductListings({ products, brands, categories, type}) {
 
   const [filter, isShowFilter] = useState(false)
-  const [productsToShow, setProductsToShow] = useState(products)
   const [brandsToSearch, setBrandsToSearch] = useState([]);
   const [categoriesToSearch, setCategoriesToSearch] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [productsToShow, setProductsToShow] = useState(products)
+  const [sidebarTop, setSidebarTop] = useState(undefined);
+
 
   let page = 1;
-
-  
+  //scroll infinito
   let handleScroll = async (e) => {
       if(window.innerHeight + e.target.documentElement.scrollTop + 1  >= e.target.documentElement.scrollHeight && !isLoading) {
           const products = await getProducts(page++)
           page = page + 1;
           if(products.last===false){
             setIsLoading(true)
-            if (type === "all") { 
+            debugger 
+
+            // getProducts API que trae todos los productos
+            if (type === "all" ) {     
                 let product = await getProducts(page);
                 setProductsToShow(productsToShow => [
                     ...productsToShow.concat (product.content)
+                    
                 ]);
+            // getpProductsByType trae productos si entras a una categoria del nav
             } else {
                 let product = await getProductsByType(type);
                 setProductsToShow(product);
+                 
             }
             setIsLoading(false)
           }
     }
   }
+
+  
 
   useEffect( ()  => {
       window.addEventListener('scroll', handleScroll);
@@ -109,16 +118,18 @@ const searchCategories = async () => {
     searchBrands();
   }
 
-
-   return (
+   return ( 
           <div className='w-full'>
-                <div>
-                    <div className='flex justify-center py-2'>
-                        <div className='justify-between m-4'>
+                <div className='sticky top-24 z-50 bg-white shadow-lg'>
+                    
+                    <div className='flex justify-center py-2 h-20'>
+
+                        <div className='justify-between my-auto mx-4'>
                             <button className="text-purple-500 bg-transparent border border-solid border-purple-500 hover:bg-purple-500 hover:text-white active:bg-purple-600 font-bold
                                             uppercase
                                             text-xl
-                                            p-6
+                                            p-2
+                                            my-auto
                                             rounded-xl
                                             shadow-lg shadow-indigo-500/50
                                             outline-none
@@ -127,16 +138,15 @@ const searchCategories = async () => {
                                             transition-all
                                             duration-150"
                                             type="button"
-                                            onClick={open}>
+                                            onClick={open}>     
                             {filter ? "Cerrar" : "Filtros" }
                             </button>
                         </div>
 
-
-                        <input type="search"
-                            className="w-2/3 m-3 text-2xl bg-purple-200 shadow-lg shadow-indigo-500/50 outline-none rounded-xl p-6"
-                            placeholder="Buscar"
-                            onChange={searchValue}/>
+                                <input type="search"
+                                    className="w-2/3 my-auto text-2xl bg-purple-200 shadow-lg shadow-indigo-500/50 outline-none rounded-xl p-2"
+                                    placeholder="Buscar"
+                                    onChange={searchValue}/>
                       </div>
                     <div className={`fixed z-50  top-0 w-full left-0 ${filter ? "" : "hidden"}  `} id="modal">
                         <div className="flex items-center justify-center min-height-100vh pt-4 px-4 pb-20 text-center sm:block sm:p-0">
@@ -162,7 +172,7 @@ const searchCategories = async () => {
                 </div>
 
 
-              <div className="mx-auto w-11/12">
+              <div className="mx-auto mt-3 w-11/12">
                   <div className="grid sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-9 2xl:gap-4 ">
                       {
                           productsToShow
