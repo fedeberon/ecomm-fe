@@ -52,7 +52,7 @@ function Nav() {
 
   return (
 
-    <header className="border-b border-palette-lighter w-full sticky top-0 z-20 bg-white">
+    <header className="border-b border-palette-lighter w-full sticky top-0 z-50 bg-white">
 
       <div className="flex items-center justify-between flex-wrap p-2 ">
         <Link href="/">
