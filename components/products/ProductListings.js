@@ -120,7 +120,7 @@ const searchCategories = async () => {
 
    return ( 
           <div className='w-full'>
-                <div className='sticky top-24 z-50 bg-white shadow-lg'>
+                <div className='sticky top-20 lg:top-24 z-30 bg-white shadow-lg'>
                     
                     <div className='flex justify-center py-2 h-20'>
 
@@ -143,7 +143,7 @@ const searchCategories = async () => {
                             </button>
                         </div>
 
-                                <input type="search"
+                                <input
                                     className="w-2/3 my-auto text-2xl bg-purple-200 shadow-lg shadow-indigo-500/50 outline-none rounded-xl p-2"
                                     placeholder="Buscar"
                                     onChange={searchValue}/>

@@ -219,11 +219,19 @@ const Payment = ({user, myPoints, users}) => {
                                     }
                                 </div>
                                 <label htmlFor="name" className="text-gray-800 text-sm font-bold leading-tight tracking-normal">
-                                    Nombre y Apellido
+                                    Nombre
                                 </label>
                                 <div className="relative mb-5 mt-2">
-                                    <input id="name" name="name"  onChange={handleChange} value={person.name +" "+ person.lastName} className="text-gray-600 focus:outline-none focus:border focus:border-indigo-700 font-normal w-full h-10 flex items-center pl-3 text-sm border-gray-300 rounded border" placeholder="Nombre y Apellido" />
+                                    <input id="name" name="name"  onChange={handleChange} value={person.name} className="text-gray-600 focus:outline-none focus:border focus:border-indigo-700 font-normal w-full h-10 flex items-center pl-3 text-sm border-gray-300 rounded border" placeholder="Nombre" />
                                 </div>
+
+                                <label htmlFor="lastName" className="text-gray-800 text-sm font-bold leading-tight tracking-normal">
+                                    Apellido
+                                </label>
+                                <div className="relative mb-5 mt-2">
+                                    <input id="lastName" name="lastName" onChange={handleChange} value={person.lastName} className="text-gray-600 focus:outline-none focus:border focus:border-indigo-700 font-normal w-full h-10 flex items-center pl-3 text-sm border-gray-300 rounded border" placeholder="Apellido" />
+                                </div>
+
 
                                 <label htmlFor="email"  className="text-gray-800 text-sm font-bold leading-tight tracking-normal">
                                     e-Mail
