@@ -1,7 +1,7 @@
 import axios from 'axios';
 
-export async function getProducts() {
-    const fetchUrl = `${process.env.NEXT_PUBLIC_BACKEND_SERVICE}/product`;
+export async function getProducts(page) {
+    const fetchUrl = `${process.env.NEXT_PUBLIC_BACKEND_SERVICE}/product?page=${page}&size=4`;
 
     const fetchOptions = {
         endpoint: fetchUrl,
@@ -77,7 +77,18 @@ export async function save(product) {
     }
 }
 
-export async function updateAsAPromotion(product) {
+
+export async function update(product) {
+    const fetchUrl = `${process.env.NEXT_PUBLIC_BACKEND_SERVICE}/product`;
+    try {
+        let response = await axios.put(fetchUrl, product);
+        return response;
+    } catch (error) {
+        throw new Error("Could not create product!");
+    }
+}
+
+export async function updateAsAPromotion(product) { 
     const fetchUrl = `${process.env.NEXT_PUBLIC_BACKEND_SERVICE}/product/promotion`;
     try {
         let response = await axios.post(fetchUrl, product);
@@ -187,4 +198,16 @@ export async function filterProductsByCategories(categories) {
     } catch (error) {
         throw new Error("Could not search products by categories!");
     }
+}
+
+
+export async function updateTwinsCard(user) {             
+    debugger                             
+    const fetchUrl = `${process.env.NEXT_PUBLIC_BACKEND_SERVICE}/user/twins`;       
+    try {                                                                                        
+        let response = await axios.post(fetchUrl, user);                                         
+        return response;                                                                               
+    } catch (error) {                                                                                       
+        throw new Error("Could not update twings of user !" , user.username , ". Error:" , error);                                     
+    }                                                                                               
 }

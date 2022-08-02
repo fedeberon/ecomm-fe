@@ -50,13 +50,15 @@ function ProductCard({ product }) {
 
           
 
-          <div className="font-primary text-palette-primary text-2xl pt-4 px-4 font-semibold">
+          <div className="font-primary truncate text-palette-primary text-2xl pt-4 px-4 font-semibold">
             {title}
           </div>
+
           <div className="text-lg text-gray-600 p-4 font-primary font-light">
             {description}
           </div>
-          <div className="text-lg text-gray-600 p-4 font-primary font-light">
+
+          <div className="absolute bottom-0 left-0 text-lg text-gray-600 p-4 truncate font-primary font-light">
             {product.category ? product.category.name : ''}
           </div>
           <div

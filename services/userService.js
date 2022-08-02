@@ -12,6 +12,18 @@ export async function save(user) {
 }
 
 
+export async function update(user) {
+    const fetchUrl = `${process.env.NEXT_PUBLIC_BACKEND_SERVICE}/user`;
+
+    try {
+        let response = await axios.put(fetchUrl, user);
+        return response;
+    } catch (error) {
+        throw new Error("Could not create user !");
+    }
+}
+
+
 export async function login(credentials) {
     const fetchUrl = `${process.env.NEXT_PUBLIC_BACKEND_SERVICE}/user/login`;
 
@@ -24,7 +36,7 @@ export async function login(credentials) {
 }
 
 export async function findAll() {
-    const fetchUrl = `${process.env.NEXT_PUBLIC_BACKEND_SERVICE}/user`;
+    const fetchUrl = `${process.env.BACKEND_SERVICE}/user`;
 
     try {
         let response = await axios.get(fetchUrl);
@@ -41,6 +53,6 @@ export async function getByUsername(username) {
 
         return response.data;
     } catch (error) {
-        throw new Error("Could not get users by username !");
+        throw new Error("Could not get points by username !");
     }
 }

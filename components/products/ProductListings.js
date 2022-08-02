@@ -1,31 +1,53 @@
 import ProductCard from '@/components/products/ProductCard'
 import {useEffect, useState} from "react";
-import FilterComponent from '../filter/FilterComponent';
-import {filterProductsByBrands, search, getProducts, filterProductsByCategories} from "../../services/productService"
-import BrandList from '../brands/BrandList';
+import {filterProductsByBrands, filterProductsByCategories, getProducts, getProductsByType, search} from "../../services/productService"
 import BrandSearch from '../brands/BrandSearch';
 import CategorySearch from '../filter/CategorySearch';
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faTimes, faWindowClose} from "@fortawesome/free-solid-svg-icons";
-import * as brandsService from 'services/brandService';
+import Loading from "@/components/utils/Loading";
 
-
-
-function ProductListings({ products, brands, categories}) {
+function ProductListings({ products, brands, categories, type}) {
 
   const [filter, isShowFilter] = useState(false)
-  const [productsToShow, setProductsToShow] = useState(products)
   const [brandsToSearch, setBrandsToSearch] = useState([]);
   const [categoriesToSearch, setCategoriesToSearch] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [productsToShow, setProductsToShow] = useState(products)
+  const [sidebarTop, setSidebarTop] = useState(undefined);
 
 
+  let page = 1;
+  //scroll infinito
+  let handleScroll = async (e) => {
+      if(window.innerHeight + e.target.documentElement.scrollTop + 1  >= e.target.documentElement.scrollHeight && !isLoading) {
+          const products = await getProducts(page++)
+          page = page + 1;
+          if(products.last===false){
+            setIsLoading(true)
+            debugger 
 
-  useEffect(() => {
+            // getProducts API que trae todos los productos
+            if (type === "all" ) {     
+                let product = await getProducts(page);
+                setProductsToShow(productsToShow => [
+                    ...productsToShow.concat (product.content)
+                    
+                ]);
+            // getpProductsByType trae productos si entras a una categoria del nav
+            } else {
+                let product = await getProductsByType(type);
+                setProductsToShow(product);
+                 
+            }
+            setIsLoading(false)
+          }
+    }
+  }
 
-    setProductsToShow(products)
-     
-  }, products);
   
+
+  useEffect( ()  => {
+      window.addEventListener('scroll', handleScroll);
+  }, [products])
 
   const close = () => {
     isShowFilter(false)
@@ -48,23 +70,18 @@ function ProductListings({ products, brands, categories}) {
           const brands = brandsToSearch.filter((brand) => brand.id !== e.target.value)
           setBrandsToSearch(brands);
       }
-  }
+  } 
 
   const searchBrands = async () => {
-    const products = []
-    if(brandsToSearch.length == 0) {
-      products = await getProducts()
-    } else {
-      products = await filterProductsByBrands(brandsToSearch)
-    }
-    setProductsToShow(products)
+    const products = await filterProductsByBrands(brandsToSearch)
+    setProductsToShow(products);
     close();
   }
 
   const handleChangeCategory = (e) => {
 
     if(e.target.checked) {
-      debugger
+      
         setCategoriesToSearch(categoriesToSearch =>  [
             ...categoriesToSearch,
             {
@@ -72,25 +89,17 @@ function ProductListings({ products, brands, categories}) {
             }
         ]);
     } else {
-      debugger
+     
         const categories = categoriesToSearch.filter((category) => category.id !== e.target.value)
         setCategoriesToSearch(categories);
     }
 }
 
 const searchCategories = async () => {
-  const products = []
-  if(categoriesToSearch.length == 0) {
-    products = await getProducts()
-  } else {
-    products = await filterProductsByCategories(categoriesToSearch)
-  }
+  const products =  await filterProductsByCategories(categoriesToSearch)
   setProductsToShow(products)
   close();
 }
-
-  
-
 
   const searchValue = async (e) => {
     if(e.target.value.trim() === '') {
@@ -102,18 +111,26 @@ const searchCategories = async () => {
         return;
     }
     setProductsToShow(result); 
-  }  
-  
-   return (
-          <div className=''>
-                <div>
-                    <div className='flex justify-center py-2'>    
-                        <div className='justify-between m-4'>
-                            <button className="text-purple-500 bg-transparent border border-solid border-purple-500 hover:bg-purple-500 hover:text-white active:bg-purple-600 font-bold 
-                                            uppercase 
-                                            text-xs
-                                            p-4
-                                            rounded-full
+  } 
+
+  const searchAll = () => {
+    searchCategories(); 
+    searchBrands();
+  }
+
+   return ( 
+          <div className='w-full'>
+                <div className='sticky top-20 lg:top-24 z-30 bg-white shadow-lg'>
+                    
+                    <div className='flex justify-center py-2 h-20'>
+
+                        <div className='justify-between my-auto mx-4'>
+                            <button className="text-purple-500 bg-transparent border border-solid border-purple-500 hover:bg-purple-500 hover:text-white active:bg-purple-600 font-bold
+                                            uppercase
+                                            text-xl
+                                            p-2
+                                            my-auto
+                                            rounded-xl
                                             shadow-lg shadow-indigo-500/50
                                             outline-none
                                             focus:outline-none
@@ -121,35 +138,33 @@ const searchCategories = async () => {
                                             transition-all
                                             duration-150"
                                             type="button"
-                                            onClick={open}>
+                                            onClick={open}>     
                             {filter ? "Cerrar" : "Filtros" }
                             </button>
                         </div>
-                        
-                        
-                        <input type="search"
-                            className="w-2/3 m-3 bg-gray-100 shadow-lg shadow-indigo-500/50 outline-none rounded-full p-3"
-                            placeholder="Buscar"
-                            onChange={searchValue}/>
-                        
-                    </div>
-                    <div className={`fixed z-50 overflow-y-auto top-0 w-full left-0 ${filter ? "" : "hidden"}  `} id="modal">
+
+                                <input
+                                    className="w-2/3 my-auto text-2xl bg-purple-200 shadow-lg shadow-indigo-500/50 outline-none rounded-xl p-2"
+                                    placeholder="Buscar"
+                                    onChange={searchValue}/>
+                      </div>
+                    <div className={`fixed z-50  top-0 w-full left-0 ${filter ? "" : "hidden"}  `} id="modal">
                         <div className="flex items-center justify-center min-height-100vh pt-4 px-4 pb-20 text-center sm:block sm:p-0">
-                            <div className="fixed inset-0 transition-opacity">
+                            <div onClick={close} className="fixed inset-0 transition-opacity">
                                 <div className="absolute inset-0 bg-gray-700 opacity-75"/>
                             </div>
-                                <span className="hidden sm:inline-block sm:align-middle sm:h-screen">&#8203;</span>
-                            <div className=" w-auto inline-block bg-white overflow-y-auto rounded-lg text-left overflow-hidden shadow-xl transform transition-all my-8 align-middle max-w-lg "
+                                <span className=" sm:inline-block sm:align-middle sm:h-screen">&#8203;</span>
+                            <div className="w-auto inline-block bg-white  rounded-lg text-left  shadow-xl transform transition-all my-8 align-middle"
                               role="dialog" aria-modal="true" aria-labelledby="modal-headline">
-                                <div className="flex grid-cols-2 gap-4 m-auto px-4 pt-6 pb-2 sm:p-6 sm:pb-4">
-                                  <BrandSearch brands={brands} onclick={handleChangeBrand}/>
-                                  <CategorySearch categories={categories} onclick={handleChangeCategory}/>
-                                  
+                                <div className=' absolute mt-20 w-full border-b-2 border-indigo-100 '></div>
+                                <div className="flex grid-cols-2 m-auto px-4 pt-6 pb-2 sm:p-6 sm:pb-4">
+                                    <CategorySearch categories={categories} onclick={handleChangeCategory}/>
+                                    <BrandSearch brands={brands} onclick={handleChangeBrand}/>
                                 </div>
 
-                                <div class="flex justify-end pt-2 pb-2 pr-2">
-                                  <button class="px-4 bg-transparent p-3 rounded-lg text-indigo-500 hover:bg-gray-100 hover:text-indigo-400 mr-2" onClick={close}>Cerrar</button>
-                                  <button class="modal-close px-4 bg-indigo-500 p-3 rounded-lg text-white hover:bg-indigo-400" onClick={searchCategories}>Buscar</button>
+                                <div class="p-3  mt-2 text-center space-x-4 md:block">
+                                  <button class="mb-2 md:mb-0 bg-red-500 border border-black-500 px-5 py-2 text-sm shadow-sm font-medium tracking-wider text-white hover:text-white rounded-full hover:shadow-lg hover:bg-red-700" onClick={close}>Cerrar</button>
+                                  <button class="mb-2 md:mb-0 bg-red-500 border border-black-500 px-5 py-2 text-sm shadow-sm font-medium tracking-wider text-white hover:text-white rounded-full hover:shadow-lg hover:bg-red-700" onClick={searchAll}>Buscar</button>
                                 </div>
                             </div>
                         </div>
@@ -157,8 +172,8 @@ const searchCategories = async () => {
                 </div>
 
 
-              <div className="mx-auto max-w-6xl">
-                  <div className="grid sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-9 2xl:gap-40 ">
+              <div className="mx-auto mt-3 w-11/12">
+                  <div className="grid sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-9 2xl:gap-4 ">
                       {
                           productsToShow
                           ?
@@ -170,6 +185,17 @@ const searchCategories = async () => {
                       }
                   </div>
               </div>
+
+              {
+                        isLoading 
+                        ?
+                        <div className='flex items-center justify-center py-6'>
+                            <div className='w-16 h-16 border-b-2 border-purple-900 rounded-full animate-spin'></div>
+                        </div> 
+                        : 
+                       <></>
+              }
+
           </div>
   )
 }

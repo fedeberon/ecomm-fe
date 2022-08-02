@@ -1,8 +1,8 @@
+import axios from "axios";
 
-export async function getPersonByCUIT(CUIT) {
-    const fetchUrl = `${process.env.NEXT_PUBLIC_BACKEND_SERVICE}/billing/person/` + CUIT;
+export async function findAll() {
+    const fetchUrl = `${process.env.NEXT_PUBLIC_BACKEND_SERVICE}/size`;
     const fetchOptions = {
-        
         endpoint: fetchUrl,
         method: "GET",
         headers: {
@@ -10,8 +10,6 @@ export async function getPersonByCUIT(CUIT) {
             "Content-Type": "application/json",
         },
     };
-    console.log(fetchUrl)
-
 
     try {
         const data = await fetch(fetchUrl, fetchOptions)
@@ -19,6 +17,6 @@ export async function getPersonByCUIT(CUIT) {
             .catch(error => console.log(error));
         return data;
     } catch (error) {
-        throw new Error("Could not fetch products!");
+        throw new Error("Could not fetch sizes!");
     }
 }
