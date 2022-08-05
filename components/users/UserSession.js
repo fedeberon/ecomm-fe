@@ -34,7 +34,7 @@ const UserSession = ({session}) => {
                         </div>
                         <div
                             ref={ref}
-                            className={`${isComponentVisible ? "" : "hidden"}  absolute mt-2 w-46 lg:w-56 lg:right-0 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none`}
+                            className={`${isComponentVisible ? "" : "hidden"}  z-50 absolute mt-2 w-46 lg:w-56 lg:right-0 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none`}
                             role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabIndex="-1">
                             <div className="py-1 " role="none">
                                 <Link href="/shoping/mine">
