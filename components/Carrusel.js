@@ -66,19 +66,18 @@ const Carousel = () => {
     // isLeft boolean we can determine which side we'll be rendering our button
     // as well as change its position and content.
     const sliderControl = isLeft => (
-        <button
-            type="button"
-            onClick={isLeft ? previousImage : nextImage}
-            className={`${arrowStyle} ${isLeft ? 'left-2' : 'right-2'}`}
-            style={{ top: '40%' }}  
-        >
-      <span role="img" aria-label={`Arrow ${isLeft ? 'left' : 'right'}`} className={"bg-slate-900"}>
-        {isLeft ? <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" hover="scale-125" fill="none" viewBox="0 0 24 24" stroke="#5b21b6">
-  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="7" d="M15 19l-7-7 7-7" />
-</svg> : <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="#5b21b6">
-  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="7" d="M9 5l7 7-7 7" />
-</svg>} 
-      </span>
+        <button type="button" onClick={isLeft ? previousImage : nextImage} className={`${arrowStyle} ${isLeft ? 'left-2' : 'right-2'}`} style={{ top: '40%' }}>
+            <span role="img" aria-label={`Arrow ${isLeft ? 'left' : 'right'}`} className={"bg-slate-900"}>
+                {isLeft 
+                ? 
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 hover:scale-125" viewBox="0 0 24 24" stroke="#5b21b6">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="7" d="M15 19l-7-7 7-7"></path>
+                </svg> 
+                :
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="#5b21b6">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="7" d="M9 5l7 7-7 7" />
+                </svg>} 
+            </span>
         </button>
     );
 
