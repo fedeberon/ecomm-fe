@@ -52,20 +52,20 @@ function Nav() {
 
   return (
 
-    <header className="w-full top-0 z-50 bg-white">
+    <header className="w-full sticky lg:static top-0 z-50 bg-white">
 
-      <div className="flex items-center justify-between flex-wrap p-2 ">
-        <Link href="/">
-          <div className="flex hidden sm:block cursor-pointer flex-row items-center">
-            <img src={logo.src} className="w-16 mx-4  lg:w-24" />
-          </div>
-        </Link>
+      <div className="flex items-center justify-between flex-wrap p-2">
         <div className="block lg:hidden">
           <button onClick={handleMenu} className="flex py-2 hover:border-grey">
             <FontAwesomeIcon icon={faBars} className="w-5 top-6 ml-2 items-center" />
           </button>
         </div>
-        <div className="lg:order-2 m-auto">
+        <Link href="/">
+          <div className="flex sm:block cursor-pointer flex-row items-center">
+            <img src={logo.src} className="w-16 mx-16 ml-20 md:mx-64 lg:mx-4 lg:w-24" />
+          </div>
+        </Link>
+        <div className="lg:order-2 -mx-12 lg:m-auto">
           <UserSession session={session} />
         </div>
         <div className="lg:order-3">
