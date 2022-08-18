@@ -7,6 +7,9 @@
 .triangle {
 
 }
+html {
+  scroll-behavior: smooth;
+}
 
 .triangle::before {
   content: '';

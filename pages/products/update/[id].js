@@ -105,7 +105,7 @@ const Update = ({product, brands}) => {
                         </div>
 
                         <div className="w-full">
-                            <label className="block tracking-wide text-gray-700 text-xs font-bold mb-2"
+                            <label className="block tracking-wide text-gray-700 text-xs font-bold mb-2 mt-2"
                                    htmlFor="codigo">
                                 C&Oacute;DIGO
                             </label>
@@ -123,7 +123,7 @@ const Update = ({product, brands}) => {
                         </div>
 
                         <div className="w-full">
-                            <label className="block tracking-wide text-gray-700 text-xs font-bold mb-2"
+                            <label className="block tracking-wide text-gray-700 text-xs font-bold mb-2 mt-2"
                                    htmlFor="category">
                                 CATEGORIA
                             </label>
@@ -137,13 +137,12 @@ const Update = ({product, brands}) => {
                             </select>
                             {errors.category &&  <p className={`text-red-500 text-xs italic`}>{errors.category}</p>}
                         </div>
-                    </div>
                     <div className="w-full">
-                        <label className="block uppercase block tracking-wide text-gray-700 text-xs font-bold mb-3"
+                        <label className="block uppercase block tracking-wide text-gray-700 text-xs font-bold mb-2 mt-2"
                                 htmlFor="brand">
                             Marcas
                         </label>
-                        <select onChange={handleChange} name="brand" onBlur={handleBlur} value={form.brand}  className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="brand">
+                        <select onChange={handleChange} name="brand" onBlur={handleBlur} value={form.brand.id}  className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="brand">
                         {
                             brands.map(brand => (
                                 <option value={brand.id}>{brand.name}</option>
@@ -154,14 +153,14 @@ const Update = ({product, brands}) => {
                     </div> 
 
                     <div className="flex flex-wrap -mx-3 mb-2">
-                        <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+                        <div className="w-full md:w-64 px-3 mb-6 md:mb-0">
                             <div>
                                 <label htmlFor="price" className="block text-sm font-medium text-gray-700">
                                     PRECIO
                                 </label>
                                 <div className="mt-1 relative rounded-md shadow-sm">
                                     <div
-                                        className="absolute inset-y-0 left-0 pl-2 pb-4 flex items-center pointer-events-none">
+                                        className="absolute inset-y-6 left-0 pl-2 pb-4 flex items-center pointer-events-none">
                                           <span className="text-gray-500 sm:text-sm">
                                             $
                                           </span>
@@ -188,11 +187,12 @@ const Update = ({product, brands}) => {
                             </div>
 
                         </div>
-                        <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
-                            <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+                        <div className="w-full md:ml-12 md:w-64 px-3 mb-6 md:mb-0">
+                            <label className="block text-sm font-medium text-gray-700"
                                    htmlFor="stock">
                                 STOCK
                             </label>
+                            <div className="mt-1 relative rounded-md shadow-sm">
                             <input
                                 type="number"
                                 id="stock"
@@ -209,12 +209,12 @@ const Update = ({product, brands}) => {
                                         event.preventDefault();
                                     }
                                 }}
-                            />
+                                />
+                                </div>
                             {errors.stock &&  <p className={`text-red-500 text-xs italic`}>{errors.stock}</p>}
                         </div>
                     </div>
-                    <div>
-
+                    <div className="w-full">
                     <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
                                    htmlFor="puntos">
                                 Puntos de producto
@@ -229,11 +229,12 @@ const Update = ({product, brands}) => {
                                 onChange={handleChange}
                                 onBlur={handleBlur}
                                 required
-                            />
+                                />
                             {errors.points &&  <p className={`text-red-500 text-xs italic`}>{errors.points}</p>}
                     </div>
+                </div>
 
-                    <div className="justify-between mt-8">
+                    <div className="mt-8 md:ml-20">
                         <a onClick={goToProductList} className={`hover:bg-gray-400 hover:text-white  text-black py-2 px-4 m-auto mr-2 rounded cursor-pointer`}>
                             Ir a la lista
                         </a>
