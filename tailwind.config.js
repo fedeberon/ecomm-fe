@@ -12,10 +12,16 @@ module.exports = {
       }),
       colors: {
         palette: {
-          lighter: '#F5F3FF',
-          light: '#DDD6FE',
-          primary: '#5B21B6',
-          dark: '#4C1D95',
+          lighter: '#fff3f9',
+          light: '#fed6f1',
+          primary: '#ed7aad',
+          dark: '#da32a9',
+          secondary: '#60c3cb',
+          slight:'#79d7df',
+          slighter:'#c6eced',
+          sdark:'#31b8c3'
+
+
         },
       },
       fontFamily: {

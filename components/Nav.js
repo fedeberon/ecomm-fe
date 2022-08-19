@@ -76,7 +76,7 @@ function Nav() {
                 icon={faShoppingCart}
               />
               {cartItems === 0 ? null : (
-                <div className=" text-xs bg-yellow-300 rounded-full text-gray-900 font-semibold py-1 px-2 ">
+                <div className=" text-xs bg-palette-secondary rounded-full text-white font-semibold py-1 px-2 ">
                   {cartItems}
                 </div>
               )}
@@ -91,7 +91,7 @@ function Nav() {
           <Link href="/" >
             <a className="text-smw border-b border-gray-200 block mt-4 lg:inline-block lg:border-none lg:mt-0 mr-4">
               <h1>
-                <span className="text-xl font-primary font-bold tracking-tight pt-1">
+                <span className="text-xl font-primary text-palette-primary font-bold tracking-tight pt-1">
                   Inicio
                 </span>
               </h1>
@@ -102,7 +102,7 @@ function Nav() {
           <Link href="/shop/Pañaleria">
             <a className="text-smw block mt-4 lg:inline-block lg:mt-0 mr-4" onClick={refreshPañaleria}>
               <h1>
-                <span className="text-xl font-primary font-bold tracking-tight pt-1">
+                <span className="text-xl font-primary text-palette-primary font-bold tracking-tight pt-1">
                   Pa&ntilde;aleria
                 </span>
               </h1>
@@ -112,7 +112,7 @@ function Nav() {
           <Link href="/shop/Accesorios">
             <a className=" text-smw block mt-4 lg:inline-block lg:mt-0 mr-4" onClick={refreshAccesorios}>
               <h1>
-                <span className="text-xl font-primary font-bold tracking-tight pt-1" >
+                <span className="text-xl font-primary text-palette-primary font-bold tracking-tight pt-1" >
                   Accesorios
                 </span>
               </h1>
@@ -122,7 +122,7 @@ function Nav() {
           <Link href="/shop/Puericultura">
             <a className="text-smw block mt-4 lg:inline-block lg:mt-0 mr-4" onClick={refreshPueri}>
               <h1>
-                <span className="text-xl font-primary font-bold tracking-tight pt-1" >
+                <span className="text-xl font-primary text-palette-primary font-bold tracking-tight pt-1" >
                   Puericultura y Lactancia
                 </span>
               </h1>
@@ -133,7 +133,7 @@ function Nav() {
             <Link href="/admin">
               <a className="flex flex-wrap top-4 right-3 lg:order-last text-smw block mt-4 lg:inline-block lg:mt-0 mr-4">
                 <h1>
-                  <span className="text-xl font-primary font-bold tracking-tight pt-1">
+                  <span className="text-xl font-primary text-palette-primary font-bold tracking-tight pt-1">
                     Administracion
                   </span>
                 </h1>
