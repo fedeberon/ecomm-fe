@@ -13,7 +13,7 @@ module.exports = {
       colors: {
         palette: {
           lighter: '#fff3f9',
-          light: '#fed6f1',
+          light: '#f9a8d4',
           primary: '#ed7aad',
           dark: '#da32a9',
           secondary: '#60c3cb',

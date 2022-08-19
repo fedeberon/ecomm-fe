@@ -73,9 +73,9 @@ const Carousel = () => {
             style={{ top: '40%' }}  
         >
       <span role="img" aria-label={`Arrow ${isLeft ? 'left' : 'right'}`} className={"bg-slate-900"}>
-        {isLeft ? <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" hover="scale-125" fill="none" viewBox="0 0 24 24" stroke="#5b21b6">
+        {isLeft ? <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" hover="scale-125" fill="none" viewBox="0 0 24 24" stroke="#ed7aad">
   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="7" d="M15 19l-7-7 7-7" />
-</svg> : <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="#5b21b6">
+</svg> : <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke='#ed7aad'>
   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="7" d="M9 5l7 7-7 7" />
 </svg>} 
       </span>

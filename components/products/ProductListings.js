@@ -165,7 +165,7 @@ const searchCategories = async () => {
                         </div>
 
                                 <input
-                                    className="w-2/3 text-palette-secondary border border-solid border-palette-secondary placeholder-palette-slighter font-semibold uppercase text-xl p-2 my-auto rounded-xl shadow-lg shadow-indigo-500/50 outline-none transition-all "
+                                    className="w-2/3 text-palette-secondary border border-solid border-palette-secondary placeholder-palette-slighter placeholder-capitalize font-semibold uppercase text-xl p-2 my-auto rounded-xl shadow-lg shadow-indigo-500/50 outline-none transition-all "
                                     placeholder="Buscar"
                                     onChange={searchValue}/>
                       </div>

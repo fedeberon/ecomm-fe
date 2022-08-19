@@ -107,8 +107,8 @@ function ProductForm({ title, mainImg, id, images, price, isPromo }) {
               <>
                 <a
                     aria-label="upload-images"
-                    className="pt-3 pb-2 bg-red-600 text-white w-full mt-2 rounded-sm font-primary font-semibold text-xl flex
-                      justify-center items-baseline  hover:bg-red-400 cursor-pointer"
+                    className="pt-3 pb-2 bg-palette-primary text-white w-full mt-2 rounded-sm font-primary font-semibold text-xl flex
+                      justify-center items-baseline  hover:bg-palette-light cursor-pointer"
                     onClick={() => setOpenUploadFile(true)}
                 >
                   Subir Imagenes
@@ -117,8 +117,8 @@ function ProductForm({ title, mainImg, id, images, price, isPromo }) {
 
                 <a
                     aria-label="edit-data"
-                    className="pt-3 pb-2 bg-red-600 text-white w-full mt-2 rounded-sm font-primary font-semibold text-xl flex
-                      justify-center items-baseline  hover:bg-red-400 cursor-pointer"
+                    className="pt-3 pb-2 bg-palette-primary text-white w-full mt-2 rounded-sm font-primary font-semibold text-xl flex
+                      justify-center items-baseline  hover:bg-palette-light cursor-pointer"
                     onClick={goToEdit}>
                   Modificar Datos
                   <FontAwesomeIcon icon={faEdit} className="w-5 ml-2" />
@@ -129,16 +129,16 @@ function ProductForm({ title, mainImg, id, images, price, isPromo }) {
                     promo
                     ?
                       <imput type='checkbox'
-                      className="pt-3 pb-2 bg-blue-600 text-white w-full mt-2 rounded-sm font-primary font-semibold text-xl flex
-                        justify-center items-baseline  hover:bg-blue-400 cursor-pointer"
+                      className="pt-3 pb-2 bg-palette-secondary text-white w-full mt-2 rounded-sm font-primary font-semibold text-xl flex
+                        justify-center items-baseline  hover:bg-palette-slight cursor-pointer"
                         onClick={handlePromo} >
                         Promocion
                       </imput>
 
                     :
                       <imput type='checkbox'
-                      className="pt-3 pb-2 bg-red-600 text-white w-full mt-2 rounded-sm font-primary font-semibold text-xl flex
-                        justify-center items-baseline  hover:bg-red-400 cursor-pointer"
+                      className="pt-3 pb-2 bg-palette-primary text-white w-full mt-2 rounded-sm font-primary font-semibold text-xl flex
+                        justify-center items-baseline  hover:bg-palette-light cursor-pointer"
                         onClick={handlePromo} >
                         Sin Promocion
                       </imput>

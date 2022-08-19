@@ -21,7 +21,7 @@ const UserSession = ({session}) => {
                         <div className="text-smw block lg:relative lg:-mt-2">
                             <button type="button"
                                     onClick={showOptionsSession}
-                                    className="inline-flex justify-center w-full rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-indigo-500"
+                                    className="inline-flex justify-center md:mt-1 w-full rounded-md border-2 border-palette-lighter shadow-sm px-3 py-2 bg-white text-sm font-medium text-palette-primary hover:bg-gray-50 focus:outline-none capitalize focus:ring-2 focus:ring-opacity-40 focus:ring-offset-0 focus:ring-offset-gray-100 focus:ring-palette-dark"
                                     id="menu-button" aria-expanded="true" aria-haspopup="true">
                                 {session.user.name}
                                 <svg className="-mr-1 ml-2 h-5 w-5" xmlns="http://www.w3.org/2000/svg"
@@ -34,24 +34,24 @@ const UserSession = ({session}) => {
                         </div>
                         <div
                             ref={ref}
-                            className={`${isComponentVisible ? "" : "hidden"}  z-50 absolute mt-2 w-46 lg:w-56 lg:right-0 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none`}
+                            className={`${isComponentVisible ? "" : "hidden"}  z-50 absolute mt-2 w-46 lg:w-32 lg:right-0 rounded-md shadow-lg bg-white ring-2 ring-palette-lighter ring-opacity-75 focus:outline-none -mx-2`}
                             role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabIndex="-1">
                             <div className="py-1 " role="none">
                                 <Link href="/shoping/mine">
-                                <a href="#" className="text-gray-700 block px-4 py-2 text-sm" role="menuitem"
+                                <a href="#" className="text-palette-light block text-center px-4 py-2 text-sm" role="menuitem"
                                    tabIndex="-1" id="menu-item-0">Mis Compras</a>
                                 </Link>
                                 <Link href={`/users/wallet/${session.user.username}`}>
-                                <a href="#" className="text-gray-700 block px-4 py-2 text-sm" role="menuitem"
+                                <a href="#" className="text-palette-light block px-4 py-2 text-center text-sm" role="menuitem"
                                    tabIndex="-1" id="menu-item-1">Mi Billetera</a>
                                 </Link>
                                 <Link href={`/users/${session.user.username}`}>
-                                    <a className="text-gray-700 block px-4 py-2 text-sm" role="menuitem"
+                                    <a className="text-palette-light block px-4 py-2 text-center text-sm" role="menuitem"
                                        tabIndex="-1" id="menu-item-2">Mis Datos</a>
                                 </Link>
                                 <form method="POST" action="#" role="none">
                                     <button onClick={() => signOut({ callbackUrl: '/' })}
-                                            className="text-gray-700 block w-full text-left px-4 py-2 text-sm"
+                                            className="text-palette-light block w-full text-center px-4 py-2 text-sm"
                                             role="menuitem" tabIndex="-1" id="menu-item-3">
                                         Salir
                                     </button>
