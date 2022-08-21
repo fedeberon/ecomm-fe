@@ -138,7 +138,7 @@ const Update = ({product, brands}) => {
                             {errors.category &&  <p className={`text-red-500 text-xs italic`}>{errors.category}</p>}
                         </div>
                     <div className="w-full">
-                        <label className="block uppercase block tracking-wide text-palette-primary text-xs font-bold mb-2 mt-2"
+                        <label className="block uppercase tracking-wide text-palette-primary text-xs font-bold mb-2 mt-2"
                                 htmlFor="brand">
                             Marcas
                         </label>

@@ -15,7 +15,7 @@ const Login = ({csrfToken}) => {
                         <p className="mt-2 text-center text-sm text-palette-slighter">
                             &oacute;
                             &nbsp;
-                            <a href="/users/create" className="font-medium text-palette-primary hover:text-palette-dark">
+                            <a href="/users/create" className="font-medium text-palette-secondary hover:text-palette-sdark">
                                Crearse una cuenta
                             </a>
                         </p>

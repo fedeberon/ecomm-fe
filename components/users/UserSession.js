@@ -63,8 +63,8 @@ const UserSession = ({session}) => {
     } else {
         return (
                 <Link href="/api/auth/signin">
-                    <a className="p-6 m-6" aria-label="login">
-                        <FontAwesomeIcon className="text-palette-primary w-6 m-auto" icon={faUserCircle} />
+                    <a className="p-6 m-12" aria-label="login">
+                        <FontAwesomeIcon className="hover:text-palette-dark text-palette-primary w-6 m-auto" icon={faUserCircle} />
                     </a>
                 </Link>
         )

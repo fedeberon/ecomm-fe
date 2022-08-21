@@ -72,7 +72,7 @@ function Nav() {
           <Link href="/cart" passHref>
             <a className="flex md:-mt-1 flex-wrap ml-2 md:ml-1 object-right p-6 lg:order-last" aria-label="cart">
               <FontAwesomeIcon
-                className="text-palette-primary h-6"
+                className="text-palette-primary md:hover:text-palette-dark h-6"
                 icon={faShoppingCart}
               />
               {cartItems === 0 ? null : (

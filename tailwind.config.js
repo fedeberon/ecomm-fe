@@ -20,8 +20,6 @@ module.exports = {
           slight:'#79d7df',
           slighter:'#c6eced',
           sdark:'#31b8c3'
-
-
         },
       },
       fontFamily: {
