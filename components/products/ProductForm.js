@@ -133,7 +133,7 @@ function ProductForm({ title, mainImg, id, images, price, isPromo }) {
                         justify-center items-baseline  hover:bg-blue-400 cursor-pointer"
                         onClick={handlePromo} >
                         Promocion
-                      </input>
+                      </imput>
 
                     :
                       <imput type='checkbox'
@@ -141,7 +141,7 @@ function ProductForm({ title, mainImg, id, images, price, isPromo }) {
                         justify-center items-baseline  hover:bg-red-400 cursor-pointer"
                         onClick={handlePromo} >
                         Sin Promocion
-                      </input>
+                      </imput>
                 }
 
                 
