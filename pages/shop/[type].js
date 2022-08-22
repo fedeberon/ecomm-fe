@@ -8,7 +8,7 @@ function Shop({title, products, brands, categories }) {
 
     return (
         <>
-            <div className="bg-blue-100 lg:px-6">
+            <div className="bg-white">
                 <div className="bg-white ">
                     <StoreHeading title={title}/>
 

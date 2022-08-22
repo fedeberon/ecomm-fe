@@ -51,7 +51,6 @@ import 'react-notifications/lib/notifications.css';
       save(form).then((result) => {
         if (result.data.hasOwnProperty("name")) {
           NotificationManager.info('El articulo: ' +'\"'+ form.name +'\"'+ "se cargo correctamente", 'Administracion de productos' , 1000);
-          setForm(initialForm);
         }else{
           NotificationManager.info(result.status +'No fue posible cargar el articulo: ' +'\"'+ form.name +'\"', 'Administracion de productos' , 1000)
         }
