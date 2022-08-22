@@ -68,10 +68,10 @@ const Update = ({product, brands}) => {
                 <form className="w-full max-w-lg" onSubmit={handleSubmit}>
                     <div className="flex flex-wrap -mx-3 mb-6">
                         <div className="w-full">
-                            <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2 mt-2 text-3xl" htmlFor="grid-first-name">
+                            <label className="block uppercase tracking-wide text-palette-dark text-xs font-bold mb-2 mt-2 text-3xl" htmlFor="grid-first-name">
                                ID #{product.id}
                             </label>
-                            <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+                            <label className="block uppercase tracking-wide text-palette-primary text-xs font-bold mb-2"
                                    htmlFor="name">
                                 Nombre
                             </label>
@@ -89,7 +89,7 @@ const Update = ({product, brands}) => {
                             {errors.name &&  <p className={`text-red-500 text-xs italic`}>{errors.name}</p>}
                         </div>
                         <div className="w-full">
-                            <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+                            <label className="block uppercase tracking-wide text-palette-primary text-xs font-bold mb-2"
                                    htmlFor="grid-last-name">
                                 Descripcion
                             </label>
@@ -137,13 +137,12 @@ const Update = ({product, brands}) => {
                             </select>
                             {errors.category &&  <p className={`text-red-500 text-xs italic`}>{errors.category}</p>}
                         </div>
-                    </div>
                     <div className="w-full">
-                        <label className="block uppercase block tracking-wide text-gray-700 text-xs font-bold mb-3"
+                        <label className="block uppercase tracking-wide text-palette-primary text-xs font-bold mb-2 mt-2"
                                 htmlFor="brand">
                             Marcas
                         </label>
-                        <select onChange={handleChange} name="brand" onBlur={handleBlur} value={form.brand}  className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="brand">
+                        <select onChange={handleChange} name="brand" onBlur={handleBlur} value={form.brand.id}  className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="brand">
                         {
                             brands.map(brand => (
                                 <option value={brand.id}>{brand.name}</option>
@@ -154,9 +153,9 @@ const Update = ({product, brands}) => {
                     </div> 
 
                     <div className="flex flex-wrap -mx-3 mb-2">
-                        <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+                        <div className="w-full md:w-64 px-3 mb-6 md:mb-0">
                             <div>
-                                <label htmlFor="price" className="block text-sm font-medium text-gray-700">
+                                <label htmlFor="price" className="block text-sm font-medium text-palette-primary">
                                     PRECIO
                                 </label>
                                 <div className="mt-1 relative rounded-md shadow-sm">
@@ -188,11 +187,12 @@ const Update = ({product, brands}) => {
                             </div>
 
                         </div>
-                        <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
-                            <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+                        <div className="w-full md:ml-12 md:w-64 px-3 mb-6 md:mb-0">
+                            <label className="block text-sm font-medium text-palette-primary"
                                    htmlFor="stock">
                                 STOCK
                             </label>
+                            <div className="mt-1 relative rounded-md shadow-sm">
                             <input
                                 type="number"
                                 id="stock"
@@ -209,13 +209,13 @@ const Update = ({product, brands}) => {
                                         event.preventDefault();
                                     }
                                 }}
-                            />
+                                />
+                                </div>
                             {errors.stock &&  <p className={`text-red-500 text-xs italic`}>{errors.stock}</p>}
                         </div>
                     </div>
-                    <div>
-
-                    <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+                    <div className="w-full">
+                    <label className="block uppercase tracking-wide text-palette-primary text-xs font-bold mb-2"
                                    htmlFor="puntos">
                                 Puntos de producto
                             </label>
@@ -229,11 +229,12 @@ const Update = ({product, brands}) => {
                                 onChange={handleChange}
                                 onBlur={handleBlur}
                                 required
-                            />
+                                />
                             {errors.points &&  <p className={`text-red-500 text-xs italic`}>{errors.points}</p>}
                     </div>
+                </div>
 
-                    <div className="justify-between mt-8">
+                    <div className="mt-8 md:ml-20">
                         <a onClick={goToProductList} className={`hover:bg-gray-400 hover:text-white  text-black py-2 px-4 m-auto mr-2 rounded cursor-pointer`}>
                             Ir a la lista
                         </a>
@@ -243,7 +244,7 @@ const Update = ({product, brands}) => {
                         </a>
 
                         <button type="submit" onClick={handleSubmit}
-                                className={`bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 m-auto rounded`}>
+                                className={`bg-palette-primary hover:bg-palette-dark text-white font-bold py-2 px-4 m-auto rounded`}>
                             Guardar
                         </button>
                         <p className={`text-red-500 text-xs italic ${Object.keys(errors).length === 0 ? "invisible": "" } `}>Complete los campos.</p>

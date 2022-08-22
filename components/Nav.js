@@ -52,31 +52,31 @@ function Nav() {
 
   return (
 
-    <header className="border-b border-palette-lighter w-full sticky top-0 z-50 bg-white">
+    <header className="w-full sticky lg:static top-0 z-50 bg-white">
 
-      <div className="flex items-center justify-between flex-wrap p-2 ">
-        <Link href="/">
-          <div className="flex hidden sm:block cursor-pointer flex-row items-center">
-            <img src={logo.src} className="w-16 mx-4  lg:w-24" />
-          </div>
-        </Link>
+      <div className="flex items-center justify-between flex-wrap p-2">
         <div className="block lg:hidden">
           <button onClick={handleMenu} className="flex py-2 hover:border-grey">
-            <FontAwesomeIcon icon={faBars} className="w-5 top-6 ml-2 items-center" />
+            <FontAwesomeIcon icon={faBars} className="w-5 top-6 ml-2 mr-0 items-center" />
           </button>
         </div>
-        <div className="lg:order-2 m-auto">
+        <Link href="/">
+          <div className="flex sm:block cursor-pointer flex-row items-center">
+            <img src={logo.src} className="w-16 mx-16 ml-8 md:mx-64 lg:mx-4 lg:w-24" />
+          </div>
+        </Link>
+        <div className="lg:order-2 -mx-8 lg:m-auto">
           <UserSession session={session} />
         </div>
         <div className="lg:order-3">
           <Link href="/cart" passHref>
-            <a className="flex flex-wrap object-right p-6 lg:order-last" aria-label="cart">
+            <a className="flex md:-mt-1 flex-wrap ml-2 md:ml-1 object-right p-6 lg:order-last md:p-3 rounded-lg hover:bg-gray-50" aria-label="cart">
               <FontAwesomeIcon
                 className="text-palette-primary h-6"
                 icon={faShoppingCart}
               />
               {cartItems === 0 ? null : (
-                <div className=" text-xs bg-yellow-300 rounded-full text-gray-900 font-semibold py-1 px-2 ">
+                <div className=" text-xs bg-palette-secondary rounded-full text-white font-semibold py-1 px-2 ">
                   {cartItems}
                 </div>
               )}
@@ -89,9 +89,9 @@ function Nav() {
           className={`w-full block flex-grow ${isShow ? "" : "hidden"} divide-y divide-y-reverse justify-between divide-gray-200 lg:divide-none lg:flex lg:justify-self-center lg:w-auto`}
         >
           <Link href="/" >
-            <a className="text-smw border-b border-gray-200 block mt-4 lg:inline-block lg:border-none lg:mt-0 mr-4">
+            <a className="text-smw border-b border-gray-200 block mt-4 lg:inline-block lg:border-none lg:mt-0">
               <h1>
-                <span className="text-xl font-primary font-bold tracking-tight pt-1">
+                <span className="text-xl font-primary text-palette-primary md:p-2 rounded-md hover:bg-gray-50 font-bold tracking-tight pt-1">
                   Inicio
                 </span>
               </h1>
@@ -100,9 +100,9 @@ function Nav() {
           </Link>
 
           <Link href="/shop/Pañaleria">
-            <a className="text-smw block mt-4 lg:inline-block lg:mt-0 mr-4" onClick={refreshPañaleria}>
+            <a className="text-smw block mt-4 lg:inline-block lg:mt-0" onClick={refreshPañaleria}>
               <h1>
-                <span className="text-xl font-primary font-bold tracking-tight pt-1">
+                <span className="text-xl font-primary text-palette-primary font-bold md:p-2 rounded-md hover:bg-gray-50 tracking-tight pt-1">
                   Pa&ntilde;aleria
                 </span>
               </h1>
@@ -110,9 +110,9 @@ function Nav() {
           </Link>
 
           <Link href="/shop/Accesorios">
-            <a className=" text-smw block mt-4 lg:inline-block lg:mt-0 mr-4" onClick={refreshAccesorios}>
+            <a className=" text-smw block mt-4 lg:inline-block lg:mt-0" onClick={refreshAccesorios}>
               <h1>
-                <span className="text-xl font-primary font-bold tracking-tight pt-1" >
+                <span className="text-xl font-primary text-palette-primary font-bold tracking-tight md:p-2 rounded-md hover:bg-gray-50 pt-1" >
                   Accesorios
                 </span>
               </h1>
@@ -120,9 +120,9 @@ function Nav() {
           </Link>
 
           <Link href="/shop/Puericultura">
-            <a className="text-smw block mt-4 lg:inline-block lg:mt-0 mr-4" onClick={refreshPueri}>
+            <a className="text-smw block mt-4 lg:inline-block lg:mt-0" onClick={refreshPueri}>
               <h1>
-                <span className="text-xl font-primary font-bold tracking-tight pt-1" >
+                <span className="text-xl font-primary text-palette-primary font-bold tracking-tight md:p-2 rounded-md hover:bg-gray-50">
                   Puericultura y Lactancia
                 </span>
               </h1>
@@ -131,9 +131,9 @@ function Nav() {
 
           {session?.user?.role?.includes("ADMIN") ? (
             <Link href="/admin">
-              <a className="flex flex-wrap top-4 right-3 lg:order-last text-smw block mt-4 lg:inline-block lg:mt-0 mr-4">
+              <a className="top-4 right-3 lg:order-last text-smw block mt-4 mr-4 lg:inline-block lg:mt-0">
                 <h1>
-                  <span className="text-xl font-primary font-bold tracking-tight pt-1">
+                  <span className="text-xl font-primary text-palette-primary md:p-2 rounded-md hover:bg-gray-50 font-bold tracking-tight pt-1">
                     Administracion
                   </span>
                 </h1>

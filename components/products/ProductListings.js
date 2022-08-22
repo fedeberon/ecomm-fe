@@ -14,7 +14,6 @@ function ProductListings({ products, brands, categories, type}) {
   const [productsToShow, setProductsToShow] = useState(products)
   const [sidebarTop, setSidebarTop] = useState(undefined);
 
-
   let page = 1;
   //scroll infinito
   let handleScroll = async (e) => {
@@ -43,8 +42,7 @@ function ProductListings({ products, brands, categories, type}) {
     }
   }
 
-  
-
+    
   useEffect( ()  => {
       window.addEventListener('scroll', handleScroll);
   }, [products])
@@ -117,15 +115,38 @@ const searchCategories = async () => {
     searchCategories(); 
     searchBrands();
   }
-
+  // Get the button
+  const backToTopButton = () =>{
+  if (typeof window !== 'undefined') {
+    
+    const mybutton = document.getElementById("btn-back-to-top");
+    mybutton.addEventListener("click", backToTop);
+    window.onscroll = function () {
+    scrollFunction();
+  };
+  function scrollFunction() {
+            mybutton.style.display = "block";
+        }
+    // When the user clicks on the button, scroll to the top of the document
+    // When the user scrolls down 20px from the top of the document, show the button
+      
+      function backToTop() {
+        document.body.scrollTop = 0;
+        document.documentElement.scrollTop = 0;
+      }
+      
+    } 
+}
    return ( 
           <div className='w-full'>
-                <div className='sticky top-20 lg:top-24 z-30 bg-white shadow-lg'>
+
                     
-                    <div className='flex justify-center py-2 h-20'>
+                <div className='sticky top-20 lg:top-0 z-30 bg-white shadow-lg'>
+                    <div className='flex justify-center py-2 h-20 '>
 
                         <div className='justify-between my-auto mx-4'>
-                            <button className="text-purple-500 bg-transparent border border-solid border-purple-500 hover:bg-purple-500 hover:text-white active:bg-purple-600 font-bold
+                            
+                            <button className="text-palette-slight bg-transparent border border-solid border-palette-secondary hover:bg-palette-secondary hover:text-white active:bg-palette-slight font-bold
                                             uppercase
                                             text-xl
                                             p-2
@@ -144,7 +165,7 @@ const searchCategories = async () => {
                         </div>
 
                                 <input
-                                    className="w-2/3 my-auto text-2xl bg-purple-200 shadow-lg shadow-indigo-500/50 outline-none rounded-xl p-2"
+                                    className="w-2/3 text-palette-secondary border border-solid border-palette-secondary placeholder-palette-slighter font-semibold text-xl p-2 my-auto rounded-xl shadow-lg shadow-indigo-500/50 outline-none transition-all"
                                     placeholder="Buscar"
                                     onChange={searchValue}/>
                       </div>
@@ -156,15 +177,15 @@ const searchCategories = async () => {
                                 <span className=" sm:inline-block sm:align-middle sm:h-screen">&#8203;</span>
                             <div className="w-auto inline-block bg-white  rounded-lg text-left  shadow-xl transform transition-all my-8 align-middle"
                               role="dialog" aria-modal="true" aria-labelledby="modal-headline">
-                                <div className=' absolute mt-20 w-full border-b-2 border-indigo-100 '></div>
+                                <div className='absolute mt-20 w-full border-b-2 border-indigo-100 '></div>
                                 <div className="flex grid-cols-2 m-auto px-4 pt-6 pb-2 sm:p-6 sm:pb-4">
                                     <CategorySearch categories={categories} onclick={handleChangeCategory}/>
                                     <BrandSearch brands={brands} onclick={handleChangeBrand}/>
                                 </div>
 
                                 <div class="p-3  mt-2 text-center space-x-4 md:block">
-                                  <button class="mb-2 md:mb-0 bg-red-500 border border-black-500 px-5 py-2 text-sm shadow-sm font-medium tracking-wider text-white hover:text-white rounded-full hover:shadow-lg hover:bg-red-700" onClick={close}>Cerrar</button>
-                                  <button class="mb-2 md:mb-0 bg-red-500 border border-black-500 px-5 py-2 text-sm shadow-sm font-medium tracking-wider text-white hover:text-white rounded-full hover:shadow-lg hover:bg-red-700" onClick={searchAll}>Buscar</button>
+                                  <button class="mb-2 md:mb-0 bg-palette-slight border border-black-500 px-5 py-2 text-sm shadow-sm font-medium tracking-wider text-white hover:text-white rounded-full hover:shadow-lg hover:bg-palette-secondary" onClick={close}>Cerrar</button>
+                                  <button class="mb-2 md:mb-0 bg-palette-slight border-black-500 px-5 py-2 text-sm shadow-sm font-medium tracking-wider text-white hover:text-white rounded-full hover:shadow-lg hover:bg-palette-secondary" onClick={searchAll}>Buscar</button>
                                 </div>
                             </div>
                         </div>
@@ -183,20 +204,24 @@ const searchCategories = async () => {
                           :
                           <></>
                       }
+          </div>
+          <button type="button" data-mdb-ripple="true" onMouseDown={backToTopButton} data-mdb-ripple-color="light" class="z-0 -mx-9 md:-mx-7 shadow-lg invisible md:visible ease-out duration-500 sticky p-2 bg-palette-secondary animate-bounce text-white font-medium text-xs leading-tight uppercase rounded-full hover:bg-palette-sdark hover:shadow-lg  focus:shadow-lg focus:outline-none focus:ring-0 active:shadow-lg bottom-5 right-2" id="btn-back-to-top">
+          <svg aria-hidden="true" focusable="false" data-prefix="fas" class="w-5 h-5" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentColor" d="M34.9 289.5l-22.2-22.2c-9.4-9.4-9.4-24.6 0-33.9L207 39c9.4-9.4 24.6-9.4 33.9 0l194.3 194.3c9.4 9.4 9.4 24.6 0 33.9L413 289.4c-9.5 9.5-25 9.3-34.3-.4L264 168.6V456c0 13.3-10.7 24-24 24h-32c-13.3 0-24-10.7-24-24V168.6L69.2 289.1c-9.3 9.8-24.8 10-34.3.4z"></path></svg>
+          </button>
                   </div>
-              </div>
 
               {
-                        isLoading 
-                        ?
-                        <div className='flex items-center justify-center py-6'>
-                            <div className='w-16 h-16 border-b-2 border-purple-900 rounded-full animate-spin'></div>
+                isLoading 
+                ?
+                <div className='flex items-center justify-center py-6'>
+                            <div className='w-16 h-16 border-b-2 border-palette-secondary rounded-full animate-spin'></div>
                         </div> 
                         : 
-                       <></>
-              }
+                        <></>
+                      }
+              
 
-          </div>
+              </div>
   )
 }
 

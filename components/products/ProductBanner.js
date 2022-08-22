@@ -35,7 +35,7 @@ const Banner = ({}) =>{
                             <img src="images/OfertaTarjeta.png" className="w-full h-full rounded-xl"></img>
                         </div>
                         <div className="flex absolute   items-center w-full h-full justify-between">
-                            <button id="left"  onClick={anterior} className="relative h-full items-center w-1/2 flex lg:hidden "> 
+                            <button id="left"  onClick={anterior} className="relative h-full items-center w-1/2 flex lg:hidden"> 
                                     
                             </button>
                             <button id="rigth" onClick={siguiente} className="relative h-full items-center w-1/2 flex lg:hidden "> 
