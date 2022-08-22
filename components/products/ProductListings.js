@@ -5,49 +5,50 @@ import BrandSearch from '../brands/BrandSearch';
 import CategorySearch from '../filter/CategorySearch';
 import Loading from "@/components/utils/Loading";
 
-function ProductListings({ products, brands, categories, type}) {
+function ProductListings({ products, brands, categories}) {
 
-  const [filter, isShowFilter] = useState(false)
-  const [brandsToSearch, setBrandsToSearch] = useState([]);
-  const [categoriesToSearch, setCategoriesToSearch] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
-  const [productsToShow, setProductsToShow] = useState(products)
-  const [sidebarTop, setSidebarTop] = useState(undefined);
-
-
-  let page = 1;
-  //scroll infinito
-  let handleScroll = async (e) => {
-      if(window.innerHeight + e.target.documentElement.scrollTop + 1  >= e.target.documentElement.scrollHeight && !isLoading) {
-          const products = await getProducts(page++)
-          page = page + 1;
-          if(products.last===false){
-            setIsLoading(true)
-            debugger 
-
-            // getProducts API que trae todos los productos
-            if (type === "all" ) {     
-                let product = await getProducts(page);
-                setProductsToShow(productsToShow => [
-                    ...productsToShow.concat (product.content)
-                    
-                ]);
-            // getpProductsByType trae productos si entras a una categoria del nav
-            } else {
-                let product = await getProductsByType(type);
-                setProductsToShow(product);
-                 
-            }
-            setIsLoading(false)
-          }
-    }
-  }
-
+    const [filter, isShowFilter] = useState(false)
+    const [brandsToSearch, setBrandsToSearch] = useState([]);
+    const [categoriesToSearch, setCategoriesToSearch] = useState([]);
+    const [isLoading, setIsLoading] = useState(false);
+    const [productsToShow, setProductsToShow] = useState(products)
+    const [page, setPage] = useState(0);
   
 
-  useEffect( ()  => {
-      window.addEventListener('scroll', handleScroll);
-  }, [products])
+    let handleScroll = async (e) => {
+        if(window.innerHeight + e.target.documentElement.scrollTop + 1  > e.target.documentElement.scrollHeight && !isLoading) {
+          if(products.last===true){
+              return;
+          }
+          if (!products) {
+              let product = await getProducts(page)
+              setProductsToShow(product.content);
+              return;
+          }    
+          if (brandsToSearch.length > 0 ) {     
+              let product = await filterProductsByBrands(brandsToSearch) 
+              setProductsToShow(product);
+          } else if (categoriesToSearch.length > 0){
+              let product = await filterProductsByCategories(categoriesToSearch)
+              setProductsToShow(product)
+        
+          } else {
+              setIsLoading(true)
+              let product = await getProducts(page + 1);
+              setPage(page + 1);
+              setProductsToShow(productsToShow => [
+                  ...productsToShow.concat (product.content)
+              ]);
+          }
+          setIsLoading(false)
+      }
+    }
+  
+    useEffect( ()  => {
+        window.addEventListener('scroll', handleScroll);
+  
+        return(() => { window.removeEventListener('scroll', handleScroll) });
+    }, [products, handleScroll])
 
   const close = () => {
     isShowFilter(false)

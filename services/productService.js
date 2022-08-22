@@ -182,7 +182,6 @@ export async function filterProductsByBrands(brands) {
     const fetchUrl = `${process.env.NEXT_PUBLIC_BACKEND_SERVICE}/product/search/brands`;
     try {
         const response = await axios.post(fetchUrl, brands);
-        debugger
         return response.data;
     } catch (error) {
         throw new Error("Could not search products by brands!");
@@ -193,7 +192,6 @@ export async function filterProductsByCategories(categories) {
     const fetchUrl = `${process.env.NEXT_PUBLIC_BACKEND_SERVICE}/product/search/categories`;
     try {
         const response = await axios.post(fetchUrl, categories);
-        debugger
         return response.data;
     } catch (error) {
         throw new Error("Could not search products by categories!");
@@ -202,7 +200,6 @@ export async function filterProductsByCategories(categories) {
 
 
 export async function updateTwinsCard(user) {             
-    debugger                             
     const fetchUrl = `${process.env.NEXT_PUBLIC_BACKEND_SERVICE}/user/twins`;       
     try {                                                                                        
         let response = await axios.post(fetchUrl, user);                                         

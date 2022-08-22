@@ -128,20 +128,20 @@ function ProductForm({ title, mainImg, id, images, price, isPromo }) {
 
                     promo
                     ?
-                      <imput type='checkbox'
+                      <input type='checkbox'
                       className="pt-3 pb-2 bg-blue-600 text-white w-full mt-2 rounded-sm font-primary font-semibold text-xl flex
                         justify-center items-baseline  hover:bg-blue-400 cursor-pointer"
                         onClick={handlePromo} >
                         Promocion
-                      </imput>
+                      </input>
 
                     :
-                      <imput type='checkbox'
+                      <input type='checkbox'
                       className="pt-3 pb-2 bg-red-600 text-white w-full mt-2 rounded-sm font-primary font-semibold text-xl flex
                         justify-center items-baseline  hover:bg-red-400 cursor-pointer"
                         onClick={handlePromo} >
                         Sin Promocion
-                      </imput>
+                      </input>
                 }
 
                 
