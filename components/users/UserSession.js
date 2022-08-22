@@ -34,7 +34,7 @@ const UserSession = ({session}) => {
                         </div>
                         <div
                             ref={ref}
-                            className={`${isComponentVisible ? "" : "hidden"}  z-50 absolute mt-2 w-46 lg:w-32 lg:right-0 rounded-md shadow-lg bg-white ring-2 ring-palette-lighter ring-opacity-75 focus:outline-none -mx-2`}
+                            className={`${isComponentVisible ? "" : "hidden"}  z-50 absolute mt-2 w-46 lg:w-32 lg:right-0 rounded-md shadow-lg bg-white ring-2 ring-palette-lighter ring-opacity-75 focus:outline-none md:-mx-2 -mx-0`}
                             role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabIndex="-1">
                             <div className="py-1 " role="none">
                                 <Link href="/shoping/mine">
@@ -43,7 +43,7 @@ const UserSession = ({session}) => {
                                 </Link>
                                 <Link href={`/users/wallet/${session.user.username}`}>
                                 <a href="#" className="text-palette-light block px-4 py-2 text-center text-sm" role="menuitem"
-                                   tabIndex="-1" id="menu-item-1">Mi Billetera</a>
+                                   tabIndex="-1" id="menu-item-1">Mi Billetera</a> 
                                 </Link>
                                 <Link href={`/users/${session.user.username}`}>
                                     <a className="text-palette-light block px-4 py-2 text-center text-sm" role="menuitem"

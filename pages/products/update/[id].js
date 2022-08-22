@@ -91,7 +91,7 @@ const Update = ({product, brands}) => {
                         <div className="w-full">
                             <label className="block uppercase tracking-wide text-palette-primary text-xs font-bold mb-2"
                                    htmlFor="grid-last-name">
-                                Descripcion
+                                Descripci&Oacute;n
                             </label>
                             <textarea
                                 autoComplete="off" value={form.description}
@@ -105,7 +105,7 @@ const Update = ({product, brands}) => {
                         </div>
 
                         <div className="w-full">
-                            <label className="block tracking-wide text-gray-700 text-xs font-bold m-2"
+                            <label className="block tracking-wide text-palette-primary text-xs font-bold mt-2 mb-2"
                                    htmlFor="codigo">
                                 C&Oacute;DIGO
                             </label>
@@ -123,7 +123,7 @@ const Update = ({product, brands}) => {
                         </div>
 
                         <div className="w-full">
-                            <label className="block tracking-wide text-gray-700 text-xs font-bold m-2"
+                            <label className="block tracking-wide text-palette-primary text-xs font-bold mt-2 mb-2"
                                    htmlFor="category">
                                 CATEGORIA
                             </label>
