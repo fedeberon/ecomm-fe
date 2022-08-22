@@ -19,8 +19,6 @@ export async function getBilling(user, checkout, type, session, coupon, card) {
     }
     const fetchUrl = `${process.env.NEXT_PUBLIC_BACKEND_SERVICE}/billing`;
 
-    debugger;
-
     try {
         let response = await axios.post(fetchUrl, bill, {
             headers: headers

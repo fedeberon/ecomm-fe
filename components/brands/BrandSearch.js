@@ -15,8 +15,8 @@ const BrandSearch = ({brands, onclick}) => {
            
                 
                 <div className="flex-center col-span-2 w-auto rounded ">
-                    <div className="w-auto bg-white text-sm text-gray-500 font-bold px-5 py-2">
-                        <div className="m-2 text-2xl">Marcas</div>
+                    <div className="w-auto bg-white text-sm text-palette-primary font-bold px-5 py-2">
+                        <div className="m-2 -ml-4 text-2xl">Marcas</div>
                     </div>
                     <div id="menu" className={`overflow-y-auto max-h-96 no-scrollbar lg:grid lg:grid-cols-4`}>
                     {

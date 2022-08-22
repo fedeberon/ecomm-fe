@@ -11,7 +11,7 @@ const UserList = ({ users }) => {
     const handleTwins = async (e) => {
         console.log(e.target.value, e.target.id);
 
-        
+
         setTwins(e)
 
         const user = {
@@ -20,7 +20,10 @@ const UserList = ({ users }) => {
         }
 
         let result = await updateTwinsCard(user);
+        e.target.value = user.twins
     }
+
+    
 
 
 
@@ -92,7 +95,11 @@ const UserList = ({ users }) => {
                                                 {user.phone}
                                             </td>
                                             <td className="flex flex-col relative px-6 py-4 justify-center items-center">
-                                                <select className="felx flex-col rounded-full bg-blue-300 text-black-900 justify-center items-center" id={`${user.username}`} onChange={handleTwins}>
+                                                <select className="felx flex-col rounded-full bg-blue-300 text-black-900 justify-center items-center"
+                                                    id={`${user.username}`}
+                                                    onChange={handleTwins} 
+                                                    value={user.twins}
+                                                    >
                                                     <option value={false}>No</option>
                                                     <option value={true}>Si</option>
                                                 </select>

@@ -33,7 +33,7 @@ function ProductImage({ images }) {
       <div className="relative flex border-t border-palette-lighter">
         <button
           aria-label="left-scroll"
-          className="h-32 bg-palette-lighter hover:bg-palette-light  relative left-0 z-10 opacity-75"
+          className="h-32 bg-palette-lighter hover:bg-pink-200 relative left-0 z-10 opacity-75"
           onClick={() => scroll(-300)}
         >
           <FontAwesomeIcon icon={faArrowLeft} className="w-3 mx-1 text-palette-primary" />
@@ -64,7 +64,7 @@ function ProductImage({ images }) {
         </div>
         <button
           aria-label="right-scroll"
-          className="h-32 bg-palette-lighter hover:bg-palette-light  absolute right-0 z-10 opacity-75"
+          className="h-32 bg-palette-lighter hover:bg-pink-200  absolute right-0 z-10 opacity-75"
           onClick={() => scroll(300)}
         >
           <FontAwesomeIcon icon={faArrowRight} className="w-3 mx-1 text-palette-primary" />

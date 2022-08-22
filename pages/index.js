@@ -20,14 +20,14 @@ function IndexPage({products, brands, categories}) {
                 <Banner/>
               </div>
             </div>
-            <ProductListings products={products} brands={brands} categories={categories} type={"all"}/>
+            <ProductListings products={products} brands={brands} categories={categories}/>
           </div>
      </>
   )
 }
 
 export async function getServerSideProps() {
-  const products = await getProducts(1);
+  const products = await getProducts(0);
   const brands = await brandsService.findAll();
   const categories = await categoriesService.findAll();
 

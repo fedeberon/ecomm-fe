@@ -24,7 +24,6 @@ const Index = ({products}) => {
     }
 
     useEffect(async () => {
-        debugger;
         if (filterProducts != undefined) {
             const filteredProductsByBrands = await productService.filterProductsByBrands(filterProducts);
             products(filteredProductsByBrands);
