@@ -105,7 +105,7 @@ const Update = ({product, brands}) => {
                         </div>
 
                         <div className="w-full">
-                            <label className="block tracking-wide text-palette-primary text-xs font-bold mb-2 mt-2"
+                            <label className="block tracking-wide text-gray-700 text-xs font-bold m-2"
                                    htmlFor="codigo">
                                 C&Oacute;DIGO
                             </label>
@@ -123,7 +123,7 @@ const Update = ({product, brands}) => {
                         </div>
 
                         <div className="w-full">
-                            <label className="block tracking-wide text-palette-primary text-xs font-bold mb-2 mt-2"
+                            <label className="block tracking-wide text-gray-700 text-xs font-bold m-2"
                                    htmlFor="category">
                                 CATEGORIA
                             </label>
@@ -160,7 +160,7 @@ const Update = ({product, brands}) => {
                                 </label>
                                 <div className="mt-1 relative rounded-md shadow-sm">
                                     <div
-                                        className="absolute inset-y-6 left-0 pl-2 pb-4 flex items-center pointer-events-none">
+                                        className="absolute inset-y-0 left-2 flex items-center pointer-events-none">
                                           <span className="text-gray-500 sm:text-sm">
                                             $
                                           </span>
