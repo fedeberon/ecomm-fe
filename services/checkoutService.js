@@ -40,3 +40,4 @@ export async function getById(id) {
         throw new Error("Could not fetch checkout by id!");
     }
 }
+

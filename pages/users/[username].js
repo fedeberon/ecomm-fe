@@ -4,11 +4,12 @@ import UserSegurity from "@/components/users/UserSegurity";
 import { getSession } from "next-auth/client";
 import { useEffect ,useState} from "react";
 import { getByUsername, save } from "services/userService";
+import BillsOfUser from "@/components/users/BillsOfUser";
+import { findAllByUsername } from "services/billingService";
+import StoreHeading from "@/components/StoreHeading";
 
-
-const Username = ({userSession})  => {
-   
-    console.log(userSession);
+const Username = ({userSession, billsOfUSer})  => {
+  
 
     const [tabs, setTabs] = useState({
         usuarios: true,
@@ -69,8 +70,12 @@ const Username = ({userSession})  => {
             <div id="first" className={`${tabs.usuarios ? `` : `hidden`}  flex bg-white justify-center p-2 `}>
                 <UserData user={userSession}/>
             </div>
-            <div id="second" className={`${tabs.activity ? `` : `hidden`}  flex bg-white justify-center p-2 `}>
-                historial
+
+            <div id="second" className={`${tabs.activity ? `` : `hidden`}  flex bg-white justify-center m-12 p-2 `}>
+                <BillsOfUser bills={billsOfUSer}/>
+            <div className="absolute -m-16">
+                <StoreHeading title="Tus Facturas"/>
+            </div>
             </div>
             <div id="thirt" className={`${tabs.segurity ? `` : `hidden`}  flex bg-white justify-center p-2 `}>
                 <UserSegurity user={userSession}/>
@@ -80,6 +85,7 @@ const Username = ({userSession})  => {
             </div> */}
           </div>
       </div>
+
     )
 }
 
@@ -89,10 +95,13 @@ export default Username;
 
 export async function getServerSideProps({query}) {
     const userSession = await getByUsername(query.username);
-  
+    const billsOfUSer = await findAllByUsername(query.username)
+ 
+
     return {
         props: {
-            userSession
+            userSession,
+            billsOfUSer
         }
     }
 }
