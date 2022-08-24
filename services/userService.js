@@ -53,6 +53,7 @@ export async function getByUsername(username) {
 
         return response.data;
     } catch (error) {
-        throw new Error("Could not get points by username !");
+        console.error("Could not get points by username !");
+        return []
     }
 }

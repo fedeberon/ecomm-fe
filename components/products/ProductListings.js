@@ -5,7 +5,7 @@ import BrandSearch from '../brands/BrandSearch';
 import CategorySearch from '../filter/CategorySearch';
 import Loading from "@/components/utils/Loading";
 
-function ProductListings({ products, brands, categories, type}) {
+function ProductListings({ products, brands, categories}) {
 
     const [filter, isShowFilter] = useState(false)
     const [brandsToSearch, setBrandsToSearch] = useState([]);
