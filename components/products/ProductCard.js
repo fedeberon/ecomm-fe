@@ -42,7 +42,7 @@ function ProductCard({ product }) {
               promo
               ?
                 <div>
-                  <span className={'absolute py-2 px-8 text-sm text-white -top-2 right-4 bg-red-600 rounded-md transform translate-x-5 -translate-y-5 shadow-xl'}>Promo</span>
+                  <span className={'absolute py-2 px-8 text-sm text-white -top-2 right-4 bg-palette-secondary rounded-md transform translate-x-5 -translate-y-5 shadow-xl'}>Promo</span>
                 </div>
               :
                 <div></div>
