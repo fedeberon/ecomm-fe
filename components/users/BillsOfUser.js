@@ -22,19 +22,19 @@ const BillsOfUser = ({bills}) => {
             sortable: true
         },
         {
-            name:'Cuit',
-            selector: row => row.cuit,
-            sortable: true
-        },
-        {
             name:'N°',
             selector: row => row.number,
             sortable: true
         },
         {
-            name: 'FECHA',
-            selector:row=>new DateObject(row.date).format("DD/MM/YYYY mm:ss."),
+            name: 'Fecha',
+            selector:row=>row.date.split('',10),
             sortable: true
+        },
+        {
+            name: 'Hora',
+            selector:row=>new DateObject(row.date).format('mm:ss'),
+            sortable:true
         },
         {
             name: 'CAE',

@@ -14,22 +14,22 @@ const Bills = ({bills}) => {
     const columns = [
             
         {
-            name: 'id',
+            name: 'Id',
             selector: row => row.id,
             sortable: true
         },
         {
-            name: 'TIPO',
+            name: 'Tipo',
             selector: row => row.billTypeName,
             sortable: true
         },
         {
-            name:'CUIT',
+            name:'Cuit',
             selector: row => row.cuit,
             sortable: true
         },
         {
-            name:'PTO VENTAS',
+            name:'Pto ventas',
             selector: row => row.pointNumber,
             sortable: true
         },
@@ -40,9 +40,14 @@ const Bills = ({bills}) => {
             
         },
         {
-            name: 'FECHA',
-            selector:row=>new DateObject(row.date).format("DD/MM/YYYY hh:mm:ss."),
+            name: 'Fecha',
+            selector:row=>row.date.split('',10),
             sortable: true
+        },
+        {
+            name: 'Hora',
+            selector:row=>new DateObject(row.date).format('mm:ss'),
+            sortable:true
         },
         {
             name: 'CAE',
@@ -50,7 +55,7 @@ const Bills = ({bills}) => {
             sortable: true
         },
         {
-            name:'IMPORTE',
+            name:'Importe',
             selector:row=>row.totalAmount,
             sortable: true
         }
