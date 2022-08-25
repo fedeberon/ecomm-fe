@@ -127,7 +127,7 @@ const Update = ({product, brands}) => {
                                    htmlFor="category">
                                 CATEGORIA
                             </label>
-                            <select onChange={handleChange} onBlur={handleChange} name="category" value={form.category.id} className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3    px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500">
+                            <select onChange={handleChange} onBlur={handleBlur} name="category" value={form.category.id} className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3    px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500 ">
                                 <option value="0">Seleccione</option>
                                 <option value="1">Jugueteria</option>
                                 <option value="2">Accesorios</option>
