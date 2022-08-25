@@ -3,10 +3,11 @@ import useForm from "../../../hooks/useForm";
 import {NotificationContainer} from 'react-notifications';
 import 'react-notifications/lib/notifications.css';
 import * as brandsService from 'services/brandService';
+import * as categoriesService from 'services/categoriesService'
 import {  useState } from "react"; 
 
 
-const Update = ({product, brands}) => {
+const Update = ({product, brands, categories}) => {
     
     const validationsForm = (form) =>{
         let errors ={};
@@ -49,6 +50,7 @@ const Update = ({product, brands}) => {
         loading,
         response,
         handleChange,
+        handleChangeBrand,
         handleBlur,
         handleSubmit,} = useForm(product, validationsForm);
         
@@ -127,13 +129,13 @@ const Update = ({product, brands}) => {
                                    htmlFor="category">
                                 CATEGORIA
                             </label>
-                            <select onChange={handleChange} onBlur={handleChange} name="category" value={form.category.id} className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3    px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500">
-                                <option value="0">Seleccione</option>
-                                <option value="1">Jugueteria</option>
-                                <option value="2">Accesorios</option>
-                                <option value="3">Pa&ntilde;aleria</option>
-                                <option value="4">Puericultura</option>
-                                <option value="5">Lactancia</option>
+                            <select onChange={handleChange} onBlur={handleChange} name="category" value={form.category.id} className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3    px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="category">
+                               {
+                                categories.map(categories => (
+                                    <option value={categories.id}>{categories.name}</option>
+                                ))
+
+                               }
                             </select>
                             {errors.category &&  <p className={`text-red-500 text-xs italic`}>{errors.category}</p>}
                         </div>
@@ -261,11 +263,13 @@ const Update = ({product, brands}) => {
 export async function getServerSideProps({ params }) {
     const product = await getProduct(params.id)
     const brands = await brandsService.findAll();
+    const categories = await categoriesService.findAll();
 
     return {
         props: {
             product,
-            brands
+            brands,
+            categories
         },
     }
 }
