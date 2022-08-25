@@ -71,10 +71,14 @@ const Username = ({userSession, billsOfUSer})  => {
                 <UserData user={userSession}/>
             </div>
 
-            <div id="second" className={`${tabs.activity ? `` : `hidden`}  flex bg-white justify-center m-12 p-2 `}>
-                <BillsOfUser bills={billsOfUSer}/>
-            <div className="absolute -m-16">
-                <StoreHeading title="Tus Facturas"/>
+            <div id="second" className={`${tabs.activity ? `` : `hidden`}  flex bg-white justify-center mx-auto w-full `}>
+            <div className="justify-center w-4/5">
+                <div className="mt-6">
+                    <StoreHeading title="Tus Facturas"/>
+                </div>
+                <div className="md:-mt8 -mt-6">
+                    <BillsOfUser bills={billsOfUSer}/>
+                </div>
             </div>
             </div>
             <div id="thirt" className={`${tabs.segurity ? `` : `hidden`}  flex bg-white justify-center p-2 `}>
