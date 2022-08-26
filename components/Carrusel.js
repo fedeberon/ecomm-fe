@@ -1,8 +1,7 @@
-import {createRef, useEffect, useState} from "react"; 
+import {createRef, useEffect, useState} from "react";
 
-const images = ['/images/panaleria.png','/images/lactancia.png','/images/CarrouselAccesorios.png']  
-const responsiveImages = ['/images/PanaleriaResponsive.png','/images/LactanciaResponsive.png','/images/Accesor.png']  
-
+const imagess = ['/images/panaleria.png','/images/lactancia.png','/images/CarrouselAccesorios.png']  
+const responsiveImages = ['/images/PanaleriaResponsive.png','/images/LactanciaResponsive.png','/images/AccesoriosResponsive.png']  
 // images must be an array of urls , if using Next JS this could something like
 // const images = ['/img/img1.png', '/img/img2.png', '/img/img3.png']
 // images must be an array of urls , if using Next JS this could something like
@@ -12,8 +11,19 @@ const responsiveImages = ['/images/PanaleriaResponsive.png','/images/LactanciaRe
 const Carousel = () => {
     // We will start by storing the index of the current image in the state.
     const [currentImage, setCurrentImage] = useState(0);
+    const [images,setImages]=useState([])
 
+    useEffect(()=>{
+        if(typeof screen !== 'undefined'){
+            if (screen.width >= 640) 
+            {setImages(imagess)} 
+        else{
+            setImages(responsiveImages)}
+        }
+    })
+    
 
+    
     // We are using react ref to 'tag' each of the images. Below will create an array of
     // objects with numbered keys. We will use those numbers (i) later to access a ref of a
     // specific image in this array.
@@ -72,7 +82,7 @@ const Carousel = () => {
             <span role="img" aria-label={`Arrow ${isLeft ? 'left' : 'right'}`} className={"bg-slate-900"}>
                 {isLeft 
                 ? 
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 hover:scale-125" fill="none" viewBox="0 0 24 24" stroke="#ed7aad">
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 hover:scale-125" viewBox="0 0 24 24" stroke="#ed7aad">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="7" d="M15 19l-7-7 7-7"></path>
                 </svg> 
                 :
