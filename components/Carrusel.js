@@ -1,6 +1,7 @@
 import {createRef, useEffect, useState} from "react"; 
 
-const images = ['/images/panaleria.png','/images/lactancia.png','/images/CarrouselAccesorios.png']  
+const imagess = ['/images/panaleria.png','/images/lactancia.png','/images/CarrouselAccesorios.png']  
+const responsiveImages = ['/images/PanaleriaResponsive.png','/images/LactanciaResponsive.png','/images/AccesoriosResponsive.png']  
 // images must be an array of urls , if using Next JS this could something like
 // const images = ['/img/img1.png', '/img/img2.png', '/img/img3.png']
 // images must be an array of urls , if using Next JS this could something like
@@ -10,6 +11,16 @@ const images = ['/images/panaleria.png','/images/lactancia.png','/images/Carrous
 const Carousel = () => {
     // We will start by storing the index of the current image in the state.
     const [currentImage, setCurrentImage] = useState(0);
+    const [images,setImages]=useState([])
+
+    useEffect(()=>{
+        if(typeof screen !== 'undefined'){
+            if (screen.width >= 640) 
+            {setImages(imagess)} 
+        else{
+            setImages(responsiveImages)}
+        }
+    })
 
 
     // We are using react ref to 'tag' each of the images. Below will create an array of
