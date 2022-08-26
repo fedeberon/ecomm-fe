@@ -11,7 +11,6 @@ function Shop({title, products, brands, categories }) {
             <div className="bg-white">
                 <div className="bg-white ">
                     <StoreHeading title={title}/>
-
                     {
                         products == null 
                         ?

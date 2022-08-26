@@ -58,7 +58,7 @@ const Products = ({products}) => {
             }
         };
         return (
-            <FilterComponent onFilter={e => setFilterText(e.target.value)} onClear={handleClear} filterText={filterText} />
+            <FilterComponent onFilter={e => setFilterText(e.target.value)} onClear={handleClear} filterText={filterText}/>
         );
     }, [filterText, resetPaginationToggle]);
     return (

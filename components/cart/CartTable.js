@@ -51,7 +51,7 @@ function CartTable({ cart }) {
 
                 <Link passHref href={`/products/${item.id}`}>
                   <a className="pt-1 hover:text-palette-dark ml-4">
-                    {item.productTitle}, {item.variantTitle}
+                    {item.productTitle} {item.variantTitle}
                   </a>
                 </Link>
               </td>

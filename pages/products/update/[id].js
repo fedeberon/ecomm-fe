@@ -127,13 +127,13 @@ const Update = ({product, brands}) => {
                                    htmlFor="category">
                                 CATEGORIA
                             </label>
-                            <select onChange={handleChange} onBlur={handleBlur} name="category" value={form.category.id} className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3    px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500 ">
-                                <option value="0">Seleccione</option>
-                                <option value="1">Jugueteria</option>
-                                <option value="2">Accesorios</option>
-                                <option value="3">Pa&ntilde;aleria</option>
-                                <option value="4">Puericultura</option>
-                                <option value="5">Lactancia</option>
+                            <select onChange={handleChange} onBlur={handleBlur} name="category" value={form.category.id} className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3    px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500 " id="category">
+                               {
+                                categories.map(categories => (
+                                    <option value={categories.id}>{categories.name}</option>
+                                ))
+
+                               }
                             </select>
                             {errors.category &&  <p className={`text-red-500 text-xs italic`}>{errors.category}</p>}
                         </div>

@@ -96,7 +96,6 @@ function Nav() {
                 </span>
               </h1>
             </a>
-
           </Link>
 
           <Link href="/shop/Pañaleria">
@@ -143,7 +142,6 @@ function Nav() {
             ""
           )}
         </div>
-
 
         {
           load ?

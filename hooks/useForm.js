@@ -16,25 +16,40 @@ import 'react-notifications/lib/notifications.css';
   const handleChange = (e) => {
     const { name, value } = e.target;
 
+    setForm({
+      ...form,
+      [name]: value,
+    });
 
-    if (name != "category") {
+    // if (name != "category") {
+    //   setForm({
+    //     ...form,
+    //     [name]: value,
+    //   });
+    // } else {
+    //   setForm({
+    //     ...form,
+    //     category: {
+    //       id: e.target.value,
+    //     },
+    //     //? se rompera?
+    //     brand: {
+    //       id: e.target.value,
+    //     },
+    //   });
+    // }
+  };
+  const handleChangeBrand = (e) =>{
+    const { name, value } = e.target;
+
+    if (name != "brand") {
       setForm({
         ...form,
         [name]: value,
       });
-    } else {
-      setForm({
-        ...form,
-        category: {
-          id: e.target.value,
-        },
-        //? se rompera?
-        brand: {
-          id: e.target.value,
-        },
-      });
     }
-  };
+  }
+  
 
   const handleBlur = (e) => {
     handleChange(e);
@@ -72,6 +87,7 @@ import 'react-notifications/lib/notifications.css';
     loading,
     response,
     handleChange,
+    handleChangeBrand,
     handleBlur,
     handleSubmit,
   };

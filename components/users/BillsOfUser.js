@@ -1,18 +1,16 @@
-import Link from "next/link";
-import Moment from "react-moment";
-import FilterCuitComponent from "../filter/FilterCuitComponent";
+import FilterComponent from  "@/components/filter/FilterComponent";
 import DataTable  from "react-data-table-component";
-import {useState, useMemo} from "react"
+import {useState, useMemo} from "react";
 import DateObject from "react-date-object";
 import {paginationComponentOptions} from "../../DataTableUtils";
 
-const Bills = ({bills}) => {
+const BillsOfUser = ({bills}) => {
     const[filterText, setFilterText]= useState ('')
     const [resetPaginationToggle, setResetPaginationToggle] = useState(false);
     const filteredItems =bills.filter(item=> filterText == '' || filterText.toLowerCase().includes(item.cuit));
-    
+ 
     const columns = [
-            
+
         {
             name: 'Id',
             selector: row => row.id,
@@ -24,20 +22,9 @@ const Bills = ({bills}) => {
             sortable: true
         },
         {
-            name:'Cuit',
-            selector: row => row.cuit,
+            name:'N°',
+            selector: row => row.number,
             sortable: true
-        },
-        {
-            name:'Pto ventas',
-            selector: row => row.pointNumber,
-            sortable: true
-        },
-        {
-            name: 'N°',
-            selector: row =>row.number,
-            sortable: true
-            
         },
         {
             name: 'Fecha',
@@ -51,15 +38,16 @@ const Bills = ({bills}) => {
         },
         {
             name: 'CAE',
-            selector:row=>row.cae,
+            selector: row =>row.cae,
             sortable: true
         },
         {
-            name:'Importe',
-            selector:row=>row.totalAmount,
+            name: "Importe",
+            selector: row => row.totalAmount,
             sortable: true
         }
     ]
+
     const subHeaderComponentMemo = useMemo(() => {
         const handleClear = () => {
             if (filterText) {
@@ -68,26 +56,26 @@ const Bills = ({bills}) => {
             }
         };
         return (
-            <FilterCuitComponent onFilter={e => setFilterText(e.target.value)} onClear={handleClear} filterText={filterText} />
+            <FilterComponent onFilter={e => setFilterText(e.target.value)} onClear={handleClear} filterText={filterText}/>
         );
     }, [filterText, resetPaginationToggle]);
-    return (
-        <div className="min-h-80 max-w-12 my-4 sm:my-8 mx-auto w-full">
-             <div className="overflow-hidden">
 
-                <DataTable
-                    columns={columns}
-                    data={filteredItems} 
-                    pagination
-                    paginationResetDefaultPage={resetPaginationToggle}
-                    subHeader
-                    subHeaderComponent={subHeaderComponentMemo}
-                    persistTableHead
-                    paginationComponentOptions={paginationComponentOptions}
-                    />
-            </div>
+
+    return (
+
+        <div className="min-h-80 max-w-12 my-4 sm:my-8 mx-auto w-full">
+            <DataTable
+                columns={columns}
+                data={filteredItems} 
+                pagination
+                paginationResetDefaultPage={resetPaginationToggle} // optionally, a hook to reset pagination to page 1
+                subHeader
+                subHeaderComponent={subHeaderComponentMemo}
+                persistTableHead
+                paginationComponentOptions={paginationComponentOptions}
+            />
         </div>
     )
 }
 
-export default Bills;
+export default BillsOfUser;
