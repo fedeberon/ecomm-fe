@@ -46,7 +46,7 @@ const UserSegurity = ({user}) => {
             </div> */}
             <div class="flex flex-wrap mx-3 mb-6">
                 <div class="w-full px-3">
-                <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-password">
+                <label class="block tracking-wide text-palette-primary text-md font-semibold mb-2" for="grid-password">
                     Nueva Contraseña
                 </label>
                 <input name="password" onChange={handleChange} class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="password" type="text" placeholder="******************"/>
@@ -63,7 +63,7 @@ const UserSegurity = ({user}) => {
                 </div>
             </div> */}
                 <div className="justify-center w-full">
-                    <button onClick={submit} className="flex m-auto bg-indigo-400 rounded-full px-4 py-2">guardar</button>
+                    <button onClick={submit} className="flex m-auto bg-palette-secondary text-white font-semibold rounded-full px-4 py-2">Guardar</button>
                 </div>
             </form>
              

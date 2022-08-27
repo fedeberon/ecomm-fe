@@ -3,7 +3,7 @@ const FilterComponent = ({ filterText, onFilter, onClear }) => (
  
 
         <input
-        className="w-full p-2 bg-gray-100 border border-purple-500 border-gray-200 rounded-lg"
+        className="w-full p-2 bg-white border-2 border-palette-sdark outline-none placeholder-palette-slight rounded-xl"
             id="search"
             type="text"
             placeholder="Buscar por id"

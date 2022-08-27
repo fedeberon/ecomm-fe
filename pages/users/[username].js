@@ -33,26 +33,25 @@ const Username = ({userSession, billsOfUSer})  => {
  
 
     return (
-      <div className="bg-blue-100 lg:px-3">
-          <div className="lg:mx-6 bg-white flex min-h-screen">
+          <div className="flex min-h-screen ">
               {/* <UserNav/>
               <Userdata user={userSession}/>  */}
-            <div className="bg-gray-100 w-1/5 h-auto ">
+            <div className="bg-blue-50 w-1/5 h-auto rounded-3xl ">
                 <ul id="tabs" className="w-full ">
-                    <li className={`font-semibold hover:bg-gray-200 py-3 flex justify-center ${tabs.usuarios ? `bg-gray-300` : ``}`}>
+                    <li className={`font-semibold rounded-3xl transition duration-500 hover:bg-palette-slight hover:text-white py-3 flex justify-center ${tabs.usuarios ? `bg-palette-sdark text-white` : ``}`}>
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
                         </svg>
                         <a name={`usuarios`} className="hidden sm:block" href="#" onClick={handleClick}>Usuario</a>
                     </li>
-                    <li className={`hover:bg-gray-200 py-3 font-semibold flex ${tabs.activity ? `bg-gray-300` : ``} justify-center`}>
+                    <li className={`hover:bg-palette-slight rounded-3xl transition duration-500 hover:text-white py-3 font-semibold flex ${tabs.activity ? `bg-palette-sdark text-white` : ``} justify-center`}>
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                         </svg>
                         <a id="default-tab" className="hidden sm:block" name={`activity`} href="#" onClick={handleClick}>Actividad</a>
                     </li>
 
-                    <li className={`hover:bg-gray-200 py-3 font-semibold flex justify-center ${tabs.segurity ? `bg-gray-300 py-3` : ``}`}>
+                    <li className={`hover:bg-palette-slight rounded-3xl transition duration-500 hover:text-white py-3 font-semibold flex justify-center ${tabs.segurity ? `bg-palette-sdark text-white` : ``}`}>
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
                         </svg>
@@ -88,7 +87,6 @@ const Username = ({userSession, billsOfUSer})  => {
                 preferencias
             </div> */}
           </div>
-      </div>
 
     )
 }

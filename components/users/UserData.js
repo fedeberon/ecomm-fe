@@ -36,13 +36,13 @@ const UserData = ({user}) => {
     return (
 
         <>
-            <form class="flex-initial shrink w-full max-w-lg p-6">
+            <form class="flex-initial shrink w-full max-w-lg">
 
             <div class="flex flex-wrap mx-3 mb-6"
             onDoubleClick={enableFields}>
                 <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
                 <label
-                class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" >
+                class="block tracking-wide text-palette-primary text-sm font-bold mb-2" >
                     Nombre
                 </label>
                 <input 
@@ -61,7 +61,7 @@ const UserData = ({user}) => {
                 onDoubleClick={enableFields}>
                 <label 
                 htmlFor="lastName"
-                class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" 
+                class="block  tracking-wide text-palette-primary text-sm font-bold mb-2" 
                 for="grid-last-name">
                     Apellido
                 </label>
@@ -82,7 +82,7 @@ const UserData = ({user}) => {
                 <div class="w-full px-3">
                 <label 
                 htmlFor="email"
-                class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" >
+                class="block text-sm tracking-wide text-palette-primary  font-bold mb-2" >
                     Email
                 </label>
                 <input 
@@ -103,9 +103,9 @@ const UserData = ({user}) => {
                 <div class="w-full px-3">
                 <label  
                 htmlFor="phone"
-                class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" 
+                class="block  tracking-wide text-palette-primary text-sm font-bold mb-2" 
                 for="grid-password">
-                    Telefono
+                    Tel&#233;fono
                 </label>
                 <input 
                 onChange={handleChange}
@@ -125,9 +125,9 @@ const UserData = ({user}) => {
                 <div class="w-full px-3">
                 <label 
                 htmlFor="direction"
-                class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" 
+                class="block  tracking-wide text-palette-primary text-sm font-bold mb-2" 
                 for="grid-password">
-                    Direccion
+                    Direcci&oacute;n
                 </label>
                 <input 
                 onChange={handleChange}
@@ -146,7 +146,7 @@ const UserData = ({user}) => {
             onDoubleClick={enableFields}>
                 <div class="w-full md:w-1/3 px-3 mb-6 md:mb-0">
                 <label  
-                class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" 
+                class="block tracking-wide text-palette-primary text-sm font-bold mb-2" 
                 htmlFor="city"
                 for="grid-city">
                     Ciudad
@@ -164,7 +164,7 @@ const UserData = ({user}) => {
                 <div class="w-full md:w-1/3 px-3 mb-6 md:mb-0"
                 onDoubleClick={enableFields}>
                 <label 
-                class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+                class="block tracking-wide text-palette-primary text-sm font-bold mb-2"
                 htmlFor="postal" 
                 for="grid-zip">
                     Codigo postal
@@ -182,7 +182,7 @@ const UserData = ({user}) => {
             </div> 
             
             <button onClick={submit}
-                class="bg-blue-500 hover:bg-blue-700 ml-6 rounded text-white font-bold mt-2 py-2 px-4">
+                class="bg-palette-secondary hover:bg-palette-sdark duration-500 ml-6 rounded-lg text-lg text-white font-bold mt-6 py-2 px-4">
                     Guardar  
             </button> 
             </form>
