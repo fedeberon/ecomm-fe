@@ -173,7 +173,7 @@ const searchCategories = async () => {
                                     onChange={searchValue}/>
                       </div>
                     <div className={`fixed z-50  top-0 w-full left-0 ${filter ? "" : "hidden"}  `} id="modal">
-                        <div className="flex items-center justify-center min-height-100vh pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+                        <div className="flex items-center justify-center min-height-100vh pt-20 md:pt-0 px-4 pb-20 text-center sm:block sm:p-0">
                             <div onClick={close} className="fixed inset-0 transition-opacity">
                                 <div className="absolute inset-0 bg-gray-700 opacity-75"/>
                             </div>
@@ -181,7 +181,7 @@ const searchCategories = async () => {
                             <div className="w-auto inline-block bg-white  rounded-lg text-left  shadow-xl transform transition-all my-8 align-middle"
                               role="dialog" aria-modal="true" aria-labelledby="modal-headline">
                                 <div className='absolute mt-20 w-full border-b-2 border-indigo-100 '></div>
-                                <div className="flex grid-cols-2 m-auto px-4 pt-6 pb-2 sm:p-6 sm:pb-4">
+                                <div className="flex grid-cols-2 m-auto px-4 pt-2 pb-2 sm:p-6 sm:pb-4">
                                     <CategorySearch categories={categories} onclick={handleChangeCategory}/>
                                     <BrandSearch brands={brands} onclick={handleChangeBrand}/>
                                 </div>

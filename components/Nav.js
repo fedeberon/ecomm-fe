@@ -54,7 +54,7 @@ function Nav() {
 
     <header className="w-full sticky lg:static top-0 z-50 bg-white">
 
-      <div className="flex items-center justify-between flex-wrap p-2">
+      <div className="flex items-center justify-between flex-wrap">
         <div className="block lg:hidden">
           <button onClick={handleMenu} className="flex py-2 hover:border-grey">
             <FontAwesomeIcon icon={faBars} className="w-5 top-6 ml-2 mr-0 items-center" />

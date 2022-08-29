@@ -9,13 +9,13 @@ const Login = ({csrfToken}) => {
                 <div>
                     <img className="mx-auto h-12 w-auto"
                          src={login.src} alt="Workflow"/>
-                        <h2 className="mt-6 text-center text-3xl font-extrabold text-palette-secondary">
-                            Registrese
+                        <h2 className="md:mt-3 mt-6 text-center text-3xl font-extrabold text-palette-secondary">
+                            Reg&iacute;strese
                         </h2>
                         <p className="mt-2 text-center text-sm text-palette-slighter">
-                            &oacute;
+                            o
                             &nbsp;
-                            <a href="/users/create" className="font-medium text-palette-secondary hover:text-palette-sdark">
+                            <a href="/users/create" className="font-medium text-palette-slight duration-500 hover:text-palette-sdark">
                                Crearse una cuenta
                             </a>
                         </p>
