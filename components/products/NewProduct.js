@@ -101,8 +101,6 @@ const NewProduct = ({ categories, brands, sizes }) => {
             setsizeToCheck(final);
             form.sizes = final;
         } else {
-            console.log(sizeToCheck);
-            console.log(e.target.value);
             const sizes = sizeToCheck.filter((size) => size.id !== e.target.value);
             setsizeToCheck(sizes);
             form.sizes = sizes;
