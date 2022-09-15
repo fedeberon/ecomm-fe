@@ -6,7 +6,7 @@ import React from "react";
 const Brand = ({brands}) => {
   return (
         <div className="mx-auto max-w-6xl">
-            <PageTitle text="MARCAS" />
+            <PageTitle text="MARCAS"/>
             <BrandList brands={brands}/>
         </div>
   );
@@ -16,7 +16,7 @@ export async function getServerSideProps() {
     const brands = await findAll();
     return {
         props: {
-            brands
+            brands  
         }
     };
 }
