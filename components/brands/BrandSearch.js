@@ -7,13 +7,7 @@ const BrandSearch = ({brands, onclick}) => {
     const handleMenu=()=>{
         setIsMenu(!isMenu)
     }
-
-
-
     return (
- 
-           
-                
                 <div className="flex-center col-span-2 w-auto rounded ">
                     <div className="w-auto bg-white text-sm text-palette-primary font-bold px-5 py-2">
                         <div className="m-2 -ml-4 text-2xl">Marcas</div>

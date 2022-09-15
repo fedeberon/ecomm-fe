@@ -1,14 +1,16 @@
 import DataTable from "react-data-table-component";
 import Link from "next/link";
-import FilterComponent from "@/components/filter/FilterComponent";
+import FilterComponent from "../filter/FilterComponent";
 import {useMemo, useState} from "react";
 import {paginationComponentOptions} from "../../DataTableUtils";
 
 const BrandList = ({ brands }) => {
-
+    
     const [filterText, setFilterText] = useState('');
     const [resetPaginationToggle, setResetPaginationToggle] = useState(false);
-    const filteredItems = brands.filter(item => filterText == '' || filterText.toLowerCase().includes(item.id));
+    
+    const filteredItems = brands.filter(item=> filterText == '' || filterText.includes(item.id));
+   
 
     const columns = [
         {
@@ -19,9 +21,10 @@ const BrandList = ({ brands }) => {
         {
             name: 'Nombre',
             selector: row => row.name,
+            sortable: true,
         }
     ];
-
+    
     const subHeaderComponentMemo = useMemo(() => {
         const handleClear = () => {
             if (filterText) {
@@ -30,11 +33,12 @@ const BrandList = ({ brands }) => {
             }
         };
         return (
-            <FilterComponent onFilter={e => setFilterText(e.target.value)} onClear={handleClear} filterText={filterText} />
+            <FilterComponent onFilter={e => setFilterText(e.target.value)} onClear={handleClear} filterText={filterText}/>
         );
     }, [filterText, resetPaginationToggle]);
 
-
+    
+    
     return (
 
         <div className="flex flex-col">

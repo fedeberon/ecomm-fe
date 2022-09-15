@@ -5,12 +5,17 @@ import FilterComponent from  "@/components/filter/FilterComponent";
 import DataTable  from "react-data-table-component";
 import {useState, useMemo} from "react";
 import {paginationComponentOptions} from "../../DataTableUtils";
+import axios from "axios";
 
 const Products = ({products}) => {
-   
-    const[filterText, setFilterText]= useState ('')
+    
+    const [data, setData] = useState([]);
+	const [loading, setLoading] = useState(false);
+	const [totalRows, setTotalRows] = useState(0);
+    const [filterText, setFilterText]= useState ('')
     const [resetPaginationToggle, setResetPaginationToggle] = useState(false);
-    const filteredItems =products.filter(item=> filterText == '' || filterText.toLowerCase().includes(item.id));
+    const filteredItems =data.filter(item=> filterText.toLowerCase() == '' || filterText.includes(item.id));
+    
     const columns = [
             
         {
@@ -36,8 +41,7 @@ const Products = ({products}) => {
         {
             name: 'Precio',
             selector: row =>row.price,
-            sortable: true
-            
+            sortable: true   
         },
         {
             name: 'Stock',
@@ -50,6 +54,24 @@ const Products = ({products}) => {
             sortable: true
         },
     ]
+
+    const fetchProducts = async page => {
+		setLoading(true);
+
+        const response = await axios.get (`${process.env.NEXT_PUBLIC_BACKEND_SERVICE}/product?page=${page}&size=10`);
+        setData(response.data.content);
+		setTotalRows(response.data.totalElements);
+		setLoading(false);
+	};
+    
+    const handlePageChange = page => {
+		fetchProducts(page);
+	};
+
+	useEffect(() => {
+		fetchProducts(1); 
+	}, []);
+
     const subHeaderComponentMemo = useMemo(() => {
         const handleClear = () => {
             if (filterText) {
@@ -61,6 +83,8 @@ const Products = ({products}) => {
             <FilterComponent onFilter={e => setFilterText(e.target.value)} onClear={handleClear} filterText={filterText}/>
         );
     }, [filterText, resetPaginationToggle]);
+
+ 
     return (
         <div className="min-h-80 max-w-12 my-4 sm:my-8 mx-auto w-full">
              <div className="overflow-hidden">
@@ -68,6 +92,10 @@ const Products = ({products}) => {
                 <DataTable
                     columns={columns}
                     data={filteredItems} 
+                    progressPending= {loading}
+                    paginationServer
+                    paginationTotalRows={totalRows}
+                    onChangePage={handlePageChange}
                     pagination
                     paginationResetDefaultPage={resetPaginationToggle}
                     subHeader
@@ -79,5 +107,7 @@ const Products = ({products}) => {
         </div>
     )
 }
+
+
 
 export default Products;
