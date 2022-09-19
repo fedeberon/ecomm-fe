@@ -106,6 +106,15 @@ function CartPage({myPoints, user}) {
                             <div className="max-w-sm mx-auto space-y-4 px-2">
                                 <BackToProductButton />
 
+                                    <Link href={"/precheck/presupuesto"} passHref>
+                                            <a href="#" className="w-1/2 bg-blue-500 text-white text-lg font-primary
+                                                            font-semibold pt-2 pb-1 leading-relaxed flex cursor-pointer
+                                                            justify-center items-center focus:ring-1 focus:ring-palette-light
+                                                            focus:outline-none w-full hover:bg-blue-600 rounded-sm">
+                                                Presupuestar
+                                            </a>
+                                    </Link>
+
                                 {/* {
                                     preference != null
                                         ?
@@ -131,7 +140,7 @@ function CartPage({myPoints, user}) {
                                                                font-semibold pt-2 pb-1 leading-relaxed flex cursor-pointer
                                                                justify-center items-center focus:ring-1 focus:ring-palette-light
                                                                focus:outline-none w-full hover:bg-blue-600 rounded-sm">
-                                                    Checkout
+                                                    Facturar
 
 
                                                 </a>
