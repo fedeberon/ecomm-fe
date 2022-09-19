@@ -53,7 +53,6 @@ const Billing = ({isShowing, checkout, type}) => {
         if(response.status === 500) {
             setShow(false);
             setError(response.data)
-            console.log(response.data)
         }
         cleanCart();
     }

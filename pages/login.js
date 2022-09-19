@@ -10,13 +10,13 @@ const Login = ({csrfToken}) => {
                     <img className="mx-auto h-12 w-auto"
                          src={login.src} alt="Workflow"/>
                         <h2 className="mt-6 text-center text-3xl font-extrabold text-palette-secondary">
-                            Registrese
+                        Iniciar Sesión
                         </h2>
                         <p className="mt-2 text-center text-sm text-palette-slighter">
                             &oacute;
                             &nbsp;
                             <a href="/users/create" className="font-medium text-palette-secondary hover:text-palette-sdark">
-                               Crearse una cuenta
+                               Registrese
                             </a>
                         </p>
                 </div>
@@ -40,14 +40,6 @@ const Login = ({csrfToken}) => {
                                        required
                                        className="appearance-none rounded-none relative block w-full px-3 py-2 border border-palette-slight placeholder-palette-slight text-palette-sdark rounded-b-md focus:outline-none focus:ring-palette-secondary focus:border-palette-sdark focus:z-10 sm:text-sm"
                                        placeholder="Contrase&ntilde;a"/>
-                            </div>
-                        </div>
-
-                        <div className="flex items-center justify-center">
-                            <div className="text-sm">
-                                <a href="#" className="font-medium text-palette-primary hover:text-palette-dark">
-                                    ¿ Olvistaste la contrasena ?
-                                </a>
                             </div>
                         </div>
 

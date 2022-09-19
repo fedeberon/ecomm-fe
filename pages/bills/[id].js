@@ -2,6 +2,7 @@ import { getBillsById } from "../../services/billingService";
 import Moment from "react-moment";
 import Link from "next/link";
 import logo from "/images/logoMati.png";
+import { useCleanCartContext } from "@/context/Store";
 
 const Detail = ({ bill }) => {
     console.log(bill);
@@ -239,7 +240,7 @@ const Detail = ({ bill }) => {
                                                         <tr>
                                                             <th scope="col"
                                                                 className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                                                Name
+                                                                Nombre
                                                             </th>
                                                             <th scope="col"
                                                                 className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
@@ -314,17 +315,16 @@ const Detail = ({ bill }) => {
                                     <div className="text-2xl">TOTAL: ${bill.totalAmount}</div>
                                 </div>
                             </div>
-
-                            <div className="flex w-full justify-center">
-                                <Link href="/">
-                                    <button type="button" className="md:m-3 justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-blue-600 text-base font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">
-                                            Volver al inicio
-                                    </button>  
-                                </Link>
-                                <button onClick={print} type="button" className="md:m-3 justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-red-600 text-base font-medium text-white hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">
-                                        Imprimir
+                        </div>
+                        <div className="flex w-full justify-center">
+                            <Link href="/">
+                                <button type="button" className="md:m-3 justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-blue-600 text-base font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">
+                                        Volver al inicio
                                 </button>  
-                            </div>
+                            </Link>
+                            <button onClick={print} type="button" className="md:m-3 justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-red-600 text-base font-medium text-white hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">
+                                    Imprimir
+                            </button>  
                         </div>
                     </>
             }
