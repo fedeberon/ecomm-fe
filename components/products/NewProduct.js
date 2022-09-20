@@ -60,9 +60,10 @@ const NewProduct = ({ categories, brands, sizes }) => {
         if (!form.description.trim()) {
             errors.description = "El campo 'Descripcion' es requerido";
         }
-        if (!form.category.id.trim()) {
+        if (!form.category.id== "  ") {
             errors.category = "El campo 'Categoria' es requerido";
         }
+
         if (form.brand.id == " ") {
             errors.brand = "El campo 'Marcas' es requerido";
         }
@@ -109,7 +110,7 @@ const NewProduct = ({ categories, brands, sizes }) => {
     
 
     return (
-        <>
+            <>
             <NotificationContainer />
             <div className="flex justify-center">
                 <form className="w-full max-w-lg" onSubmit={handleSubmit}>
@@ -172,7 +173,7 @@ const NewProduct = ({ categories, brands, sizes }) => {
                                 htmlFor="category">
                                 Categoria
                             </label>
-                            <select onChange={handleChange} name="category" onBlur={handleBlur} value={form.category.id} className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="category">
+                            <select onChange={handleChange} name="category" onBlur={handleBlur} className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="category">
                                 {
                                     categories.map(category => (
                                         <option value={category.id}>{category.name}</option>
