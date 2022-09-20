@@ -67,6 +67,17 @@ export async function getProduct(id) {
     }
 }
 
+export async function all() {
+    const fetchUrl = `${process.env.BACKEND_SERVICE}/product/all`;
+
+    try {
+        let response = await axios.get(fetchUrl);
+        return response.data;
+    } catch (error) {
+        throw new Error("Could not get all users !");
+    }
+}
+
 export async function save(product) {
     const fetchUrl = `${process.env.NEXT_PUBLIC_BACKEND_SERVICE}/product`;
     try {
