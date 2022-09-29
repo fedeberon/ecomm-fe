@@ -149,7 +149,7 @@ const searchCategories = async () => {
 
                         <div className='justify-between my-auto mx-4'>
                             
-                            <button className="text-palette-slight bg-transparent border border-solid border-palette-secondary hover:bg-palette-secondary hover:text-white active:bg-palette-slight font-bold
+                            <button className="text-white  bg-palette-secondary border border-solid border-palette-secondary hover:bg-palette-slight hover:text-white active:bg-palette-slight font-bold
                                             uppercase
                                             text-xl
                                             p-2
