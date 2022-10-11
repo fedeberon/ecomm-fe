@@ -7,6 +7,7 @@ import { paginationComponentOptions } from "../../DataTableUtils";
 import DataTable from "react-data-table-component";
 import DateObject from "react-date-object";
 import UserList from "../users/UserList";
+import AddPoints from "./AddPoints";
 
 
 
@@ -14,6 +15,7 @@ const WalletOfUser = ({ walletOfUser, user }) => {
     const [isWallet, setIsWallet] = useState(false);
     const [points, setPoints] = useState(0);
     const [twins, setTwins] = useState(false)
+    const [addPoints, setAddPoints] = useState(false)
 
     const [filterText, setFilterText] = useState('');
     const filteredItems = walletOfUser.filter(item => filterText == '' || filterText.toLowerCase().includes(item.id));
@@ -90,6 +92,8 @@ const WalletOfUser = ({ walletOfUser, user }) => {
         setTwins(!twins)
     }
 
+    const handleOnClose = () => setAddPoints(false)
+
 
 
     return (
@@ -148,8 +152,25 @@ const WalletOfUser = ({ walletOfUser, user }) => {
             }
 
 
+
             <div className={""}>
                 <div className="leading-relaxed font-primary font-extrabold text-2xl text-center text-palette-primary mt-4 py-2 sm:py-4">Adquisicion de puntos</div>
+            <div className="flex justify-between m-auto w-80 h-10">
+                <a
+                    onClick={() => console.log("Restar puntos")}
+                    aria-label="back-to-products"
+                    className="border border-palette-primary text-palette-primary text-lg font-primary font-semibold pt-2 pb-1 py-2 px-4
+                    justify-center items-center md:-mt-2  focus:ring-1 focus:ring-palette-light focus:outline-none w-full hover:bg-palette-lighter rounded-sm cursor-pointer">
+                    Restar puntos
+                </a>  
+                <a
+                    onClick={() => setAddPoints(true)}
+                    aria-label="back-to-products"
+                    className="border border-palette-primary text-palette-primary text-lg font-primary font-semibold pt-2 pb-1 py-2 px-4
+                    justify-center items-center md:-mt-2  focus:ring-1 focus:ring-palette-light focus:outline-none w-full hover:bg-palette-lighter rounded-sm cursor-pointer">
+                    Sumar puntos
+                </a>
+            </div>
                 <div className="flex flex-col">
                     <div className="overflow-x-auto sm:-mx-6 lg:-mx-8">
                         <div className="py-2 inline-block min-w-full sm:px-6 lg:px-8">
@@ -169,6 +190,7 @@ const WalletOfUser = ({ walletOfUser, user }) => {
                     </div>
                 </div>
             </div>
+                <AddPoints onClose={handleOnClose} visible={addPoints}/>
         </div>
 
     );
