@@ -164,14 +164,14 @@ const WalletOfUser = ({ walletOfUser, user }) => {
                     aria-label="back-to-products"
                     className="border border-palette-primary text-palette-primary text-lg font-primary font-semibold pt-2 pb-1 py-2 px-4
                     justify-center items-center md:-mt-2  focus:ring-1 focus:ring-palette-light focus:outline-none w-full hover:bg-palette-lighter rounded-sm cursor-pointer">
-                    Restar puntos
+                    Quitar puntos
                 </a>  
                 <a
                     onClick={() => setAddPoints(true)}
                     aria-label="back-to-products"
                     className="border border-palette-primary text-palette-primary text-lg font-primary font-semibold pt-2 pb-1 py-2 px-4
                     justify-center items-center md:-mt-2  focus:ring-1 focus:ring-palette-light focus:outline-none w-full hover:bg-palette-lighter rounded-sm cursor-pointer">
-                    Sumar puntos
+                    Añadir puntos
                 </a>
             </div>
                 <div className="flex flex-col">

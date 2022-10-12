@@ -40,7 +40,7 @@ function addPoints({visible, onClose}){
     return (
                 <div id="container" onClick={handleOnClose} className="fixed inset-0 bg-black bg-opacity-30 backdrop-blur-sm flex justify-center items-center ">
                 <div className="w-auto bg-white text-sm text-palette-primary font-bold px-5 py-2 rounded mb-5">
-                    <div className="m-2 -ml-4 text-2xl flex justify-center">Sumar Puntos</div>
+                    <div className="m-2 -ml-4 text-2xl flex justify-center">Añadir Puntos</div>
                     <div className="flex flex-col">
                         <input 
                             type="text"
