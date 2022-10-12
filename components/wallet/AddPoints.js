@@ -44,14 +44,14 @@ function addPoints({visible, onClose}){
                     <div className="flex flex-col">
                         <input 
                             type="text"
-                            className="border border-gray-700 p-2 rounded mb-5"
+                            className="border border-gray-700 p-2 rounded mb-3"
                             placeholder="Cantidad"
                             value={amount}
                             onChange={(e) => handleInputAmount(e)}
                         />
 
                     </div>
-                    {errors && (<p className="m-2 -ml-4 text-2xl flex justify-center">{errors}</p>)}
+                    {errors && (<p className="m-2 -ml-4 text-2xm flex justify-center">{errors}</p>)}
                     <div className="flex justify-between items-center w-50 h-10">
                         <a
                         onClick={onClose}
