@@ -8,6 +8,7 @@ import DataTable from "react-data-table-component";
 import DateObject from "react-date-object";
 import UserList from "../users/UserList";
 import AddPoints from "./AddPoints";
+import RemovePoints from "./RemovePoints";
 
 
 
@@ -16,6 +17,7 @@ const WalletOfUser = ({ walletOfUser, user }) => {
     const [points, setPoints] = useState(0);
     const [twins, setTwins] = useState(false)
     const [addPoints, setAddPoints] = useState(false)
+    const [removePoints, setRemovePoints] = useState(false)
 
     const [filterText, setFilterText] = useState('');
     const filteredItems = walletOfUser.filter(item => filterText == '' || filterText.toLowerCase().includes(item.id));
@@ -92,7 +94,8 @@ const WalletOfUser = ({ walletOfUser, user }) => {
         setTwins(!twins)
     }
 
-    const handleOnClose = () => setAddPoints(false)
+    const handleAddPointsOnClose = () => setAddPoints(false)
+    const handleRemovePointsOnClose = () => setRemovePoints(false)
 
 
 
@@ -157,7 +160,7 @@ const WalletOfUser = ({ walletOfUser, user }) => {
                 <div className="leading-relaxed font-primary font-extrabold text-2xl text-center text-palette-primary mt-4 py-2 sm:py-4">Adquisicion de puntos</div>
             <div className="flex justify-between m-auto w-80 h-10">
                 <a
-                    onClick={() => console.log("Restar puntos")}
+                    onClick={() => setRemovePoints(true)}
                     aria-label="back-to-products"
                     className="border border-palette-primary text-palette-primary text-lg font-primary font-semibold pt-2 pb-1 py-2 px-4
                     justify-center items-center md:-mt-2  focus:ring-1 focus:ring-palette-light focus:outline-none w-full hover:bg-palette-lighter rounded-sm cursor-pointer">
@@ -190,7 +193,8 @@ const WalletOfUser = ({ walletOfUser, user }) => {
                     </div>
                 </div>
             </div>
-                <AddPoints onClose={handleOnClose} visible={addPoints}/>
+                <AddPoints onClose={handleAddPointsOnClose} visible={addPoints}/>
+                <RemovePoints onClose={handleRemovePointsOnClose} visible={removePoints}/>
         </div>
 
     );
