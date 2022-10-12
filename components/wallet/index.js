@@ -9,6 +9,8 @@ import DateObject from "react-date-object";
 import UserList from "../users/UserList";
 import AddPoints from "./AddPoints";
 import RemovePoints from "./RemovePoints";
+// import { getSession } from "next-auth/client";
+import { useSession } from "next-auth/client";
 
 
 
@@ -18,6 +20,7 @@ const WalletOfUser = ({ walletOfUser, user }) => {
     const [twins, setTwins] = useState(false)
     const [addPoints, setAddPoints] = useState(false)
     const [removePoints, setRemovePoints] = useState(false)
+    const [session, loading] = useSession();
 
     const [filterText, setFilterText] = useState('');
     const filteredItems = walletOfUser.filter(item => filterText == '' || filterText.toLowerCase().includes(item.id));
@@ -158,6 +161,10 @@ const WalletOfUser = ({ walletOfUser, user }) => {
 
             <div className={""}>
                 <div className="leading-relaxed font-primary font-extrabold text-2xl text-center text-palette-primary mt-4 py-2 sm:py-4">Adquisicion de puntos</div>
+            
+           {
+           session?.user?.role?.includes("ADMIN")
+          ? 
             <div className="flex justify-between m-auto w-80 h-10">
                 <a
                     onClick={() => setRemovePoints(true)}
@@ -174,6 +181,9 @@ const WalletOfUser = ({ walletOfUser, user }) => {
                     Añadir puntos
                 </a>
             </div>
+            : null
+            }
+
                 <div className="flex flex-col">
                     <div className="overflow-x-auto sm:-mx-6 lg:-mx-8">
                         <div className="py-2 inline-block min-w-full sm:px-6 lg:px-8">
@@ -201,6 +211,14 @@ const WalletOfUser = ({ walletOfUser, user }) => {
 }
 export default WalletOfUser;
 
-
+// export async function getServerSideProps(context) {
+//     const session = await getSession(context);
+//     const sessionUser = session.user;
+//     return  {
+//         props: {
+//             sessionUser,
+//         },
+//     }
+// }
 
 
