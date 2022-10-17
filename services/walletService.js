@@ -1,3 +1,5 @@
+import axios from "axios";
+
 export async function getWalletUser(username) {
     const fetchUrl = `${process.env.BACKEND_SERVICE}/user/wallet/${username}`
     const fetchOptions = {
@@ -36,6 +38,17 @@ export async function getPoints(username) {
         return data;
     } catch (error) {
         throw new Error("Could not fetch point of wallets!");
+    }
+}
+
+export async function addPoints(points) {
+    const fetchUrl = `${process.env.NEXT_PUBLIC_BACKEND_SERVICE}/wallet/add`;
+
+    try {
+        let response = await axios.post(fetchUrl, points);
+        return response;
+    } catch (error) {
+        throw new Error("Could not add points !");
     }
 }
 
