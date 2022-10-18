@@ -23,7 +23,7 @@ const WalletOfUser = ({ walletOfUser, user }) => {
     const [session, loading] = useSession();
 
     const [filterText, setFilterText] = useState('');
-    const filteredItems = walletOfUser.filter(item => filterText == '' || filterText.toLowerCase().includes(item.id));
+    const filteredItems = walletOfUser && walletOfUser.filter(item => filterText == '' || filterText.toLowerCase().includes(item.id));
 
 
     useEffect(() => {
@@ -40,7 +40,7 @@ const WalletOfUser = ({ walletOfUser, user }) => {
         },
         {
             name: 'Producto',
-            selector: row => row.product.name,
+            selector: row => row.product === null ? "Puntos" : row.product.name,
             sortable: true
         },
         {
@@ -203,8 +203,8 @@ const WalletOfUser = ({ walletOfUser, user }) => {
                     </div>
                 </div>
             </div>
-                <AddPoints onClose={handleAddPointsOnClose} visible={addPoints}/>
-                <RemovePoints onClose={handleRemovePointsOnClose} visible={removePoints}/>
+                <AddPoints onClose={handleAddPointsOnClose} visible={addPoints} user={user}/>
+                <RemovePoints onClose={handleRemovePointsOnClose} visible={removePoints} user={user}/>
         </div>
 
     );

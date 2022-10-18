@@ -1,15 +1,21 @@
 import React, { useState } from "react";
 import {NotificationContainer, NotificationManager} from 'react-notifications';
-import 'react-notifications/lib/notifications.css'; 
+import 'react-notifications/lib/notifications.css';
+import { addPoints as addPointsQuery} from "services/walletService" ;
 
 
-function addPoints({visible, onClose}){
+function addPoints({visible, onClose, user}){
 
     const handleOnClose = (e) => {
         if(e.target.id === "container") onClose()
     }
 
-    const [amount, setAmount] = useState()
+    const [register, setRegister] = useState({
+        product: null,
+        points: "",
+        user: user,
+        quantity: 1,
+    })
     const [errors, setErrors] = useState("")
 
     function validate(value) {
@@ -18,21 +24,29 @@ function addPoints({visible, onClose}){
         }
     }
 
-    function handleInputAmount(e){
-        setAmount(e.target.value)
+    function handleInputregister(e){
+        setRegister({
+            ...register,
+            [e.target.name] : e.target.value
+        })
     }
 
     function handleCheckErrors(e){
-        e.preventDefault();
         setErrors(validate(e.target.value))
         handleSubmit(e)
     }
 
     async function handleSubmit(e) {
-        if(amount >= 1){
-            NotificationManager.info('Se agregaron ' + amount + ' Puntos al usuario', 'Añadir puntos', 4000,  () => {
-              });
-        setAmount("")
+        if(register.points >= 1){
+            NotificationManager.info('Se agregaron ' + register.points + ' Puntos al usuario', 'Añadir puntos', 4000,  () => {
+            });
+            addPointsQuery(register)
+        setRegister({
+            product: null,
+            points: "",
+            user: user,
+            quantity: 1,
+        })
         setErrors("")
     }
     }
@@ -48,11 +62,12 @@ function addPoints({visible, onClose}){
                     <div className="m-2 text-3xl flex justify-center">Añadir Puntos</div>
                     <div className="flex flex-col">
                         <input 
+                            name="points"
                             type="text"
                             className="border border-gray-700 p-2 rounded mb-3"
                             placeholder="Cantidad"
-                            value={amount}
-                            onChange={(e) => handleInputAmount(e)}
+                            value={register.points}
+                            onChange={(e) => handleInputregister(e)}
                         />
 
                     </div>
