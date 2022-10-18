@@ -1,14 +1,20 @@
 import React, { useState } from "react";
 import {NotificationContainer, NotificationManager} from 'react-notifications';
-import 'react-notifications/lib/notifications.css'; 
+import 'react-notifications/lib/notifications.css';
+import { removePoints as removePointsQuery } from "services/walletService";
 
 
-function removePoints({visible, onClose}){
+function removePoints({visible, onClose, user}){
     const handleOnClose = (e) => {
         if(e.target.id === "container") onClose()
     }
 
-    const [amount, setAmount] = useState("")
+    const [register, setRegister] = useState({
+        product: null,
+        points: "",
+        user: user,
+        quantity: 1,
+    })
     const [errors, setErrors] = useState("")
 
     function validate(value) {
@@ -17,22 +23,36 @@ function removePoints({visible, onClose}){
         }
     }
 
-    function handleInputAmount(e){
-        setAmount(e.target.value)
+    function handleInputregister(e){
+        setRegister({
+            ...register,
+            [e.target.name] : e.target.value
+        })
     }
 
     function handleCheckErrors(e){
-        e.preventDefault()
         setErrors(validate(e.target.value))
         handleSubmit(e)
     }
 
     function handleSubmit(e){
-        if(amount >= 1){
-            NotificationManager.info('Se quitaron ' + amount + ' Puntos del usuario', "Quitar puntos", 4000,  () => {
+        if(register.points >= 1){
+            NotificationManager.info('Se quitaron ' + register.points + ' Puntos del usuario', "Quitar puntos", 4000,  () => {
             });
-        setAmount("")
-        setErrors("")
+            let data = {
+                product: register.product,
+                points: 0 - register.points,
+                user: register.user,
+                quantity: register.quantity,
+            }
+            removePointsQuery(data)
+            setRegister({
+                product: null,
+                points: "",
+                user: user,
+                quantity: 1,
+            })
+            setErrors("")
         }
     }
 
@@ -47,11 +67,12 @@ function removePoints({visible, onClose}){
                     <div className="m-2 text-3xl flex justify-center">Quitar Puntos</div>
                     <div className="flex flex-col">
                         <input 
+                            name="points"
                             type="text"
                             className="border border-gray-700 p-2 rounded mb-3"
                             placeholder="Cantidad"
-                            value={amount}
-                            onChange={(e) => handleInputAmount(e)}
+                            value={register.points}
+                            onChange={(e) => handleInputregister(e)}
                         />
 
                     </div>

@@ -41,11 +41,22 @@ export async function getPoints(username) {
     }
 }
 
-export async function addPoints(points) {
+export async function addPoints(register) {
     const fetchUrl = `${process.env.NEXT_PUBLIC_BACKEND_SERVICE}/wallet/add`;
 
     try {
-        let response = await axios.post(fetchUrl, points);
+        let response = await axios.post(fetchUrl, register);
+        return response;
+    } catch (error) {
+        throw new Error("Could not add points !");
+    }
+}
+
+export async function removePoints(register) {
+    const fetchUrl = `${process.env.NEXT_PUBLIC_BACKEND_SERVICE}/wallet/remove`;
+
+    try {
+        let response = await axios.post(fetchUrl, register);
         return response;
     } catch (error) {
         throw new Error("Could not add points !");
