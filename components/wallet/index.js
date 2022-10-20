@@ -28,7 +28,7 @@ const WalletOfUser = ({ walletOfUser, user }) => {
 
     useEffect(() => {
         walletOfUser.length == 0 ? setIsWallet(false) : setIsWallet(true);
-        let active = walletOfUser.filter(walletOfUser => testDuePoints(walletOfUser.date))
+        let active = walletOfUser.filter(walletOfUser => testDuePoints(walletOfUser.date, {activeFilter : true}))
         setPoints(active.reduce((a, v) => a = a + v.points, 0));
     }, [walletOfUser]);
     const columns = [
@@ -73,24 +73,30 @@ const WalletOfUser = ({ walletOfUser, user }) => {
     }, [filterText]);
 
 
-    const testDuePoints = (date) => {
-
+    const testDuePoints = (date, active) => {
         let today = new Date();
         let buydate = new Date(date);
         let expiredate = new Date(date)
         expiredate.setMonth(buydate.getMonth() + 3);
         expiredate.setDate(1)
+        let time = date.split("T")
+        date = time[0]+time[1]
 
         let result = today > expiredate
+
+        //To filter amount of points
+        if(active && result){
+            return false
+        } else if(active) {
+            return true
+        }
+        // To Columns
         if (result) {
-            return "Vencido: " + new DateObject(date).format('DD/MM/YYYY hh:mm:ss.');
-
-
+            return "Vencido: " + new DateObject(date).format("DD/MM/YYYY hh:mm:ss", ["Date", "Time"]);
         } else {
-            return new DateObject(date).format('DD/MM/YYYY hh:mm:ss.')
+            return new DateObject(date).format("DD/MM/YYYY hh:mm:ss", ["Date", "Time"])
 
         }
-
     }
 
     const handleTwins = (e) => {
