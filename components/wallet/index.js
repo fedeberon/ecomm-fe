@@ -7,6 +7,10 @@ import { paginationComponentOptions } from "../../DataTableUtils";
 import DataTable from "react-data-table-component";
 import DateObject from "react-date-object";
 import UserList from "../users/UserList";
+import AddPoints from "./AddPoints";
+import RemovePoints from "./RemovePoints";
+// import { getSession } from "next-auth/client";
+import { useSession } from "next-auth/client";
 
 
 
@@ -14,14 +18,17 @@ const WalletOfUser = ({ walletOfUser, user }) => {
     const [isWallet, setIsWallet] = useState(false);
     const [points, setPoints] = useState(0);
     const [twins, setTwins] = useState(false)
+    const [addPoints, setAddPoints] = useState(false)
+    const [removePoints, setRemovePoints] = useState(false)
+    const [session, loading] = useSession();
 
     const [filterText, setFilterText] = useState('');
-    const filteredItems = walletOfUser.filter(item => filterText == '' || filterText.toLowerCase().includes(item.id));
+    const filteredItems = walletOfUser && walletOfUser.filter(item => filterText == '' || filterText.toLowerCase().includes(item.id));
 
 
     useEffect(() => {
         walletOfUser.length == 0 ? setIsWallet(false) : setIsWallet(true);
-        let active = walletOfUser.filter(walletOfUser => testDuePoints(walletOfUser.date))
+        let active = walletOfUser.filter(walletOfUser => testDuePoints(walletOfUser.date, {activeFilter : true}))
         setPoints(active.reduce((a, v) => a = a + v.points, 0));
     }, [walletOfUser]);
     const columns = [
@@ -33,7 +40,7 @@ const WalletOfUser = ({ walletOfUser, user }) => {
         },
         {
             name: 'Producto',
-            selector: row => row.product.name,
+            selector: row => row.product === null ? "Puntos" : row.product.name,
             sortable: true
         },
         {
@@ -66,29 +73,38 @@ const WalletOfUser = ({ walletOfUser, user }) => {
     }, [filterText]);
 
 
-    const testDuePoints = (date) => {
-
+    const testDuePoints = (date, active) => {
         let today = new Date();
         let buydate = new Date(date);
         let expiredate = new Date(date)
         expiredate.setMonth(buydate.getMonth() + 3);
         expiredate.setDate(1)
+        let time = date.split("T")
+        date = time[0]+time[1]
 
         let result = today > expiredate
+
+        //To filter amount of points
+        if(active && result){
+            return false
+        } else if(active) {
+            return true
+        }
+        // To Columns
         if (result) {
-            return "Vencido: " + new DateObject(date).format('DD/MM/YYYY hh:mm:ss.');
-
-
+            return "Vencido: " + new DateObject(date).format("DD/MM/YYYY hh:mm:ss", ["Date", "Time"]);
         } else {
-            return new DateObject(date).format('DD/MM/YYYY hh:mm:ss.')
+            return new DateObject(date).format("DD/MM/YYYY hh:mm:ss", ["Date", "Time"])
 
         }
-
     }
 
     const handleTwins = (e) => {
         setTwins(!twins)
     }
+
+    const handleAddPointsOnClose = () => setAddPoints(false)
+    const handleRemovePointsOnClose = () => setRemovePoints(false)
 
 
 
@@ -148,8 +164,32 @@ const WalletOfUser = ({ walletOfUser, user }) => {
             }
 
 
+
             <div className={""}>
                 <div className="leading-relaxed font-primary font-extrabold text-2xl text-center text-palette-primary mt-4 py-2 sm:py-4">Adquisicion de puntos</div>
+            
+           {
+           session?.user?.role?.includes("ADMIN")
+          ? 
+            <div className="flex justify-between m-auto w-80 h-10">
+                <a
+                    onClick={() => setRemovePoints(true)}
+                    aria-label="back-to-products"
+                    className="border border-palette-primary text-palette-primary text-lg font-primary font-semibold pt-2 pb-1 py-2 px-4
+                    justify-center items-center md:-mt-2  focus:ring-1 focus:ring-palette-light focus:outline-none w-full hover:bg-palette-lighter rounded-sm cursor-pointer">
+                    Quitar puntos
+                </a>  
+                <a
+                    onClick={() => setAddPoints(true)}
+                    aria-label="back-to-products"
+                    className="border border-palette-primary text-palette-primary text-lg font-primary font-semibold pt-2 pb-1 py-2 px-4
+                    justify-center items-center md:-mt-2  focus:ring-1 focus:ring-palette-light focus:outline-none w-full hover:bg-palette-lighter rounded-sm cursor-pointer">
+                    Añadir puntos
+                </a>
+            </div>
+            : null
+            }
+
                 <div className="flex flex-col">
                     <div className="overflow-x-auto sm:-mx-6 lg:-mx-8">
                         <div className="py-2 inline-block min-w-full sm:px-6 lg:px-8">
@@ -169,12 +209,22 @@ const WalletOfUser = ({ walletOfUser, user }) => {
                     </div>
                 </div>
             </div>
+                <AddPoints onClose={handleAddPointsOnClose} visible={addPoints} user={user}/>
+                <RemovePoints onClose={handleRemovePointsOnClose} visible={removePoints} user={user}/>
         </div>
 
     );
 }
 export default WalletOfUser;
 
-
+// export async function getServerSideProps(context) {
+//     const session = await getSession(context);
+//     const sessionUser = session.user;
+//     return  {
+//         props: {
+//             sessionUser,
+//         },
+//     }
+// }
 
 
