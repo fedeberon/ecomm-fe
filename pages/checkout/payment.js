@@ -94,12 +94,12 @@ const Payment = ({user, myPoints, users}) => {
             "username": username,
             "checkoutId": checkout.id,
         };
-        buyWithPoints(walletDiscount).then((res) => {
-            setCheckout(res.data);
+        console.log(walletDiscount)
+        buyWithPoints(walletDiscount)
             setLoading(false);
-            router.push(`/users/wallet/${username}`)
+            // setCheckout(res.data);
             cleanCart();
-        });
+            router.push(`/users/wallet/${username}`)
     }
 
     const handleChangeUsers = (e) => {
