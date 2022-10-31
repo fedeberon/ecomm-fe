@@ -11,6 +11,8 @@ import logo from "../../images/Logo Dulce bb.png";
 import {findAll, getByUsername} from "../../services/userService";
 import CartTable from '@/components/cart/CartTable'
 import {getPersonByCUIT}from "../../services/personService.js"
+import {NotificationContainer, NotificationManager} from 'react-notifications';
+import 'react-notifications/lib/notifications.css';
 
 const Payment = ({user, myPoints, users}) => {
     const [checkout, setCheckout] = useState()
@@ -94,12 +96,18 @@ const Payment = ({user, myPoints, users}) => {
             "username": username,
             "checkoutId": checkout.id,
         };
-        console.log(walletDiscount)
-        buyWithPoints(walletDiscount)
-            setLoading(false);
-            // setCheckout(res.data);
-            cleanCart();
-            router.push(`/users/wallet/${username}`)
+        buyWithPoints(walletDiscount).then((res) => {
+            if(res.data === "puntos insuficientes"){
+                NotificationManager.info('El usuario no tiene puntos suficientes', 'Puntos insuficientes', 4000,  () => {
+                });
+                setLoading(false);
+            } else {
+                setLoading(false);
+                cleanCart();
+                router.push(`/users/wallet/${username}`)
+            }
+
+        });
     }
 
     const handleChangeUsers = (e) => {
@@ -129,6 +137,7 @@ const Payment = ({user, myPoints, users}) => {
 
     return(
         <>
+        <NotificationContainer/>
             {
                 checkout
                 ?
