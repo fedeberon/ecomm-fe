@@ -11,6 +11,7 @@ import AddPoints from "./AddPoints";
 import RemovePoints from "./RemovePoints";
 // import { getSession } from "next-auth/client";
 import { useSession } from "next-auth/client";
+import { getPoints } from "services/walletService";
 
 
 
@@ -26,11 +27,11 @@ const WalletOfUser = ({ walletOfUser, user }) => {
     const filteredItems = walletOfUser && walletOfUser.filter(item => filterText == '' || filterText.toLowerCase().includes(item.id));
 
 
-    useEffect(() => {
+    useEffect(async () => {
         walletOfUser.length == 0 ? setIsWallet(false) : setIsWallet(true);
-        let active = walletOfUser.filter(walletOfUser => testDuePoints(walletOfUser.date, {activeFilter : true}))
-        setPoints(active.reduce((a, v) => a = a + v.points, 0));
+        setPoints(await getPoints(user.username))
     }, [walletOfUser]);
+    
     const columns = [
 
         {
@@ -84,12 +85,6 @@ const WalletOfUser = ({ walletOfUser, user }) => {
 
         let result = today > expiredate
 
-        //To filter amount of points
-        if(active && result){
-            return false
-        } else if(active) {
-            return true
-        }
         // To Columns
         if (result) {
             return "Vencido: " + new DateObject(date).format("DD/MM/YYYY hh:mm:ss", ["Date", "Time"]);
