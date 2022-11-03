@@ -25,13 +25,12 @@ const WalletOfUser = ({ walletOfUser, user }) => {
 
     const [filterText, setFilterText] = useState('');
     const filteredItems = walletOfUser && walletOfUser.filter(item => filterText == '' || filterText.toLowerCase().includes(item.id));
-
-
+    
     useEffect(async () => {
         walletOfUser.length == 0 ? setIsWallet(false) : setIsWallet(true);
         setPoints(await getPoints(user.username))
     }, [walletOfUser]);
-    
+  
     const columns = [
 
         {
@@ -46,7 +45,7 @@ const WalletOfUser = ({ walletOfUser, user }) => {
         },
         {
             name: 'Puntos',
-            selector: row => row.isConsumed === false ? row.points : `${row.points} Gastado`,
+            selector: row => row.points,
             sortable: true
         },
         {
@@ -62,6 +61,17 @@ const WalletOfUser = ({ walletOfUser, user }) => {
 
         }
     ]
+
+    const conditionalRowStyles = [
+        {
+            when: row => row.points,
+            style: row => ({
+                textDecoration: row.isConsumed === true ? "line-through" : null,
+                color: row.isConsumed === true ? "red" : null
+            }),
+        }
+    ]
+
     const subHeaderComponentMemo = useMemo(() => {
         const handleClear = () => {
             if (filterText) {
@@ -196,6 +206,7 @@ const WalletOfUser = ({ walletOfUser, user }) => {
                                     pagination
                                     subHeader
                                     subHeaderComponent={subHeaderComponentMemo}
+                                    conditionalRowStyles={conditionalRowStyles}
                                 />
 
 

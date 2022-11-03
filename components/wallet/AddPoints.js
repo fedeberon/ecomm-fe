@@ -48,6 +48,7 @@ function addPoints({visible, onClose, user}){
             quantity: 1,
         })
         setErrors("")
+        window.location.reload(false);
     }
     }
 
