@@ -78,7 +78,6 @@ const Payment = ({user, myPoints, users}) => {
         }
         if(response.status === 500 || response.status === 400){
             setError(response.data)
-            console.log(response.data)
             setLoading(false)
         }
     }
@@ -103,8 +102,8 @@ const Payment = ({user, myPoints, users}) => {
                 setLoading(false);
             } else {
                 setLoading(false);
-                cleanCart();
                 router.push(`/users/wallet/${username}`)
+                cleanCart();
             }
 
         });

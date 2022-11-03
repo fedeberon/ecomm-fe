@@ -41,7 +41,7 @@ function removePoints({visible, onClose, user}){
             });
             let data = {
                 product: register.product,
-                points: 0 - register.points,
+                points: register.points,
                 user: register.user,
                 quantity: register.quantity,
             }

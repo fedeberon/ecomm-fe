@@ -46,7 +46,7 @@ const WalletOfUser = ({ walletOfUser, user }) => {
         },
         {
             name: 'Puntos',
-            selector: row => row.points,
+            selector: row => row.isConsumed === false ? row.points : `${row.points} Gastado`,
             sortable: true
         },
         {
