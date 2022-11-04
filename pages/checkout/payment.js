@@ -13,6 +13,8 @@ import CartTable from "@/components/cart/CartTable";
 import { getPersonByCUIT } from "../../services/personService.js";
 import UserList from "/components/users/UserList";
 import logo2 from "/images/logo3buhos.png";
+import {NotificationContainer, NotificationManager} from 'react-notifications';
+import 'react-notifications/lib/notifications.css';
 
 const Payment = ({ user, myPoints, users }) => {
   const [checkout, setCheckout] = useState();
@@ -85,7 +87,6 @@ const Payment = ({ user, myPoints, users }) => {
     }
     if (response.status === 500 || response.status === 400) {
       setError(response.data);
-      console.log(response.data);
       setLoading(false);
     }
   };
@@ -97,19 +98,25 @@ const Payment = ({ user, myPoints, users }) => {
     });
   };
 
-  const handleCreditPoints = (username) => {
-    setLoading(true);
-    let walletDiscount = {
-      username: username,
-      checkoutId: checkout.id,
-    };
-    buyWithPoints(walletDiscount).then((res) => {
-      setCheckout(res.data);
-      setLoading(false);
-      router.push(`/users/wallet/${username}`);
-      cleanCart();
-    });
-  };
+    const handleCreditPoints = (username) => {
+        setLoading(true);
+        let walletDiscount = {
+            "username": username,
+            "checkoutId": checkout.id,
+        };
+        buyWithPoints(walletDiscount).then((res) => {
+            if(res.data === "puntos insuficientes"){
+                NotificationManager.info('El usuario no tiene puntos suficientes', 'Puntos insuficientes', 4000,  () => {
+                });
+                setLoading(false);
+            } else {
+                setLoading(false);
+                router.push(`/users/wallet/${username}`)
+                cleanCart();
+            }
+
+        });
+    }
 
   const handleChangeUsers = (e) => {
     const { value } = e.target;
@@ -149,6 +156,7 @@ const Payment = ({ user, myPoints, users }) => {
 
   return (
     <>
+        <NotificationContainer/>
       {checkout ? (
         <div className="bg-blue-100 lg:px-3">
           <div className="lg:mx-6 bg-white  min-h-screen">
@@ -156,8 +164,8 @@ const Payment = ({ user, myPoints, users }) => {
               <li
                 className={`px-4 py-2 font-semibold text-gray-800 rounded-t opacity-50 border-b-2 ${tabs.factura ? `border-blue-400` : ``
                   }`}
-              >
-                <a name={`factura`} href="#" onClick={handleClick}>
+            >
+                  <a name={`factura`} href="#" onClick={handleClick}>
                   Detalle
                 </a>
               </li>

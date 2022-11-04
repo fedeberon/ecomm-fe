@@ -11,6 +11,7 @@ import AddPoints from "./AddPoints";
 import RemovePoints from "./RemovePoints";
 // import { getSession } from "next-auth/client";
 import { useSession } from "next-auth/client";
+import { getPoints } from "services/walletService";
 
 
 
@@ -24,13 +25,12 @@ const WalletOfUser = ({ walletOfUser, user }) => {
 
     const [filterText, setFilterText] = useState('');
     const filteredItems = walletOfUser && walletOfUser.filter(item => filterText == '' || filterText.toLowerCase().includes(item.id));
-
-
-    useEffect(() => {
+    
+    useEffect(async () => {
         walletOfUser.length == 0 ? setIsWallet(false) : setIsWallet(true);
-        let active = walletOfUser.filter(walletOfUser => testDuePoints(walletOfUser.date))
-        setPoints(active.reduce((a, v) => a = a + v.points, 0));
+        setPoints(await getPoints(user.username))
     }, [walletOfUser]);
+  
     const columns = [
 
         {
@@ -61,6 +61,17 @@ const WalletOfUser = ({ walletOfUser, user }) => {
 
         }
     ]
+
+    const conditionalRowStyles = [
+        {
+            when: row => row.points,
+            style: row => ({
+                textDecoration: row.isConsumed === true ? "line-through" : null,
+                color: row.isConsumed === true ? "red" : null
+            }),
+        }
+    ]
+
     const subHeaderComponentMemo = useMemo(() => {
         const handleClear = () => {
             if (filterText) {
@@ -73,24 +84,24 @@ const WalletOfUser = ({ walletOfUser, user }) => {
     }, [filterText]);
 
 
-    const testDuePoints = (date) => {
-
+    const testDuePoints = (date, active) => {
         let today = new Date();
         let buydate = new Date(date);
         let expiredate = new Date(date)
         expiredate.setMonth(buydate.getMonth() + 3);
         expiredate.setDate(1)
+        let time = date.split("T")
+        date = time[0]+time[1]
 
         let result = today > expiredate
+
+        // To Columns
         if (result) {
-            return "Vencido: " + new DateObject(date).format('DD/MM/YYYY hh:mm:ss.');
-
-
+            return "Vencido: " + new DateObject(date).format("DD/MM/YYYY hh:mm:ss", ["Date", "Time"]);
         } else {
-            return new DateObject(date).format('DD/MM/YYYY hh:mm:ss.')
+            return new DateObject(date).format("DD/MM/YYYY hh:mm:ss", ["Date", "Time"])
 
         }
-
     }
 
     const handleTwins = (e) => {
@@ -195,6 +206,7 @@ const WalletOfUser = ({ walletOfUser, user }) => {
                                     pagination
                                     subHeader
                                     subHeaderComponent={subHeaderComponentMemo}
+                                    conditionalRowStyles={conditionalRowStyles}
                                 />
 
 
