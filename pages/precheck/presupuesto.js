@@ -6,6 +6,8 @@ import {getPoints} from "../../services/walletService";
 import {findAll, getByUsername} from "../../services/userService";
 import PreTable from "@/components/cart/Pretable";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {NotificationContainer, NotificationManager} from 'react-notifications';
+import 'react-notifications/lib/notifications.css';
 import { faPrint , faWallet, faTrash, faCheck } from '@fortawesome/free-solid-svg-icons'
 import PageTitle from '@/components/PageTitle'
 import Link from "next/link";
@@ -50,6 +52,21 @@ const Presupuesto = ({userSession, myPoints, users}) => {
         })
     }
 
+    async function deleteCart () {
+        NotificationManager.info('Carrito vaciado', () => {
+            router.push('/')
+          });
+          cleanCart();
+    }
+
+    async function checkSubmit () {
+        NotificationManager.info('Compra realizada con exito', () => {
+            router.push('/')
+          });
+          window.location.href = "/"
+          cleanCart();
+    }
+
 
     const print = () => {
         let mywindow = window.open('', 'PRINT', 'height=400,width=600');
@@ -68,7 +85,9 @@ const Presupuesto = ({userSession, myPoints, users}) => {
         return true
     }
     return(
-        <div>
+        <>
+        <NotificationContainer/>
+        <div> 
             <div id="presupuesto">
                 <div><PageTitle text="Presupuesto" /></div>
                 {
@@ -97,12 +116,12 @@ const Presupuesto = ({userSession, myPoints, users}) => {
             </div>
             <div className="flex w-full justify-center">
                 <button onClick={print} className="w-20 h-20 bg-indigo-500 m-10 rounded-full hover:bg-indigo-700"><FontAwesomeIcon icon={faPrint} className="m-auto w-10 h-10 text-white"/></button>
-                <button className="w-20 h-20 bg-red-500 m-10 rounded-full hover:bg-red-700"><FontAwesomeIcon icon={faTrash} className="m-auto w-10 h-10 text-white"/></button>
+                <button onClick={deleteCart} className="w-20 h-20 bg-red-500 m-10 rounded-full hover:bg-red-700"><FontAwesomeIcon icon={faTrash} className="m-auto w-10 h-10 text-white"/></button>
                 {
                     userSession?.role?.includes("ADMIN") 
                     ?
                         <div>
-                            <button className="w-20 h-20 bg-green-500 m-10 rounded-full hover:bg-green-700"><FontAwesomeIcon icon={faCheck} className="m-auto w-10 h-10 text-white" />
+                            <button onClick={checkSubmit} className="w-20 h-20 bg-green-500 m-10 rounded-full hover:bg-green-700"><FontAwesomeIcon icon={faCheck} className="m-auto w-10 h-10 text-white" />
                             </button><Link href={"/checkout/payment"} passHref><button className="w-20 h-20 bg-yellow-500 m-10 rounded-full hover:bg-yellow-700"><FontAwesomeIcon icon={faWallet} className="m-auto w-10 h-10 text-white" /></button></Link>
                         </div>
         
@@ -113,6 +132,7 @@ const Presupuesto = ({userSession, myPoints, users}) => {
                 
             </div>
         </div>
+        </>
     )
 }
  

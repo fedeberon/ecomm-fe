@@ -95,7 +95,17 @@ export async function update(product) {
         let response = await axios.put(fetchUrl, product);
         return response;
     } catch (error) {
-        throw new Error("Could not create product!");
+        throw new Error("Could not update product!");
+    }
+}
+
+export async function deleteProduct(product) {
+    const fetchUrl = `${process.env.NEXT_PUBLIC_BACKEND_SERVICE}/product/${product}`;
+    try {
+        let response = await axios.delete(fetchUrl, product);
+        return response;
+    } catch (error) {
+        throw new Error("Could not delete product!");
     }
 }
 

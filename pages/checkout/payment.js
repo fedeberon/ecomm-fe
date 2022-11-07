@@ -87,8 +87,8 @@ const Payment = ({ user, myPoints, users }) => {
     }
     if (response.status === 500 || response.status === 400) {
       setError(response.data);
-      setLoading(false);
-    }
+      }
+    setLoading(false);
   };
 
   const handleChange = (e) => {
