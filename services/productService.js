@@ -180,7 +180,7 @@ export async function createCheckout(cart){
 
 
 export async function buyWithPoints(walletDiscount){
-    const fetchUrl = `${process.env.NEXT_PUBLIC_BACKEND_SERVICE}/wallet`;
+    const fetchUrl = `${process.env.NEXT_PUBLIC_BACKEND_SERVICE}/wallet/buyWithPoints`;
     try {
         let response = await axios.post(fetchUrl, walletDiscount);
         return response;
