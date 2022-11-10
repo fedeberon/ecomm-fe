@@ -89,11 +89,11 @@ export async function save(product) {
 }
 
 
-export async function update(product) {
-    const fetchUrl = `${process.env.NEXT_PUBLIC_BACKEND_SERVICE}/product`;
+export async function update(id, product) {
+    const fetchUrl = `${process.env.NEXT_PUBLIC_BACKEND_SERVICE}/product/${id}`;
     try {
         let response = await axios.put(fetchUrl, product);
-        return response;
+        return response.data;
     } catch (error) {
         throw new Error("Could not update product!");
     }

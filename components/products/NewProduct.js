@@ -26,28 +26,9 @@ const NewProduct = ({ categories, brands, sizes }) => {
     })
 );
 
-    // const initialForm = {
-    //     name: "",
-    //     price: "",
-    //     description: "",
-    //     category: {
-    //         id: ""
-    //     },
-    //     brand: {
-    //         id: ""
-    //     },
-    //     sizes: [{
-    //         id: ""
-    //     }],
-    //     code: "",
-    //     stock: "",
-    //     points: "",
-    //     promo: false,
-    // }
-
     const validationsForm = (form) => {
         let errors = {};
-        let regexName = /^[A-Za-z]+$/;
+        // let regexName = /^[A-Za-z]+$/;
 
         if (!form.name.trim()) {
             errors.name = "El campo 'Nombre' es requerido";
@@ -66,6 +47,10 @@ const NewProduct = ({ categories, brands, sizes }) => {
 
         if (form.brand.id == " ") {
             errors.brand = "El campo 'Marcas' es requerido";
+        }
+
+        if (!form.sizes[0] || form.sizes[0].id === ""){
+            errors.sizes = "El campo 'Sizes' es requerido";
         }
 
         if (!form.code.trim()) {
@@ -208,11 +193,12 @@ const NewProduct = ({ categories, brands, sizes }) => {
                                 {
                                     sizes.map( size  => (
                                         <div className="flex">
-                                            <input type={"checkbox"} onClick={handleChangeSize}  className="form-checkbox rounded text-red-500" value={size.id}></input>
+                                            <input type={"checkbox"} onClick={handleChangeSize} onBlur={handleBlur} className="form-checkbox rounded text-red-500" value={size.id}></input>
                                             <div className="mx-4">{size.name}</div>
                                         </div>
                                     ))
                                 }
+                                {errors.sizes &&  <p className={`text-red-500 text-xs italic`}>{errors.sizes}</p>} 
                             </div>
                         </div>   
 

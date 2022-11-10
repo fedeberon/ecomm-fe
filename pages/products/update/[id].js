@@ -1,14 +1,32 @@
 import {getProduct} from "../../../services/productService";
-import useForm from "../../../hooks/useForm";
+import { update } from "../../../services/productService";
 import {NotificationContainer} from 'react-notifications';
+import {NotificationManager} from 'react-notifications';
 import 'react-notifications/lib/notifications.css';
 import * as brandsService from 'services/brandService';
 import * as categoriesService from 'services/categoriesService'
-import {  useState } from "react"; 
+import * as sizesService from 'services/sizeService'
+import { useState } from "react"; 
 
 
-const Update = ({product, brands, categories}) => {
-    
+const Update = ({product, brands, categories, sizes}) => {
+    const [data, setData] = useState({
+        name: product.name,
+        price: product.price,
+        description: product.description,
+        category: {
+            id: product.category.id
+        },
+        brand: product.brand.id
+        ,
+        sizes: product.sizes,
+        code: product.code,
+        stock: product.stock,
+        points: product.points,
+        promo: false,
+    })
+    const [errors, setErrors] = useState({});
+
     const validationsForm = (form) =>{
         let errors ={};
 
@@ -28,6 +46,10 @@ const Update = ({product, brands, categories}) => {
             errors.category = "El campo 'Categoria' es requerido";
         }
 
+        if (form.sizes.length == 0){
+            errors.sizes = "El campo 'Sizes' es requerido";
+        }
+
         if (!form.code.trim()){
             errors.code = "El campo 'Codigo' es requerido";
         }
@@ -44,15 +66,58 @@ const Update = ({product, brands, categories}) => {
         return errors
     };
     
-    const { 
-        form,
-        errors,
-        loading,
-        response,
-        handleChange,
-        handleChangeBrand,
-        handleBlur,
-        handleSubmit,} = useForm(product, validationsForm);
+
+    const handleChange = (e) => {
+        const {name, value} = e.target
+
+        setData({
+            ...data,
+            [name]:value
+        })
+    }
+
+    const handleChangeSize = (e) => {
+        const {value} = e.target
+        value = Number(value)
+        if(value !== null && e.target.value !== 'Seleccionar' && !(data.sizes.map(size => size.id)).includes(value)){
+            setData({
+                ...data,
+                sizes: [...data.sizes, {id: value, name: sizes.find(size => size.id == value).name }]
+            })
+            setErrors(validationsForm(data))
+        }
+        setErrors(validationsForm(data))
+    }
+
+    const deleteSize = (e) => {
+        const {value} = e.target
+        value = Number(value)
+        setData({
+            ...data,
+            sizes: data.sizes.filter(size => size.id !== value)
+        })
+        setErrors(validationsForm(data))
+
+    }
+
+    const handleBlur = (e) => {
+        handleChange(e);
+        setErrors(validationsForm(data));
+    }
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        setErrors(validationsForm(data));
+        if(errors.name || errors.code || errors.categories || errors.brand || errors.price ||errors.stock ||errors.points ||errors.sizes || data.sizes.length == 0){
+            NotificationManager.info('No fue posible actualizar el articulo: ' +'\"'+ product.name +'\"', 'Administracion de productos' , 2000)    
+        } else {
+            update(product.id, data).then((result) => {
+                      NotificationManager.info('El articulo: ' +'\"'+ data.name +'\"'+ "se actualizo correctamente", 'Administracion de productos' , 2000);
+                })    
+        }
+
+    }
+
         
         const goToProductList = () => {
             window.location.href = '/products'
@@ -67,7 +132,7 @@ const Update = ({product, brands, categories}) => {
         <>
             <NotificationContainer/>
             <div className="flex justify-center">
-                <form className="w-full max-w-lg" onSubmit={handleSubmit}>
+                <form className="w-full max-w-lg" onSubmit={e => handleSubmit(e)}>
                     <div className="flex flex-wrap -mx-3 mb-6">
                         <div className="w-full">
                             <label className="block uppercase tracking-wide text-palette-dark text-xs font-bold mb-2 mt-2 text-3xl" htmlFor="grid-first-name">
@@ -83,7 +148,7 @@ const Update = ({product, brands, categories}) => {
                                 id="name" type="text"
                                 placeholder="Nombre del Producto"
                                 name="name"
-                                value={form.name}
+                                value={data.name}
                                 onChange={handleChange}
                                 onBlur={handleBlur}
                                 required
@@ -96,7 +161,7 @@ const Update = ({product, brands, categories}) => {
                                 Descripci&Oacute;n
                             </label>
                             <textarea
-                                autoComplete="off" value={form.description}
+                                autoComplete="off" value={data.description}
                                 className="resize-none appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                                 id="grid-last-name" placeholder="Descripci&oacute;n del producto" name="description" rows="3"
                                 onChange={handleChange}
@@ -113,7 +178,7 @@ const Update = ({product, brands, categories}) => {
                             </label>
                             <input
                                 autoComplete="off"
-                                value={form.code}
+                                value={data.code}
                                 className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3  px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                                 id="codigo" type="text" placeholder="C&oacute;dido del producto"
                                 name="code"
@@ -129,7 +194,7 @@ const Update = ({product, brands, categories}) => {
                                    htmlFor="category">
                                 CATEGORIA
                             </label>
-                            <select onChange={handleChange} onBlur={handleChange} name="category" value={form.category.id} className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3    px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="category">
+                            <select onChange={handleChange} onBlur={handleChange} name="category" value={data.category.id} className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3    px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="category">
                                {
                                 categories.map(categories => (
                                     <option value={categories.id}>{categories.name}</option>
@@ -144,7 +209,7 @@ const Update = ({product, brands, categories}) => {
                                 htmlFor="brand">
                             Marcas
                         </label>
-                        <select onChange={handleChange} name="brand" onBlur={handleBlur} value={form.brand.id}  className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="brand">
+                        <select onChange={handleChange} name="brand" onBlur={handleBlur} value={data.brand.id}  className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="brand">
                         {
                             brands.map(brand => (
                                 <option value={brand.id}>{brand.name}</option>
@@ -153,6 +218,34 @@ const Update = ({product, brands, categories}) => {
                         </select>
                         {errors.brand &&  <p className={`text-red-500 text-xs italic`}>{errors.brand}</p>}
                     </div> 
+
+                    <div className="w-full">
+                            <label className="block uppercase block tracking-wide text-palette-primary text-xs font-bold mb-3"
+                                htmlFor="size">
+                                Talles
+                            </label>
+                            <select onChange={handleChangeSize} name={sizes.name} onBlur={handleBlur} value={sizes.id}  className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="size">
+                                <option value={null}>Seleccionar</option>
+                                {
+                                    sizes.map(size => (
+                                        <option value={size.id}>{size.name}</option>
+                                    ))
+                                }
+                            </select>
+                            <div className="flex grid grid-cols-4 appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight">
+                                {
+                                    data.sizes?.map( (size)  => {
+                                        return(
+                                        <div className="flex mx-1 rounded  bg-red-200" key={size.id} onBlur={handleBlur}>
+                                            <div className="mx-auto bg-red-200">Talle: {size.name}</div>
+                                            <button className="ml-auto h-auto w-4 bg-red-400" onClick={e => {deleteSize(e)}} value={size.id}>X</button>
+                                        </div>
+                                        )
+                                    })
+                                }
+                                {errors.sizes &&  <p className={`text-red-500 text-xs italic`}>{errors.sizes}</p>}
+                            </div>
+                        </div>   
 
                     <div className="flex flex-wrap -mx-3 mb-2">
                         <div className="w-full md:w-64 px-3 mb-6 md:mb-0">
@@ -177,7 +270,7 @@ const Update = ({product, brands, categories}) => {
                                         onBlur={handleBlur}
                                         maxLength = "7"
                                         required
-                                        value={form.price}
+                                        value={data.price}
                                         onKeyPress={(event) => {
                                             if (!/[0-9]?[0-9]?(\.[0-9][0-9]?)?/.test(event.key)) {
                                                 event.preventDefault();
@@ -201,7 +294,7 @@ const Update = ({product, brands, categories}) => {
                                 placeholder="Stock"
                                 name="stock"
                                 autoComplete="off"
-                                value={form.stock}
+                                value={data.stock}
                                 className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                                 onChange={handleChange}
                                 onBlur={handleBlur}
@@ -227,7 +320,7 @@ const Update = ({product, brands, categories}) => {
                                 id="puntos" type="number"
                                 placeholder="Puntos del producto"
                                 name="points"
-                                value={form.points}
+                                value={data.points}
                                 onChange={handleChange}
                                 onBlur={handleBlur}
                                 required
@@ -244,11 +337,26 @@ const Update = ({product, brands, categories}) => {
                         <a onClick={showOnShop} className={`hover:bg-gray-400 hover:text-white  text-black py-2 px-4 mr-2 m-autorounded cursor-pointer`}>
                             Ver en el Shop
                         </a>
-
-                        <button type="submit" onClick={handleSubmit}
+                        {
+                            errors.name ||
+                            errors.code ||
+                            errors.categories ||
+                            errors.brand ||
+                            errors.price ||
+                            errors.stock ||
+                            errors.points ||
+                            errors.sizes
+                            ? 
+                            <button type="submit"
+                                className={`bg-palette-lighter text-white font-bold py-2 px-4 m-auto rounded`} disabled>
+                                Guardar
+                            </button> 
+                            :
+                            <button type="submit" onClick={handleSubmit}
                                 className={`bg-palette-primary hover:bg-palette-dark text-white font-bold py-2 px-4 m-auto rounded`}>
-                            Guardar
-                        </button>
+                                Guardar
+                            </button>
+                        }
                         <p className={`text-red-500 text-xs italic ${Object.keys(errors).length === 0 ? "invisible": "" } `}>Complete los campos.</p>
                     </div>
                 </form>
@@ -264,12 +372,14 @@ export async function getServerSideProps({ params }) {
     const product = await getProduct(params.id)
     const brands = await brandsService.findAll();
     const categories = await categoriesService.findAll();
+    const sizes = await sizesService.findAll();
 
     return {
         props: {
             product,
             brands,
-            categories
+            categories,
+            sizes
         },
     }
 }
