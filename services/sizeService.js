@@ -20,3 +20,15 @@ export async function findAll() {
         throw new Error("Could not fetch sizes!");
     }
 }
+
+export async function save(size) {
+    const fetchUrl = `${process.env.NEXT_PUBLIC_BACKEND_SERVICE}/size`;
+    try {
+        let response = await axios.post(fetchUrl, size);
+        console.log(response)
+        return response;
+    } catch (error) {
+        console.log(error);
+        throw new Error("Could not create size!");
+    }
+}
