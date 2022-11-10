@@ -62,22 +62,19 @@ import 'react-notifications/lib/notifications.css';
     let tal = validateForm(form);
 
 
-    if (Object.keys(tal).length === 0) {
+    if (Object.keys(tal).length === 0 && form.sizes[0].id !== "") {
       save(form).then((result) => {
         if (result.data.hasOwnProperty("name")) {
-          NotificationManager.info('El articulo: ' +'\"'+ form.name +'\"'+ "se cargo correctamente", 'Administracion de productos' , 1000);
+          NotificationManager.info('El articulo: ' +'\"'+ form.name +'\"'+ "se cargo correctamente", 'Administracion de productos' , 2000);
         }else{
-          NotificationManager.info(result.status +'No fue posible cargar el articulo: ' +'\"'+ form.name +'\"', 'Administracion de productos' , 1000)
+          NotificationManager.info(result.status +'No fue posible cargar el articulo: ' +'\"'+ form.name +'\"', 'Administracion de productos' , 2000)
         }
 
       });   
 
     } 
-
     else {
-
-      return;
-
+      NotificationManager.info('No fue posible cargar el articulo: ' +'\"'+ form.name +'\"', 'Administracion de productos' , 2000)
     }
   };
 
