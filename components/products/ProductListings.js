@@ -1,6 +1,6 @@
 import ProductCard from '@/components/products/ProductCard'
 import {useEffect, useState} from "react";
-import {filterProductsByBrands, filterProductsByCategories, getProducts, getProductsByType, search} from "../../services/productService"
+import {getAllProductsBySales, filterProductsByBrands, filterProductsByCategories, getProducts, getProductsByType, search} from "../../services/productService"
 import BrandSearch from '../brands/BrandSearch';
 import CategorySearch from '../filter/CategorySearch';
 import Loading from "@/components/utils/Loading";
@@ -14,41 +14,25 @@ function ProductListings({ products, brands, categories}) {
     const [productsToShow, setProductsToShow] = useState(products)
     const [page, setPage] = useState(0);
 
+    useEffect( async()  => {
+        if (!productsToShow) {
+            let product = await getAllProductsBySales("Desc");
+            setProductsToShow(product);
+            return;
+        }
+        if (brandsToSearch.length > 0 ) {
+            let product = await filterProductsByBrands(brandsToSearch) 
+            setProductsToShow(product);
+        } else if (categoriesToSearch.length > 0){
+            let product = await filterProductsByCategories(categoriesToSearch)
+            setProductsToShow(product)
 
-    let handleScroll = async (e) => {
-        if(window.innerHeight + e.target.documentElement.scrollTop + 1  > e.target.documentElement.scrollHeight && !isLoading) {
-          if(products.last===true){
-              return;
-          }
-          if (!products) {
-              let product = await getProducts(page)
-              setProductsToShow(product.content);
-              return;
-          }
-          if (brandsToSearch.length > 0 ) {
-              let product = await filterProductsByBrands(brandsToSearch) 
-              setProductsToShow(product);
-          } else if (categoriesToSearch.length > 0){
-              let product = await filterProductsByCategories(categoriesToSearch)
-              setProductsToShow(product)
-
-          } else {
-              setIsLoading(true)
-              let product = await getProducts(page + 1);
-              setPage(page + 1);
-              setProductsToShow(productsToShow => [
-                  ...productsToShow.concat (product.content)
-              ]);
-          }
-          setIsLoading(false)
-      }
-    }
-
-    useEffect( ()  => {
-        window.addEventListener('scroll', handleScroll);
-
-        return(() => { window.removeEventListener('scroll', handleScroll) });
-    }, [products, handleScroll])
+        } 
+        else {
+            setProductsToShow(products);
+        }
+    
+    }, [productsToShow])
 
   const close = () => {
     isShowFilter(false)
@@ -97,11 +81,10 @@ function ProductListings({ products, brands, categories}) {
 }
 
 const searchCategories = async () => {
-  const products =  await filterProductsByCategories(categoriesToSearch)
+  const products = await filterProductsByCategories(categoriesToSearch)
   setProductsToShow(products)
   close();
 }
-
   const searchValue = async (e) => {
     if(e.target.value.trim() === '') {
       return;
