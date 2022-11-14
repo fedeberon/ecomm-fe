@@ -74,7 +74,18 @@ export async function all() {
         let response = await axios.get(fetchUrl);
         return response.data;
     } catch (error) {
-        throw new Error("Could not get all users !");
+        throw new Error("Could not get all products !");
+    }
+}
+
+export async function getAllProductsBySales(order) {
+    const fetchUrl = `${process.env.BACKEND_SERVICE}/product/sales/${order}`;
+
+    try {
+        let response = await axios.get(fetchUrl);
+        return response.data;
+    } catch (error) {
+        throw new Error("Could not get all products in order of sales!");
     }
 }
 
