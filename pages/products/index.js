@@ -1,5 +1,5 @@
 import Products from "@/components/products/Products";
-import {getProducts} from "../../services/productService";
+import {all, getProducts} from "../../services/productService";
 import Link from "next/link";
 import PageTitle from "@/components/PageTitle";
 import {updateAsAPromotion} from "../../services/productService"
@@ -25,10 +25,10 @@ const ProductsManager = ({products}) => {
 
 
 export async function getServerSideProps() {
-    const products = await getProducts(1)
+    const products = await all()
     return {
         props: {
-            products: products.content,
+            products: products,
         },
     }
 }

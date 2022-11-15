@@ -9,12 +9,12 @@ import axios from "axios";
 
 const Products = ({products}) => {
     
-    const [data, setData] = useState([]);
-	const [loading, setLoading] = useState(false);
-	const [totalRows, setTotalRows] = useState(0);
+    // const [data, setData] = useState();
+	// const [loading, setLoading] = useState(false);
+	// const [totalRows, setTotalRows] = useState(0);
+    // const [resetPaginationToggle, setResetPaginationToggle] = useState(false);
     const [filterText, setFilterText]= useState ('')
-    const [resetPaginationToggle, setResetPaginationToggle] = useState(false);
-    const filteredItems =data.filter(item=> filterText.toLowerCase() == '' || filterText.includes(item.id));
+    const filteredItems =products.filter(item=> filterText.toLowerCase() == '' || filterText.includes(item.id));
     
     const columns = [
             
@@ -55,34 +55,34 @@ const Products = ({products}) => {
         },
     ]
 
-    const fetchProducts = async page => {
-		setLoading(true);
+    // const fetchProducts = async page => {
+	// 	setLoading(true);
 
-        const response = await axios.get (`${process.env.NEXT_PUBLIC_BACKEND_SERVICE}/product?page=${page}&size=10`);
-        setData(response.data.content);
-		setTotalRows(response.data.totalElements);
-		setLoading(false);
-	};
+    //     const response = await axios.get (`${process.env.NEXT_PUBLIC_BACKEND_SERVICE}/product?page=${page}&size=10&sortBy=sales`);
+    //     setData(response.data.content);
+	// 	// setTotalRows(response.data.totalElements);
+	// 	setLoading(false);
+	// };
     
-    const handlePageChange = page => {
-		fetchProducts(page);
-	};
+    // const handlePageChange = page => {
+	// 	fetchProducts(page);
+	// };
 
-	useEffect(() => {
-		fetchProducts(1); 
-	}, []);
+	// useEffect(() => {
+	// 	fetchProducts(0); 
+	// }, []);
 
     const subHeaderComponentMemo = useMemo(() => {
         const handleClear = () => {
             if (filterText) {
-                setResetPaginationToggle(!resetPaginationToggle);
+                // setResetPaginationToggle(!resetPaginationToggle);
                 setFilterText('');
             }
         };
         return (
             <FilterComponent onFilter={e => setFilterText(e.target.value)} onClear={handleClear} filterText={filterText}/>
         );
-    }, [filterText, resetPaginationToggle]);
+    }, [filterText]);
 
  
     return (
@@ -92,16 +92,16 @@ const Products = ({products}) => {
                 <DataTable
                     columns={columns}
                     data={filteredItems} 
-                    progressPending= {loading}
-                    paginationServer
-                    paginationTotalRows={totalRows}
-                    onChangePage={handlePageChange}
+                    // progressPending= {loading}
+                    // paginationServer
+                    // paginationTotalRows={totalRows}
+                    // onChangePage={handlePageChange}
                     pagination
-                    paginationResetDefaultPage={resetPaginationToggle}
+                    // paginationResetDefaultPage={resetPaginationToggle}
                     subHeader
                     subHeaderComponent={subHeaderComponentMemo}
-                    persistTableHead
-                    paginationComponentOptions={paginationComponentOptions}
+                    // persistTableHead
+                    // paginationComponentOptions={paginationComponentOptions}
                     />
             </div>
         </div>
