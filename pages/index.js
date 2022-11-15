@@ -1,5 +1,5 @@
 import ProductListings from '@/components/products/ProductListings'
-import {getProducts, getAllProductsBySales} from "../services/productService";
+import {getProducts} from "../services/productService";
 import Carrusel from "@/components/Carrusel";
 import * as brandsService from 'services/brandService';
 import * as categoriesService from 'services/categoriesService'
@@ -27,13 +27,13 @@ function IndexPage({products, brands, categories}) {
 }
 
 export async function getServerSideProps() {
-  const products = await getAllProductsBySales("Desc");
+  const products = await getProducts(0);
   const brands = await brandsService.findAll();
   const categories = await categoriesService.findAll();
 
   return {
     props: {
-      products: products,
+      products: products.content,
       brands, 
       categories,
     },
