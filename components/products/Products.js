@@ -25,32 +25,32 @@ const Products = ({products}) => {
         },
         {
             name: 'Nombre',
-            selector: row => row.name,
+            selector: row => row.name ? row.name : "Producto",
             sortable: true
         },
         {
             name:'Categoria',
-            selector: row => row.category.name,
+            selector: row => row.category ? row.category.name : "Categoria",
             sortable: true
         },
         {
             name:'Codigo',
-            selector: row => row.code,
+            selector: row => row.code ? row.code : "Codigo",
             sortable: true
         },
         {
             name: 'Precio',
-            selector: row =>row.price,
+            selector: row =>row.price ? row.price : "Precio",
             sortable: true   
         },
         {
             name: 'Stock',
-            selector:row=>row.stock,
+            selector:row=>row.stock ? row.stock : "Stock",
             sortable: true
         },
         {
             name: 'Puntos',
-            selector:row=>row.points,
+            selector:row=>row.points ? row.points : "Puntos",
             sortable: true
         },
     ]

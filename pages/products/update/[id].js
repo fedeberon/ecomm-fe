@@ -11,18 +11,18 @@ import { useState } from "react";
 
 const Update = ({product, brands, categories, sizes}) => {
     const [data, setData] = useState({
-        name: product.name,
-        price: product.price,
-        description: product.description,
+        name: product.name ? product.name : "Producto",
+        price: product.price ? product.price : 0,
+        description: product.description ? product.description : "Descripcion",
         category: {
-            id: product.category.id
+            id: product.category ? product.category.id : 0
         },
-        brand: product.brand.id
+        brand: product.brand ? product.brand.id : 0
         ,
-        sizes: product.sizes,
-        code: product.code,
-        stock: product.stock,
-        points: product.points,
+        sizes: product.sizes ? product.sizes : [],
+        code: product.code ? product.code : "0",
+        stock: product.stock ? product.stock : 0,
+        points: product.points ? product.points : 0,
         promo: false,
     })
     const [errors, setErrors] = useState({});
@@ -47,7 +47,7 @@ const Update = ({product, brands, categories, sizes}) => {
         }
 
         if (form.sizes.length == 0){
-            errors.sizes = "El campo 'Sizes' es requerido";
+            errors.sizes = "El campo 'Talles' es requerido";
         }
 
         if (!form.code.trim()){
@@ -196,9 +196,10 @@ const Update = ({product, brands, categories, sizes}) => {
                             </label>
                             <select onChange={handleChange} onBlur={handleChange} name="category" value={data.category.id} className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3    px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="category">
                                {
-                                categories.map(categories => (
+                                categories? categories.map(categories => (
                                     <option value={categories.id}>{categories.name}</option>
-                                ))
+                                )): 
+                                <option>Categorias</option>
 
                                }
                             </select>
@@ -211,9 +212,10 @@ const Update = ({product, brands, categories, sizes}) => {
                         </label>
                         <select onChange={handleChange} name="brand" onBlur={handleBlur} value={data.brand.id}  className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="brand">
                         {
-                            brands.map(brand => (
+                            brands ? brands.map(brand => (
                                 <option value={brand.id}>{brand.name}</option>
-                            ))
+                            )):
+                            <option>Marcas</option>
                         }
                         </select>
                         {errors.brand &&  <p className={`text-red-500 text-xs italic`}>{errors.brand}</p>}
@@ -227,9 +229,10 @@ const Update = ({product, brands, categories, sizes}) => {
                             <select onChange={handleChangeSize} name={sizes.name} onBlur={handleBlur} value={sizes.id}  className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="size">
                                 <option value={null}>Seleccionar</option>
                                 {
-                                    sizes.map(size => (
+                                    sizes ? sizes.map(size => (
                                         <option value={size.id}>{size.name}</option>
-                                    ))
+                                    )) : 
+                                    <option>Talles</option>
                                 }
                             </select>
                             <div className="flex grid grid-cols-4 appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight">
