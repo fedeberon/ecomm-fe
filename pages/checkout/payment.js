@@ -29,6 +29,7 @@ const Payment = ({ user, myPoints, users }) => {
   const [check, setCheck] = useState(false);
   const [cross, setCross] = useState(false);
   const [totalAmount, setTotalAmount] = useState(0);
+  const [personLoaded, setPersonLoaded] = useState()
 
   useEffect(async () => {
     setLoading(true);
@@ -64,6 +65,7 @@ const Payment = ({ user, myPoints, users }) => {
       data: false,
       creditCard: false,
       pointCard: false,
+      paymentMethod: false,
     });
     setTabs({
       [name]: true,
@@ -86,9 +88,10 @@ const Payment = ({ user, myPoints, users }) => {
       cleanCart();
     }
     if (response.status === 500 || response.status === 400) {
-      setError(response.data);
-      setLoading(false);
-    }
+      console.log(response)
+      setError(response.data.error);
+      }
+    setLoading(false);
   };
 
   const handleChange = (e) => {
@@ -99,8 +102,12 @@ const Payment = ({ user, myPoints, users }) => {
   };
 
     const handleCreditPoints = (username) => {
-        setLoading(true);
-        let walletDiscount = {
+        if (username != null) {
+      console.log(username);
+    
+    setLoading(true);
+    
+    let walletDiscount = {
             "username": username,
             "checkoutId": checkout.id,
         };
@@ -116,25 +123,38 @@ const Payment = ({ user, myPoints, users }) => {
             }
 
         });
-    }
+     } 
+  }
 
   const handleChangeUsers = (e) => {
     const { value } = e.target;
-    getPoints(value).then((res) => {
-      setPoints(res);
-    });
-
-    getByUsername(value).then((res) => {
-      setPerson({
-        username: res.username,
-        name: res.name,
-        lastName: res.lastName,
-        address: res.address,
-        cuit: res.cuit,
-        twins: res.twins,
+    if (value != "seleccionar") {
+      setPersonLoaded(true)
+      getPoints(value).then((res) => {
+        setPoints(res);
+    
       });
-    });
+
+      getByUsername(value).then((res) => {
+        setPerson({
+          username: res.username,
+          name: res.name,
+          lastName: res.lastName,
+          address: res.address,
+          cuit: res.cuit,
+          twins: res.twins,
+        });
+      });
+    } else {
+      setPersonLoaded(false)
+      setPerson({ name:"SELECIONAR USUARIO" })
+      setPoints(0)
+    }
+
+    
   };
+
+  
 
   const handleCUIT = async (cuit) => {
     let dataCuit = await getPersonByCUIT(cuit);
@@ -154,11 +174,36 @@ const Payment = ({ user, myPoints, users }) => {
     setTwins(!twins);
   };
 
+  const [showCreditCard, setShowCreditCard] = useState(false);
+
+  const [showPointCard, setShowPointCard] = useState(false);
+
+  const handleSelect = (e) => {
+    const { value } = e.target;
+     
+    if (value === "seleccionar") {
+      setShowPointCard(false);
+      setShowCreditCard(false);
+      
+    }
+
+    if (value === "credit card") {
+      
+
+      setShowCreditCard(true);
+      setShowPointCard(false);
+    }
+    if (value === "point card") {
+      setShowPointCard(true);
+      setShowCreditCard(false);
+    }
+  };
+
   return (
     <>
         <NotificationContainer/>
       {checkout ? (
-        <div className="bg-blue-100 lg:px-3">
+        <div className="bg-white-100 lg:px-3">
           <div className="lg:mx-6 bg-white  min-h-screen">
             <ul id="tabs" className="inline-flex w-full px-1 pt-2 ">
               <li
@@ -170,8 +215,9 @@ const Payment = ({ user, myPoints, users }) => {
                 </a>
               </li>
               <li
-                className={`px-4 py-2 -mb-px font-semibold text-gray-800 border-b-2 ${tabs.data ? `border-blue-400` : ``
-                  } rounded-t opacity-50`}
+                className={`px-4 py-2 font-semibold text-gray-800 border-b-2 ${
+                  tabs.data ? `border-blue-400` : ``
+                } rounded-t opacity-50`}
               >
                 <a
                   id="default-tab"
@@ -184,20 +230,10 @@ const Payment = ({ user, myPoints, users }) => {
               </li>
 
               <li
-                className={`px-4 py-2 font-semibold text-gray-800 rounded-t opacity-50 border-b-2 ${tabs.creditCard ? `border-blue-400` : ``
-                  }`}
+                className={`px-4 py-2 font-semibold text-gray-800 rounded-t opacity-50 border-b-2`}
               >
-                <a name={`creditCard`} href="#" onClick={handleClick}>
-                  Forma de pago
-                </a>
-              </li>
-
-              <li
-                className={`px-4 py-2 font-semibold text-gray-800 rounded-t opacity-50 border-b-2 ${tabs.pointCard ? `border-blue-400` : ``
-                  }`}
-              >
-                <a name={`pointCard`} href="#" onClick={handleClick}>
-                  Tarjeta Puntos
+                <a name={`paymentMethod`} href="#" onClick={handleClick}>
+                  Metodo de pago
                 </a>
               </li>
             </ul>
@@ -205,8 +241,9 @@ const Payment = ({ user, myPoints, users }) => {
             <div>
               <div
                 id="first"
-                className={`${tabs.factura ? `` : `hidden`
-                  }  flex bg-white justify-center p-2 `}
+                className={`${
+                  tabs.factura ? `` : `hidden`
+                }  flex bg-white justify-center p-2 `}
               >
                 <CartTable cart={cart} />
               </div>
@@ -242,7 +279,7 @@ const Payment = ({ user, myPoints, users }) => {
                     className="text-gray-600 focus:outline-none  font-normal w-full h-10 flex items-center pl-3 text-sm border-gray-300 rounded border"
                     onChange={handleChangeUsers}
                   >
-                    <option value="">Seleccione el usuario </option>
+                    <option value="seleccionar">Seleccione el usuario </option>
                     {users.map((user, index) => {
                       return (
                         <option
@@ -438,120 +475,171 @@ const Payment = ({ user, myPoints, users }) => {
 
               <div
                 id="third"
-                className={`${tabs.creditCard ? `` : `hidden`
-                  }  flex bg-white justify-center p-2 `}
+                className={`${tabs.paymentMethod ? `` : `hidden`}`}
               >
-                <CreditCard
-                  person={person}
-                  setCard={setCard}
-                  card={card}
-                  coupon={coupon}
-                  setCoupon={setCoupon}
-                />
-              </div>
-              <div
-                id="quarter"
-                className={`${tabs.pointCard ? `` : `hidden`}  p-4`}
-              >
-                {person.twins ? (
-                  <div id="myDiv">
-                    <div className="m-auto w-80 h-48 rounded-2xl font-mono text-white overflow-hidden cursor-pointer transition-all duration-500 bg-gradient-to-r from-blue-500 to-green-400 p-4 py-3 px-5 rounded-xl">
-                      <div className="relative flex justify-between">
-                        <div>
-                          <h2 className="relative text-left font-bold text-xl decoration-pink-500 font-bold">
-                            Tarjeta Mellizos
-                          </h2>
-                          <h2 className="relative italic">20% de descuento</h2>
-                        </div>
-                        <div className="relative flex items-center">
-                          <img
-                            src={logo2.src}
-                            className={"w-16 relative lg:w-24"}
-                          />
-                        </div>
-                      </div>
-                      <div className="relative flex justify-between mt-8 w-48 ">
-                        <div>
-                          <h3 className="relative text-xs"> Titular </h3>
-                          <p className="relative font-bold">
-                            {" "}
-                            {person.name} {person.lastName}{" "}
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                ) : (
-                  <div className="m-auto w-80 h-48 rounded-2xl font-mono text-white overflow-hidden cursor-pointer transition-all duration-500 bg-gradient-to-r from-pink-500 to-purple-500 p-4 py-5 px-5">
-                    <div className="flex justify-between">
-                      <div>
-                        <h2>Puntos: </h2>
-                        <p className="text-2xl font-bold"> {points}</p>
-                      </div>
-                      <div className="flex items-center ">
-                        <img
-                          src={logo.src}
-                          className={"w-16 relative lg:w-24"}
-                        />
-                      </div>
-                    </div>
-                    <div className="flex justify-between mt-8 w-48 ">
-                      <div>
-                        <h3 className="text-xs"> Titular </h3>
-                        <p className="font-bold">
-                          {" "}
-                          {person.name} {person.lastName}{" "}
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                )}
+                {/*<select onChange={(e)=>handleSelect(e)}>
+                    <option>SELECCIONAR</option>
+                    
+                    <option value={'point card'}> TARJETA DE PUNTOS </option>
+                    <option value={'credit card'}> TARJETA DE CREDITO </option>
+                  </select>*/}
 
-                <hr className="my-5" />
-                <div className="justify-center">
-                  <h1 className="text-gray-800 font-lg font-bold tracking-normal leading-tight mb-4">
-                    Detalle de Facturaci&oacute;n
-                  </h1>
-
-                  <select
-                    id="user"
-                    className="text-gray-600 focus:outline-none  font-normal w-full h-10 flex items-center pl-3 text-sm border-gray-300 rounded border"
-                    onChange={handleChangeUsers}
+                <div className="w-full">
+                  <label
+                    className="block uppercase block tracking-wide text-palette-primary text-xs font-bold mb-2 mt-4"
+                    htmlFor="size"
                   >
-                    <option value="">Seleccione el usuario </option>
-                    {users.map((user, index) => {
-                      return (
-                        <option
-                          key={index}
-                          value={user.username}
-                          name={`${user.name}`}
-                        >
-                          {user.name}
-                        </option>
-                      );
-                    })}
+                    SELECCIONA UN METODO DE PAGO
+                  </label>
+                  <select
+                    onChange={handleSelect}
+                    name="cardSelect"
+                    id="selectCard"
+                    className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                  >
+                    <option value={"seleccionar"}>SELECCIONAR</option>
+                    <option value={"credit card"}>TARJETA CREDITO</option>
+                    <option value={"point card"}>TARJETA PUNTOS</option>
                   </select>
-
-                  {person.twins ? (
-                    <p
-                      aria-label="checkout-products"
-                      className="mt-8 w-80 bg-indigo-600 mx-auto text-white text-lg font-primary font-semibold pt-2 pb-1 leading-relaxed flex 
-                                                    justify-center items-center focus:ring-1 focus:ring-palette-light focus:outline-none w-1/3  rounded-sm min-w-full"
-                    >
-                      EL 20% DE DESCUENTO SE APLICARA A EN LA FACTURA FINAL DEL
-                      TOTAL DE LA COMPRA
-                    </p>
-                  ) : (
-                    <a
-                      onClick={() => handleCreditPoints(person.username)}
-                      aria-label="checkout-products"
-                      className="mt-8 w-80 bg-gradient-to-r from-blue-900 to-blue-500 mx-auto text-white text-lg font-primary font-semibold pt-2 pb-1 leading-relaxed flex cursor-pointer
-                                                    justify-center items-center focus:ring-1 focus:ring-palette-light focus:outline-none w-1/3 hover:bg-blue-600 rounded-sm min-w-full"
-                    >
-                      Tarjeta de Puntos. Saldo: {points}
-                    </a>
-                  )}
                 </div>
+
+                {showCreditCard ? (
+                  <div id="third" className="flex bg-white justify-center p-2">
+                    <CreditCard
+                      person={person}
+                      setCard={setCard}
+                      card={card}
+                      coupon={coupon}
+                      setCoupon={setCoupon}
+                    />
+                  </div>
+                ) : null}
+
+                {showPointCard ? (
+                  <div id="quarter">
+                    {person.twins ? (
+                      <div id="myDiv">
+                        <div className="m-auto w-80 h-48 rounded-2xl font-mono text-white overflow-hidden cursor-pointer transition-all duration-500 bg-gradient-to-r from-blue-500 to-green-400 p-4 py-3 px-5 rounded-xl">
+                          <div className="relative flex justify-between">
+                            <div>
+                              <h2 className="relative text-left font-bold text-xl decoration-pink-500 font-bold">
+                                Tarjeta Mellizos
+                              </h2>
+                              <h2 className="relative italic">
+                                20% de descuento
+                              </h2>
+                            </div>
+                            <div className="relative flex items-center">
+                              <img
+                                src={logo2.src}
+                                className={"w-16 relative lg:w-24"}
+                              />
+                            </div>
+                          </div>
+                          <div className="relative flex justify-between mt-8 w-48 ">
+                            <div>
+                              <h3 className="relative text-xs"> Titular </h3>
+                              <p className="relative font-bold">
+                                {" "}
+                                {person.name} {person.lastName}{" "}
+                              </p>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    ) : (
+                      <div className="m-auto w-80 h-48 rounded-2xl font-mono text-white overflow-hidden cursor-pointer transition-all duration-500 bg-gradient-to-r from-pink-500 to-purple-500 p-4 py-5 px-5">
+                        <div className="flex justify-between">
+                          <div>
+                            <h2>Puntos: </h2>
+                            <p className="text-2xl font-bold"> {points}</p>
+                          </div>
+                          <div className="flex items-center ">
+                            <img
+                              src={logo.src}
+                              className={"w-16 relative lg:w-24"}
+                            />
+                          </div>
+                        </div>
+                        <div className="flex justify-between mt-8 w-48 ">
+                          <div>
+                            <h3 className="text-xs"> Titular </h3>
+                            <p className="font-bold">
+                              {" "}
+                              {person.name} {person.lastName}{" "}
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    )}
+
+                    <hr className="my-5" />
+                    <div className="justify-center">
+                      <h1 className="text-gray-800 font-lg font-bold tracking-normal leading-tight mb-4">
+                        Detalle de Facturaci&oacute;n
+                      </h1>
+
+                      <select
+                        id="user"
+                        className="text-gray-600 focus:outline-none  font-normal w-full h-10 flex items-center pl-3 text-sm border-gray-300 rounded border"
+                        onChange={handleChangeUsers}
+                        
+                      >
+                        <option value="seleccionar">Seleccione el usuario </option>
+                        {users.map((user, index) => {
+                          return (
+                            <option
+                              key={index}
+                              value={user.username}
+                              name={`${user.name}`}
+                            >
+                              {user.name}
+                            </option>
+                          );
+                        })}
+                      </select>
+
+                      {!personLoaded ? 
+                      (
+                        <p
+                          aria-label="checkout-products"
+                          className="mt-8 w-80 bg-indigo-600 mx-auto text-white text-lg font-primary font-semibold pt-2 pb-1 leading-relaxed flex 
+                                                    justify-center items-center focus:ring-1 focus:ring-palette-light focus:outline-none w-1/3  rounded-sm min-w-full"
+                        >
+                          SELECCIONAR USUARIO
+
+                          
+                        </p>
+                      )
+
+                      :
+                      
+                      (person.twins ?  (
+                        <p
+                          aria-label="checkout-products"
+                          className="mt-8 w-80 bg-indigo-600 mx-auto text-white text-lg font-primary font-semibold pt-2 pb-1 leading-relaxed flex 
+                                                    justify-center items-center focus:ring-1 focus:ring-palette-light focus:outline-none w-1/3  rounded-sm min-w-full"
+                        >
+                          EL 20% DE DESCUENTO SE APLICARA A EN LA FACTURA FINAL
+                          DEL TOTAL DE LA COMPRA
+
+                          
+                        </p>
+                      ) : (
+                        
+                        <a
+                          onClick={() => handleCreditPoints(person.username)}
+                          value={person}
+                          aria-label="checkout-products"
+                          className="mt-8 w-80 bg-gradient-to-r from-blue-900 to-blue-500 mx-auto text-white text-lg font-primary font-semibold pt-2 pb-1 leading-relaxed flex cursor-pointer
+                                                    justify-center items-center focus:ring-1 focus:ring-palette-light focus:outline-none w-1/3 hover:bg-blue-600 rounded-sm min-w-full"
+                        >
+                          Tarjeta de Puntos. Saldo: {points}
+                        </a>
+                      ))}
+                    </div>
+                  </div>
+                ) : null}
               </div>
             </div>
           </div>

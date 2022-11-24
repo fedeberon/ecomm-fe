@@ -1,26 +1,24 @@
-// import List from "@/components/reports/List";
 import React from "react";
-
-//importar servicio del back..
-
 import PageTitle from "@/components/PageTitle";
+import Calendario from "@/components/calendar/calendar";
+import { findAll } from "services/reportService";
 
-const Index = ({data}) => {
+const Index = ({report}) => {
 
     return (
         <div className="mx-auto max-w-6xl">
             <PageTitle text={`Reportes`} />
-            {/* <List checkout={data}/> */}
+            <Calendario/>
         </div>
     )
 }
 
 // export async function getServerSideProps() {
-//     const data = await findAll();
+//     const reports = await findAll();
 
 //     return {
 //         props: {
-//             data
+//             reports
 //         },
 //     }
 // }

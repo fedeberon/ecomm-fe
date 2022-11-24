@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 export async function getProducts(page) {
-    const fetchUrl = `${process.env.NEXT_PUBLIC_BACKEND_SERVICE}/product?page=${page}&size=12`;
+    const fetchUrl = `${process.env.NEXT_PUBLIC_BACKEND_SERVICE}/product?page=${page}&size=12&sortBy=sales`;
 
     const fetchOptions = {
         endpoint: fetchUrl,
@@ -89,13 +89,23 @@ export async function save(product) {
 }
 
 
-export async function update(product) {
-    const fetchUrl = `${process.env.NEXT_PUBLIC_BACKEND_SERVICE}/product`;
+export async function update(id, product) {
+    const fetchUrl = `${process.env.NEXT_PUBLIC_BACKEND_SERVICE}/product/${id}`;
     try {
         let response = await axios.put(fetchUrl, product);
+        return response.data;
+    } catch (error) {
+        throw new Error("Could not update product!");
+    }
+}
+
+export async function deleteProduct(product) {
+    const fetchUrl = `${process.env.NEXT_PUBLIC_BACKEND_SERVICE}/product/${product}`;
+    try {
+        let response = await axios.delete(fetchUrl, product);
         return response;
     } catch (error) {
-        throw new Error("Could not create product!");
+        throw new Error("Could not delete product!");
     }
 }
 

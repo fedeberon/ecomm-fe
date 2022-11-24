@@ -26,12 +26,8 @@ function ProductDetails({ productData}) {
       </div>
 
       <ProductForm 
-        title={productData.name}
-        mainImg={image}
-        id={productData.id}
-        images={productData.images}
-        price={productData.price}
-        isPromo={productData.promo}
+        productData={productData}
+        image={image}
       />
       <div className=''>
         <BackToProductButton />

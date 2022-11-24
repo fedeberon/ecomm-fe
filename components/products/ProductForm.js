@@ -1,23 +1,27 @@
 import { useState } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCloudUploadAlt, faEdit} from '@fortawesome/free-solid-svg-icons'
+import { faCloudUploadAlt, faEdit, faTrash} from '@fortawesome/free-solid-svg-icons'
 import { useCartContext, useAddToCartContext } from '@/context/Store'
 import UploadFile from "@/components/products/UploadFile";
 import {NotificationContainer, NotificationManager} from 'react-notifications';
 import 'react-notifications/lib/notifications.css';
 import {useSession} from "next-auth/client";
 import {useRouter} from "next/router";
-import { updateAsAPromotion } from 'services/productService';
+import { deleteProduct, updateAsAPromotion } from 'services/productService';
 
 
-function ProductForm({ title, mainImg, id, images, price, isPromo }) {
+function ProductForm({ productData, image}) {
+  const [title, setTitle] = useState(productData.name);
+  const [mainImg, setMainImg] = useState(image);
+  const [id, setID] = useState(productData.id);
+  const [price, setPrice] = useState(productData.price);
   const [quantity, setQuantity] = useState(1);
   const isLoading = useCartContext()[2];
   const addToCart = useAddToCartContext();
   const [openUploadFile, setOpenUploadFile] = useState(false);
   const router = useRouter();
   const [session, loading] = useSession();
-  const [promo, setPromo] = useState(isPromo);
+  const [promo, setPromo] = useState(productData.promo);
   
    
  
@@ -55,6 +59,23 @@ function ProductForm({ title, mainImg, id, images, price, isPromo }) {
     }
   }
 
+  async function delateProduct (productData) {
+    try{
+      
+      await deleteProduct(id)
+
+      NotificationManager.info('Producto borrado', () => {
+        router.push('/')
+      });
+
+      window.location.href = '/'
+    }
+    catch(error){
+      throw new Error("Fallo en la funcion de borrar producto")
+    }
+    // window.location.href = '/'
+  }
+
   const goToEdit = () => {
     window.location.href = '/products/update/' + id
   }
@@ -85,7 +106,7 @@ function ProductForm({ title, mainImg, id, images, price, isPromo }) {
                 value={quantity}
                 onChange={(e) => updateQuantity(e.target.value)}
                 className="text-gray-900 form-input border border-gray-300 w-16 rounded-sm focus:border-palette-light focus:ring-palette-light"
-            />
+            ></input>
           </div>
 
           <div className="flex flex-col items-start space-y-1 flex-grow-0">
@@ -105,6 +126,8 @@ function ProductForm({ title, mainImg, id, images, price, isPromo }) {
           
             ?
               <>
+                <button onClick={delateProduct} className="pt-3 pb-2 bg-palette-primary text-white w-full mt-2 rounded-sm font-primary font-semibold text-xl flex
+                      justify-center items-baseline  hover:bg-palette-light cursor-pointer"><FontAwesomeIcon icon={faTrash} className="m-auto w-10 h-10 text-white"/></button>
                 <a
                     aria-label="upload-images"
                     className="pt-3 pb-2 bg-palette-primary text-white w-full mt-2 rounded-sm font-primary font-semibold text-xl flex
