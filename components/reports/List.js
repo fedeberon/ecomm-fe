@@ -1,33 +1,44 @@
 import DataTable from 'react-data-table-component'
 import Link from 'next/link'
-import FilterComponent from "@/components/filter/FilterComponent";
 import {useMemo, useState} from "react";
 import {paginationComponentOptions} from "../../DataTableUtils";
 
 const List = ({report}) => {
     const [filterText, setFilterText] = useState('');
     const [resetPaginationToggle, setResetPaginationToggle] = useState(false);
-    const filteredItems = report.filter(item => filterText == '' || filterText.toLowerCase().includes(item.id));
+   
 
     const columns = [
         {
-            name: 'Id',
+            name: 'ID Reporte',
             selector: row => row.id,
-            sortable: true,
-            // cell: row => <Link passHref href={`/checkout/${row.id}`}><a className={`text-indigo-600`}>#{row.id}</a></Link>
+            sortable: true
         },
         {
-            name: 'Estado',
-            selector: row => row.checkoutState,
+            name:'ID ckeckout',
+            selector: row=>row.checkout.id
+        }, 
+        {
+            name:"CUIT",
+            selector: row=> row.cuit
         },
         {
-            name: 'Cantidad',
-            selector: row => row.products.length
+            name: 'Tarjeta de credito',
+            selector: row => row.creditCard
         },
         {
-            name: 'Total',
-            selector: row => (<label>$ {row.totalAmount}</label>)
+            name: 'Nombre de factura',
+            selector: row => row.billTypeName
+        },
+        {
+            name: 'Tipo de factura',
+            selector: row => row.billType
+        },
+        {
+            name:'CAE',
+            selector:row=>row.CAE
         }
+
     ];
 
 
@@ -38,25 +49,26 @@ const List = ({report}) => {
                 setFilterText('');
             }
         };
-        return (
-            <FilterComponent onFilter={e => setFilterText(e.target.value)} onClear={handleClear} filterText={filterText} />
-        );
     }, [filterText, resetPaginationToggle]);
 
 
     return (
+        
         <div className="min-h-80 max-w-12 my-4 sm:my-8 mx-auto w-full">
             <DataTable
                 columns={columns}
-                data={filteredItems}
+                data={report}
+                noDataComponent={"Buscar por fechas de reportes en el CALENDARIO para ver contenido en la tabla"}
                 pagination
-                paginationResetDefaultPage={resetPaginationToggle} // optionally, a hook to reset pagination to page 1
+                paginationResetDefaultPage={resetPaginationToggle}
                 subHeader
                 subHeaderComponent={subHeaderComponentMemo}
                 persistTableHead
                 paginationComponentOptions={paginationComponentOptions}
             />
+
         </div>
+        
     )
 }
 

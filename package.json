@@ -23,6 +23,7 @@
     "postcss": "^8.1.10",
     "prop-types": "^15.7.2",
     "react": "^17.0.1",
+    "react-calendar": "^3.9.0",
     "react-data-table-component": "^7.4.5",
     "react-date-object": "^2.1.5",
     "react-dom": "^17.0.1",
