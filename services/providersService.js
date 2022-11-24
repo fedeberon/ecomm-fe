@@ -1,10 +1,11 @@
 import axios from 'axios';
 
 export async function all() {
-    const fetchUrl = `${process.env.BACKEND_SERVICE}/provider/all`;
+    const fetchUrl = `${process.env.BACKEND_SERVICE}/provider`;
 
     try {
         let response = await axios.get(fetchUrl);
+        console.log(response.data)
         return response.data;
     } catch (error) {
         throw new Error("Could not get all provider !");
