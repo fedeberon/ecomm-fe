@@ -5,7 +5,6 @@ export async function all() {
 
     try {
         let response = await axios.get(fetchUrl);
-        console.log(response.data)
         return response.data;
     } catch (error) {
         throw new Error("Could not get all provider !");
