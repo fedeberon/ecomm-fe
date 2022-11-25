@@ -15,11 +15,12 @@ import 'react-notifications/lib/notifications.css';
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-
-    setForm({
-      ...form,
-      [name]: value,
-    });
+    if(value != "Seleccionar"){
+      setForm({
+        ...form,
+        [name]: value,
+      });
+    }
 
     // if (name != "category") {
     //   setForm({
