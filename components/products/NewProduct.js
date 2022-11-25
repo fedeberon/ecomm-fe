@@ -41,11 +41,11 @@ const NewProduct = ({ categories, brands, sizes }) => {
         if (!form.description.trim()) {
             errors.description = "El campo 'Descripcion' es requerido";
         }
-        if (!form.category.id== "  ") {
+        if (form.category.id == "") {
             errors.category = "El campo 'Categoria' es requerido";
         }
 
-        if (form.brand.id == " ") {
+        if (form.brand.id == "") {
             errors.brand = "El campo 'Marcas' es requerido";
         }
 
@@ -158,7 +158,8 @@ const NewProduct = ({ categories, brands, sizes }) => {
                                 htmlFor="category">
                                 Categoria
                             </label>
-                            <select onChange={handleChange} name="category" onBlur={handleBlur} className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="category">
+                            <select value={form.category.id} onChange={handleChange} name="category" onBlur={handleBlur} className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="category">
+                                    <option disabled={true} value="">Seleccionar</option>
                                 {
                                     categories.map(category => (
                                         <option value={category.id}>{category.name}</option>
@@ -174,7 +175,8 @@ const NewProduct = ({ categories, brands, sizes }) => {
                                 htmlFor="brand">
                                 Marcas
                             </label>
-                            <select onChange={handleChange} name="brand" onBlur={handleBlur} value={form.brand.id} className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="brand">
+                            <select value={form.brand.id} onChange={handleChange} name="brand" onBlur={handleBlur} className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="brand">
+                                <option disabled={true} value="">Seleccionar</option>
                                 {
                                     brands.map(brand => (
                                         <option value={brand.id}>{brand.name}</option>
