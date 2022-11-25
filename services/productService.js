@@ -99,10 +99,10 @@ export async function update(id, product) {
     }
 }
 
-export async function deleteProduct(product) {
-    const fetchUrl = `${process.env.NEXT_PUBLIC_BACKEND_SERVICE}/product/${product}`;
+export async function deleteProduct(id) {
+    const fetchUrl = `${process.env.NEXT_PUBLIC_BACKEND_SERVICE}/product/delete/${id}`;
     try {
-        let response = await axios.delete(fetchUrl, product);
+        let response = await axios.put(fetchUrl);
         return response;
     } catch (error) {
         throw new Error("Could not delete product!");
