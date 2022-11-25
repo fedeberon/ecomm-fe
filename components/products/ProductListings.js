@@ -11,7 +11,7 @@ function ProductListings({ products, brands, categories}) {
     const [brandsToSearch, setBrandsToSearch] = useState([]);
     const [categoriesToSearch, setCategoriesToSearch] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
-    const [productsToShow, setProductsToShow] = useState(products)
+    const [productsToShow, setProductsToShow] = useState()
     const [page, setPage] = useState(0);
 
 
@@ -19,6 +19,11 @@ function ProductListings({ products, brands, categories}) {
         if(window.innerHeight + e.target.documentElement.scrollTop + 1  > e.target.documentElement.scrollHeight && !isLoading) {
           if(products.last===true){
               return;
+          }
+          if (!productsToShow) {
+            let product = await getProducts(page)
+            setProductsToShow(product.content);
+            return; 
           }
           if (!products) {
               let product = await getProducts(page)
@@ -104,6 +109,8 @@ const searchCategories = async () => {
 
   const searchValue = async (e) => {
     if(e.target.value.trim() === '') {
+      setProductsToShow(products)
+      
       return;
     }   
     const result = await search(e.target.value);
