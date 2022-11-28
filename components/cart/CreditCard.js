@@ -1,6 +1,5 @@
-import {useState} from "react";
 
-const CreditCard = ({person, setCard, card , coupon, setCoupon}) => {
+const CreditCard = ({person, setCard, card, setCoupon}) => {
 
 
 

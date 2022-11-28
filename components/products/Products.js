@@ -1,18 +1,8 @@
-import Link from "next/link";
-import logo from "../../images/default.jpeg";
-import {useEffect} from "react";
 import FilterComponent from  "@/components/filter/FilterComponent";
 import DataTable  from "react-data-table-component";
 import {useState, useMemo} from "react";
-import {paginationComponentOptions} from "../../DataTableUtils";
-import axios from "axios";
 
 const Products = ({products}) => {
-    
-    // const [data, setData] = useState();
-	// const [loading, setLoading] = useState(false);
-	// const [totalRows, setTotalRows] = useState(0);
-    // const [resetPaginationToggle, setResetPaginationToggle] = useState(false);
     const [filterText, setFilterText]= useState ('')
     const filteredItems =products.filter(item=> filterText.toLowerCase() == '' || filterText.includes(item.id));
     
@@ -55,27 +45,9 @@ const Products = ({products}) => {
         },
     ]
 
-    // const fetchProducts = async page => {
-	// 	setLoading(true);
-
-    //     const response = await axios.get (`${process.env.NEXT_PUBLIC_BACKEND_SERVICE}/product?page=${page}&size=10&sortBy=sales`);
-    //     setData(response.data.content);
-	// 	// setTotalRows(response.data.totalElements);
-	// 	setLoading(false);
-	// };
-    
-    // const handlePageChange = page => {
-	// 	fetchProducts(page);
-	// };
-
-	// useEffect(() => {
-	// 	fetchProducts(0); 
-	// }, []);
-
     const subHeaderComponentMemo = useMemo(() => {
         const handleClear = () => {
             if (filterText) {
-                // setResetPaginationToggle(!resetPaginationToggle);
                 setFilterText('');
             }
         };
@@ -92,16 +64,9 @@ const Products = ({products}) => {
                 <DataTable
                     columns={columns}
                     data={filteredItems} 
-                    // progressPending= {loading}
-                    // paginationServer
-                    // paginationTotalRows={totalRows}
-                    // onChangePage={handlePageChange}
                     pagination
-                    // paginationResetDefaultPage={resetPaginationToggle}
                     subHeader
                     subHeaderComponent={subHeaderComponentMemo}
-                    // persistTableHead
-                    // paginationComponentOptions={paginationComponentOptions}
                     />
             </div>
         </div>

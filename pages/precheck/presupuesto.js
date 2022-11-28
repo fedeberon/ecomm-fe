@@ -1,5 +1,4 @@
-import {useEffect, useState} from "react";
-import CartTable from '@/components/cart/Pretable'
+import {useState} from "react";
 import {useCartContext, useCleanCartContext} from '@/context/Store'
 import {getSession} from "next-auth/client";
 import {getPoints} from "../../services/walletService";
@@ -28,12 +27,6 @@ const Presupuesto = ({userSession, myPoints, users}) => {
         "cuit": ""
     })
 
-    const handleChange = (e) => {
-        setPerson({
-            ...person,
-            [e.target.name]: e.target.value,
-        });
-    }
 
     const handleChangeUsers = (e) => {
         const {value} = e.target;

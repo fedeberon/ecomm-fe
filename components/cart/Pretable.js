@@ -5,19 +5,12 @@ import { faTimes } from '@fortawesome/free-solid-svg-icons'
 import Link from 'next/link'
 import Price from '@/components/products/Price'
 import { getCartSubTotal } from '@/utils/helpers'
-import logo from "../../images/default.jpeg";
-import Image from 'next/image'
 
 function PreTable ({cart}) {
     const updateCartQuantity = useUpdateCartQuantityContext()
     const [cartItems, setCartItems] = useState([])
     const [subtotal, setSubtotal] = useState(0)
-  
-    const defaultImage = {
-      "url": "default.jpeg",
-      "link": logo,
-      "main": false
-    };
+
   
     useEffect(() => {
       setCartItems(cart)

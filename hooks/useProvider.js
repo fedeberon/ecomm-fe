@@ -20,24 +20,6 @@ import 'react-notifications/lib/notifications.css';
       ...form,
       [name]: value,
     });
-
-    // if (name != "category") {
-    //   setForm({
-    //     ...form,
-    //     [name]: value,
-    //   });
-    // } else {
-    //   setForm({
-    //     ...form,
-    //     category: {
-    //       id: e.target.value,
-    //     },
-    //     //? se rompera?
-    //     brand: {
-    //       id: e.target.value,
-    //     },
-    //   });
-    // }
   };
   const handleChangeBrand = (e) =>{
     const { name, value } = e.target;

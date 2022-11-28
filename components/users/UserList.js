@@ -1,7 +1,5 @@
-import axios from "axios"
 import Link from "next/link";
-import { useReducer, useState } from "react";
-import { update } from "services/userService";
+import { useState } from "react";
 import { updateTwinsCard } from "services/productService";
 
 

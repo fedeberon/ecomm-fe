@@ -3,7 +3,7 @@ import {faCloudUploadAlt, faEdit} from "@fortawesome/free-solid-svg-icons";
 import UploadFile from "@/components/products/UploadFile";
 import {useState} from "react";
 
-const ManageProduct = ({session, productId}) => {
+const ManageProduct = () => {
     const [openUploadFile, setOpenUploadFile] = useState(false);
 
     const goToEdit = () => {

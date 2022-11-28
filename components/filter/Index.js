@@ -54,7 +54,7 @@ const Index = ({products}) => {
 export default Index;
 
 
-export async function getServerSideProps(context) {
+export async function getServerSideProps() {
     const brands = await findAll();
     return {
         props: {

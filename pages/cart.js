@@ -1,18 +1,14 @@
 import SEO from '@/components/SEO'
 import PageTitle from '@/components/PageTitle'
 import CartTable from '@/components/cart/CartTable'
-import CheckOutButton from '@/components/CheckOutButton'
 import BackToProductButton from '@/components/products/BackToProductButton'
 import {useCartContext, useCleanCartContext} from '@/context/Store'
 import {buyWithPoints, createCheckout, getPreference} from "../services/productService";
 import React, {useEffect, useState} from "react";
-import MercadoPago from "@/components/mercadoPago/MercadoPago";
 import Loading from "@/components/utils/Loading";
 import {getSession} from "next-auth/client";
-import getMyShopping from "../services/shoppingService";
 import {getPoints} from "../services/walletService";
 import {useRouter} from "next/router";
-import {NotificationManager} from "react-notifications";
 import Link from "next/link";
 import { useSession } from "next-auth/client";
 
@@ -115,22 +111,6 @@ function CartPage({myPoints, user}) {
                                             </a>
                                     </Link>
 
-                                {/* {
-                                    preference != null
-                                        ?
-                                        <>
-                                            <MercadoPago preference={preference}/>
-                                        </>
-                                        :
-                                        <>
-                                            <a onClick={preparePreference}
-                                            aria-label="checkout-products"
-                                            className="w-1/2 bg-blue-500 text-white text-lg font-primary font-semibold pt-2 pb-1 leading-relaxed flex cursor-pointer
-                                                        justify-center items-center focus:ring-1 focus:ring-palette-light focus:outline-none w-full hover:bg-blue-600 rounded-sm"
-                                            >Mercado Pago</a>
-                                        </>
-
-                                } */}
                                 
                                 {
                                 session?.user?.role?.includes("ADMIN") 
