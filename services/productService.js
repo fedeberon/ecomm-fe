@@ -163,7 +163,7 @@ export async function getCallback(id) {
 export async function createCheckout(cart){
     const fetchUrl = `${process.env.NEXT_PUBLIC_BACKEND_SERVICE}/checkout`;
     let details = []
-    cart.forEach(function(value, index, array) {
+    cart.forEach(function(value) {
         let detail = {
             "id": value.id,
             "quantity" : value.quantity

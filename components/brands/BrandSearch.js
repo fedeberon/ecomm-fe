@@ -1,12 +1,4 @@
-import { useState } from "react";
-
-
 const BrandSearch = ({brands, onclick}) => {
-    const [isMenu, setIsMenu] = useState(false)
-
-    const handleMenu=()=>{
-        setIsMenu(!isMenu)
-    }
     return (
                 <div className="flex-center col-span-2 w-auto rounded ">
                     <div className="w-auto bg-white text-sm text-palette-primary font-bold px-5 py-2">

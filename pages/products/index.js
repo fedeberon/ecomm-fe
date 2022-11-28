@@ -1,8 +1,7 @@
 import Products from "@/components/products/Products";
-import {all, getProducts} from "../../services/productService";
+import {all} from "../../services/productService";
 import Link from "next/link";
 import PageTitle from "@/components/PageTitle";
-import {updateAsAPromotion} from "../../services/productService"
 
 const ProductsManager = ({products}) => {
 

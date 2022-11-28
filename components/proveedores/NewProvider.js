@@ -1,6 +1,6 @@
 import { NotificationContainer } from "react-notifications";
 import useProvider from "../../hooks/useProvider";
-import {useEffect, useState, useMemo } from "react";
+import { useMemo } from "react";
 
 
 const NewProvider = () => {
@@ -13,7 +13,6 @@ const NewProvider = () => {
 
     const validationsForm = (form) => {
         let errors = {};
-        let regexName = /^[A-Za-z]+$/;
 
         if (!form.name.trim()) {
             errors.name = "El campo 'Nombre' es requerido";
@@ -30,8 +29,6 @@ const NewProvider = () => {
     const {
         form,
         errors,
-        loading,
-        response,
         handleChange,
         handleBlur,
         handleSubmit, } = useProvider(initialForm, validationsForm);

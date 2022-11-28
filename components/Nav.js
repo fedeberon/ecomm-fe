@@ -6,12 +6,9 @@ import { faBars } from "@fortawesome/free-solid-svg-icons";
 import { faShoppingCart } from "@fortawesome/free-solid-svg-icons";
 import logo from "/images/logoMati.png";
 import UserSession from "@/components/users/UserSession";
-import Index from "./admin";
 import { useSession } from "next-auth/client";
 import Loading from "./utils/Loading";
 
-import { getServerSideProps } from "pages/login";
-import { padding } from "tailwindcss/defaultTheme";
 
 function Nav() {
   const cart = useCartContext()[0];

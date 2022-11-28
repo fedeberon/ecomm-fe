@@ -1,5 +1,4 @@
 import List from "@/components/proveedores/List";
-// import {getProducts} from "../../services/productService";
 import Link from "next/link";
 import PageTitle from "@/components/PageTitle";
 import { all } from "services/providersService";

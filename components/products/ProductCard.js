@@ -2,15 +2,12 @@ import Image from 'next/image'
 import Link from 'next/link'
 import Price from '@/components/products/Price'
 import logo from "../../images/default.jpeg";
-import { useState } from "react";
 
 function ProductCard({ product }) {
   const title = product.name;
   const description = product.description;
   const price = product.price;
   const promo = product.promo;
-
-  
 
   let defaultImage = {
         "url": "default.jpeg",

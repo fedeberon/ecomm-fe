@@ -3,13 +3,10 @@ import logo from "/images/Logo Dulce bb.png";
 import logo2 from "/images/logo3buhos.png"
 import { useMemo } from "react";
 import FilterComponent from "@/components/filter/FilterComponent";
-import { paginationComponentOptions } from "../../DataTableUtils";
 import DataTable from "react-data-table-component";
 import DateObject from "react-date-object";
-import UserList from "../users/UserList";
 import AddPoints from "./AddPoints";
 import RemovePoints from "./RemovePoints";
-// import { getSession } from "next-auth/client";
 import { useSession } from "next-auth/client";
 import { getPoints } from "services/walletService";
 
@@ -18,7 +15,6 @@ import { getPoints } from "services/walletService";
 const WalletOfUser = ({ walletOfUser, user }) => {
     const [isWallet, setIsWallet] = useState(false);
     const [points, setPoints] = useState(0);
-    const [twins, setTwins] = useState(false)
     const [addPoints, setAddPoints] = useState(false)
     const [removePoints, setRemovePoints] = useState(false)
     const [session, loading] = useSession();
@@ -104,10 +100,6 @@ const WalletOfUser = ({ walletOfUser, user }) => {
         }
     }
 
-    const handleTwins = (e) => {
-        setTwins(!twins)
-    }
-
     const handleAddPointsOnClose = () => setAddPoints(false)
     const handleRemovePointsOnClose = () => setRemovePoints(false)
 
@@ -150,15 +142,7 @@ const WalletOfUser = ({ walletOfUser, user }) => {
                                 <img src={logo.src} className={"w-16 relative lg:w-24"} />
                             </div>
                         </div>
-                        {/* <div className='mt-5 flex justify-between items-center w-40'>
-                      <span className='text-lg'> CUIL </span>
-                      <span> {isWallet ? walletOfUser[0].user.cardId : user.user.username}</span>
-                  </div> */}
                         <div className='flex justify-between mt-8 w-48 '>
-                            {/* <div>
-                          <h3 className="text-xs"> Vencimiento </h3>
-                          <p className="font-bold"> 10/21 </p>
-                      </div> */}
                             <div>
                                 <h3 className="text-xs"> Titular </h3>
                                 <p className="font-bold"> {user.name} {user.lastName} </p>
@@ -222,15 +206,5 @@ const WalletOfUser = ({ walletOfUser, user }) => {
     );
 }
 export default WalletOfUser;
-
-// export async function getServerSideProps(context) {
-//     const session = await getSession(context);
-//     const sessionUser = session.user;
-//     return  {
-//         props: {
-//             sessionUser,
-//         },
-//     }
-// }
 
 

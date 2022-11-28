@@ -4,11 +4,6 @@ import { useState } from "react";
 const CategorySearch = ({categories, onclick}) => {
     const [isMenu, setIsMenu] = useState(false)
 
-    const handleMenu=()=>{
-        setIsMenu(!isMenu)
-    }
-
-
     return (
  
            

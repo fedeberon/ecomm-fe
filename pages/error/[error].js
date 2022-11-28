@@ -1,5 +1,3 @@
-import {getProduct} from "../../services/productService";
-
 const Error = ({error}) => {
     return (
         <div class="h-screen w-screen bg-gray-100 flex items-center">
