@@ -3,13 +3,17 @@ import Link from "next/link";
 import FilterComponent from "../filter/FilterComponent";
 import {useMemo, useState} from "react";
 import {paginationComponentOptions} from "../../DataTableUtils";
+import { deleteSize, findAll } from "services/sizeService";
 
 const SizesList = ({ sizes }) => {
     
     const [filterText, setFilterText] = useState('');
     const [resetPaginationToggle, setResetPaginationToggle] = useState(false);
+    const [toggledClearRows, setToggledClearRows] = useState(false);
     
-    const filteredItems = sizes.filter(item=> filterText == '' || filterText.includes(item.id));
+    // const filteredItems = sizes.filter(item=> filterText == '' || filterText.includes(item.id));
+
+    const [data, setData] = useState(sizes.filter(item=> filterText == '' || filterText.includes(item.id)));
    
 
     const columns = [
@@ -22,6 +26,13 @@ const SizesList = ({ sizes }) => {
             name: 'Nombre',
             selector: row => row.name,
             sortable: true,
+        },
+        {
+            name: "Eliminar",
+            cell: (row) => <button onClick={() => handleDelete(row.id)}>X</button>,
+            allowOverflow: true,
+            button: true,
+            width: "56px"
         }
     ];
     
@@ -37,7 +48,12 @@ const SizesList = ({ sizes }) => {
         );
     }, [filterText, resetPaginationToggle]);
 
-    
+    const handleDelete = async (id) =>{
+        deleteSize(id)
+        sizes = await findAll();
+        setData(sizes.filter(item=> filterText == '' || filterText.includes(item.id)))
+        window.location.reload(false);
+    }
     
     return (
 
@@ -47,13 +63,15 @@ const SizesList = ({ sizes }) => {
                     <div className="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
                         <DataTable
                             columns={columns}
-                            data={filteredItems}
+                            data={data}
                             pagination
                             paginationResetDefaultPage={resetPaginationToggle} // optionally, a hook to reset pagination to page 1
                             subHeader
                             subHeaderComponent={subHeaderComponentMemo}
                             persistTableHead
                             paginationComponentOptions={paginationComponentOptions}
+                            upda={toggledClearRows}
+                            re
                         />
                     </div>
 
