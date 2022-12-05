@@ -1,6 +1,8 @@
 const {useState} = require("react");
 const {save} = require("../../services/sizeService");
 const {useRouter} = require("next/router");
+import {NotificationContainer, NotificationManager} from 'react-notifications';
+import 'react-notifications/lib/notifications.css';
 const NewSize = () => {
     const router = useRouter()
 
@@ -17,15 +19,22 @@ const NewSize = () => {
 
     const submit =  (e) => {
         e.preventDefault();
-        save(size).then((result) => {
-            if (result.status === 202) {
-                router.push('/size')
-            }
-        });
+        if(size.name.length <= 0){
+            NotificationManager.info('No fue posible añadir el talle, ingrese un nombre', 'Añadir talle', 4000,  () => {
+            });
+        }
+        else{
+            save(size).then((result) => {
+                if (result.status === 202) {
+                    router.push('/size')
+                }
+            });
+        }
     }
 
     return (
         <>
+        <NotificationContainer/>
             <div className="flex justify-center">
                 <form className="w-full max-w-lg" onSubmit={submit}>
                 <div className="flex flex-wrap -mx-3 mb-6">
