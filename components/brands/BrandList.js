@@ -22,6 +22,13 @@ const BrandList = ({ brands }) => {
             name: 'Nombre',
             selector: row => row.name,
             sortable: true,
+        },
+        {
+            name: "Eliminar",
+            cell: (row) => <button onClick={() => handleDelete(row.id)}>X</button>,
+            allowOverflow: true,
+            button: true,
+            width: "56px"
         }
     ];
     
@@ -37,6 +44,11 @@ const BrandList = ({ brands }) => {
         );
     }, [filterText, resetPaginationToggle]);
 
+    const handleDelete = async (id) =>{
+        // Delete function
+        console.log(id)
+        window.location.reload(false);
+    }
     
     
     return (

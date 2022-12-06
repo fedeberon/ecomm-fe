@@ -3,15 +3,12 @@ import Link from "next/link";
 import FilterComponent from "../filter/FilterComponent";
 import {useMemo, useState} from "react";
 import {paginationComponentOptions} from "../../DataTableUtils";
-import { deleteSize, findAll } from "services/sizeService";
+import { deleteSize } from "services/sizeService";
 
 const SizesList = ({ sizes }) => {
     
     const [filterText, setFilterText] = useState('');
     const [resetPaginationToggle, setResetPaginationToggle] = useState(false);
-    const [toggledClearRows, setToggledClearRows] = useState(false);
-    
-    // const filteredItems = sizes.filter(item=> filterText == '' || filterText.includes(item.id));
 
     const [data, setData] = useState(sizes.filter(item=> filterText == '' || filterText.includes(item.id)));
    
@@ -50,8 +47,6 @@ const SizesList = ({ sizes }) => {
 
     const handleDelete = async (id) =>{
         deleteSize(id)
-        sizes = await findAll();
-        setData(sizes.filter(item=> filterText == '' || filterText.includes(item.id)))
         window.location.reload(false);
     }
     
@@ -70,8 +65,6 @@ const SizesList = ({ sizes }) => {
                             subHeaderComponent={subHeaderComponentMemo}
                             persistTableHead
                             paginationComponentOptions={paginationComponentOptions}
-                            upda={toggledClearRows}
-                            re
                         />
                     </div>
 

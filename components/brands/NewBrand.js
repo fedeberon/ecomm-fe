@@ -1,6 +1,8 @@
 const {useState} = require("react");
 const {save} = require("../../services/brandService");
 const {useRouter} = require("next/router");
+import {NotificationContainer, NotificationManager} from 'react-notifications';
+import 'react-notifications/lib/notifications.css';
 const NewBrand = () => {
     const router = useRouter()
 
@@ -17,15 +19,22 @@ const NewBrand = () => {
 
     const submit =  (e) => {
         e.preventDefault();
-        save(brand).then((result) => {
-            if (result.status === 200) {
-                router.push('/brand')
-            }
-        });
+        if(brand.name.length <= 0){
+            NotificationManager.info('No fue posible añadir la marca, ingrese un nombre', 'Añadir marca', 4000,  () => {
+            });
+        }
+        else{
+            save(brand).then((result) => {
+                if (result.status === 200) {
+                    router.push('/brand')
+                }
+            });
+        }
     }
 
     return (
         <>
+        <NotificationContainer/>
             <div className="flex justify-center">
                 <form className="w-full max-w-lg" onSubmit={submit}>
                 <div className="flex flex-wrap -mx-3 mb-6">
