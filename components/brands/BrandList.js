@@ -3,6 +3,7 @@ import Link from "next/link";
 import FilterComponent from "../filter/FilterComponent";
 import {useMemo, useState} from "react";
 import {paginationComponentOptions} from "../../DataTableUtils";
+import { deleteBrand } from "services/brandService";
 
 const BrandList = ({ brands }) => {
     
@@ -45,8 +46,7 @@ const BrandList = ({ brands }) => {
     }, [filterText, resetPaginationToggle]);
 
     const handleDelete = async (id) =>{
-        // Delete function
-        console.log(id)
+        await deleteBrand(id)
         window.location.reload(false);
     }
     

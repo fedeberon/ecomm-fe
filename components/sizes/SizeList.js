@@ -46,7 +46,7 @@ const SizesList = ({ sizes }) => {
     }, [filterText, resetPaginationToggle]);
 
     const handleDelete = async (id) =>{
-        deleteSize(id)
+        await deleteSize(id)
         window.location.reload(false);
     }
     

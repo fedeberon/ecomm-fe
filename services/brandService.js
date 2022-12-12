@@ -34,3 +34,12 @@
         }
     }
 
+    export async function deleteBrand(id) {
+        const fetchUrl = `${process.env.NEXT_PUBLIC_BACKEND_SERVICE}/brand/${id}`;
+        try {
+            let response = await axios.delete(fetchUrl);
+            return response;
+        } catch (error) {
+            throw new Error("Could not delete brand!");
+        }
+    }
