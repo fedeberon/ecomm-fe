@@ -17,7 +17,9 @@ const Update = ({product, brands, categories, sizes}) => {
         category: {
             id: product.category ? product.category.id : 0
         },
-        brand: product.brand ? product.brand.id : 0
+        brand: {
+            id: product.brand ? product.brand.id : 0
+        }
         ,
         sizes: product.sizes ? product.sizes : [],
         code: product.code ? product.code : "0",
@@ -26,7 +28,6 @@ const Update = ({product, brands, categories, sizes}) => {
         promo: false,
     })
     const [errors, setErrors] = useState({});
-
     const validationsForm = (form) =>{
         let errors ={};
 
