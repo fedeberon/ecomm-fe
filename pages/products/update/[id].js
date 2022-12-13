@@ -15,10 +15,10 @@ const Update = ({product, brands, categories, sizes}) => {
         price: product.price ? product.price : 0,
         description: product.description ? product.description : "Descripcion",
         category: {
-            id: product.category ? product.category.id : 0
+            id: product.category ? product.category.id : ""
         },
         brand: {
-            id: product.brand ? product.brand.id : 0
+            id: product.brand ? product.brand.id : ""
         }
         ,
         sizes: product.sizes ? product.sizes : [],
@@ -43,8 +43,12 @@ const Update = ({product, brands, categories, sizes}) => {
             errors.description = "El campo 'Descripcion' es requerido";
         }
 
-        if (form.category.id == 0){
+        if (form.category.id == 0 || form.category.id == ""){
             errors.category = "El campo 'Categoria' es requerido";
+        }
+
+        if (form.brand.id == "") {
+            errors.brand = "El campo 'Marcas' es requerido";
         }
 
         if (form.sizes.length == 0){
@@ -109,7 +113,7 @@ const Update = ({product, brands, categories, sizes}) => {
     const handleSubmit = (e) => {
         e.preventDefault();
         setErrors(validationsForm(data));
-        if(errors.name || errors.code || errors.categories || errors.brand || errors.price ||errors.stock ||errors.points ||errors.sizes || data.sizes.length == 0){
+        if(errors.name || errors.code || errors.category || errors.brand || errors.price ||errors.stock ||errors.points ||errors.sizes || data.sizes.length == 0 || data.category.id == "" || data.brand.id == ""){
             NotificationManager.info('No fue posible actualizar el articulo: ' +'\"'+ product.name +'\"', 'Administracion de productos' , 2000)    
         } else {
             update(product.id, data).then((result) => {
@@ -195,7 +199,8 @@ const Update = ({product, brands, categories, sizes}) => {
                                    htmlFor="category">
                                 CATEGORIA
                             </label>
-                            <select onChange={handleChange} onBlur={handleChange} name="category" value={data.category.id} className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3    px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="category">
+                            <select onChange={handleChange} onBlur={handleBlur} name="category" value={data.category.id} className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3    px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="category">
+                                <option disabled={true} value="">Seleccionar</option>
                                {
                                 categories? categories.map(categories => (
                                     <option value={categories.id}>{categories.name}</option>
@@ -212,6 +217,7 @@ const Update = ({product, brands, categories, sizes}) => {
                             Marcas
                         </label>
                         <select onChange={handleChange} name="brand" onBlur={handleBlur} value={data.brand.id}  className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="brand">
+                        <option disabled={true} value="">Seleccionar</option>
                         {
                             brands ? brands.map(brand => (
                                 <option value={brand.id}>{brand.name}</option>
@@ -344,7 +350,7 @@ const Update = ({product, brands, categories, sizes}) => {
                         {
                             errors.name ||
                             errors.code ||
-                            errors.categories ||
+                            errors.category ||
                             errors.brand ||
                             errors.price ||
                             errors.stock ||
