@@ -32,3 +32,14 @@ import axios from "axios";
             throw new Error("Could not create categories!");
         }
     }
+
+    export async function deleteCategory(id) {
+        const fetchUrl = `${process.env.NEXT_PUBLIC_BACKEND_SERVICE}/category/${id}`;
+        try {
+            let response = await axios.delete(fetchUrl);
+            return response;
+        } catch (error) {
+            console.log(error)
+            throw new Error("Could not delete category!");
+        }
+    }
