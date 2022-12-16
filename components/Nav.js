@@ -40,11 +40,6 @@ function Nav() {
     setLoad(false)
   }
 
-  const refreshPueri = () => {
-    setLoad(true)
-    window.location.href = "/shop/Puericultura"
-    setLoad(false)
-  }
 
 
   return (
@@ -115,11 +110,11 @@ function Nav() {
             </a>
           </Link>
 
-          <Link href="/shop/Puericultura">
-            <a className="text-smw block mt-4 lg:inline-block lg:mt-0" onClick={refreshPueri}>
+          <Link href="/about/about">
+            <a className="text-smw block mt-4 lg:inline-block lg:mt-0">
               <h1>
                 <span className="text-xl font-primary text-palette-primary font-bold tracking-tight md:p-2 rounded-md hover:bg-gray-50">
-                  Puericultura y Lactancia
+                  Quienes somos
                 </span>
               </h1>
             </a>
