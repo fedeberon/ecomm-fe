@@ -118,7 +118,8 @@ const Update = ({product, brands, categories, sizes}) => {
         } else {
             update(product.id, data).then((result) => {
                       NotificationManager.info('El articulo: ' +'\"'+ data.name +'\"'+ "se actualizo correctamente", 'Administracion de productos' , 2000);
-                })    
+                })   
+                window.location.href = '/products/' + product.id 
         }
 
     }
