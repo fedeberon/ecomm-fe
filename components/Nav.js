@@ -34,14 +34,6 @@ function Nav() {
     setLoad(false)
   }
 
-  const refreshAccesorios = () => {
-    setLoad(true)
-    window.location.href = "/shop/Accesorios"
-    setLoad(false)
-  }
-
-
-
   return (
 
     <header className="w-full sticky lg:static top-0 z-50 bg-white">
@@ -100,8 +92,8 @@ function Nav() {
             </a>
           </Link>
 
-          <Link href="/shop/Accesorios">
-            <a className=" text-smw block mt-4 lg:inline-block lg:mt-0" onClick={refreshAccesorios}>
+          <Link href="/accessories/inicio">
+            <a className=" text-smw block mt-4 lg:inline-block lg:mt-0">
               <h1>
                 <span className="text-xl font-primary text-palette-primary font-bold tracking-tight md:p-2 rounded-md hover:bg-gray-50 pt-1" >
                   Accesorios

@@ -12,8 +12,9 @@ function IndexPage({products, brands, categories}) {
   return (
       <>
           <div className='bg-white'>
-            <div className="h-full overflow-hidden shadow-lg max-h-full">
-              <Carrusel/>
+            <div >
+              {/* <Carrusel/> */}
+              <img src="images/inicio.jpg" className="w-full h-screen"></img>
             </div>
             <div className="w-full h-full">
               <div className='flex justify-center'>
