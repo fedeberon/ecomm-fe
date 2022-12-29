@@ -11,12 +11,11 @@ import logo from "../../images/Logo Dulce bb.png";
 import { findAll, getByUsername } from "../../services/userService";
 import CartTable from "@/components/cart/CartTable";
 import { getPersonByCUIT } from "../../services/personService.js";
-import UserList from "/components/users/UserList";
 import logo2 from "/images/logo3buhos.png";
 import {NotificationContainer, NotificationManager} from 'react-notifications';
 import 'react-notifications/lib/notifications.css';
 
-const Payment = ({ user, myPoints, users }) => {
+const Payment = ({ myPoints, users }) => {
   const [checkout, setCheckout] = useState();
   const [error, setError] = useState();
   const router = useRouter();
@@ -170,10 +169,6 @@ const Payment = ({ user, myPoints, users }) => {
     }
   };
 
-  const handleTwins = (e) => {
-    setTwins(!twins);
-  };
-
   const [showCreditCard, setShowCreditCard] = useState(false);
 
   const [showPointCard, setShowPointCard] = useState(false);
@@ -307,7 +302,6 @@ const Payment = ({ user, myPoints, users }) => {
                     {error ? error : ""}
                   </label>
                   <div className="relative mb-5 mt-2">
-                    {/* <div className="absolute w-10 right-0 bg-green-600 h-10"></div> */}
                     <input
                       id="cuit"
                       name="cuit"
@@ -477,12 +471,6 @@ const Payment = ({ user, myPoints, users }) => {
                 id="third"
                 className={`${tabs.paymentMethod ? `` : `hidden`}`}
               >
-                {/*<select onChange={(e)=>handleSelect(e)}>
-                    <option>SELECCIONAR</option>
-                    
-                    <option value={'point card'}> TARJETA DE PUNTOS </option>
-                    <option value={'credit card'}> TARJETA DE CREDITO </option>
-                  </select>*/}
 
                 <div className="w-full">
                   <label

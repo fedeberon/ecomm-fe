@@ -1,6 +1,5 @@
 import { createContext, useContext, useState, useEffect } from 'react'
-import { createShopifyCheckout, updateShopifyCheckout, setLocalData, saveLocalData } from '@/utils/helpers'
-import {createCheckout} from "../services/productService";
+import {  setLocalData, saveLocalData } from '@/utils/helpers'
 
 const CartContext = createContext()
 const AddToCartContext = createContext()
@@ -27,7 +26,6 @@ export function CartProvider({ children }) {
   const [cart, setCart] = useState([])
   const [checkoutId, setCheckoutId] = useState('')
   const [checkoutUrl, setCheckoutUrl] = useState('')
-  const [price, setPrice] = useState('');
   const [isLoading, setisLoading] = useState(false)
 
   useEffect(() => {

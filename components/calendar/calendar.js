@@ -43,7 +43,6 @@ function Calendario() {
       }else{
       isShowFilter(false)
       setInfo(data)
-      console.log(data)
       }
     })
   })

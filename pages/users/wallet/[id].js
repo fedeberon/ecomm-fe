@@ -1,5 +1,4 @@
 import {getWalletUser} from "../../../services/walletService";
-import {useEffect} from "react";
 import PageTitle from "@/components/PageTitle";
 import WalletOfUser from "../../../components/wallet";
 import { getByUsername } from "services/userService";

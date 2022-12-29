@@ -1,7 +1,7 @@
 
 import { NotificationContainer } from "react-notifications";
 import useForm from "../../hooks/useForm";
-import {useEffect, useState, useMemo } from "react";
+import { useState, useMemo } from "react";
 
 
 const NewProduct = ({ categories, brands, sizes }) => {
@@ -28,7 +28,6 @@ const NewProduct = ({ categories, brands, sizes }) => {
 
     const validationsForm = (form) => {
         let errors = {};
-        // let regexName = /^[A-Za-z]+$/;
 
         if (!form.name.trim()) {
             errors.name = "El campo 'Nombre' es requerido";
@@ -70,8 +69,6 @@ const NewProduct = ({ categories, brands, sizes }) => {
     const {
         form,
         errors,
-        loading,
-        response,
         handleChange,
         handleBlur,
         handleSubmit, } = useForm(initialForm, validationsForm);

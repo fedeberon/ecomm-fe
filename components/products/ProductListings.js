@@ -1,9 +1,8 @@
 import ProductCard from '@/components/products/ProductCard'
 import {useEffect, useState} from "react";
-import {filterProductsByBrands, filterProductsByCategories, getProducts, getProductsByType, search} from "../../services/productService"
+import {filterProductsByBrands, filterProductsByCategories, getProducts, search} from "../../services/productService"
 import BrandSearch from '../brands/BrandSearch';
 import CategorySearch from '../filter/CategorySearch';
-import Loading from "@/components/utils/Loading";
 
 function ProductListings({ products, brands, categories}) {
 
@@ -193,9 +192,9 @@ const searchCategories = async () => {
                                     <BrandSearch brands={brands} onclick={handleChangeBrand}/>
                                 </div>
 
-                                <div class="p-3  mt-2 text-center space-x-4 md:block">
-                                  <button class="mb-2 md:mb-0 bg-palette-slight border border-black-500 px-5 py-2 text-sm shadow-sm font-medium tracking-wider text-white hover:text-white rounded-full hover:shadow-lg hover:bg-palette-secondary" onClick={close}>Cerrar</button>
-                                  <button class="mb-2 md:mb-0 bg-palette-slight border-black-500 px-5 py-2 text-sm shadow-sm font-medium tracking-wider text-white hover:text-white rounded-full hover:shadow-lg hover:bg-palette-secondary" onClick={searchAll}>Buscar</button>
+                                <div className="p-3  mt-2 text-center space-x-4 md:block">
+                                  <button className="mb-2 md:mb-0 bg-palette-slight border border-black-500 px-5 py-2 text-sm shadow-sm font-medium tracking-wider text-white hover:text-white rounded-full hover:shadow-lg hover:bg-palette-secondary" onClick={close}>Cerrar</button>
+                                  <button className="mb-2 md:mb-0 bg-palette-slight border-black-500 px-5 py-2 text-sm shadow-sm font-medium tracking-wider text-white hover:text-white rounded-full hover:shadow-lg hover:bg-palette-secondary" onClick={searchAll}>Buscar</button>
                                 </div>
                             </div>
                         </div>
@@ -215,8 +214,8 @@ const searchCategories = async () => {
                           <></>
                       }
           </div>
-          <button type="button" data-mdb-ripple="true" onMouseDown={backToTopButton} data-mdb-ripple-color="light" class="z-0 -mx-9 md:-mx-7 shadow-lg invisible md:visible ease-out duration-500 sticky p-2 bg-palette-secondary animate-bounce text-white font-medium text-xs leading-tight uppercase rounded-full hover:bg-palette-sdark hover:shadow-lg  focus:shadow-lg focus:outline-none focus:ring-0 active:shadow-lg bottom-5 right-2" id="btn-back-to-top">
-          <svg aria-hidden="true" focusable="false" data-prefix="fas" class="w-5 h-5" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentColor" d="M34.9 289.5l-22.2-22.2c-9.4-9.4-9.4-24.6 0-33.9L207 39c9.4-9.4 24.6-9.4 33.9 0l194.3 194.3c9.4 9.4 9.4 24.6 0 33.9L413 289.4c-9.5 9.5-25 9.3-34.3-.4L264 168.6V456c0 13.3-10.7 24-24 24h-32c-13.3 0-24-10.7-24-24V168.6L69.2 289.1c-9.3 9.8-24.8 10-34.3.4z"></path></svg>
+          <button type="button" data-mdb-ripple="true" onMouseDown={backToTopButton} data-mdb-ripple-color="light" className="z-0 -mx-9 md:-mx-7 shadow-lg invisible md:visible ease-out duration-500 sticky p-2 bg-palette-secondary animate-bounce text-white font-medium text-xs leading-tight uppercase rounded-full hover:bg-palette-sdark hover:shadow-lg  focus:shadow-lg focus:outline-none focus:ring-0 active:shadow-lg bottom-5 right-2" id="btn-back-to-top">
+          <svg aria-hidden="true" focusable="false" data-prefix="fas" className="w-5 h-5" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentColor" d="M34.9 289.5l-22.2-22.2c-9.4-9.4-9.4-24.6 0-33.9L207 39c9.4-9.4 24.6-9.4 33.9 0l194.3 194.3c9.4 9.4 9.4 24.6 0 33.9L413 289.4c-9.5 9.5-25 9.3-34.3-.4L264 168.6V456c0 13.3-10.7 24-24 24h-32c-13.3 0-24-10.7-24-24V168.6L69.2 289.1c-9.3 9.8-24.8 10-34.3.4z"></path></svg>
           </button>
                   </div>
 

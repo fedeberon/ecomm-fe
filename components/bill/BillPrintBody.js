@@ -1,4 +1,3 @@
-import {useEffect} from "react";
 import Moment from "react-moment";
 
 const BillPrintBody = ({bill}) => {
@@ -60,7 +59,7 @@ const BillPrintBody = ({bill}) => {
                                 <tbody class="bg-white divide-y divide-gray-200">
 
                                 {
-                                    bill.data.checkout.products.map((p, index) => (
+                                    bill.data.checkout.products.map((p) => (
                                         <tr>
                                             <td className="px-6 py-4 whitespace-nowrap">
                                                 <div className="flex items-center">

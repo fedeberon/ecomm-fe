@@ -6,12 +6,9 @@ import { faBars } from "@fortawesome/free-solid-svg-icons";
 import { faShoppingCart } from "@fortawesome/free-solid-svg-icons";
 import logo from "/images/logoMati.png";
 import UserSession from "@/components/users/UserSession";
-import Index from "./admin";
 import { useSession } from "next-auth/client";
 import Loading from "./utils/Loading";
 
-import { getServerSideProps } from "pages/login";
-import { padding } from "tailwindcss/defaultTheme";
 
 function Nav() {
   const cart = useCartContext()[0];
@@ -36,19 +33,6 @@ function Nav() {
     window.location.href = "/shop/Pañaleria"
     setLoad(false)
   }
-
-  const refreshAccesorios = () => {
-    setLoad(true)
-    window.location.href = "/shop/Accesorios"
-    setLoad(false)
-  }
-
-  const refreshPueri = () => {
-    setLoad(true)
-    window.location.href = "/shop/Puericultura"
-    setLoad(false)
-  }
-
 
   return (
 
@@ -108,8 +92,8 @@ function Nav() {
             </a>
           </Link>
 
-          <Link href="/shop/Accesorios">
-            <a className=" text-smw block mt-4 lg:inline-block lg:mt-0" onClick={refreshAccesorios}>
+          <Link href="/accessories/inicio">
+            <a className=" text-smw block mt-4 lg:inline-block lg:mt-0">
               <h1>
                 <span className="text-xl font-primary text-palette-primary font-bold tracking-tight md:p-2 rounded-md hover:bg-gray-50 pt-1" >
                   Accesorios
@@ -118,11 +102,11 @@ function Nav() {
             </a>
           </Link>
 
-          <Link href="/shop/Puericultura">
-            <a className="text-smw block mt-4 lg:inline-block lg:mt-0" onClick={refreshPueri}>
+          <Link href="/about/about">
+            <a className="text-smw block mt-4 lg:inline-block lg:mt-0">
               <h1>
                 <span className="text-xl font-primary text-palette-primary font-bold tracking-tight md:p-2 rounded-md hover:bg-gray-50">
-                  Puericultura y Lactancia
+                  Quienes somos
                 </span>
               </h1>
             </a>

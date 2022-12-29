@@ -1,7 +1,6 @@
 import UserData from "@/components/users/UserData";
 import UserNav from "@/components/users/UserNav";
 import { getSession } from "next-auth/client";
-import { useEffect } from "react";
 import { getByUsername } from "services/userService";
 
 const Profile = ({userSession}) => {

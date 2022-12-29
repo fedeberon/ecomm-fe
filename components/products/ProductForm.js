@@ -16,7 +16,6 @@ function ProductForm({ productData, image}) {
   const [id, setID] = useState(productData.id);
   const [price, setPrice] = useState(productData.price);
   const [quantity, setQuantity] = useState(1);
-  const isLoading = useCartContext()[2];
   const addToCart = useAddToCartContext();
   const [openUploadFile, setOpenUploadFile] = useState(false);
   const router = useRouter();
@@ -34,16 +33,6 @@ function ProductForm({ productData, image}) {
     setPromo(product.data.promo)
   }
 
-  
-  const atcBtnStyle = isLoading ?
-    `pt-3 pb-2 bg-palette-primary text-white w-full mt-2 rounded-sm font-primary font-semibold text-xl flex 
-                      justify-center items-baseline  hover:bg-palette-dark opacity-25 cursor-none`
-    :
-    `pt-3 pb-2 bg-palette-primary text-white w-full mt-2 rounded-sm font-primary font-semibold text-xl flex 
-                      justify-center items-baseline  hover:bg-palette-dark`
-
-
-
   async function handleAddToCart() {
     if (quantity != '') {
       addToCart({
@@ -59,7 +48,7 @@ function ProductForm({ productData, image}) {
     }
   }
 
-  async function delateProduct (productData) {
+  async function delateProduct () {
     try{
       
       await deleteProduct(id)
@@ -73,7 +62,6 @@ function ProductForm({ productData, image}) {
     catch(error){
       throw new Error("Fallo en la funcion de borrar producto")
     }
-    // window.location.href = '/'
   }
 
   const goToEdit = () => {

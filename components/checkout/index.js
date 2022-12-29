@@ -1,15 +1,6 @@
-import logo from "../../images/default.jpeg";
 import {useEffect} from "react";
 
 const CheckoutDetail = ({checkout, setShow}) => {
-
-    const defaultImage = {
-        "url": "default.jpeg",
-        "link": logo,
-        "main": false
-    };
-
-
     useEffect(() => {
         console.log(checkout, setShow)
     })

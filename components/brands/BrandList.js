@@ -3,6 +3,7 @@ import Link from "next/link";
 import FilterComponent from "../filter/FilterComponent";
 import {useMemo, useState} from "react";
 import {paginationComponentOptions} from "../../DataTableUtils";
+import { deleteBrand } from "services/brandService";
 
 const BrandList = ({ brands }) => {
     
@@ -22,6 +23,13 @@ const BrandList = ({ brands }) => {
             name: 'Nombre',
             selector: row => row.name,
             sortable: true,
+        },
+        {
+            name: "Eliminar",
+            cell: (row) => <button onClick={() => handleDelete(row.id)}>X</button>,
+            allowOverflow: true,
+            button: true,
+            width: "56px"
         }
     ];
     
@@ -37,6 +45,10 @@ const BrandList = ({ brands }) => {
         );
     }, [filterText, resetPaginationToggle]);
 
+    const handleDelete = async (id) =>{
+        await deleteBrand(id)
+        window.location.reload(false);
+    }
     
     
     return (

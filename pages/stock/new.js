@@ -1,7 +1,6 @@
 import Create   from '/components/stock/Create'
 import PageTitle from "@/components/PageTitle";
 import React from "react";
-import { NotificationContainer } from "react-notifications";
 
 
 const New = () => {

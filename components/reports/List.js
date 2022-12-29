@@ -1,5 +1,4 @@
 import DataTable from 'react-data-table-component'
-import Link from 'next/link'
 import {useMemo, useState} from "react";
 import {paginationComponentOptions} from "../../DataTableUtils";
 
@@ -41,17 +40,6 @@ const List = ({report}) => {
 
     ];
 
-
-    const subHeaderComponentMemo = useMemo(() => {
-        const handleClear = () => {
-            if (filterText) {
-                setResetPaginationToggle(!resetPaginationToggle);
-                setFilterText('');
-            }
-        };
-    }, [filterText, resetPaginationToggle]);
-
-
     return (
         
         <div className="min-h-80 max-w-12 my-4 sm:my-8 mx-auto w-full">
@@ -62,7 +50,6 @@ const List = ({report}) => {
                 pagination
                 paginationResetDefaultPage={resetPaginationToggle}
                 subHeader
-                subHeaderComponent={subHeaderComponentMemo}
                 persistTableHead
                 paginationComponentOptions={paginationComponentOptions}
             />

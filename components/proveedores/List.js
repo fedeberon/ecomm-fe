@@ -1,5 +1,4 @@
 import DataTable from 'react-data-table-component'
-import Link from 'next/link'
 import FilterComponent from "@/components/filter/FilterComponent";
 import {useMemo, useState} from "react";
 import {paginationComponentOptions} from "../../DataTableUtils";

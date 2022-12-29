@@ -1,5 +1,3 @@
-import Link from "next/link";
-import Moment from "react-moment";
 import FilterCuitComponent from "../filter/FilterCuitComponent";
 import DataTable  from "react-data-table-component";
 import {useState, useMemo} from "react"
