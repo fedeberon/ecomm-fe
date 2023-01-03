@@ -8,9 +8,11 @@ const Accessories = ({categories, setCategory}) => {
                             categories
                             ?
                             categories.map((category, index) => (
+                                category.name != "Pañaleria" ?
                                 <div onClick={() => setCategory(category.name)}>
                                     <Category category={category}/>
                                 </div>
+                                : null
                             ))
                             :
                             <></>
