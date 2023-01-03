@@ -28,12 +28,6 @@ function Nav() {
     setCartItems(numItems);
   }, [cart]);
 
-  const refreshPañaleria = () => {
-    setLoad(true)
-    window.location.href = "/shop/Pañaleria"
-    setLoad(false)
-  }
-
   return (
 
     <header className="w-full sticky lg:static top-0 z-50 bg-white">
@@ -82,8 +76,8 @@ function Nav() {
             </a>
           </Link>
 
-          <Link href="/shop/Pañaleria">
-            <a className="text-smw block mt-4 lg:inline-block lg:mt-0" onClick={refreshPañaleria}>
+          <Link href="/diapers/inicio">
+            <a className="text-smw block mt-4 lg:inline-block lg:mt-0">
               <h1>
                 <span className="text-xl font-primary text-palette-primary font-bold md:p-2 rounded-md hover:bg-gray-50 tracking-tight pt-1">
                   Pa&ntilde;aleria
@@ -102,7 +96,7 @@ function Nav() {
             </a>
           </Link>
 
-          <Link href="/about/about">
+          <Link href="/about/inicio">
             <a className="text-smw block mt-4 lg:inline-block lg:mt-0">
               <h1>
                 <span className="text-xl font-primary text-palette-primary font-bold tracking-tight md:p-2 rounded-md hover:bg-gray-50">
