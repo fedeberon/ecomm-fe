@@ -3,6 +3,7 @@ import DataTable  from "react-data-table-component";
 import {useState, useMemo} from "react"
 import DateObject from "react-date-object";
 import {paginationComponentOptions} from "../../DataTableUtils";
+import Link from "next/link";
 
 const Bills = ({bills}) => {
     const[filterText, setFilterText]= useState ('')
@@ -14,7 +15,8 @@ const Bills = ({bills}) => {
         {
             name: 'Id',
             selector: row => row.id,
-            sortable: true
+            sortable: true,
+            cell: row => <Link passHref href={`/bills/${row.id}`}><a className={`text-indigo-600`}>#{row.id}</a></Link>
         },
         {
             name: 'Tipo',
