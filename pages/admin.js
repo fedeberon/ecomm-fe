@@ -144,6 +144,22 @@ const Admin = () => {
                         </div>
                     </Link>
 
+                    <Link href="/proveedores/bills">
+                        <div className="pl-1 my-4 w-80 h-24 lg:w-3/4 justify-self-center bg-green-400 rounded-lg shadow-md cursor-pointer">
+                            <div className="flex w-full h-full py-2 px-4 bg-white rounded-lg justify-between">
+                                <div className="my-auto">
+                                    <p className="font-bold">Facturacion Proveedores</p>
+                                    <p className="text-lg">Detalle de las facturas generadas por los provedores</p>
+                                </div>
+                                <div className="my-auto">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                                </svg>
+                                </div>
+                            </div>
+                        </div>
+                    </Link>
+
                     <Link href="/size">
                         <div className="pl-1 my-4 w-80 h-24 lg:w-3/4 justify-self-center bg-blue-500 rounded-lg shadow-md cursor-pointer">
                             <div className="flex w-full h-full py-2 px-4 bg-white rounded-lg justify-between">
