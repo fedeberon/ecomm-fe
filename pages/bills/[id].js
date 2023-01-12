@@ -33,7 +33,7 @@ const Detail = ({ bill }) => {
                     <> Buscando </>
                     :
                     <>
-                        <div id="bill" className="justify-between w-full h-screen">
+                        <div id="bill" className="justify-between w-full h-screen mt-10">
                             <div id="factura" className="m-auto lg:w-1/2">
                                 <div id="head-factura" className="flex justify-between border-b-4 border-grey-800">
                                     <img id="img-factura" src={logo.src} className="w-32" />
