@@ -6,7 +6,7 @@ import { NotificationManager, NotificationContainer } from "react-notifications"
 import 'react-notifications/lib/notifications.css';
 import Loading from "../utils/Loading";
 
-const Create = () => {
+const Create = ({providers}) => {
 
     const [errors, setErrors] = useState({})
     const [stocks, setStocks] = useState([])
@@ -63,6 +63,10 @@ const Create = () => {
         errors.order = "El campo 'Orden' es requerido";
         setErrors(errors)
       }
+      if (stoks[0]?.provider == null || stoks[0].provider == "" ){
+        errors.provider = "El campo 'Proveedor' es requerido";
+        setErrors(errors)
+      }
       stoks.map(item =>{
         if (!item.quantity == null || item.quantity == "" || item.quantity < 1){
           errors.quantity = "El campo 'Cantidad' es requerido";
@@ -76,14 +80,17 @@ const Create = () => {
 
     const saveStocks = () => { 
       setIsLoad(true)
-      if(errors.order == undefined && errors.quantity == undefined){
+      if(errors.order == undefined && errors.quantity == undefined && errors.provider == undefined){
         save(stocks).then((result) => {
-          if (result.status == 200) {
+          console.log(result)
+          if (result.status == 200 && result.data.length > 0) {
             NotificationManager.info('El stock se cargo correctamente', 'Administracion de stock' , 3000);
           }else{
-            NotificationManager.info(result.status +'No fue posible cargar el articulo: ', 'Administracion de productos' , 1000)
+            NotificationManager.info('No fue posible cargar el articulo, por favor revisar Orden y proveedor ', 'Administracion de productos' , 3000)
           }
         });   
+      } else{
+        NotificationManager.info(`No fue posible cargar el articulo: ${ errors.quantity ? "Revisar cantidad de articulos" : errors.order ? "Revisar numero de orden" : errors.provider ? "Revisar proveedor": null}`, 'Administracion de productos' , 3000)
       }
       setIsLoad(false)
       return;
@@ -91,7 +98,8 @@ const Create = () => {
     }
 
     const handleChange = (e, index) => {
-        const { name, value } = e.target;
+      const { name, value } = e.target;
+      console.log(name)
           if(name == "order"){
             stocks.map((stock)=>{
               stock[name] = value
@@ -103,14 +111,23 @@ const Create = () => {
           validateStock(stocks);
     }
 
+    const handleChangeProvider = (e) => {
+      const { name, value } = e.target;
+      stocks.map((stock)=>{
+        stock[name] = {id: value}
+      })
+    }
+
     return (
       <>
       <NotificationContainer/>
-        <div className="flex">
-            <span className="text-sm border border-2 rounded-l px-4 py-2 bg-white w-32 whitespace-no-wrap">Orden #</span>
-            <input name="order" className="border border-2 rounded-r px-4 py-2 w-full" type="text"
-                    placeholder="Ingrese el n&uacute;mero de comprobante ..." onChange={(e)=>handleChange(e)} />
-             {errors.order &&   <p className={`text-red-500 text-xs italic`}>*</p>}
+      <div className="flex items-center justify-center h-full">
+          <button
+            className="py-2 px-4 bg-blue-500 text-white rounded hover:bg-blue-700"
+            onClick={toggleModal}
+          >
+            Agregar Producto
+          </button>
         </div>
         <section className="container mx-auto p-6 font-mono">
           <div className="w-full mb-8 overflow-hidden rounded-lg shadow-lg">
@@ -187,21 +204,36 @@ const Create = () => {
             </div>
           </div>
         </section>
+
+
+        <div className="flex">
+            <span className="text-sm border border-2 rounded-l px-4 py-2 bg-white w-32 whitespace-no-wrap">Orden #</span>
+            <input name="order" className="border border-2 rounded-r px-4 py-2 w-full" type="text"
+                    placeholder="Ingrese el n&uacute;mero de comprobante ..." onChange={(e)=>handleChange(e)} />
+             {errors.order &&   <p className={`text-red-500 text-xs italic`}>* Campo necesario</p>}
+        </div>
+        <div className="flex">
+            <span className="text-sm border border-2 rounded-l px-4 py-2 bg-white w-32 whitespace-no-wrap">Proveedor</span>
+            <select name="provider" className="border border-2 rounded-r px-4 py-2 w-full" onChange={handleChangeProvider}>
+              <option selected disabled={true} value="">Seleccionar Proveedor</option>
+              {
+                providers.map(provider => (
+                  <option name={provider.name} value={provider.id}>{provider.name}</option>
+                ))
+              }
+            </select>
+             {errors.provider &&   <p className={`text-red-500 text-xs italic`}>* Campo necesario</p>}
+        </div>
+        
+
         <div className="flex items-center justify-center h-full">
           <button
-            className="py-2 px-4 bg-blue-500 text-white rounded hover:bg-blue-700"
-            onClick={toggleModal}
-          >
-            Agregar
-          </button>
-
-          <button
-            className="py-2 px-4 ml-4 bg-green-500 text-white rounded hover:bg-blue-700"
+            className="py-2 px-4 my-10 ml-4 bg-green-500 text-white rounded hover:bg-blue-700"
             onClick={saveStocks}
           >
             Guardar
           </button>
-          {errors.quantity &&   <p className={`text-red-500 text-xs italic`}>{errors.quantity}</p>}
+          {errors.quantity &&   <p className={`text-red-500 text-xs italic`}>{errors.quantity} Elegir productos</p>}
 
         </div>
 
