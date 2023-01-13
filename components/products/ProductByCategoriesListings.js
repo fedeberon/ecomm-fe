@@ -7,7 +7,6 @@ function ProductByCategoriesListings({ products, brands, categories, category}) 
     const [isLoading, setIsLoading] = useState(false);
     const [productsToShow, setProductsToShow] = useState();
 
-
     let handleScroll = async (e) => {
         if(window.innerHeight + e.target.documentElement.scrollTop + 1  > e.target.documentElement.scrollHeight && !isLoading) {
           if(products.last===true){
@@ -59,13 +58,13 @@ function ProductByCategoriesListings({ products, brands, categories, category}) 
               <div className="mx-auto mt-3 w-11/12">
                   <div className="grid sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-9 2xl:gap-4 ">
                       {
-                          productsToShow
+                          productsToShow?.length >= 1
                           ?
                           productsToShow.map((product, index) => (
                               <ProductCard key={index} product={product} />
                           ))
                           :
-                          <></>
+                          <div className=" ">No hay productos disponibles en {category}</div>
                       }
           </div>
           <button type="button" data-mdb-ripple="true" onMouseDown={backToTopButton} data-mdb-ripple-color="light" className="z-0 -mx-9 md:-mx-7 shadow-lg invisible md:visible ease-out duration-500 sticky p-2 bg-palette-secondary animate-bounce text-white font-medium text-xs leading-tight uppercase rounded-full hover:bg-palette-sdark hover:shadow-lg  focus:shadow-lg focus:outline-none focus:ring-0 active:shadow-lg bottom-5 right-2" id="btn-back-to-top">
