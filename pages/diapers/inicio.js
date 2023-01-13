@@ -1,4 +1,3 @@
-import Accesories from "@/components/accessories/Accessories"
 import PageTitle from "@/components/PageTitle"
 import { findAll } from "services/categoriesService";
 import { getProducts } from "services/productService";
