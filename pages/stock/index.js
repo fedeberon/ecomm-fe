@@ -5,7 +5,6 @@ import List from "@/components/stock/List";
 import Link from "next/link";
 
 const Index = ({stock}) => {
-
     return (
 
         <div className="mx-auto max-w-6xl">

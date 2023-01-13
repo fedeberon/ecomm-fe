@@ -8,6 +8,7 @@ import logo from "/images/logoMati.png";
 import UserSession from "@/components/users/UserSession";
 import { useSession } from "next-auth/client";
 import Loading from "./utils/Loading";
+import { findAll } from "services/categoriesService";
 
 
 function Nav() {
@@ -16,10 +17,17 @@ function Nav() {
   const [session, loading] = useSession();
   const [isShow, setIsShow] = useState(false)
   const [load, setLoad] = useState(false)
+  const [categoriesVisible, setCategoriesVisible] = useState(false);
+  const [categories, setCategories] = useState([])
 
   const handleMenu = () => {
     setIsShow(!isShow)
   }
+
+  useEffect(async() => {
+    setCategories(await findAll())
+  }, [])
+
   useEffect(() => {
     let numItems = 0;
     cart.forEach((item) => {
@@ -27,6 +35,10 @@ function Nav() {
     });
     setCartItems(numItems);
   }, [cart]);
+
+  const showCategories = (() => {
+    setCategoriesVisible(!categoriesVisible)
+  })
 
   return (
 
@@ -86,15 +98,36 @@ function Nav() {
             </a>
           </Link>
 
-          <Link href="/accessories/inicio">
-            <a className=" text-smw block mt-4 lg:inline-block lg:mt-0">
-              <h1>
-                <span className="text-xl font-primary text-palette-primary font-bold tracking-tight md:p-2 rounded-md hover:bg-gray-50 pt-1" >
-                  Accesorios
-                </span>
-              </h1>
-            </a>
-          </Link>
+          <div className="relative inline-block text-left">
+            <div className="text-smw block lg:relative lg:mt-0">
+              <button
+                type="button"
+                onClick={showCategories}
+                className="inline-flex w-full bg-white text-lg font-primary font-bold text-palette-primary hover:bg-gray-50 capitalize  focus:ring-2 focus:ring-palette-lighter focus:ring-opacity-75"
+              >
+                Categorías
+                <svg className="h-5 mt-1 w-5" xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                    <path fillRule="evenodd"
+                      d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                      clipRule="evenodd"/>
+                </svg>
+              </button>
+            </div>
+            <div
+                className={`${categoriesVisible ? "" : "hidden"}  z-50 absolute mt-2 w-46 lg:w-32 lg:right-0 rounded-md shadow-lg bg-white ring-2 ring-palette-lighter ring-opacity-75 focus:outline-none md:-mx-2 -mx-0`}
+                role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabIndex="-1">
+                <div className="py-1 " role="none">
+                  {categories?.map((category) =>(
+                      <Link href={`/accessories/${category.id}`} passHref legacyBehavior>
+                      <a href="#" onClick={showCategories} className="text-palette-light block text-center hover:bg-gray-50 px-4 py-2 text-sm" role="menuitem"
+                      tabIndex="-1" id="menu-item-0">{category.name}</a>
+                      </Link>
+                    ))
+                  }
+                </div>
+            </div>
+          </div>
 
           <Link href="/about/inicio">
             <a className="text-smw block mt-4 lg:inline-block lg:mt-0">
