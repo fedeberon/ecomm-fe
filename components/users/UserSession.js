@@ -21,9 +21,9 @@ const UserSession = ({session}) => {
                         <div className="text-smw block lg:relative lg:-mt-2">
                             <button type="button"
                                     onClick={showOptionsSession}
-                                    className="inline-flex justify-center md:mt-2 md:ml-2 w-full rounded-md px-3 py-2 bg-white text-lg font-primary font-bold text-palette-primary hover:bg-gray-50 capitalize  focus:ring-2 focus:ring-palette-lighter focus:ring-opacity-75"
+                                    className="inline-flex justify-center md:mt-2 md:ml-2 w-full rounded-md px-3 py-2 bg-white text-lg font-primary text-palette-primary hover:text-palette-secondary capitalize  focus:ring-2 focus:ring-palette-lighter focus:ring-opacity-75"
                                     id="menu-button" aria-expanded="true" aria-haspopup="true">
-                                {session.user.name}
+                                {(session.user.name).toUpperCase()}
                                 <svg className="h-5 mt-1 w-5" xmlns="http://www.w3.org/2000/svg"
                                      viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
                                     <path fillRule="evenodd"
