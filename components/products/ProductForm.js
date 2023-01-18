@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCloudUploadAlt, faEdit, faTrash} from '@fortawesome/free-solid-svg-icons'
+import { faCloudUploadAlt, faEdit, faTrash, faTag} from '@fortawesome/free-solid-svg-icons'
 import { useCartContext, useAddToCartContext } from '@/context/Store'
 import UploadFile from "@/components/products/UploadFile";
 import {NotificationContainer, NotificationManager} from 'react-notifications';
@@ -113,45 +113,50 @@ function ProductForm({ productData, image}) {
                 session?.user?.role?.includes("ADMIN")
           
             ?
-              <>
-                <button onClick={delateProduct} className="pt-3 pb-2 bg-palette-primary text-white w-full mt-2 rounded-sm font-primary font-semibold text-xl flex
-                      justify-center items-baseline  hover:bg-palette-light cursor-pointer"><FontAwesomeIcon icon={faTrash} className="m-auto w-10 h-10 text-white"/></button>
-                <a
+              <div className='display flex w-full justify-between h-12'>
+                <button onClick={delateProduct} className="bg-palette-primary text-white w-1/4 mt-2 mr-3  rounded-sm font-primary font-semibold text-xs flex
+                    justify-center items-baseline hover:scale-125 transform transition duration-500 group hover:bg-palette-light cursor-pointer">
+                      <p className="hidden m-1 group-hover:block">Eliminar Producto</p>
+                      <FontAwesomeIcon icon={faTrash} className="w-5 m-auto group-hover:hidden"/>
+                </button>
+                <div
                     aria-label="upload-images"
-                    className="pt-3 pb-2 bg-palette-primary text-white w-full mt-2 rounded-sm font-primary font-semibold text-xl flex
-                      justify-center items-baseline  hover:bg-palette-light cursor-pointer"
+                    className="bg-palette-primary text-white w-1/4 mt-2 mr-3 h-auto rounded-sm font-primary font-semibold text-xs flex
+                    justify-center items-baseline hover:scale-125 transform transition duration-500 group hover:bg-palette-light cursor-pointer"
                     onClick={() => setOpenUploadFile(true)}
                 >
-                  Subir Imagenes
-                  <FontAwesomeIcon icon={faCloudUploadAlt} className="w-5 ml-2" />
-                </a>
+                  <p className="hidden m-1 group-hover:block">Subir Imagenes</p>
+                  <FontAwesomeIcon icon={faCloudUploadAlt} className="w-5 m-auto group-hover:hidden" />
+                </div>
 
-                <a
+                <div
                     aria-label="edit-data"
-                    className="pt-3 pb-2 bg-palette-primary text-white w-full mt-2 rounded-sm font-primary font-semibold text-xl flex
-                      justify-center items-baseline  hover:bg-palette-light cursor-pointer"
+                    className="bg-palette-primary text-white w-1/4 mt-2 mr-3 rounded-sm font-primary font-semibold text-xs flex
+                    justify-center items-baseline hover:scale-125 transform transition duration-500 group hover:bg-palette-light cursor-pointer"
                     onClick={goToEdit}>
-                  Modificar Datos
-                  <FontAwesomeIcon icon={faEdit} className="w-5 ml-2" />
-                </a>
+                  <p className="hidden m-1  group-hover:block">Editar Producto</p>
+                  <FontAwesomeIcon icon={faEdit} className="w-5 m-auto group-hover:hidden" />
+                </div>
 
                 {
 
                     promo
                     ?
                       <imput type='checkbox'
-                      className="pt-3 pb-2 bg-blue-600 text-white w-full mt-2 rounded-sm font-primary font-semibold text-xl flex
-                        justify-center items-baseline  hover:bg-blue-400 cursor-pointer"
+                      className="bg-blue-400 text-white w-1/4 mt-2 mr-3 rounded-sm font-primary font-semibold text-xs flex
+                      justify-center items-baseline hover:scale-125 transform transition duration-500 group hover:bg-blue-400 cursor-pointer"
                         onClick={handlePromo} >
-                        Promocion
+                          <p className="hidden m-1 group-hover:block">Eliminar Promocion</p>
+                        <FontAwesomeIcon icon={faTag} className="w-5 m-auto group-hover:hidden" />
                       </imput>
 
                     :
                       <imput type='checkbox'
-                      className="pt-3 pb-2 bg-red-600 text-white w-full mt-2 rounded-sm font-primary font-semibold text-xl flex
-                        justify-center items-baseline  hover:bg-red-400 cursor-pointer"
+                      className="bg-red-600 text-white w-1/4 mt-2 rounded-sm font-primary font-semibold text-xs flex
+                        justify-center items-baseline hover:scale-125 transform transition duration-500 group hover:bg-red-400 cursor-pointer"
                         onClick={handlePromo} >
-                        Sin Promocion
+                          <p className="hidden m-1 group-hover:block">Añadir Promocion</p>
+                        <FontAwesomeIcon icon={faTag} className="w-5 m-auto group-hover:hidden" />
                       </imput>
                 }
 
@@ -163,7 +168,7 @@ function ProductForm({ productData, image}) {
                     folder={id}
 
                 />
-              </>
+              </div>
               :
               <></>
         }
