@@ -47,11 +47,11 @@ function ProductCard({ product }) {
 
           
 
-          <div className="font-primary truncate text-palette-primary text-2xl pt-4 px-4 font-semibold">
+          <div className="font-primary truncate text-palette-primary text-2xl pt-4 px-4 font-bold">
             {title}
           </div>
 
-          <div className="text-lg text-palette-secondary p-4 font-primary font-light">
+          <div className="text-lg text-palette-secondary p-4 font-primary font-semibold">
             {description}
           </div>
 

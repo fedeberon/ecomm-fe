@@ -60,9 +60,9 @@ function Nav() {
         </div>
         <div className="lg:order-3">
           <Link href="/cart" passHref>
-            <a className="flex md:-mt-1 flex-wrap ml-2 md:ml-1 object-right p-6 lg:order-last md:p-3 rounded-lg hover:bg-gray-50" aria-label="cart">
+            <a className="flex md:-mt-1 flex-wrap ml-2 md:ml-1 object-right p-6 lg:order-last md:p-3 rounded-lg hover:text-palette-secondary" aria-label="cart">
               <FontAwesomeIcon
-                className="text-palette-primary h-6"
+                className="text-palette-primary hover:text-palette-secondary h-6"
                 icon={faShoppingCart}
               />
               {cartItems === 0 ? null : (
@@ -81,8 +81,8 @@ function Nav() {
           <Link href="/" >
             <a className="text-smw border-b border-gray-200 block mt-4 lg:inline-block lg:border-none lg:mt-0">
               <h1>
-                <span className="text-xl font-primary text-palette-primary md:p-2 rounded-md hover:bg-gray-50 font-bold tracking-tight pt-1">
-                  Inicio
+                <span className="text-xl font-primary text-palette-primary md:p-2 rounded-md hover:text-palette-secondary  tracking-tight pt-1">
+                  INICIO
                 </span>
               </h1>
             </a>
@@ -91,8 +91,8 @@ function Nav() {
           <Link href="/diapers/inicio">
             <a className="text-smw block mt-4 lg:inline-block lg:mt-0">
               <h1>
-                <span className="text-xl font-primary text-palette-primary font-bold md:p-2 rounded-md hover:bg-gray-50 tracking-tight pt-1">
-                  Pa&ntilde;aleria
+                <span className="text-xl font-primary text-palette-primary md:p-2 rounded-md hover:text-palette-secondary tracking-tight pt-1">
+                  PAÑALERIA
                 </span>
               </h1>
             </a>
@@ -103,9 +103,9 @@ function Nav() {
               <button
                 type="button"
                 onClick={showCategories}
-                className="inline-flex w-full bg-white text-lg font-primary font-bold text-palette-primary hover:bg-gray-50 capitalize  focus:ring-2 focus:ring-palette-lighter focus:ring-opacity-75"
+                className="inline-flex w-full bg-white text-lg font-primary text-palette-primary hover:text-palette-secondary capitalize  focus:ring-2 focus:ring-palette-lighter focus:ring-opacity-75"
               >
-                Categorías
+                CATEGORÍAS
                 <svg className="h-5 mt-1 w-5" xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
                     <path fillRule="evenodd"
@@ -120,7 +120,7 @@ function Nav() {
                 <div className="py-1 " role="none">
                   {categories?.map((category) =>(
                       <Link href={`/accessories/${category.id}`} passHref legacyBehavior>
-                      <a href="#" onClick={showCategories} className="text-palette-light block text-center hover:bg-gray-50 px-4 py-2 text-sm" role="menuitem"
+                      <a href="#" onClick={showCategories} className="text-palette-light block text-center hover:text-palette-secondary px-4 py-2 text-sm" role="menuitem"
                       tabIndex="-1" id="menu-item-0">{category.name}</a>
                       </Link>
                     ))
@@ -132,8 +132,8 @@ function Nav() {
           <Link href="/about/inicio">
             <a className="text-smw block mt-4 lg:inline-block lg:mt-0">
               <h1>
-                <span className="text-xl font-primary text-palette-primary font-bold tracking-tight md:p-2 rounded-md hover:bg-gray-50">
-                  Quienes somos
+                <span className="text-xl font-primary text-palette-primary tracking-tight md:p-2 rounded-md hover:text-palette-secondary">
+                  QUIENES SOMOS
                 </span>
               </h1>
             </a>
@@ -143,8 +143,8 @@ function Nav() {
             <Link href="/admin">
               <a className="top-4 right-3 lg:order-last text-smw block mt-4 mr-4 lg:inline-block lg:mt-0">
                 <h1>
-                  <span className="text-xl font-primary text-palette-primary md:p-2 rounded-md hover:bg-gray-50 font-bold tracking-tight pt-1">
-                    Administracion
+                  <span className="text-xl font-primary text-palette-primary md:p-2 rounded-md hover:text-palette-secondary tracking-tight pt-1">
+                    ADMINISTRACION
                   </span>
                 </h1>
               </a>
