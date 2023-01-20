@@ -103,6 +103,8 @@ const Payment = ({ myPoints, users }) => {
     const handleCreditPoints = (username) => {
         if (username != null) {
       console.log(username);
+
+      debugger
     
     setLoading(true);
     

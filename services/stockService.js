@@ -23,6 +23,7 @@ export async function findAll() {
 }
 
 export async function save(stock){
+    debugger
     const fetchUrl = `${process.env.NEXT_PUBLIC_BACKEND_SERVICE}/stock/list`;
     try {
         let response = await axios.post(fetchUrl, stock);

@@ -7,27 +7,22 @@ import FilterComponent from "@/components/filter/FilterComponent";
 const List = ({ stock }) => {
     const [filterText, setFilterText] = useState('');
     const [resetPaginationToggle, setResetPaginationToggle] = useState(false);
-    const filteredItems = stock.filter(item => filterText == '' || filterText.toLowerCase().includes(item.id));
+    const filteredItems = stock.filter(item => filterText == '' || filterText.toLowerCase().includes(item.provider.name));
 
     const columns = [
         {
-            name: 'ID producto',
+            name: '#',
             selector: row => row.id,
             sortable: true
         },
         {
-            name: 'Articulo',
-            selector: row => row.product.name,
+            name: 'Proveedor',
+            selector: row => row.provider.name,
             sortable: true
         },
         {
             name: 'Orden',
             selector: row => row.order,
-            sortable: true,
-        },
-        {
-            name: 'Cantidad',
-            selector: row => row.quantity,
             sortable: true,
         },
         {
