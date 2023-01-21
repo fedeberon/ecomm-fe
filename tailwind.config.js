@@ -14,21 +14,35 @@ module.exports = {
         palette: {
           lighter: '#fff3f9',
           light: '#f9a8d4',
-          primary: '#ed7aad',
+          primary: '#545053',
           dark: '#da32a9',
-          secondary: '#60c3cb',
+          secondary: '#F8B9CA',
           slight:'#79d7df',
           slighter:'#c6eced',
           sdark:'#31b8c3'
         },
       },
+      // colors: {
+      //   palette: {
+      //     lighter: '#fff3f9',
+      //     light: '#f9a8d4',
+      //     primary: '#ed7aad',
+      //     dark: '#da32a9',
+      //     secondary: '#60c3cb',
+      //     slight:'#79d7df',
+      //     slighter:'#c6eced',
+      //     sdark:'#31b8c3'
+      //   },
+      // },
       fontFamily: {
         primary: ['"Josefin Sans"']
       }
     },
   },
   variants: {
-    extend: {},
+    extend: {
+      display: ["group-hover"],
+    },
   },
   plugins: [
     require("@tailwindcss/forms")({
