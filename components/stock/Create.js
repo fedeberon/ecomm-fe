@@ -5,11 +5,19 @@ import {save} from "../../services/stockService"
 import { NotificationManager, NotificationContainer } from "react-notifications";
 import 'react-notifications/lib/notifications.css';
 import Loading from "../utils/Loading";
+import Router from 'next/router';
 
 const Create = ({providers}) => {
 
     const [errors, setErrors] = useState({})
     const [stocks, setStocks] = useState([])
+    const [stock, setStock] = useState({
+        "order": "",
+        "provider": {
+            "id" : 0
+        },
+        "items": stocks
+    })
     const[show, isShow] = useState(false)
     const[result, setResult] = useState([])
     const[isLoad, setIsLoad] = useState(false)
@@ -37,8 +45,7 @@ const Create = ({providers}) => {
     const add = (product) => {
         setIsLoad(true)
         const updatedCarsArray = [...stocks, {
-          "quantity": null,
-            "order" : null,
+            "quantity": 1,
             product
         }];
         setStocks(updatedCarsArray)
@@ -56,19 +63,18 @@ const Create = ({providers}) => {
         isShow(!show)
     }
 
-    const validateStock =(stoks)=>{
-
+    const validateStock = () =>{
       let errors = {}
-      if (stoks[0]?.order == null || stoks[0].order == "" ){
+      if (stock?.order == null || stock.order == "" ){
         errors.order = "El campo 'Orden' es requerido";
         setErrors(errors)
       }
-      if (stoks[0]?.provider == null || stoks[0].provider == "" ){
+      if (stock.provider.id == null || stock.provider.id == "" ){
         errors.provider = "El campo 'Proveedor' es requerido";
         setErrors(errors)
       }
-      stoks.map(item =>{
-        if (!item.quantity == null || item.quantity == "" || item.quantity < 1){
+      stocks.map(item =>{
+        if (item.quantity == "" || item.quantity < 1){
           errors.quantity = "El campo 'Cantidad' es requerido";
           setErrors(errors)
           return;
@@ -80,12 +86,13 @@ const Create = ({providers}) => {
 
     const saveStocks = () => { 
       setIsLoad(true)
+       stock.items = stocks
       if(errors.order == undefined && errors.quantity == undefined && errors.provider == undefined){
-        save(stocks).then((result) => {
-          console.log(result)
-          if (result.status == 200 && result.data.length > 0) {
+        save(stock).then((result) => {
+          if (result.status == 200) {
             NotificationManager.info('El stock se cargo correctamente', 'Administracion de stock' , 3000);
-          }else{
+              Router.push({pathname:`/stock/${result.data.id}`});
+          } else {
             NotificationManager.info('No fue posible cargar el articulo, por favor revisar Orden y proveedor ', 'Administracion de productos' , 3000)
           }
         });   
@@ -94,34 +101,57 @@ const Create = ({providers}) => {
       }
       setIsLoad(false)
       return;
-
     }
 
-    const handleChange = (e, index) => {
+    const handleChange = (e) => {
       const { name, value } = e.target;
-      console.log(name)
-          if(name == "order"){
-            stocks.map((stock)=>{
-              stock[name] = value
-            })
-          } else{
-            const stock = stocks[index];
-            stock[name]= value;
-          }
-          validateStock(stocks);
+        setStock({
+            ...stock,
+            [e.target.name]: e.target.value,
+            "items" : stocks
+        });
+      validateStock(stocks);
+    }
+
+    const handleQuantity = (e, index) => {
+        const { name, value } = e.target;
+        stocks[index][name] = value;
+        //stock.items = stocks
+        validateStock(stocks);
     }
 
     const handleChangeProvider = (e) => {
-      const { name, value } = e.target;
-      stocks.map((stock)=>{
-        stock[name] = {id: value}
-      })
+      const { value } = e.target;
+        setStock({
+            ...stock,
+            "provider": {
+                "id": value
+            }
+        });
     }
 
     return (
       <>
       <NotificationContainer/>
       <div className="flex items-center justify-center h-full">
+          <div className="flex mr-5">
+              <span className="text-sm border border-2 rounded-l px-4 py-2 bg-white w-32 whitespace-no-wrap">Orden #</span>
+              <input name="order" className="border border-2 rounded-r px-4 py-2 w-full" type="text"
+                     placeholder="Ingrese el n&uacute;mero de comprobante ..." onChange={(e)=>handleChange(e)} />
+              {errors.order &&   <p className={`text-red-500 text-xs italic`}>* Campo necesario</p>}
+          </div>
+          <div className="flex mr-5">
+              <span className="text-sm border border-2 rounded-l px-4 py-2 bg-white w-32 whitespace-no-wrap">Proveedor</span>
+              <select name="provider" className="border border-2 rounded-r px-4 py-2 w-full" onChange={handleChangeProvider}>
+                  <option selected disabled={true} value="">Seleccionar Proveedor</option>
+                  {
+                      providers.map(provider => (
+                          <option name={provider.name} value={provider.id}>{provider.name}</option>
+                      ))
+                  }
+              </select>
+              {errors.provider &&   <p className={`text-red-500 text-xs italic`}>* Campo necesario</p>}
+          </div>
           <button
             className="py-2 px-4 bg-blue-500 text-white rounded hover:bg-blue-700"
             onClick={toggleModal}
@@ -182,7 +212,7 @@ const Create = ({providers}) => {
                           <div className="custom-number-input h-10 w-32">
                             <div className="flex flex-row h-10 w-full rounded-lg  bg-transparent mt-1">
                               <input
-                                onChange={(e)=>handleChange(e,index)}
+                                onChange={(e) => handleQuantity(e, index)}
                                 type="number"
                                 placeholder="00"
                                 className="outline-none focus:outline-none text-center w-full bg-gray-300 font-semibold text-md hover:text-black focus:text-black  md:text-basecursor-default flex items-center text-gray-700  outline-none"
@@ -204,27 +234,6 @@ const Create = ({providers}) => {
             </div>
           </div>
         </section>
-
-
-        <div className="flex">
-            <span className="text-sm border border-2 rounded-l px-4 py-2 bg-white w-32 whitespace-no-wrap">Orden #</span>
-            <input name="order" className="border border-2 rounded-r px-4 py-2 w-full" type="text"
-                    placeholder="Ingrese el n&uacute;mero de comprobante ..." onChange={(e)=>handleChange(e)} />
-             {errors.order &&   <p className={`text-red-500 text-xs italic`}>* Campo necesario</p>}
-        </div>
-        <div className="flex">
-            <span className="text-sm border border-2 rounded-l px-4 py-2 bg-white w-32 whitespace-no-wrap">Proveedor</span>
-            <select name="provider" className="border border-2 rounded-r px-4 py-2 w-full" onChange={handleChangeProvider}>
-              <option selected disabled={true} value="">Seleccionar Proveedor</option>
-              {
-                providers.map(provider => (
-                  <option name={provider.name} value={provider.id}>{provider.name}</option>
-                ))
-              }
-            </select>
-             {errors.provider &&   <p className={`text-red-500 text-xs italic`}>* Campo necesario</p>}
-        </div>
-        
 
         <div className="flex items-center justify-center h-full">
           <button
