@@ -12,7 +12,7 @@ const List = ({ stock }) => {
     const columns = [
         {
             name: '#',
-            selector: row => row.id,
+            cell: row => <a href={`/stock/${row.id}`}  alt={row.id}># {row.id}</a>,
             sortable: true
         },
         {

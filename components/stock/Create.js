@@ -5,6 +5,7 @@ import {save} from "../../services/stockService"
 import { NotificationManager, NotificationContainer } from "react-notifications";
 import 'react-notifications/lib/notifications.css';
 import Loading from "../utils/Loading";
+import Router from 'next/router';
 
 const Create = ({providers}) => {
 
@@ -90,6 +91,7 @@ const Create = ({providers}) => {
         save(stock).then((result) => {
           if (result.status == 200) {
             NotificationManager.info('El stock se cargo correctamente', 'Administracion de stock' , 3000);
+              Router.push({pathname:`/stock/${result.data.id}`});
           } else {
             NotificationManager.info('No fue posible cargar el articulo, por favor revisar Orden y proveedor ', 'Administracion de productos' , 3000)
           }
@@ -132,13 +134,13 @@ const Create = ({providers}) => {
       <>
       <NotificationContainer/>
       <div className="flex items-center justify-center h-full">
-          <div className="flex">
+          <div className="flex mr-5">
               <span className="text-sm border border-2 rounded-l px-4 py-2 bg-white w-32 whitespace-no-wrap">Orden #</span>
               <input name="order" className="border border-2 rounded-r px-4 py-2 w-full" type="text"
                      placeholder="Ingrese el n&uacute;mero de comprobante ..." onChange={(e)=>handleChange(e)} />
               {errors.order &&   <p className={`text-red-500 text-xs italic`}>* Campo necesario</p>}
           </div>
-          <div className="flex">
+          <div className="flex mr-5">
               <span className="text-sm border border-2 rounded-l px-4 py-2 bg-white w-32 whitespace-no-wrap">Proveedor</span>
               <select name="provider" className="border border-2 rounded-r px-4 py-2 w-full" onChange={handleChangeProvider}>
                   <option selected disabled={true} value="">Seleccionar Proveedor</option>
