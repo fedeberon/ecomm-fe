@@ -2,6 +2,7 @@ import DataTable from 'react-data-table-component'
 import {useMemo, useState} from "react";
 import {paginationComponentOptions} from "../../DataTableUtils";
 import FilterCardComponent from '../filter/FilterCardComponent';
+import ExcelExport from "@/components/reports/ExcelExport";
 
 const List = ({report}) => {
     const [filterText, setFilterText] = useState('');
@@ -76,6 +77,7 @@ const List = ({report}) => {
                 paginationComponentOptions={paginationComponentOptions}
             />
 
+            <ExcelExport excelData={report} fileName={"Reeporte de Facturacion - Dulce BB"}/>
         </div>
         
     )
