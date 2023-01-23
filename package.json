@@ -34,6 +34,7 @@
     "react-router": "^5.2.1",
     "react-scroll-bottom-hook": "^0.6.2",
     "react-text-mask": "^5.4.3",
+    "react-to-print": "^2.14.11",
     "styled-components": "^5.3.3",
     "tailwindcss": "^2.0.2",
     "text-mask-addons": "^3.8.0",
