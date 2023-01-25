@@ -10,7 +10,7 @@ function Layout({ children }) {
         <Nav />
       </div>
 
-        <main>
+        <main className='bg-palette-bg'>
           {children}
         </main>
 
