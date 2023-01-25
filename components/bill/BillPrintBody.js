@@ -1,5 +1,5 @@
 import Moment from "react-moment";
-import logo from "../../images/logoMati.png";
+import logo from "../../images/logo.png";
 
 const BillPrintBody = ({bill}) => {
 

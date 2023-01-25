@@ -38,7 +38,7 @@ const Login = ({csrfToken}) => {
                                        type="password"
                                        autoComplete="current-password"
                                        required
-                                       className="appearance-none rounded-none relative block w-full px-3 py-2 border border-palette-slight placeholder-palette-slight text-palette-sdark rounded-b-md focus:outline-none focus:ring-palette-secondary focus:border-palette-sdark focus:z-10 sm:text-sm"
+                                       className="mt-5 appearance-none rounded-none relative block w-full px-3 py-2 border border-palette-slight placeholder-palette-slight text-palette-sdark rounded-b-md focus:outline-none focus:ring-palette-secondary focus:border-palette-sdark focus:z-10 sm:text-sm"
                                        placeholder="Contrase&ntilde;a"/>
                             </div>
                         </div>

@@ -7,7 +7,7 @@ module.exports = withPWA({
     disable: process.env.NODE_ENV === 'development',
   },
   env: {
-    siteTitle: 'Dulce Bebe',
+    siteTitle: 'e-commerce',
     siteDescription: 'Tienda On line!',
     siteKeywords: 'bebes, juguetes, indumentaria',
     siteUrl: 'https://www.dulcebebe.com',

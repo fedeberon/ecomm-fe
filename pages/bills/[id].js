@@ -11,7 +11,7 @@ const Detail = ({ bill }) => {
     const componentRed = useRef()
     const print = useReactToPrint({
         content: () => componentRed.current,
-        documentTitle: `DulceBB - Factura ${bill.id}`
+        documentTitle: `Ecommerce - Factura ${bill.id}`
     })
 
     return (

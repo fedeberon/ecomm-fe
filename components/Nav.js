@@ -52,7 +52,7 @@ function Nav() {
         </div>
         <Link href="/">
           <div className="flex sm:block cursor-pointer flex-row items-center">
-            <img src={logo.src} className="w-16 mx-16 ml-8 md:mx-64 lg:mx-4 lg:w-24" />
+            <img src={logo.src} className="w-32 mx-16 ml-8 md:mx-70 lg:mx-4 lg:w-32" />
           </div>
         </Link>
         <div className="lg:order-2 -mx-8 lg:m-auto">
@@ -88,15 +88,6 @@ function Nav() {
             </a>
           </Link>
 
-          <Link href="/diapers/inicio">
-            <a className="text-smw block mt-4 lg:inline-block lg:mt-0">
-              <h1>
-                <span className="text-xl font-primary text-palette-primary md:p-2 rounded-md hover:text-palette-secondary tracking-tight pt-1">
-                  PAÑALERIA
-                </span>
-              </h1>
-            </a>
-          </Link>
 
           <div className="relative inline-block text-left">
             <div className="text-smw block lg:relative lg:mt-0">

@@ -1,7 +1,9 @@
 function Footer() {
   return (
     <footer className="py-4 flex justify-center font-primary items-center">
-        Dulce Bebé OnLine
+
+        e-commerce - 2023
+
     </footer>
   )
 }
