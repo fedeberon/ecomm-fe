@@ -138,7 +138,7 @@ function Nav() {
                 <div className="py-1 " role="none">
                   {categories?.map((category) =>(
                       <Link href={`/accessories/${category.id}`} passHref legacyBehavior>
-                      <a href="#" onClick={showCategories} className="text-palette-light block text-center hover:text-palette-secondary px-4 py-2 text-sm" role="menuitem"
+                      <a href="#" onClick={showCategories} className="text-palette-primary block text-center hover:text-palette-secondary px-4 py-2 text-sm" role="menuitem"
                       tabIndex="-1" id="menu-item-0">{category.name}</a>
                       </Link>
                     ))
