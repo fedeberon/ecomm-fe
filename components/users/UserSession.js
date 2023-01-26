@@ -38,20 +38,20 @@ const UserSession = ({session}) => {
                             role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabIndex="-1">
                             <div className="py-1 " role="none">
                                 <Link href="/shoping/mine">
-                                <a href="#" className="text-palette-light block text-center hover:bg-gray-50 px-4 py-2 text-sm" role="menuitem"
+                                <a href="#" className="text-palette-primary block text-center hover:bg-gray-50 px-4 py-2 text-sm" role="menuitem"
                                    tabIndex="-1" id="menu-item-0">Mis Compras</a>
                                 </Link>
                                 <Link href={`/users/wallet/${session.user.username}`}>
-                                <a href="#" className="text-palette-light block px-4 py-2 text-center text-sm hover:bg-gray-50" role="menuitem"
+                                <a href="#" className="text-palette-primary block px-4 py-2 text-center text-sm hover:bg-gray-50" role="menuitem"
                                    tabIndex="-1" id="menu-item-1">Mi Billetera</a> 
                                 </Link>
                                 <Link href={`/users/${session.user.username}`}>
-                                    <a className="text-palette-light block px-4 py-2 text-center text-sm hover:bg-gray-50" role="menuitem"
+                                    <a className="text-palette-primary block px-4 py-2 text-center text-sm hover:bg-gray-50" role="menuitem"
                                        tabIndex="-1" id="menu-item-2">Mis Datos</a>
                                 </Link>
                                 <form method="POST" action="#" role="none">
                                     <button onClick={() => signOut({ callbackUrl: '/' })}
-                                            className="text-palette-light block w-full text-center px-4 py-2 text-sm hover:bg-gray-50"
+                                            className="text-palette-primary block w-full text-center px-4 py-2 text-sm hover:bg-gray-50"
                                             role="menuitem" tabIndex="-1" id="menu-item-3">
                                         Salir
                                     </button>
