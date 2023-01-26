@@ -20,6 +20,21 @@ function Nav() {
   const [categoriesVisible, setCategoriesVisible] = useState(false);
   const [categories, setCategories] = useState([])
 
+
+  const [color, setColor] = useState(false)
+  
+  useEffect(()=> {
+    const changeColor = () => {
+      if(window.scrollY >= 90){
+        setColor(true)
+      } else {
+        setColor(false)
+      }
+    }
+
+    window.addEventListener('scroll', changeColor)
+  }, [])
+
   const handleMenu = () => {
     setIsShow(!isShow)
   }
@@ -42,9 +57,12 @@ function Nav() {
 
   return (
 
-    <header className="w-full sticky lg:static top-0 z-50 bg-white">
+    <header className={color ? "w-full sticky lg:static top-0 z-50 bg-white ease-in duration-300" : "w-full sticky lg:static top-0 z-50 bg-palette-bg ease-in duration-300"}>
 
-      <div className="flex items-center justify-between flex-wrap p-2">
+      <div >
+        <div className="flex items-center justify-between flex-wrap p-2">
+
+        
         <div className="block lg:hidden">
           <button onClick={handleMenu} className="flex py-2 hover:border-grey">
             <FontAwesomeIcon icon={faBars} className="w-5 top-6 ml-2 mr-0 items-center" />
@@ -52,7 +70,7 @@ function Nav() {
         </div>
         <Link href="/">
           <div className="flex sm:block cursor-pointer flex-row items-center">
-            <img src={logo.src} className="w-16 mx-16 ml-8 md:mx-64 lg:mx-4 lg:w-24" />
+            <img src={logo.src} className="w-16 mx-16 ml-8 md:mx-64 lg:mx-4 lg:w-12" />
           </div>
         </Link>
         <div className="lg:order-2 -mx-8 lg:m-auto">
@@ -81,7 +99,7 @@ function Nav() {
           <Link href="/" >
             <a className="text-smw border-b border-gray-200 block mt-4 lg:inline-block lg:border-none lg:mt-0">
               <h1>
-                <span className="text-xl font-primary text-palette-primary md:p-2 rounded-md hover:text-palette-secondary  tracking-tight pt-1">
+                <span className="text-m font-primary text-palette-primary md:p-2 rounded-md hover:text-palette-secondary  tracking-tight pt-1">
                   INICIO
                 </span>
               </h1>
@@ -91,7 +109,7 @@ function Nav() {
           <Link href="/diapers/inicio">
             <a className="text-smw block mt-4 lg:inline-block lg:mt-0">
               <h1>
-                <span className="text-xl font-primary text-palette-primary md:p-2 rounded-md hover:text-palette-secondary tracking-tight pt-1">
+                <span className="text-m font-primary text-palette-primary md:p-2 rounded-md hover:text-palette-secondary tracking-tight pt-1">
                   PAÑALERIA
                 </span>
               </h1>
@@ -103,7 +121,7 @@ function Nav() {
               <button
                 type="button"
                 onClick={showCategories}
-                className="inline-flex w-full bg-white text-lg font-primary text-palette-primary hover:text-palette-secondary capitalize  focus:ring-2 focus:ring-palette-lighter focus:ring-opacity-75"
+                className="inline-flex w-full text-m font-primary text-palette-primary hover:text-palette-secondary capitalize  focus:ring-2 focus:ring-palette-lighter focus:ring-opacity-75"
               >
                 CATEGORÍAS
                 <svg className="h-5 mt-1 w-5" xmlns="http://www.w3.org/2000/svg"
@@ -120,7 +138,7 @@ function Nav() {
                 <div className="py-1 " role="none">
                   {categories?.map((category) =>(
                       <Link href={`/accessories/${category.id}`} passHref legacyBehavior>
-                      <a href="#" onClick={showCategories} className="text-palette-light block text-center hover:text-palette-secondary px-4 py-2 text-sm" role="menuitem"
+                      <a href="#" onClick={showCategories} className="text-palette-primary block text-center hover:text-palette-secondary px-4 py-2 text-sm" role="menuitem"
                       tabIndex="-1" id="menu-item-0">{category.name}</a>
                       </Link>
                     ))
@@ -132,7 +150,7 @@ function Nav() {
           <Link href="/about/inicio">
             <a className="text-smw block mt-4 lg:inline-block lg:mt-0">
               <h1>
-                <span className="text-xl font-primary text-palette-primary tracking-tight md:p-2 rounded-md hover:text-palette-secondary">
+                <span className="text-m font-primary text-palette-primary tracking-tight md:p-2 rounded-md hover:text-palette-secondary">
                   QUIENES SOMOS
                 </span>
               </h1>
@@ -143,7 +161,7 @@ function Nav() {
             <Link href="/admin">
               <a className="top-4 right-3 lg:order-last text-smw block mt-4 mr-4 lg:inline-block lg:mt-0">
                 <h1>
-                  <span className="text-xl font-primary text-palette-primary md:p-2 rounded-md hover:text-palette-secondary tracking-tight pt-1">
+                  <span className="text-m font-primary text-palette-primary md:p-2 rounded-md hover:text-palette-secondary tracking-tight pt-1">
                     ADMINISTRACION
                   </span>
                 </h1>
@@ -162,6 +180,7 @@ function Nav() {
             <></>
 
         }
+        </div>
       </div>
     </header>
   );
