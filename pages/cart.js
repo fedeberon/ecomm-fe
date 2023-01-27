@@ -11,6 +11,8 @@ import {getPoints} from "../services/walletService";
 import {useRouter} from "next/router";
 import Link from "next/link";
 import { useSession } from "next-auth/client";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faArchive, faMoneyBill, faNewspaper} from "@fortawesome/free-solid-svg-icons";
 
 
 function CartPage({myPoints, user}) {
@@ -111,7 +113,7 @@ function CartPage({myPoints, user}) {
                                             </a>
                                     </Link>
 
-                                
+
                                 {
                                 session?.user?.role?.includes("ADMIN") 
                                     ?
@@ -121,8 +123,6 @@ function CartPage({myPoints, user}) {
                                                                justify-center items-center focus:ring-1 focus:ring-palette-light
                                                                focus:outline-none w-full hover:bg-blue-600 rounded-sm">
                                                     Facturar
-
-
                                                 </a>
                                         </Link>
                                     :

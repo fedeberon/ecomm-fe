@@ -150,7 +150,7 @@ const searchCategories = async () => {
           <div className='w-full'>
 
                     
-                <div className='sticky top-20 lg:top-0 z-30 bg-white shadow-lg'>
+                <div className='sticky top-20 lg:top-0 z-30 bg-white'>
                     <div className='flex justify-center py-2 h-20 '>
 
                         <div className='justify-between my-auto mx-4'>

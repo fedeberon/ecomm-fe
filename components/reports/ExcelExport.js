@@ -6,11 +6,7 @@ const ExcelExport = ({excelData, fileName}) => {
 
     const fileExtension = `.xlsx`
 
-
     const exportToExcel = async () => {
-
-        console.log("En funcion exportar datos")
-
         const ws = XSLX.utils.json_to_sheet(excelData);
         const wb = {
             Sheets: {
