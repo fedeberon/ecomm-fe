@@ -21,7 +21,7 @@ const UserSession = ({session}) => {
                         <div className="text-smw block lg:relative lg:-mt-2">
                             <button type="button"
                                     onClick={showOptionsSession}
-                                    className="inline-flex justify-center md:mt-2 md:ml-2 w-full rounded-md px-3 py-2 bg-white text-lg font-primary text-palette-primary hover:text-palette-secondary capitalize  focus:ring-2 focus:ring-palette-lighter focus:ring-opacity-75"
+                                    className="inline-flex justify-center md:mt-2 md:ml-2 w-full rounded-md px-3 py-2 text-m font-primary text-palette-primary hover:text-palette-secondary capitalize  focus:ring-2 focus:ring-palette-lighter focus:ring-opacity-75"
                                     id="menu-button" aria-expanded="true" aria-haspopup="true">
                                 {(session.user.name).toUpperCase()}
                                 <svg className="h-5 mt-1 w-5" xmlns="http://www.w3.org/2000/svg"
@@ -38,20 +38,20 @@ const UserSession = ({session}) => {
                             role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabIndex="-1">
                             <div className="py-1 " role="none">
                                 <Link href="/shoping/mine">
-                                <a href="#" className="text-palette-light block text-center hover:bg-gray-50 px-4 py-2 text-sm" role="menuitem"
+                                <a href="#" className="text-palette-primary block text-center hover:bg-gray-50 px-4 py-2 text-sm" role="menuitem"
                                    tabIndex="-1" id="menu-item-0">Mis Compras</a>
                                 </Link>
                                 <Link href={`/users/wallet/${session.user.username}`}>
-                                <a href="#" className="text-palette-light block px-4 py-2 text-center text-sm hover:bg-gray-50" role="menuitem"
+                                <a href="#" className="text-palette-primary block px-4 py-2 text-center text-sm hover:bg-gray-50" role="menuitem"
                                    tabIndex="-1" id="menu-item-1">Mi Billetera</a> 
                                 </Link>
                                 <Link href={`/users/${session.user.username}`}>
-                                    <a className="text-palette-light block px-4 py-2 text-center text-sm hover:bg-gray-50" role="menuitem"
+                                    <a className="text-palette-primary block px-4 py-2 text-center text-sm hover:bg-gray-50" role="menuitem"
                                        tabIndex="-1" id="menu-item-2">Mis Datos</a>
                                 </Link>
                                 <form method="POST" action="#" role="none">
                                     <button onClick={() => signOut({ callbackUrl: '/' })}
-                                            className="text-palette-light block w-full text-center px-4 py-2 text-sm hover:bg-gray-50"
+                                            className="text-palette-primary block w-full text-center px-4 py-2 text-sm hover:bg-gray-50"
                                             role="menuitem" tabIndex="-1" id="menu-item-3">
                                         Salir
                                     </button>
