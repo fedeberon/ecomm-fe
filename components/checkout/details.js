@@ -81,13 +81,6 @@ const Details = ({checkout}) => {
                 </tbody>
             </table>
 
-            {
-                checkout.checkoutState === 'IN_PROCESS'
-                ?
-               <CheckOutButton checkout={checkout}/>
-                :
-                <></>
-            }
         </>
 
 

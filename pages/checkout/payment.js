@@ -101,31 +101,27 @@ const Payment = ({ myPoints, users }) => {
     });
   };
 
-    const handleCreditPoints = (username) => {
-        if (username != null) {
-      console.log(username);
+  const handleCreditPoints = (username) => {
+    if (username != null) {
+      setLoading(true);
 
-      debugger
-    
-    setLoading(true);
-    
-    let walletDiscount = {
-            "username": username,
-            "checkoutId": checkout.id,
-        };
-        buyWithPoints(walletDiscount).then((res) => {
-            if(res.data === "puntos insuficientes"){
-                NotificationManager.info('El usuario no tiene puntos suficientes', 'Puntos insuficientes', 4000,  () => {
-                });
-                setLoading(false);
-            } else {
-                setLoading(false);
-                router.push(`/users/wallet/${username}`)
-                cleanCart();
-            }
+      let walletDiscount = {
+        "username": username,
+        "checkoutId": checkout.id,
+      };
+      buyWithPoints(walletDiscount).then((res) => {
+        if (res.data === "puntos insuficientes") {
+          NotificationManager.info('El usuario no tiene puntos suficientes', 'Puntos insuficientes', 4000, () => {
+          });
+          setLoading(false);
+        } else {
+          setLoading(false);
+          router.push(`/users/wallet/${username}`)
+          cleanCart();
+        }
 
-        });
-     } 
+      });
+    }
   }
 
   const handleChangeUsers = (e) => {

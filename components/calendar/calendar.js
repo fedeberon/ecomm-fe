@@ -6,12 +6,14 @@ import { search } from "../../services/reportService";
 import List from '../reports/List';
 import { NotificationManager, NotificationContainer } from 'react-notifications';
 import 'react-notifications/lib/notifications.css';
+import Loading from "@/components/utils/Loading";
 
 function Calendario() {
-  const [date, setDate] = useState(new Date());
-  const [filter, isShowFilter] = useState(false)
-  const [info, setInfo] =useState()
- 
+    const [date, setDate] = useState(new Date());
+    const [filter, isShowFilter] = useState(false)
+    const [info, setInfo] = useState()
+    const [loading, isLoading] = useState(false);
+
   const close = () => {
     isShowFilter(false)
   }
@@ -34,18 +36,20 @@ function Calendario() {
     })
   })
 
-  const handleSubmit = (async(e)=>{
-    e.preventDefault()
-    await search(dates).then((data)=>{
-      if(data.length===0){
-        NotificationManager.info('No hay reportes dentro del rango de fechas')
+    const handleSubmit = (async (e) => {
+        e.preventDefault()
         isShowFilter(false)
-      }else{
-      isShowFilter(false)
-      setInfo(data)
-      }
+        isLoading(true)
+        await search(dates).then((data) => {
+            if (data.length === 0) {
+                NotificationManager.info('No hay reportes dentro del rango de fechas')
+            } else {
+                setInfo(data)
+            }
+        }).then(() => {
+            isLoading(false)
+        })
     })
-  })
 
   return (
     <>
@@ -69,7 +73,7 @@ function Calendario() {
                                             duration-150"
                                             type="button"
                                             onClick={open}>     
-                            {filter ? "Cerrar" : "Calendario" }
+                            { filter ? "Cerrar" : "Calendario" }
                             </button>
                         </div>
                       </div>
@@ -111,7 +115,16 @@ function Calendario() {
                             </div>
                         </div>
                     </div>
-                    <List report={info}/>
+
+                    {
+                        loading
+                            ?
+                            <Loading message={"Un momento por favor ..."}/>
+                            :
+                            <List report={info}/>
+                    }
+
+
     </div>
     </>
   );
