@@ -13,10 +13,10 @@ function IndexPage({products, brands, categories}) {
   return (
       <>
           <div className='bg-palette-bg'>
-              {/* <Carrusel/> */}
-              <div className='flex justify-center'>
+               <Carrusel/>
+              {/*<div className='flex justify-center'>
                 <img src="images/inicio4.jpg" className='w-full h-screen'></img>
-              </div>
+              </div>*/}
             <div className="w-full h-full ">
               <div className='flex justify-center'>
                 <Banner/>
