@@ -51,7 +51,7 @@ function ProductCard({ product }) {
             {title}
           </div>
 
-          <div className="text-lg text-palette-secondary p-4 font-primary font-semibold">
+          <div className="truncate hover:text-clip text-lg text-palette-secondary p-4 font-primary font-semibold">
             {description}
           </div>
 
