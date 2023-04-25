@@ -32,9 +32,6 @@ const Create = () => {
         let isValidPassword = /^(?=\w*\d)(?=\w*[A-Z])(?=\w*[a-z])\S{7,16}$/i.test(user.password);  
         let isValidDNIoCUIL = /^[0-9.-]*$/i.test(user.cuil);  
 
-        console.log(user.name != "", user.lastName != "",  isValidDNIoCUIL, isValidPassword, isValidEmail);
-
-
         if (user.name && user.lastName != "" && isValidDNIoCUIL && isValidPassword && isValidEmail){
             setEnable(true)  
         }  
@@ -188,21 +185,11 @@ const Create = () => {
 
                     <div
                         className="grid justify-items-center ">               
-                    {
-                        enable
-                            ?    
                             <button type="submit" onClick={submit}
                                     className={`bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded `}>
                                 Listo !
                             </button> 
-                            : 
-                        <></>
-                    }  
-                    </div>    
-
-                    
-
-
+                    </div>
                 </form>
 
             </div>
