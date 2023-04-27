@@ -12,7 +12,8 @@ module.exports = withPWA({
     siteKeywords: 'bebes, juguetes, indumentaria',
     siteUrl: 'https://www.dulcebebe.com',
     siteImagePreviewUrl: '/images/main.jpg',
-    twitterHandle: '@dulcebebe'
+    twitterHandle: '@dulcebebe',
+    backend: 'http://localhost:8888/eComm'
   },
   images: {
     domains: ['vps-2124680-x.dattaweb.com', 'localhost'],

@@ -79,36 +79,58 @@ function ProductForm({ productData, image}) {
   return (
     <>
       <NotificationContainer/>
+
       <div className="w-full">
-        <div className="flex justify-start space-x-2">
 
-          <div className="flex flex-col items-start space-y-1 flex-grow-0">
-            <label className="text-gray-500 text-base">Qty.</label>
-            <input
-                type="number"
-                inputMode="numeric"
-                id="quantity"
-                name="quantity"
-                min="1"
-                step="1"
-                value={quantity}
-                onChange={(e) => updateQuantity(e.target.value)}
-                className="text-gray-900 form-input border border-gray-300 w-16 rounded-sm focus:border-palette-light focus:ring-palette-light"
-            ></input>
-          </div>
+        <div className="w-full">
 
-          <div className="flex flex-col items-start space-y-1 flex-grow-0">
-            <label className="text-gray-500 text-base">&nbsp;</label>
-            <a
-                onClick={handleAddToCart}
-                aria-label="add-to-cart"
-                className="border border-palette-primary text-palette-primary text-lg font-primary font-semibold pt-2 pb-1 leading-relaxed flex
-                justify-center items-center focus:ring-1 focus:ring-palette-light focus:outline-none w-full hover:bg-palette-lighter rounded-md cursor-pointer  pl-4 pr-4">
-              Agregar al carrito
-            </a>
+          <div className="flex flex-col space-y-2">
+            <div className="flex">
+              <div className="flex-col items-start space-y-1 mr-2">
+                <input
+                    type="number"
+                    inputMode="numeric"
+                    id="quantity"
+                    name="quantity"
+                    min="1"
+                    step="1"
+                    value={quantity}
+                    onChange={(e) => updateQuantity(e.target.value)}
+                    className="text-gray-900 form-input border border-gray-300 w-16 rounded-sm focus:border-palette-light focus:ring-palette-light"
+                />
+              </div>
+              <div className="flex-col items-start space-y-1">
+                <select
+                    name="category"
+                    className="appearance-none   w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                    id="size"
+                >
+                  <option value="0" selected>Talle</option>
+
+                  {
+                      productData.sizes.map(provider => (
+                          <option name={provider.name}
+                                  value={provider.id}>{provider.name}</option>
+                      ))
+                    }
+                </select>
+              </div>
+            </div>
+
+            <div className="flex flex-col items-start space-y-1">
+              <button
+                  onClick={handleAddToCart}
+                  aria-label="add-to-cart"
+                  className="border border-palette-primary bg-purple-500 hover:bg-purple-600 text-lg text-white font-primary font-semibold pt-2 pb-1 leading-relaxed flex justify-center items-center focus:ring-1 focus:ring-palette-light focus:outline-none w-full rounded-md cursor-pointer  pl-4 pr-4"
+              >
+                Agregar al carrito
+              </button>
+            </div>
           </div>
 
         </div>
+
+
         {
                 session?.user?.role?.includes("ADMIN")
           
