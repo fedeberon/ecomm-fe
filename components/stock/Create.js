@@ -65,7 +65,6 @@ const Create = ({providers}) => {
                 }
             }
         })
-        console.log("stocks", stocks)
         setStocks(array)
     }
 
