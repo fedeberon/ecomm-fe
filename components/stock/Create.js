@@ -59,7 +59,7 @@ const Create = ({providers}) => {
     const updateSize = (id, size) => {
         const array = [...stocks];
         stocks.forEach((item, index) => {
-            if (item.product.id = id) {
+            if (item.product.id == id) {
                 item.size = {
                     "id": size
                 }
