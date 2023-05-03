@@ -51,8 +51,9 @@ function ProductCard({ product }) {
             {title}
           </div>
 
+
           <div className="relative text-lg bg-white h-20 overflow-hidden text-palette-secondary p-4 font-primary font-semibold">
-            <div className="relative hover:bg-black">
+            <div className="relative">
               {description}
             </div>
           </div>

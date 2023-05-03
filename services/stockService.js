@@ -23,13 +23,15 @@ export async function findAll() {
 }
 
 export async function save(stock){
-    debugger
     const fetchUrl = `${process.env.NEXT_PUBLIC_BACKEND_SERVICE}/stock/list`;
+
+    console.log(stock)
+
     try {
         let response = await axios.post(fetchUrl, stock);
         return response;
     } catch (error) {
-        throw new Error("Could not create stock!");
+        throw new Error("Could not create stock. " + error);
     }
 }
 

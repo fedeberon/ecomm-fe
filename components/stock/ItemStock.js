@@ -13,7 +13,7 @@ const ItemStock = ({stock}) => {
                             <thead>
                             <tr className="text-md font-semibold tracking-wide text-left text-gray-900 bg-gray-100  border-b border-gray-600">
                                 <th className="px-4 py-3">Nombre</th>
-                                <th className="px-4 py-3">C&oacute;digo</th>
+                                <th className="px-4 py-3">Talle</th>
                                 <th className="px-4 py-3">Stock</th>
                                 <th className="px-4 py-3">Cantidad</th>
                             </tr>
@@ -49,7 +49,7 @@ const ItemStock = ({stock}) => {
                                             </div>
                                         </td>
                                         <td className="px-4 py-3 text-ms font-semibold border">
-                                            {item.product.id}
+                                            {item.size.name}
                                         </td>
                                         <td className="px-4 py-3 text-sm border">
                                             {item.product.stock}
