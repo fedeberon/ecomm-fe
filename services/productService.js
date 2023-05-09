@@ -180,6 +180,28 @@ export async function createCheckout(cart){
     }
 }
 
+export async function createBudget(cart){
+    debugger
+    const fetchUrl = `${process.env.NEXT_PUBLIC_BACKEND_SERVICE}/checkout/budget`;
+    let details = []
+    cart.forEach(function(value) {
+        let detail = {
+            "id": value.id,
+            "quantity" : value.quantity,
+            "size": value.size
+        }
+        details.push(detail);
+    });
+    let response = "";
+    try {
+        response = await axios.post(fetchUrl, details);
+        return response;
+    } catch (error) {
+        console.error(response)
+        throw new Error("Could not create preference!");
+    }
+}
+
 
 export async function buyWithPoints(walletDiscount){
     const fetchUrl = `${process.env.NEXT_PUBLIC_BACKEND_SERVICE}/wallet/buyWithPoints`;
