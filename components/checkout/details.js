@@ -68,7 +68,7 @@ const Details = ({checkout}) => {
                                     $ {p.product.price}
                                 </td>
                                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                    {checkout.checkoutState}
+                                    {checkout.checkoutState.value}
                                 </td>
                                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                                     $ {p.price}

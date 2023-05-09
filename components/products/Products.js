@@ -59,11 +59,12 @@ const Products = ({products}) => {
  
     return (
         <div className="min-h-80 max-w-12 my-4 sm:my-8 mx-auto w-full">
+
              <div className="overflow-hidden">
 
                 <DataTable
                     columns={columns}
-                    data={filteredItems} 
+                    data={filteredItems}
                     pagination
                     subHeader
                     subHeaderComponent={subHeaderComponentMemo}
