@@ -18,7 +18,7 @@ const List = ({checkout}) => {
         },
         {
             name: 'Estado',
-            selector: row => row.checkoutState,
+            selector: row => row.checkoutState.value,
         },
         {
             name: 'Cantidad',
