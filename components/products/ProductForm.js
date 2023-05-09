@@ -34,13 +34,19 @@ function ProductForm({ productData, image}) {
   }
 
   async function handleAddToCart() {
+    const selectElement = document.getElementById('size');
+    const selectedOption = selectElement.options[selectElement.selectedIndex];
+    const selectedOptionText = selectedOption.text;
     if (quantity != '') {
       addToCart({
         productTitle: title,
         productImage: mainImg,
         quantity: quantity,
         id: id,
-        price: price
+        price: price,
+        size: selectElement.value,
+        sizeName: selectedOptionText
+
       })
       NotificationManager.info('Se agrego ' + title + '.', 'Carro de compras' , 1000 ,  () => {
         router.push('/cart')
@@ -106,13 +112,12 @@ function ProductForm({ productData, image}) {
                     id="size"
                 >
                   <option value="0" selected>Talle</option>
-
                   {
                       productData.sizes.map(provider => (
                           <option name={provider.name}
                                   value={provider.id}>{provider.name}</option>
                       ))
-                    }
+                  }
                 </select>
               </div>
             </div>

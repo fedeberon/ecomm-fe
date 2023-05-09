@@ -46,17 +46,13 @@ const Details = ({checkout}) => {
                                       <Image product={p.product}/>
                                     </Link>
                                 </td>
-                                <td className="px-6 py-4 whitespace-nowrap">
-                                    <Link href={'/products/' + p.product.id}>
+                                <td className="px-6 py-4 whitespace-nowrap max-w-40">
+                                <Link href={'/products/' + p.product.id}>
                                         <div className="flex items-center cursor-pointer">
                                             <div className="ml-4">
                                                 <div
                                                     className="text-sm font-medium text-gray-900">
                                                     <div>{p.product.name}</div>
-                                                </div>
-                                                <div
-                                                    className="text-sm text-gray-500">
-                                                    {p.product.description}
                                                 </div>
                                             </div>
                                         </div>
@@ -64,6 +60,9 @@ const Details = ({checkout}) => {
                                 </td>
                                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                                     {p.quantity}
+                                </td>
+                                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                    {p.size}
                                 </td>
                                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                                     $ {p.product.price}

@@ -30,13 +30,14 @@ function CartTable({ cart }) {
 
 
   return (
-    <div className="min-h-50 max-w-2xl my-4 sm:my-8 mx-auto w-full">
+    <div className="min-h-50 max-w-4xl my-4 sm:my-8 mx-auto w-full">
       <table className="mx-auto">
         <thead>
           <tr className="uppercase text-xs sm:text-sm text-palette-primary border-b border-palette-light">
             <th className="font-primary font-normal px-6 py-4">Producto</th>
             <th className="font-primary font-normal px-6 py-4">Cantidad</th>
             <th className="font-primary font-normal px-6 py-4 hidden sm:table-cell">Precio</th>
+            <th className="font-primary font-normal px-6 py-4">Talle</th>
             <th className="font-primary font-normal px-6 py-4">Eliminar</th>
           </tr>
         </thead>
@@ -50,8 +51,8 @@ function CartTable({ cart }) {
                   className="w-12 h-12 rounded-full"/>
 
                 <Link passHref href={`/products/${item.id}`}>
-                  <a className="pt-1 hover:text-palette-dark ml-4">
-                    {item.productTitle} {item.variantTitle}
+                  <a className="pt-1 hover:text-palette-dark ml-4 truncate">
+                    {item.productTitle}
                   </a>
                 </Link>
               </td>
@@ -80,6 +81,9 @@ function CartTable({ cart }) {
                   num={item.price}
                   numSize="text-lg"
                 />
+              </td>
+              <td className="font-primary text-base font-light px-4 sm:px-6 py-4 hidden sm:table-cell">
+                <label>{item.sizeName}</label>
               </td>
               <td className="font-primary font-medium px-4 sm:px-6 py-4">
                 <button
