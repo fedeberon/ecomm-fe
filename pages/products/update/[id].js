@@ -7,6 +7,8 @@ import * as brandsService from 'services/brandService';
 import * as categoriesService from 'services/categoriesService'
 import * as sizesService from 'services/sizeService'
 import { useState } from "react"; 
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faShapes } from "@fortawesome/free-solid-svg-icons";
 
 
 const Update = ({product, brands, categories, sizes}) => {
@@ -243,13 +245,13 @@ const Update = ({product, brands, categories, sizes}) => {
                                     <option>Talles</option>
                                 }
                             </select>
-                            <div className="flex grid grid-cols-4 appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight">
+                            <div className="flex grid grid-cols-4 gap-8 appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight">
                                 {
                                     data.sizes?.map( (size)  => {
                                         return(
-                                        <div className="flex mx-1 rounded  bg-red-200" key={size.id} onBlur={handleBlur}>
-                                            <div className="mx-auto bg-red-200">Talle: {size.name}</div>
-                                            <button className="ml-auto h-auto w-4 bg-red-400" onClick={e => {deleteSize(e)}} value={size.id}>X</button>
+                                        <div className="flex w-32 justify-between mx-2 rounded shadow-xl bg-blue-500 text-white" key={size.id} onBlur={handleBlur}>
+                                            <div className="flex w-3/4 m-auto text-xs p-2">{size.name}</div>
+                                            <button className="w-1/4 rounded-r bg-red-500 uppercase text-white h-full" onClick={e => {deleteSize(e)}} value={size.id}>x</button>
                                         </div>
                                         )
                                     })
