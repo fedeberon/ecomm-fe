@@ -60,7 +60,7 @@ export function CartProvider({ children }) {
       // loop through all cart items to check if variant
       // already exists and update quantity
       newCart.map(item => {
-        if (item.id === newItem.id) {
+        if (item.id === newItem.id && item.size == newItem.size) {
           item.quantity += newItem.quantity
           itemAdded = true
         }
@@ -74,6 +74,9 @@ export function CartProvider({ children }) {
       }
 
       setCart(newCartWithItem)
+
+      console.log("newCartWithItem", newCartWithItem)
+
       //await updateShopifyCheckout(newCartWithItem, checkoutId)
       saveLocalData(newCartWithItem, checkoutId, checkoutUrl)
     }
