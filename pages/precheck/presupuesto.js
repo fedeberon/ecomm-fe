@@ -3,11 +3,8 @@ import {useCartContext, useCleanCartContext} from '@/context/Store'
 import {getSession} from "next-auth/client";
 import {getPoints} from "../../services/walletService";
 import {findAll, getByUsername} from "../../services/userService";
-import PreTable from "@/components/cart/Pretable";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {NotificationContainer, NotificationManager} from 'react-notifications';
 import 'react-notifications/lib/notifications.css';
-import { faPrint , faWallet, faTrash, faCheck } from '@fortawesome/free-solid-svg-icons'
 import PageTitle from '@/components/PageTitle'
 import Link from "next/link";
 import {useReactToPrint} from "react-to-print";
@@ -24,13 +21,13 @@ const Presupuesto = ({userSession, users}) => {
     const [points, setPoints] = useState(0)
     const [loading, setLoading] = useState(true);
     const router = useRouter();
-
     const [personLoaded, setPersonLoaded] = useState(false)
 
     useEffect(async () => {
         setLoading(true);
         let checkout = await createCheckout(cart);
         setCheckout(checkout.data);
+        cleanCart();
         setLoading(false);
     }, []);
 
@@ -51,7 +48,6 @@ const Presupuesto = ({userSession, users}) => {
 
 
     const handleChangeUsers = (e) => {
-        debugger
         const {value} = e.target;
         getPoints(value).then((res) => {
             setPoints(res)

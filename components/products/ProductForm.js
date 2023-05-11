@@ -34,9 +34,21 @@ function ProductForm({ productData, image}) {
   }
 
   async function handleAddToCart() {
-    const selectElement = document.getElementById('size');
-    const selectedOption = selectElement.options[selectElement.selectedIndex];
-    const selectedOptionText = selectedOption.text;
+    const element = document.getElementById('size');
+    let selectElement = 0;
+    let selectedOptionText = 'Talle Unico'
+    if (element.tagName === "SELECT") {
+      const selectedOption = element.options[element.selectedIndex];
+      selectElement = selectedOption.text;
+      selectedOptionText = selectedOption.value;
+      console.log("Selected option text:", selectElement);
+      console.log("Selected option value:", selectedOptionText);
+    } else if (element.tagName === "LABEL") {
+      console.log("Label text:");
+    } else {
+      console.log("Element is not a select or label");
+    }
+
     if (quantity != '') {
       addToCart({
         productTitle: title,
@@ -48,7 +60,7 @@ function ProductForm({ productData, image}) {
         sizeName: selectedOptionText
 
       })
-      NotificationManager.info('Se agrego ' + title + '.', 'Carro de compras' , 1000 ,  () => {
+      NotificationManager.info(title, 'Agrado al carro de compras' , 2000 ,  () => {
         router.push('/cart')
       });
     }
@@ -106,19 +118,29 @@ function ProductForm({ productData, image}) {
                 />
               </div>
               <div className="flex-col items-start space-y-1">
-                <select
-                    name="category"
-                    className="appearance-none   w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-                    id="size"
-                >
-                  <option value="0" selected>Talle</option>
-                  {
-                      productData.sizes.map(provider => (
-                          <option name={provider.name}
-                                  value={provider.id}>{provider.name}</option>
-                      ))
-                  }
-                </select>
+
+                  {productData.sizes.length > 0 ? (
+                      <>
+                      <select
+                          name="category"
+                          className="appearance-none   w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                          id="size"
+                      >
+                        <option disabled={true} value="-1">
+                          Seleccionar
+                        </option>
+                        {productData.sizes.map((provider) => (
+                            <option key={provider.id} name={provider.name} value={provider.id}>
+                              {provider.name}
+                            </option>
+                        ))}
+                      </select>
+                      </>
+                  ) : (
+                      <label id={'size'} className="block text-gray-700 text-sm font-bold mb-2 mt-3">Talle Único</label>
+                  )}
+
+
               </div>
             </div>
 

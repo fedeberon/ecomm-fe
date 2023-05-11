@@ -5,7 +5,7 @@ const Loading = ({message}) => {
             <div className="flex items-center justify-center">
                 <div className="w-16 h-16 border-b-2 border-white-900 rounded-full animate-spin"></div>
             </div>
-            <h2 className="text-center text-white text-xl font-semibold pt-8">Loading...</h2>
+            <h2 className="text-center text-white text-xl font-semibold pt-8">Buscando...</h2>
             <p className="w-1/3 text-center text-white">{message}</p>
         </div>
     )

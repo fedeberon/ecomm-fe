@@ -1,13 +1,40 @@
 import DataTable from 'react-data-table-component'
 import Link from 'next/link'
 import FilterComponent from "@/components/filter/FilterComponent";
-import {useMemo, useState} from "react";
+import {useEffect, useMemo, useState} from "react";
 import {paginationComponentOptions} from "../../DataTableUtils";
+import Loading from "@/components/utils/Loading";
+import {findAll, getById} from "../../services/checkoutService";
 /*https://react-data-table-component.netlify.app/?path=/story/getting-started-intro--page*/
-const List = ({checkout}) => {
-    const [filterText, setFilterText] = useState('');
+const List = () => {
+
+    const [content, setContent] = useState([])
     const [resetPaginationToggle, setResetPaginationToggle] = useState(false);
-    const filteredItems = checkout.filter(item => filterText == '' || filterText.toLowerCase().includes(item.id));
+
+    const filteredItems = async item => {
+        debugger
+        const result = await getById(item)
+        setContent(result)
+    };
+
+
+    const [total, setTotal] = useState([])
+    const [loading, setLoading] = useState(false)
+
+    const handlePageChange = async (page) => {
+        setLoading(true)
+        const data =  await findAll(page);
+        setContent(data.content);
+        setLoading(false)
+    };
+
+    useEffect(async () => {
+        setLoading(true)
+        const data =  await findAll(1);
+        setContent(data.content);
+        setTotal(data.totalElements)
+        setLoading(false)
+    }, []);
 
     const columns = [
         {
@@ -18,10 +45,10 @@ const List = ({checkout}) => {
         },
         {
             name: 'Estado',
-            selector: row => row.checkoutState.value,
+            selector: row => row.status,
         },
         {
-            name: 'Cantidad',
+            name: 'Cantidad de Productos',
             selector: row => row.products.length
         },
         {
@@ -30,33 +57,37 @@ const List = ({checkout}) => {
         }
     ];
 
+    const handleClear = () => {
 
-    const subHeaderComponentMemo = useMemo(() => {
-        const handleClear = () => {
-            if (filterText) {
-                setResetPaginationToggle(!resetPaginationToggle);
-                setFilterText('');
-            }
-        };
-        return (
-            <FilterComponent onFilter={e => setFilterText(e.target.value)} onClear={handleClear} filterText={filterText} />
-        );
-    }, [filterText, resetPaginationToggle]);
+    }
 
 
     return (
-        <div className="min-h-80 max-w-12 my-4 sm:my-8 mx-auto w-full">
-            <DataTable
-                columns={columns}
-                data={filteredItems}
-                pagination
-                paginationResetDefaultPage={resetPaginationToggle} // optionally, a hook to reset pagination to page 1
-                subHeader
-                subHeaderComponent={subHeaderComponentMemo}
-                persistTableHead
-                paginationComponentOptions={paginationComponentOptions}
-            />
-        </div>
+        <>
+            <FilterComponent onFilter={item => filteredItems} onClear={handleClear}  />
+
+            { loading ? (
+                <Loading/>
+            ) : (
+                <div className="min-h-80 max-w-12 my-4 sm:my-8 mx-auto w-full">
+                <DataTable
+                    columns={columns}
+                    data={content}
+                    pagination
+                    paginationResetDefaultPage={resetPaginationToggle} // optionally, a hook to reset pagination to page 1
+                    subHeader
+                    persistTableHead
+                    paginationServer
+                    paginationComponentOptions={paginationComponentOptions}
+                    paginationPerPage={10}
+                    paginationTotalRows={total}
+                    onChangePage={handlePageChange}
+                    persistTableHead
+                />
+                </div>
+            )}
+        </>
+
     )
 }
 
