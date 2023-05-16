@@ -4,6 +4,7 @@
 @tailwind components;
 @tailwind utilities;
 
+
 .triangle {
 
 }
@@ -96,4 +97,5 @@ html {
     transform: rotate(360deg);
   }
 }
+
 
