@@ -39,12 +39,11 @@ function ProductForm({ productData, image}) {
     let selectedOptionText = 'Talle Unico'
     if (element.tagName === "SELECT") {
       const selectedOption = element.options[element.selectedIndex];
-      selectElement = selectedOption.text;
-      selectedOptionText = selectedOption.value;
-      console.log("Selected option text:", selectElement);
-      console.log("Selected option value:", selectedOptionText);
+      selectElement = selectedOption.value;
+      selectedOptionText = selectedOption.text;
     } else if (element.tagName === "LABEL") {
-      console.log("Label text:");
+      selectedOptionText = element.textContent;
+      selectElement = 0
     } else {
       console.log("Element is not a select or label");
     }
@@ -56,7 +55,7 @@ function ProductForm({ productData, image}) {
         quantity: quantity,
         id: id,
         price: price,
-        size: selectElement.value,
+        size: selectElement,
         sizeName: selectedOptionText
 
       })
@@ -137,7 +136,7 @@ function ProductForm({ productData, image}) {
                       </select>
                       </>
                   ) : (
-                      <label id={'size'} className="block text-gray-700 text-sm font-bold mb-2 mt-3">Talle Único</label>
+                      <label id='size' className="block text-gray-700 text-sm font-bold mb-2 mt-3">Talle Único</label>
                   )}
 
 
@@ -164,14 +163,14 @@ function ProductForm({ productData, image}) {
             ?
               <div className='display flex w-full justify-between h-12'>
                 <button onClick={delateProduct} className="bg-palette-primary text-white w-1/4 mt-2 mr-3  rounded-sm font-primary font-semibold text-xs flex
-                    justify-center items-baseline hover:scale-125 transform transition duration-500 group hover:bg-palette-light cursor-pointer">
+                    justify-center items-baselinetransform transition duration-500 group cursor-pointer">
                       <p className="hidden m-1 group-hover:block">Eliminar Producto</p>
                       <FontAwesomeIcon icon={faTrash} className="w-5 m-auto group-hover:hidden"/>
                 </button>
                 <div
                     aria-label="upload-images"
                     className="bg-palette-primary text-white w-1/4 mt-2 mr-3 h-auto rounded-sm font-primary font-semibold text-xs flex
-                    justify-center items-baseline hover:scale-125 transform transition duration-500 group hover:bg-palette-light cursor-pointer"
+                    justify-center items-baseline group  cursor-pointer"
                     onClick={() => setOpenUploadFile(true)}
                 >
                   <p className="hidden m-1 group-hover:block">Subir Imagenes</p>
@@ -181,7 +180,7 @@ function ProductForm({ productData, image}) {
                 <div
                     aria-label="edit-data"
                     className="bg-palette-primary text-white w-1/4 mt-2 mr-3 rounded-sm font-primary font-semibold text-xs flex
-                    justify-center items-baseline hover:scale-125 transform transition duration-500 group hover:bg-palette-light cursor-pointer"
+                    justify-center items-baseline group  cursor-pointer"
                     onClick={goToEdit}>
                   <p className="hidden m-1  group-hover:block">Editar Producto</p>
                   <FontAwesomeIcon icon={faEdit} className="w-5 m-auto group-hover:hidden" />
@@ -193,7 +192,7 @@ function ProductForm({ productData, image}) {
                     ?
                       <imput type='checkbox'
                       className="bg-blue-400 text-white w-1/4 mt-2 mr-3 rounded-sm font-primary font-semibold text-xs flex
-                      justify-center items-baseline hover:scale-125 transform transition duration-500 group hover:bg-blue-400 cursor-pointer"
+                      justify-center items-baseline group hover:bg-blue-400 cursor-pointer"
                         onClick={handlePromo} >
                           <p className="hidden m-1 group-hover:block">Eliminar Promocion</p>
                         <FontAwesomeIcon icon={faTag} className="w-5 m-auto group-hover:hidden" />
