@@ -4,24 +4,27 @@ import FilterComponent from "@/components/filter/FilterComponent";
 import {useEffect, useMemo, useState} from "react";
 import {paginationComponentOptions} from "../../DataTableUtils";
 import Loading from "@/components/utils/Loading";
-import {findAll, getById} from "../../services/checkoutService";
+import {findAll, getById, search} from "../../services/checkoutService";
+
+
 /*https://react-data-table-component.netlify.app/?path=/story/getting-started-intro--page*/
 const List = () => {
-
+    const [currentPage, setCurrentPage] = useState(1);
     const [content, setContent] = useState([])
     const [resetPaginationToggle, setResetPaginationToggle] = useState(false);
 
     const filteredItems = async item => {
+        const value = item.target.value
         debugger
-        const result = await getById(item)
+        const result = await search(value)
         setContent(result)
     };
-
 
     const [total, setTotal] = useState([])
     const [loading, setLoading] = useState(false)
 
     const handlePageChange = async (page) => {
+        setCurrentPage(page);
         setLoading(true)
         const data =  await findAll(page);
         setContent(data.content);
@@ -57,14 +60,16 @@ const List = () => {
         }
     ];
 
-    const handleClear = () => {
-
-    }
-
-
     return (
         <>
-            <FilterComponent onFilter={item => filteredItems} onClear={handleClear}  />
+            <input
+                className="w-full p-2 bg-gray-100 border border-purple-500 border-gray-200 rounded-lg"
+                id="search"
+                type="text"
+                placeholder="Buscar por id"
+                aria-label="Search Input"
+                onChange={filteredItems}
+            />
 
             { loading ? (
                 <Loading/>
@@ -82,6 +87,7 @@ const List = () => {
                     paginationPerPage={10}
                     paginationTotalRows={total}
                     onChangePage={handlePageChange}
+                    paginationDefaultPage={currentPage}
                     persistTableHead
                 />
                 </div>
