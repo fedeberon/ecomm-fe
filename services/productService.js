@@ -109,6 +109,16 @@ export async function deleteProduct(id) {
     }
 }
 
+export async function activateProduct(id) {
+    const fetchUrl = `${process.env.NEXT_PUBLIC_BACKEND_SERVICE}/product/activate/${id}`;
+    try {
+        let response = await axios.put(fetchUrl);
+        return response;
+    } catch (error) {
+        throw new Error("Could not delete product!");
+    }
+}
+
 export async function updateAsAPromotion(product) { 
     const fetchUrl = `${process.env.NEXT_PUBLIC_BACKEND_SERVICE}/product/promotion`;
     try {
