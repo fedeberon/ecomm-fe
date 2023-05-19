@@ -1,13 +1,14 @@
 import { useState } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCloudUploadAlt, faEdit, faTrash, faTag} from '@fortawesome/free-solid-svg-icons'
+import {faCloudUploadAlt, faEdit, faTrash, faTag, faInfo} from '@fortawesome/free-solid-svg-icons'
 import { useCartContext, useAddToCartContext } from '@/context/Store'
 import UploadFile from "@/components/products/UploadFile";
 import {NotificationContainer, NotificationManager} from 'react-notifications';
 import 'react-notifications/lib/notifications.css';
 import {useSession} from "next-auth/client";
 import {useRouter} from "next/router";
-import { deleteProduct, updateAsAPromotion } from 'services/productService';
+import {activateProduct, deleteProduct, updateAsAPromotion} from 'services/productService';
+import { faPlus } from '@fortawesome/free-solid-svg-icons';
 
 
 function ProductForm({ productData, image}) {
@@ -21,6 +22,7 @@ function ProductForm({ productData, image}) {
   const router = useRouter();
   const [session, loading] = useSession();
   const [promo, setPromo] = useState(productData.promo);
+  const [status, setStatus] = useState(productData.deleted)
   
    
  
@@ -65,19 +67,31 @@ function ProductForm({ productData, image}) {
     }
   }
 
-  async function delateProduct () {
-    try{
-      
-      await deleteProduct(id)
+  async function delateProduct() {
+    try {
 
-      NotificationManager.info('Producto borrado', () => {
-        router.push('/')
-      });
+      let result = await deleteProduct(id)
 
-      window.location.href = '/'
+      setStatus(result.data.deleted)
+
+      NotificationManager.error('No se mostrara en los resultados de busqueda', 'Baja de producto' , 5000);
     }
     catch(error){
       throw new Error("Fallo en la funcion de borrar producto")
+    }
+  }
+
+  async function activeProduct() {
+    try {
+
+      let result = await activateProduct(id)
+
+      setStatus(result.data.deleted)
+
+      NotificationManager.info('Se mostrara en los resultados de busqueda', 'Producto Activo' , 5000);
+    }
+    catch(error){
+      throw new Error("Fallo en la funcion de activar producto")
     }
   }
 
@@ -138,8 +152,6 @@ function ProductForm({ productData, image}) {
                   ) : (
                       <label id='size' className="block text-gray-700 text-sm font-bold mb-2 mt-3">Talle Único</label>
                   )}
-
-
               </div>
             </div>
 
@@ -162,24 +174,36 @@ function ProductForm({ productData, image}) {
           
             ?
               <div className='display flex w-full justify-between h-12'>
-                <button onClick={delateProduct} className="bg-palette-primary text-white w-1/4 mt-2 mr-3  rounded-sm font-primary font-semibold text-xs flex
-                    justify-center items-baselinetransform transition duration-500 group cursor-pointer">
-                      <p className="hidden m-1 group-hover:block">Eliminar Producto</p>
-                      <FontAwesomeIcon icon={faTrash} className="w-5 m-auto group-hover:hidden"/>
-                </button>
+
+                {
+
+                status == false
+                    ?
+                      <button onClick={delateProduct} className="bg-palette-primary text-white w-1/4 mt-2 mr-3  rounded-md font-primary font-semibold text-xs flex
+                          justify-center items-baselinetransform transition duration-500 group cursor-pointer">
+                            <p className="hidden m-1 group-hover:block">Eliminar Producto</p>
+                            <FontAwesomeIcon icon={faTrash} className="w-5 m-auto group-hover:hidden"/>
+                      </button>
+                    :
+
+                    <button onClick={activeProduct} className="bg-blue-500 text-white w-1/4 mt-2 mr-3 rounded-md font-primary font-semibold text-xs flex justify-center items-baseline transform transition duration-500 group cursor-pointer">
+                      <p className="hidden m-1 group-hover:block">Activar Producto</p>
+                      <FontAwesomeIcon icon={faPlus} className="w-5 m-auto group-hover:hidden"/>
+                    </button>
+                }
                 <div
                     aria-label="upload-images"
-                    className="bg-palette-primary text-white w-1/4 mt-2 mr-3 h-auto rounded-sm font-primary font-semibold text-xs flex
-                    justify-center items-baseline group  cursor-pointer"
+                    className="bg-palette-primary text-white w-1/4 mt-2 mr-3 h-auto  font-primary font-semibold text-xs flex
+                   justify-center items-baseline group rounded-md cursor-pointer"
                     onClick={() => setOpenUploadFile(true)}
                 >
-                  <p className="hidden m-1 group-hover:block">Subir Imagenes</p>
+                  <p className="hidden m-1 group-hover:block text-center">Subir Imagenes</p>
                   <FontAwesomeIcon icon={faCloudUploadAlt} className="w-5 m-auto group-hover:hidden" />
                 </div>
 
                 <div
                     aria-label="edit-data"
-                    className="bg-palette-primary text-white w-1/4 mt-2 mr-3 rounded-sm font-primary font-semibold text-xs flex
+                    className="bg-palette-primary text-white text-center w-1/4 mt-2 mr-3 rounded-md font-primary font-semibold text-xs flex
                     justify-center items-baseline group  cursor-pointer"
                     onClick={goToEdit}>
                   <p className="hidden m-1  group-hover:block">Editar Producto</p>
@@ -191,7 +215,7 @@ function ProductForm({ productData, image}) {
                     promo
                     ?
                       <imput type='checkbox'
-                      className="bg-blue-400 text-white w-1/4 mt-2 mr-3 rounded-sm font-primary font-semibold text-xs flex
+                      className="bg-blue-400 text-white text-center w-1/4 mt-2 mr-3 rounded-md font-primary font-semibold text-xs flex
                       justify-center items-baseline group hover:bg-blue-400 cursor-pointer"
                         onClick={handlePromo} >
                           <p className="hidden m-1 group-hover:block">Eliminar Promocion</p>
@@ -200,7 +224,7 @@ function ProductForm({ productData, image}) {
 
                     :
                       <imput type='checkbox'
-                      className="bg-red-600 text-white w-1/4 mt-2 rounded-sm font-primary font-semibold text-xs flex
+                      className="bg-red-600 text-white text-center w-1/4 mt-2 rounded-md font-primary font-semibold text-xs flex
                         justify-center items-baseline hover:scale-125 transform transition duration-500 group hover:bg-red-400 cursor-pointer"
                         onClick={handlePromo} >
                           <p className="hidden m-1 group-hover:block">Añadir Promocion</p>
