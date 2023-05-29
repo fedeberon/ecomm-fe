@@ -260,6 +260,17 @@ export async function updateTwinsCard(user) {
         let response = await axios.post(fetchUrl, user);                                         
         return response;                                                                               
     } catch (error) {                                                                                       
-        throw new Error("Could not update twings of user !" , user.username , ". Error:" , error);                                     
+        throw new Error("Could not update twings of user !" + user.username + ". Error:" + error);
     }                                                                                               
+}
+
+
+export async function getProductsRelated(product) {
+    const fetchUrl = `${process.env.NEXT_PUBLIC_BACKEND_SERVICE}/product/relationship/${product.id}`;
+    try {
+        let response = await axios.get(fetchUrl);
+        return response.data;
+    } catch (error) {
+        throw new Error("Could not get products related about " + product.name + ". Error:" + error);
+    }
 }
