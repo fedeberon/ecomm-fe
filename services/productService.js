@@ -263,3 +263,14 @@ export async function updateTwinsCard(user) {
         throw new Error("Could not update twings of user !" , user.username , ". Error:" , error);                                     
     }                                                                                               
 }
+
+export async function deletedImagen(productId, image) { 
+    debugger            
+    const fetchUrl = `${process.env.NEXT_PUBLIC_BACKEND_SERVICE}/product/delete/${productId}/${image}`;       
+    try {                                                                                        
+        let response = await axios.delete(fetchUrl);                                         
+        return response;                                                                               
+    } catch (error) {                                                                                       
+        throw new Error("Could not delete image !", ". Error:" , error);                                     
+    }                                                                                               
+}

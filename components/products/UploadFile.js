@@ -71,7 +71,7 @@ const UploadFile = ({isOpen, setIsOpen, folder}) => {
                                                         <section className="container">
                                                             <div {...getRootProps({className: 'dropzone'})}>
                                                                 <input {...getInputProps()} />
-                                                                <p>Arrastre y suelte algunos archivos aquí, o haga clic para seleccionar archivos</p>
+                                                                <p className="h-20 rounded text-center items-center bg-blue-100 border-2 border-dashed border-red-400">Arrastre y suelte algunos archivos aquí, o haga clic para seleccionar archivos</p>
                                                             </div> 
                                                             
                                                             <aside>
