@@ -9,6 +9,7 @@ import {useSession} from "next-auth/client";
 import {useRouter} from "next/router";
 import {activateProduct, deleteProduct, updateAsAPromotion} from 'services/productService';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
+import ProductCard from "@/components/products/ProductCard";
 
 
 function ProductForm({ productData, image}) {
@@ -136,17 +137,19 @@ function ProductForm({ productData, image}) {
                       <>
                       <select
                           name="category"
-                          className="appearance-none   w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                          className="appearance-none  w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-400"
                           id="size"
                       >
                         <option disabled={true} value="-1">
                           Seleccionar
                         </option>
-                        {productData.sizes.map((provider) => (
+                        {
+                          productData.sizes.map((provider) => (
                             <option key={provider.id} name={provider.name} value={provider.id}>
                               {provider.name}
                             </option>
-                        ))}
+                          ))
+                        }
                       </select>
                       </>
                   ) : (
@@ -155,15 +158,26 @@ function ProductForm({ productData, image}) {
               </div>
             </div>
 
-            <div className="flex flex-col items-start space-y-1">
-              <button
-                  onClick={handleAddToCart}
-                  aria-label="add-to-cart"
-                  className="border border-palette-primary bg-purple-500 hover:bg-purple-600 text-lg text-white font-primary font-semibold pt-2 pb-1 leading-relaxed flex justify-center items-center focus:ring-1 focus:ring-palette-light focus:outline-none w-full rounded-md cursor-pointer  pl-4 pr-4"
-              >
-                Agregar al carrito
-              </button>
-            </div>
+
+            {
+                status == true
+                    ?
+                      <div className="bg-red-500 text-white p-4 rounded-lg">
+                        Producto inactivo
+                      </div>
+                    :
+                      <div className="flex flex-col items-start space-y-1">
+                        <button
+                            onClick={handleAddToCart}
+                            aria-label="add-to-cart"
+                            className="border border-palette-primary bg-purple-500 hover:bg-purple-600 text-lg text-white font-primary font-semibold pt-2 pb-1 leading-relaxed flex justify-center items-center focus:ring-1 focus:ring-palette-light focus:outline-none w-full rounded-md cursor-pointer  pl-4 pr-4"
+                        >
+                          Agregar al carrito
+                        </button>
+                      </div>
+            }
+
+
           </div>
 
         </div>
@@ -185,11 +199,12 @@ function ProductForm({ productData, image}) {
                             <FontAwesomeIcon icon={faTrash} className="w-5 m-auto group-hover:hidden"/>
                       </button>
                     :
-
-                    <button onClick={activeProduct} className="bg-blue-500 text-white w-1/4 mt-2 mr-3 rounded-md font-primary font-semibold text-xs flex justify-center items-baseline transform transition duration-500 group cursor-pointer">
-                      <p className="hidden m-1 group-hover:block">Activar Producto</p>
-                      <FontAwesomeIcon icon={faPlus} className="w-5 m-auto group-hover:hidden"/>
-                    </button>
+                   <>
+                     <button onClick={activeProduct} className="bg-blue-500 text-white w-1/4 mt-2 mr-3 rounded-md font-primary font-semibold text-xs flex justify-center items-baseline transform transition duration-500 group cursor-pointer">
+                       <p className="hidden m-1 group-hover:block">Activar Producto</p>
+                       <FontAwesomeIcon icon={faPlus} className="w-5 m-auto group-hover:hidden"/>
+                     </button>
+                   </>
                 }
                 <div
                     aria-label="upload-images"
@@ -215,8 +230,8 @@ function ProductForm({ productData, image}) {
                     promo
                     ?
                       <imput type='checkbox'
-                      className="bg-blue-400 text-white text-center w-1/4 mt-2 mr-3 rounded-md font-primary font-semibold text-xs flex
-                      justify-center items-baseline group hover:bg-blue-400 cursor-pointer"
+                      className="bg-blue-300 text-white text-center w-1/4 mt-2 rounded-md font-primary font-semibold text-xs flex
+                        justify-center items-baseline hover:scale-125 transform transition duration-500 group cursor-pointer"
                         onClick={handlePromo} >
                           <p className="hidden m-1 group-hover:block">Eliminar Promocion</p>
                         <FontAwesomeIcon icon={faTag} className="w-5 m-auto group-hover:hidden" />
@@ -224,15 +239,13 @@ function ProductForm({ productData, image}) {
 
                     :
                       <imput type='checkbox'
-                      className="bg-red-600 text-white text-center w-1/4 mt-2 rounded-md font-primary font-semibold text-xs flex
-                        justify-center items-baseline hover:scale-125 transform transition duration-500 group hover:bg-red-400 cursor-pointer"
+                      className="bg-palette-secondary text-white text-center w-1/4 mt-2 rounded-md font-primary font-semibold text-xs flex
+                        justify-center items-baseline hover:scale-125 transform transition duration-500 group cursor-pointer"
                         onClick={handlePromo} >
                           <p className="hidden m-1 group-hover:block">Añadir Promocion</p>
                         <FontAwesomeIcon icon={faTag} className="w-5 m-auto group-hover:hidden" />
                       </imput>
                 }
-
-                
 
                 <UploadFile
                     isOpen={openUploadFile}
