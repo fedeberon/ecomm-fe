@@ -16,7 +16,7 @@ function Shop({title, products, brands, categories }) {
                         ?
                             <>Not found</>
                         :
-                            <ProductListings products={products} brands={brands} categories={categories} type={title} />
+                            <ProductListings brands={brands} categories={categories} type={title} />
                     }
                 </div>
             </div>

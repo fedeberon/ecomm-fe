@@ -8,6 +8,7 @@ function ProductByCategoriesListings({ products, brands, categories, category}) 
     const [productsToShow, setProductsToShow] = useState();
 
     let handleScroll = async (e) => {
+        debugger
         if(window.innerHeight + e.target.documentElement.scrollTop + 1  > e.target.documentElement.scrollHeight && !isLoading) {
           if(products.last===true){
               return;

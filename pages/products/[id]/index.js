@@ -1,5 +1,5 @@
 import ProductSection from '@/components/products/ProductSection'
-import {getProduct, getProducts} from "../../../services/productService";
+import {getProduct} from "../../../services/productService";
 
 function Index({ productData }) {
 
