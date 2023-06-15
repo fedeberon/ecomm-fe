@@ -2,7 +2,6 @@ import axios from 'axios';
 
 export async function getProducts(page) {
     const fetchUrl = `${process.env.NEXT_PUBLIC_BACKEND_SERVICE}/product?page=${page}&size=12&sortBy=sales`;
-
     const fetchOptions = {
         endpoint: fetchUrl,
         method: "GET",
@@ -11,11 +10,9 @@ export async function getProducts(page) {
             "Content-Type": "application/json",
         },
     };
-
     try {
-        const data = await fetch(fetchUrl, fetchOptions)
-            .then((response) => response.json())
-            .catch(error => console.log(error));
+        const response = await fetch(fetchUrl, fetchOptions);
+        const data = await response.json();
         return data;
     } catch (error) {
         throw new Error("Could not fetch products!");
@@ -64,17 +61,6 @@ export async function getProduct(id) {
         return data;
     } catch (error) {
         throw new Error("Could not fetch product!");
-    }
-}
-
-export async function all() {
-    const fetchUrl = `${process.env.BACKEND_SERVICE}/product/all`;
-
-    try {
-        let response = await axios.get(fetchUrl);
-        return response.data;
-    } catch (error) {
-        throw new Error("Could not get all users !");
     }
 }
 
@@ -229,7 +215,7 @@ export async function search(value) {
         const response = await axios.get(fetchUrl);
         return response.data;
     } catch (error) {
-        throw new Error("Could not search products!");
+        return []
     }
 }
 

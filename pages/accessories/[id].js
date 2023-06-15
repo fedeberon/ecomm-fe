@@ -36,14 +36,13 @@ function AccessoriesPage({categories, products, brands}) {
   }
 
   export async function getServerSideProps() {
-    const products = await getProducts(0);
     const brands = await brandsService.findAll();
     const categories = await findAll();
   
     return {
       props: {
         products: products.content,
-        brands, 
+        brands,
         categories,
       },
     }
