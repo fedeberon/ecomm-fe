@@ -19,6 +19,25 @@ export async function getProducts(page) {
     }
 }
 
+export async function all(page) {
+    const fetchUrl = `${process.env.NEXT_PUBLIC_BACKEND_SERVICE}/product/all`;
+    const fetchOptions = {
+        endpoint: fetchUrl,
+        method: "GET",
+        headers: {
+            "Accept": "application/json",
+            "Content-Type": "application/json",
+        },
+    };
+    try {
+        const response = await fetch(fetchUrl, fetchOptions);
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        throw new Error("Could not fetch products!");
+    }
+}
+
 export async function getProductsByType(type) {
     const fetchUrl = `${process.env.NEXT_PUBLIC_BACKEND_SERVICE}/product/byType/${type}`;
 

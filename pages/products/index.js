@@ -1,5 +1,5 @@
 import Products from "@/components/products/Products";
-import {all} from "../../services/productService";
+import {all, getProducts} from "../../services/productService";
 import Link from "next/link";
 import PageTitle from "@/components/PageTitle";
 import {PlusIcon} from "@heroicons/react/20/solid";
@@ -26,7 +26,6 @@ const ProductsManager = ({products}) => {
     )
 
 }
-
 
 export async function getServerSideProps() {
     const products = await all()
