@@ -116,6 +116,7 @@
             } else {
                 setIsLoading(true)
                 let result = await getProducts(page + 1);
+                console.log("page", page)
                 setPage(page + 1);
                 setProductsToShow(productsToShow => [
                     ...productsToShow.concat (result.content)
