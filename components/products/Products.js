@@ -4,7 +4,7 @@ import {useState, useMemo} from "react";
 
 const Products = ({products}) => {
     const [filterText, setFilterText]= useState ('')
-    const filteredItems =products.filter(item=> filterText.toLowerCase() == '' || filterText.includes(item.id));
+    const filteredItems = products.filter(item=> filterText.toLowerCase() == '' || filterText.includes(item.id));
     
     const columns = [
             
