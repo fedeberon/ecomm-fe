@@ -99,9 +99,9 @@ function Nav() {
           <Link href="/" >
             <a className="text-smw border-b border-gray-200 block mt-4 lg:inline-block lg:border-none lg:mt-0">
               <h1>
-                <span className="text-m font-primary text-palette-primary md:p-2 rounded-md hover:text-palette-secondary  tracking-tight pt-1">
+                <div className="text-m font-primary text-palette-primary md:p-2 rounded-md hover:text-palette-secondary  tracking-tight pt-1">
                   INICIO
-                </span>
+                </div>
               </h1>
             </a>
           </Link>
@@ -109,9 +109,9 @@ function Nav() {
           <Link href="/diapers/inicio">
             <a className="text-smw block mt-4 lg:inline-block lg:mt-0">
               <h1>
-                <span className="text-m font-primary text-palette-primary md:p-2 rounded-md hover:text-palette-secondary tracking-tight pt-1">
+                <div className="text-m font-primary text-palette-primary md:p-2 rounded-md hover:text-palette-secondary tracking-tight pt-1">
                   PAÑALERIA
-                </span>
+                </div>
               </h1>
             </a>
           </Link>
@@ -150,9 +150,9 @@ function Nav() {
           <Link href="/about/inicio">
             <a className="text-smw block mt-4 lg:inline-block lg:mt-0">
               <h1>
-                <span className="text-m font-primary text-palette-primary tracking-tight md:p-2 rounded-md hover:text-palette-secondary">
+                <div className="text-m font-primary text-palette-primary tracking-tight md:p-2 rounded-md hover:text-palette-secondary">
                   QUIENES SOMOS
-                </span>
+                </div>
               </h1>
             </a>
           </Link>
@@ -161,9 +161,9 @@ function Nav() {
             <Link href="/admin">
               <a className="top-4 right-3 lg:order-last text-smw block mt-4 mr-4 lg:inline-block lg:mt-0">
                 <h1>
-                  <span className="text-m font-primary text-palette-primary md:p-2 rounded-md hover:text-palette-secondary tracking-tight pt-1">
+                  <div className="text-m font-primary text-palette-primary md:p-2 rounded-md hover:text-palette-secondary tracking-tight pt-1">
                     ADMINISTRACION
-                  </span>
+                  </div>
                 </h1>
               </a>
             </Link>

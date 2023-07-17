@@ -1,6 +1,9 @@
 import FilterComponent from  "@/components/filter/FilterComponent";
 import DataTable  from "react-data-table-component";
+import Link from 'next/link'
 import {useState, useMemo} from "react";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import {faEyeSlash, faEdit, faTrash, faTag, faInfo} from '@fortawesome/free-solid-svg-icons'
 
 const Products = ({products}) => {
     const [filterText, setFilterText]= useState ('')
@@ -42,6 +45,32 @@ const Products = ({products}) => {
             name: 'Puntos',
             selector:row=>row.points ? row.points : "Puntos",
             sortable: true
+        },
+        {
+            name: 'Acciones',
+            cell: (row) => (
+                <div className="flex justify-between">
+                    <button onClick={() => console.log('Button clicked!')} className="bg-green-500 ml-2 hover:bg-green-400 text-white w-10 h-auto p-2 rounded-full font-primary font-semibold text-xs flex
+                    justify-center items-baselinetransform transition duration-500 group cursor-pointer">
+                    <FontAwesomeIcon icon={faEyeSlash} className="w-5 m-auto"/>
+                    </button>
+
+                    <Link
+                    href={`/products/${row.id}`}
+                    passHref
+                    >
+                    <button className="bg-blue-500 ml-2 hover:bg-blue-400 text-white w-10 h-auto p-2 rounded-full font-primary font-semibold text-xs flex
+                    justify-center items-baselinetransform transition duration-500 group cursor-pointer">
+                    <FontAwesomeIcon icon={faEdit} className="w-5 m-auto"/>
+                    </button>
+                    </Link>
+
+                    <button onClick={() => console.log(`Product ${row.id} clicked!`)} className="bg-red-500 ml-2 hover:bg-red-400 text-white w-10 h-auto p-2 rounded-full font-primary font-semibold text-xs flex
+                    justify-center items-baselinetransform transition duration-500 group cursor-pointer">
+                    <FontAwesomeIcon icon={faTrash} className="w-5 m-auto"/>
+                    </button>
+                </div>
+            ),
         },
     ]
 

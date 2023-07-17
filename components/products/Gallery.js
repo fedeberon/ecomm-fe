@@ -50,7 +50,7 @@ const Gallery = ({ productData }) => {
                         {products.map((product, innerIndex) => (
                             <div
                                 key={innerIndex}
-                                className="m-auto bg-white shadow-md rounded-lg p-4 max-w-2xl"
+                                className="m-auto bg-white shadow-md rounded-lg p-4 w-80 h-120"
                             >
                                 <ProductCard product={product} />
                             </div>
