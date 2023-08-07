@@ -1,20 +1,31 @@
 import FilterComponent from  "@/components/filter/FilterComponent";
 import DataTable  from "react-data-table-component";
 import Link from 'next/link'
+import { deleteProduct } from "services/productService";
 import {useState, useMemo} from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import {faEyeSlash, faEdit, faTrash, faTag, faInfo} from '@fortawesome/free-solid-svg-icons'
+import {faEye, faEdit, faTrash, faTag, faInfo} from '@fortawesome/free-solid-svg-icons'
 
 const Products = ({products}) => {
     const [filterText, setFilterText]= useState ('')
     const filteredItems = products.filter(item=> filterText.toLowerCase() == '' || filterText.includes(item.id));
-    
+    console.log(products);
+    const [data,setData]= useState(filteredItems)
+
+    const handleDelete = (rowId) => {
+        const updatedData = data.filter(row => row.id !== rowId);
+        setData(updatedData);
+        deleteProduct(rowId)
+      };
+
+
     const columns = [
             
         {
+            
             name: 'Id',
             selector: row => row.id,
-            sortable: true
+            sortable: true,
         },
         {
             name: 'Nombre',
@@ -50,13 +61,18 @@ const Products = ({products}) => {
             name: 'Acciones',
             cell: (row) => (
                 <div className="flex justify-between">
-                    <button onClick={() => console.log('Button clicked!')} className="bg-green-500 ml-2 hover:bg-green-400 text-white w-10 h-auto p-2 rounded-full font-primary font-semibold text-xs flex
-                    justify-center items-baselinetransform transition duration-500 group cursor-pointer">
-                    <FontAwesomeIcon icon={faEyeSlash} className="w-5 m-auto"/>
-                    </button>
-
                     <Link
                     href={`/products/${row.id}`}
+                    passHref
+                    >
+                    <button onClick={() => console.log('Button clicked!')} className="bg-green-500 ml-2 hover:bg-green-400 text-white w-10 h-auto p-2 rounded-full font-primary font-semibold text-xs flex
+                    justify-center items-baselinetransform transition duration-500 group cursor-pointer">
+                    <FontAwesomeIcon icon={faEye} className="w-5 m-auto"/>
+                    </button>
+                    </Link>
+
+                    <Link
+                    href={`/products/update/${row.id}`}
                     passHref
                     >
                     <button className="bg-blue-500 ml-2 hover:bg-blue-400 text-white w-10 h-auto p-2 rounded-full font-primary font-semibold text-xs flex
@@ -65,7 +81,7 @@ const Products = ({products}) => {
                     </button>
                     </Link>
 
-                    <button onClick={() => console.log(`Product ${row.id} clicked!`)} className="bg-red-500 ml-2 hover:bg-red-400 text-white w-10 h-auto p-2 rounded-full font-primary font-semibold text-xs flex
+                    <button onClick={() => handleDelete(row.id)} className="bg-red-500 ml-2 hover:bg-red-400 text-white w-10 h-auto p-2 rounded-full font-primary font-semibold text-xs flex
                     justify-center items-baselinetransform transition duration-500 group cursor-pointer">
                     <FontAwesomeIcon icon={faTrash} className="w-5 m-auto"/>
                     </button>
@@ -93,7 +109,7 @@ const Products = ({products}) => {
 
                 <DataTable
                     columns={columns}
-                    data={filteredItems}
+                    data={data}
                     pagination
                     subHeader
                     subHeaderComponent={subHeaderComponentMemo}
