@@ -99,7 +99,7 @@ function Nav() {
           <Link href="/" >
             <a className="text-smw border-b border-gray-200 block mt-4 lg:inline-block lg:border-none lg:mt-0">
               <h1>
-                <div className="text-m font-primary text-palette-primary md:p-2 rounded-md hover:text-palette-secondary  tracking-tight pt-1">
+                <div className="text-m font-primary text-palette-primary md:p-2 rounded-md hover:text-palette-secondary tracking-tight pt-1">
                   INICIO
                 </div>
               </h1>
@@ -116,20 +116,19 @@ function Nav() {
             </a>
           </Link>
 
-          <div className="relative inline-block text-left">
-            <div className="text-smw block lg:relative lg:mt-0">
-              <button
+          <div className="relative text-smw block mt-4 lg:inline-block lg:mt-0">
+            <div className ="md:p-2 pt-1">
+              <button 
                 type="button"
                 onClick={showCategories}
-                className="inline-flex w-full text-m font-primary text-palette-primary hover:text-palette-secondary capitalize  focus:ring-2 focus:ring-palette-lighter focus:ring-opacity-75"
-              >
+                className="inline-flex text-m font-primary text-palette-primary rounded-md hover:text-palette-secondary tracking-tight">
                 CATEGORÍAS
-                <svg className="h-5 mt-1 w-5" xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                    <path fillRule="evenodd"
-                      d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                      clipRule="evenodd"/>
-                </svg>
+                  <svg className="h-5 mt-1 w-5" xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 3 20 20" fill="currentColor" aria-hidden="true">
+                      <path fillRule="evenodd"
+                        d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                        clipRule="evenodd"/>
+                  </svg>
               </button>
             </div>
             <div
