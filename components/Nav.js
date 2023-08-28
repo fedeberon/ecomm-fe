@@ -56,12 +56,10 @@ function Nav() {
   })
 
   return (
-
     <header className={color ? "w-full sticky lg:static top-0 z-50 bg-white ease-in duration-300" : "w-full sticky lg:static top-0 z-50 bg-palette-bg ease-in duration-300"}>
 
       <div >
         <div className="flex items-center justify-between flex-wrap p-2">
-
         
         <div className="block lg:hidden">
           <button onClick={handleMenu} className="flex py-2 hover:border-grey">
@@ -97,49 +95,40 @@ function Nav() {
           className={`w-full block flex-grow ${isShow ? "" : "hidden"} divide-y divide-y-reverse justify-between divide-gray-200 lg:divide-none lg:flex lg:justify-self-center lg:w-auto`}
         >
           <Link href="/" >
-            <a className="text-smw border-b border-gray-200 block mt-4 lg:inline-block lg:border-none lg:mt-0">
-              <h1>
-                <div className="text-m font-primary text-palette-primary md:p-2 rounded-md hover:text-palette-secondary  tracking-tight pt-1">
-                  INICIO
-                </div>
-              </h1>
+            <a className="text-smw border-b border-gray-200 block mt-4 lg:inline-block lg:border-none lg:mt-0
+               text-m font-primary text-palette-primary md:p-2 rounded-md hover:text-palette-secondary tracking-tight pt-1">
+                INICIO                
             </a>
           </Link>
 
           <Link href="/diapers/inicio">
-            <a className="text-smw block mt-4 lg:inline-block lg:mt-0">
-              <h1>
-                <div className="text-m font-primary text-palette-primary md:p-2 rounded-md hover:text-palette-secondary tracking-tight pt-1">
+            <a className="text-smw block mt-4 lg:inline-block lg:mt-0
+                text-m font-primary text-palette-primary md:p-2 rounded-md hover:text-palette-secondary tracking-tight pt-1">
                   PAÑALERIA
-                </div>
-              </h1>
             </a>
           </Link>
 
-          <div className="relative inline-block text-left">
-            <div className="text-smw block lg:relative lg:mt-0">
-              <button
+          <div className="relative text-smw block mt-4 lg:inline-block lg:mt-0">
+            <button 
                 type="button"
                 onClick={showCategories}
-                className="inline-flex w-full text-m font-primary text-palette-primary hover:text-palette-secondary capitalize  focus:ring-2 focus:ring-palette-lighter focus:ring-opacity-75"
-              >
+                className="inline-flex text-m font-primary text-palette-primary tracking-tight md:p-2 rounded-md hover:text-palette-secondary">
                 CATEGORÍAS
-                <svg className="h-5 mt-1 w-5" xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                    <path fillRule="evenodd"
-                      d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                      clipRule="evenodd"/>
-                </svg>
-              </button>
-            </div>
-            <div
-                className={`${categoriesVisible ? "" : "hidden"}  z-50 absolute mt-2 w-46 lg:w-32 lg:right-0 rounded-md shadow-lg bg-white ring-2 ring-palette-lighter ring-opacity-75 focus:outline-none md:-mx-2 -mx-0`}
+                  <svg className="h-5 w-5 align-items-lg-stretch" xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                      <path fillRule="evenodd"
+                        d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                        clipRule="evenodd"/>
+                  </svg>
+              </button>       
+              <div
+                className={`${categoriesVisible ? "" : "hidden"}   z-50 absolute mt-2 w-46 lg:w-32 lg:right-0 rounded-md shadow-lg bg-white ring-2 ring-palette-lighter ring-opacity-75 focus:outline-none md:-mx-2 -mx-0`}
                 role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabIndex="-1">
                 <div className="py-1 " role="none">
                   {categories?.map((category) =>(
                       <Link href={`/accessories/${category.id}`} passHref legacyBehavior>
-                      <a href="#" onClick={showCategories} className="text-palette-primary block text-center hover:text-palette-secondary px-4 py-2 text-sm" role="menuitem"
-                      tabIndex="-1" id="menu-item-0">{category.name}</a>
+                        <a href="#" onClick={showCategories} className="text-palette-primary block text-center hover:text-palette-secondary px-4 py-2 text-sm" role="menuitem"
+                        tabIndex="-1" id="menu-item-0">{category.name}</a>
                       </Link>
                     ))
                   }
@@ -148,12 +137,8 @@ function Nav() {
           </div>
 
           <Link href="/about/inicio">
-            <a className="text-smw block mt-4 lg:inline-block lg:mt-0">
-              <h1>
-                <div className="text-m font-primary text-palette-primary tracking-tight md:p-2 rounded-md hover:text-palette-secondary">
+            <a className="text-smw block mt-4 lg:inline-block lg:mt-0 text-m font-primary text-palette-primary tracking-tight md:p-2 rounded-md hover:text-palette-secondary">
                   QUIENES SOMOS
-                </div>
-              </h1>
             </a>
           </Link>
 
