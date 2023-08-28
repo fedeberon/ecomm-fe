@@ -24,8 +24,8 @@ const UserSession = ({session}) => {
                                     className="inline-flex justify-center md:mt-2 md:ml-2 w-full rounded-md px-3 py-2 text-m font-primary text-palette-primary hover:text-palette-secondary capitalize  focus:ring-2 focus:ring-palette-lighter focus:ring-opacity-75"
                                     id="menu-button" aria-expanded="true" aria-haspopup="true">
                                 {(session.user.name).toUpperCase()}
-                                <svg className="h-5 mt-1 w-5" xmlns="http://www.w3.org/2000/svg"
-                                     viewBox="0 3 20 20" fill="currentColor" aria-hidden="true">
+                                <svg className="h-5 w-5" xmlns="http://www.w3.org/2000/svg"
+                                     viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
                                     <path fillRule="evenodd"
                                           d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
                                           clipRule="evenodd"/>
@@ -62,11 +62,14 @@ const UserSession = ({session}) => {
         )
     } else {
         return (
-                <Link href="/api/auth/signin">
-                    <a className="p-6 m-12" aria-label="login">
-                        <FontAwesomeIcon className="hover:text-palette-dark text-palette-primary w-6 m-auto" icon={faUserCircle} />
-                    </a>
-                </Link>
+            <Link href="/api/auth/signin">
+                <a className="flex  md:-mt-1 flex-wrap ml-2 md:ml-1 object-right p-6 lg:order-last md:p-3 rounded-lg hover:text-palette-secondary" aria-label="cart">
+                    <FontAwesomeIcon
+                        className="text-palette-primary hover:text-palette-secondary h-6"
+                        icon={faUserCircle}
+                    />
+                </a>
+          </Link>
         )
     }
 }
