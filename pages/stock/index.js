@@ -3,6 +3,7 @@ import React from "react";
 import PageTitle from "@/components/PageTitle";
 import List from "@/components/stock/List";
 import Link from "next/link";
+import withAuthorization from 'components/withAuthorization';
 
 const Index = ({stock}) => {
     return (
@@ -30,5 +31,4 @@ export async function getServerSideProps() {
     }
 }
 
-
-export default Index
+export default withAuthorization(Index);

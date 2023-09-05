@@ -3,7 +3,7 @@ import {all, getProducts} from "../../services/productService";
 import Link from "next/link";
 import PageTitle from "@/components/PageTitle";
 import {PlusIcon} from "@heroicons/react/20/solid";
-
+import withAuthorization from 'components/withAuthorization';
 
 const ProductsManager = ({products}) => {
 
@@ -36,4 +36,4 @@ export async function getServerSideProps() {
     }
 }
 
-export default ProductsManager
+export default withAuthorization(ProductsManager)
