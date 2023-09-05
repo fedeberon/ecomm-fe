@@ -2,6 +2,7 @@ import {findAll} from "../../services/brandService";
 import BrandList from "@/components/brands/BrandList";
 import PageTitle from "@/components/PageTitle";
 import React from "react";
+import withAuthorization from 'components/withAuthorization';
 
 const Brand = ({brands}) => {
   return (
@@ -21,5 +22,5 @@ export async function getServerSideProps() {
     };
 }
 
-export default Brand;
+export default withAuthorization(Brand);
 
