@@ -1,6 +1,7 @@
 import {getBills} from "../../services/billingService";
 import Bills from "@/components/bill/Bills";
 import PageTitle from "@/components/PageTitle";
+import withAuthorization from 'components/withAuthorization';
 
 const Index = ({bills}) => {
 
@@ -22,4 +23,4 @@ export async function getServerSideProps() {
     }
 }
 
-export default Index
+export default withAuthorization(Index);

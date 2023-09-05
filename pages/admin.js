@@ -1,4 +1,5 @@
 import Link from "next/link";
+import withAuthorization from 'components/withAuthorization';
 
 const Admin = () => {
     return (
@@ -167,4 +168,4 @@ const Admin = () => {
 
 }
 
-export default Admin
+export default withAuthorization(Admin);
