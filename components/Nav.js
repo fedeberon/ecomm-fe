@@ -124,7 +124,7 @@ function Nav() {
               <div
                 className={`${categoriesVisible ? "" : "hidden"}   z-50 absolute mt-2 w-46 lg:w-32 lg:right-0 rounded-md shadow-lg bg-white ring-2 ring-palette-lighter ring-opacity-75 focus:outline-none md:-mx-2 -mx-0`}
                 role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabIndex="-1">
-                <div className="py-1 " role="none">
+                <div className="py-1 overflow-y-scroll h-80" role="none">
                   {categories?.map((category) =>(
                       <Link href={`/accessories/${category.id}`} passHref legacyBehavior>
                         <a href="#" onClick={showCategories} className="text-palette-primary block text-center hover:text-palette-secondary px-4 py-2 text-sm" role="menuitem"
