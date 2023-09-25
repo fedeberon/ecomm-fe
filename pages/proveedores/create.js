@@ -1,5 +1,6 @@
 import NewProvider from "@/components/proveedores/NewProvider";
 import StoreHeading from "@/components/StoreHeading";
+import withAuthorization from 'components/withAuthorization';
 
 const Create = () => {
     return(
@@ -10,4 +11,5 @@ const Create = () => {
     );
 }
 
-export default Create;
+
+export default withAuthorization(Create);

@@ -1,6 +1,7 @@
 import React from "react";
 import PageTitle from "@/components/PageTitle";
 import Calendario from "@/components/calendar/calendar";
+import withAuthorization from 'components/withAuthorization';
 
 const Index = () => {
 
@@ -12,4 +13,4 @@ const Index = () => {
     )
 }
 
-export default Index
+export default withAuthorization(Index);

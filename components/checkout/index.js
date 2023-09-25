@@ -1,4 +1,5 @@
 import {useEffect} from "react";
+import withAuthorization from 'components/withAuthorization';
 
 const CheckoutDetail = ({checkout, setShow}) => {
     useEffect(() => {
@@ -114,4 +115,4 @@ const CheckoutDetail = ({checkout, setShow}) => {
     )
 }
 
-export default CheckoutDetail
+export default withAuthorization(CheckoutDetail);

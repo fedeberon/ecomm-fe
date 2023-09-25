@@ -1,5 +1,6 @@
 import StoreHeading from "@/components/StoreHeading";
 import NewSize from "@/components/sizes/NewSize";
+import withAuthorization from 'components/withAuthorization';
 
 const Create = () => {
     return (
@@ -10,4 +11,4 @@ const Create = () => {
     );
 }
 
-export default Create;
+export default withAuthorization(Create);
