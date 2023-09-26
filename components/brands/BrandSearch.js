@@ -1,3 +1,4 @@
+// A ELIMINAR - SU CONTENIDO IRA A FILTERMODAL
 const BrandSearch = ({brands, onclick}) => {
     return (
                 <div className="flex-center col-span-2 w-auto rounded ">

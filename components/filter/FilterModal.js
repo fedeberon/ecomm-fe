@@ -5,22 +5,12 @@ import CategorySearch from '../filter/CategorySearch';  //A ELIMINAR, SERAN UNA 
 import { debounce } from 'lodash';
 
 function FilterModal({ clasifications, searchFunction }) {
-    const [filter, isShowFilter] = useState(false)
+    const [showFilter, setShowFilter] = useState(false)
     //¿DEBERIA HABER UN ARRAY MULTIPLE? ¿UN ARREGLO DENTADO?
     const [brandsToSearch, setBrandsToSearch] = useState([]);
     const [categoriesToSearch, setCategoriesToSearch] = useState([]);
 
     const [searchTerm, setSearchTerm] = useState('');
-
-    //PERTENECERA A NUEVO COMPONENTE
-    const close = () => {
-        isShowFilter(false)
-    }
-
-    //PERTENECERA A NUEVO COMPONENTE
-    const open = () => {
-        isShowFilter(!filter)
-    }
 
     //PERTENECERA A NUEVO COMPONENTE - A UNIFICAR CON SIGUIENTE
     const handleChangeBrand = (e) => {
@@ -52,6 +42,17 @@ function FilterModal({ clasifications, searchFunction }) {
         }
     }
 
+    //REEMPLAZO A GENERAR DE LOS 2 ANTERIORES
+    const handleChangeSubCat = (e) => {
+
+    }
+
+    //PERTENECERA A NUEVO COMPONENTE    
+    function handleChangeSearch(event) {
+        const { value } = event.target;
+        setSearchTerm(value);
+    }
+
     //PERTENECERA A NUEVO COMPONENTE    
     useEffect(() => {
         const debouncedSearch = debounce(searchValue, 500); // Retraso de 500 ms
@@ -62,11 +63,7 @@ function FilterModal({ clasifications, searchFunction }) {
         };
     }, [searchTerm]);
 
-    //PERTENECERA A NUEVO COMPONENTE    
-    function handleChange(event) {
-        const { value } = event.target;
-        setSearchTerm(value);
-    }
+
 
     return (
         <div className=' sticky top-16 pt-4 md:top-14 md:pt-0 z-30 bg-white'>
@@ -87,7 +84,7 @@ function FilterModal({ clasifications, searchFunction }) {
                                 transition-all
                                 duration-150"
                         type="button"
-                        onClick={open}>
+                        onClick={setShowFilter(true)}>
                         Filtros
                     </button>
                 </div>
@@ -96,12 +93,12 @@ function FilterModal({ clasifications, searchFunction }) {
                     placeholder="Buscar"
                     id="search"
                     value={searchTerm}
-                    onChange={handleChange}
+                    onChange={handleChangeSearch}
                     autoComplete="off" />
             </div>
-            <div className={`fixed z-50  top-0 w-full left-0 ${filter ? "" : "hidden"}  `} id="modal">
+            <div className={`fixed z-50  top-0 w-full left-0 ${showFilter ? "" : "hidden"}  `} id="modal">
                 <div className="flex items-center justify-center min-height-100vh pt-4 px-4 pb-20 text-center sm:block sm:p-0">
-                    <div onClick={close} className="fixed inset-0 transition-opacity">
+                    <div onClick={setShowFilter(false)} className="fixed inset-0 transition-opacity">
                         <div className="absolute inset-0 bg-gray-700 opacity-75" />
                     </div>
                     <span className=" sm:inline-block sm:align-middle sm:h-screen">&#8203;</span>
