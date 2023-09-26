@@ -1,10 +1,16 @@
 import ProductCard from '@/components/products/ProductCard'
 import FilterModal from '@/components/filter/FilterModal'
 import { useEffect, useState } from "react";
-import { filterProductsByBrands, filterProductsByCategories, getProducts, search } from "../../services/productService"
+import { filterProductsByBrands, filterProductsByCategories, getProducts } from "../../services/productService"
 
 function ProductListings({ brands, categories }) {
     const [isLoading, setIsLoading] = useState(false);
+    //Components of the search query: 
+    const [termToSearch, setTermToSearch] = useState("");
+    const [brandsToSearch, setBrandsToSearch] = useState([]);
+    const [categoriesToSearch, setCategoriesToSearch] = useState([]);
+    const [orderAsc, setOrderAsc] = useState(true);
+    //List of products to show and number of the page (it'll use the default size of 12)
     const [productsToShow, setProductsToShow] = useState([])
     const [page, setPage] = useState(0);
 
@@ -40,7 +46,7 @@ function ProductListings({ brands, categories }) {
     //SERA LA UNICA FUNCION PARA BUSQUEDA PARA PRODUCTOS
     //LA FUNCION ESPECIFICA DE BUSQUEDA DEBERA SER PASADA COMO PARAMETRO PARA FILTERMODAL...
     const searchAll = () => {
-
+        console.log("TO DO")
     }
 
     //PROPIA DE PRODUCTLISTINGS
@@ -51,7 +57,7 @@ function ProductListings({ brands, categories }) {
         });
     }
 
-    //PROPIA DE PRODUCTLISTINGS
+    //PROPIA DE PRODUCTLISTINGS - A REEVALUAR CON NUEVOS PARAMETTROS
     let handleScroll = async (e) => {
         if (window.innerHeight + e.target.documentElement.scrollTop + 1 > e.target.documentElement.scrollHeight && !isLoading) {
             if (brandsToSearch.length > 0) {

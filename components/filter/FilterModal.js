@@ -1,14 +1,11 @@
 //Componente nuevo a definir a futuro
 import { useEffect, useState } from "react";
-import BrandSearch from '../brands/BrandSearch';        //A ELIMINAR, SERAN UNA FUNCION PROPIA Y UNICA
-import CategorySearch from '../filter/CategorySearch';  //A ELIMINAR, SERAN UNA FUNCION PROPIA Y UNICA
+//import BrandSearch from '../brands/BrandSearch';        //A ELIMINAR, SERAN UNA FUNCION PROPIA Y UNICA
+//import CategorySearch from '../filter/CategorySearch';  //A ELIMINAR, SERAN UNA FUNCION PROPIA Y UNICA
 import { debounce } from 'lodash';
 
 function FilterModal({ filterParams, searchFunction }) {
     const [showFilter, setShowFilter] = useState(false)
-    //¿DEBERIA HABER UN ARRAY MULTIPLE? ¿UN ARREGLO DENTADO?
-    //const [brandsToSearch, setBrandsToSearch] = useState([]);
-    //const [categoriesToSearch, setCategoriesToSearch] = useState([]);
     const [queryParameters, setQueryParameters] = useState([]);
     const [searchTerm, setSearchTerm] = useState('');
 
@@ -46,13 +43,18 @@ function FilterModal({ filterParams, searchFunction }) {
 
     //REEMPLAZO A GENERAR DE LOS 2 ANTERIORES
     const handleChangeSubCat = (e) => {
-
+        console.log("Listo, ahora como hacemo?")
     }
 
     //PERTENECERA A NUEVO COMPONENTE    
     function handleChangeSearch(event) {
         const { value } = event.target;
         setSearchTerm(value);
+    }
+
+    function searchButton(){
+        setShowFilter(false);
+        searchFunction();
     }
 
     //PERTENECERA A NUEVO COMPONENTE    
@@ -112,7 +114,7 @@ function FilterModal({ filterParams, searchFunction }) {
                                 filterParams()
                                     ?
                                     filterParams().map((category, index) => (
-                                        <div className="flex-center col-span-2 w-auto rounded ">
+                                        <div className="flex-center col-span-2 w-auto rounded">
                                             <div className="w-auto bg-white text-sm text-palette-primary font-bold px-5 py-2">
                                                 <div className="m-2 -ml-4 text-2xl">{category.type}</div>
                                             </div>
@@ -128,8 +130,10 @@ function FilterModal({ filterParams, searchFunction }) {
                                                                 <div className="block">
                                                                     <div className="mt-2 px-2">
                                                                         <label className="inline-flex items-center">
-                                                                            <input type="checkbox" className="form-checkbox rounded text-red-500 " onClick={() => searchFunction}
-                                                                                value={subcategory.id} />
+                                                                            <input type="checkbox" 
+                                                                                   className="form-checkbox rounded text-red-500 " 
+                                                                                   onChange={handleChangeSubCat}
+                                                                                   value={subcategory.id} />
                                                                             <span className="ml-2">{subcategory.name}</span>
                                                                         </label>
                                                                     </div>
@@ -148,7 +152,7 @@ function FilterModal({ filterParams, searchFunction }) {
                         </div>
                         <div className="p-3  mt-2 text-center space-x-4 md:block">
                                 <button className="mb-2 md:mb-0 bg-palette-slight border border-black-500 px-5 py-2 text-sm shadow-sm font-medium tracking-wider text-white hover:text-white rounded-full hover:shadow-lg hover:bg-palette-secondary" onClick={() => setShowFilter(false)}>Cerrar</button>
-                                <button className="mb-2 md:mb-0 bg-palette-slight border-black-500 px-5 py-2 text-sm shadow-sm font-medium tracking-wider text-white hover:text-white rounded-full hover:shadow-lg hover:bg-palette-secondary" onClick={searchFunction}>Buscar</button>
+                                <button className="mb-2 md:mb-0 bg-palette-slight border-black-500 px-5 py-2 text-sm shadow-sm font-medium tracking-wider text-white hover:text-white rounded-full hover:shadow-lg hover:bg-palette-secondary" onClick={() => searchButton()}>Buscar</button>
                             </div>
                     </div>
                 </div>
