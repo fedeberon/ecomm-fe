@@ -4,15 +4,16 @@ import BrandSearch from '../brands/BrandSearch';        //A ELIMINAR, SERAN UNA 
 import CategorySearch from '../filter/CategorySearch';  //A ELIMINAR, SERAN UNA FUNCION PROPIA Y UNICA
 import { debounce } from 'lodash';
 
-function FilterModal({ clasifications, searchFunction }) {
+function FilterModal({ filterParams, searchFunction }) {
     const [showFilter, setShowFilter] = useState(false)
     //¿DEBERIA HABER UN ARRAY MULTIPLE? ¿UN ARREGLO DENTADO?
-    const [brandsToSearch, setBrandsToSearch] = useState([]);
-    const [categoriesToSearch, setCategoriesToSearch] = useState([]);
-
+    //const [brandsToSearch, setBrandsToSearch] = useState([]);
+    //const [categoriesToSearch, setCategoriesToSearch] = useState([]);
+    const [queryParameters, setQueryParameters] = useState([]);
     const [searchTerm, setSearchTerm] = useState('');
 
     //PERTENECERA A NUEVO COMPONENTE - A UNIFICAR CON SIGUIENTE
+    /*
     const handleChangeBrand = (e) => {
         if (e.target.checked) {
             setBrandsToSearch(brandsToSearch => [
@@ -41,6 +42,7 @@ function FilterModal({ clasifications, searchFunction }) {
             setCategoriesToSearch(categories);
         }
     }
+    */
 
     //REEMPLAZO A GENERAR DE LOS 2 ANTERIORES
     const handleChangeSubCat = (e) => {
@@ -55,7 +57,7 @@ function FilterModal({ clasifications, searchFunction }) {
 
     //PERTENECERA A NUEVO COMPONENTE    
     useEffect(() => {
-        const debouncedSearch = debounce(searchValue, 500); // Retraso de 500 ms
+        const debouncedSearch = debounce(searchFunction, 500); // Retraso de 500 ms
         debouncedSearch(searchTerm);
 
         return () => {
@@ -84,7 +86,7 @@ function FilterModal({ clasifications, searchFunction }) {
                                 transition-all
                                 duration-150"
                         type="button"
-                        onClick={setShowFilter(true)}>
+                        onClick={() => setShowFilter(true)}>
                         Filtros
                     </button>
                 </div>
@@ -98,7 +100,7 @@ function FilterModal({ clasifications, searchFunction }) {
             </div>
             <div className={`fixed z-50  top-0 w-full left-0 ${showFilter ? "" : "hidden"}  `} id="modal">
                 <div className="flex items-center justify-center min-height-100vh pt-4 px-4 pb-20 text-center sm:block sm:p-0">
-                    <div onClick={setShowFilter(false)} className="fixed inset-0 transition-opacity">
+                    <div onClick={() => setShowFilter(false)} className="fixed inset-0 transition-opacity">
                         <div className="absolute inset-0 bg-gray-700 opacity-75" />
                     </div>
                     <span className=" sm:inline-block sm:align-middle sm:h-screen">&#8203;</span>
@@ -106,14 +108,48 @@ function FilterModal({ clasifications, searchFunction }) {
                         role="dialog" aria-modal="true" aria-labelledby="modal-headline">
                         <div className='absolute mt-20 w-full border-b-2 border-indigo-100 '></div>
                         <div className="flex grid-cols-2 m-auto px-4 pt-6 pb-2 sm:p-6 sm:pb-4">
-                            {/* A MAPEAR */}
-
-                            {/* A MAPEAR */}
-                            <div className="p-3  mt-2 text-center space-x-4 md:block">
-                                <button className="mb-2 md:mb-0 bg-palette-slight border border-black-500 px-5 py-2 text-sm shadow-sm font-medium tracking-wider text-white hover:text-white rounded-full hover:shadow-lg hover:bg-palette-secondary" onClick={close}>Cerrar</button>
+                            {
+                                filterParams()
+                                    ?
+                                    filterParams().map((category, index) => (
+                                        <div className="flex-center col-span-2 w-auto rounded ">
+                                            <div className="w-auto bg-white text-sm text-palette-primary font-bold px-5 py-2">
+                                                <div className="m-2 -ml-4 text-2xl">{category.type}</div>
+                                            </div>
+                                            <div id="menu" className={category.column ?
+                                                                        `overflow-y-auto max-h-96 no-scrollbar`
+                                                                    :
+                                                                        `overflow-y-auto max-h-96 no-scrollbar lg:grid lg:grid-cols-4`}>
+                                                {
+                                                    category.elements
+                                                        ?
+                                                        category.elements.map((subcategory, index) => (
+                                                            <div key={index}>
+                                                                <div className="block">
+                                                                    <div className="mt-2 px-2">
+                                                                        <label className="inline-flex items-center">
+                                                                            <input type="checkbox" className="form-checkbox rounded text-red-500 " onClick={() => searchFunction}
+                                                                                value={subcategory.id} />
+                                                                            <span className="ml-2">{subcategory.name}</span>
+                                                                        </label>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        ))
+                                                        :
+                                                        <></>
+                                                }
+                                            </div>
+                                        </div>
+                                    ))
+                            :
+                                    <></>
+                            }
+                        </div>
+                        <div className="p-3  mt-2 text-center space-x-4 md:block">
+                                <button className="mb-2 md:mb-0 bg-palette-slight border border-black-500 px-5 py-2 text-sm shadow-sm font-medium tracking-wider text-white hover:text-white rounded-full hover:shadow-lg hover:bg-palette-secondary" onClick={() => setShowFilter(false)}>Cerrar</button>
                                 <button className="mb-2 md:mb-0 bg-palette-slight border-black-500 px-5 py-2 text-sm shadow-sm font-medium tracking-wider text-white hover:text-white rounded-full hover:shadow-lg hover:bg-palette-secondary" onClick={searchFunction}>Buscar</button>
                             </div>
-                        </div>
                     </div>
                 </div>
             </div>

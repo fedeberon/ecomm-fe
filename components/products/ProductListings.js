@@ -8,6 +8,12 @@ function ProductListings({ brands, categories }) {
     const [productsToShow, setProductsToShow] = useState([])
     const [page, setPage] = useState(0);
 
+    const filterParams = () =>{
+        return [{"type": "Categorias", "elements": categories, "column": true}, 
+                {"type": "Marcas", "elements": brands, "column": false}];
+    }
+
+    /*
     //A ELIMINAR - SEARCHALL DEBERA REEMPLAZARLO
     const searchBrands = async () => {
         const products = await filterProductsByBrands(brandsToSearch)
@@ -22,18 +28,19 @@ function ProductListings({ brands, categories }) {
         close();
     }
 
+
     //A ELIMINAR - SEARCHALL DEBERA REEMPLAZARLO
     const searchValue = (valor) => {
         search(valor).then((result) => {
             setProductsToShow(result);
         });
     }
+    */
 
     //SERA LA UNICA FUNCION PARA BUSQUEDA PARA PRODUCTOS
     //LA FUNCION ESPECIFICA DE BUSQUEDA DEBERA SER PASADA COMO PARAMETRO PARA FILTERMODAL...
     const searchAll = () => {
-        searchCategories();
-        searchBrands();
+
     }
 
     //PROPIA DE PRODUCTLISTINGS
@@ -78,7 +85,7 @@ function ProductListings({ brands, categories }) {
     return (        
         <div className='w-full'>
             <FilterModal 
-                clasifications={[brands, categories]} 
+                filterParams={filterParams} 
                 searchFunction={searchAll}>
             </FilterModal>
             <div className="mx-auto mt-3 w-11/12">
