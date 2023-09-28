@@ -3,6 +3,7 @@ import StoreHeading from "@/components/StoreHeading";
 import * as brandsService from 'services/brandService';
 import * as categoriesService from "services/categoriesService";
 import * as sizeService  from "services/sizeService";
+import withAuthorization from 'components/withAuthorization';
 
 const Create = ({brands, categories, sizes}) => {
     return(
@@ -27,5 +28,5 @@ export async function getServerSideProps() {
   }
   
 
-export default Create;
+  export default withAuthorization(Create);
 

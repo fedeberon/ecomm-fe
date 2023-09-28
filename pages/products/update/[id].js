@@ -7,6 +7,7 @@ import * as brandsService from 'services/brandService';
 import * as categoriesService from 'services/categoriesService'
 import * as sizesService from 'services/sizeService'
 import { useState } from "react"; 
+import withAuthorization from 'components/withAuthorization';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faShapes } from "@fortawesome/free-solid-svg-icons";
 
@@ -397,5 +398,5 @@ export async function getServerSideProps({ params }) {
     }
 }
 
-export default Update
+export default withAuthorization(Update);
 

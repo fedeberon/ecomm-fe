@@ -2,6 +2,7 @@ import {findAll} from "../../services/sizeService";
 import SizeList from "@/components/sizes/SizeList";
 import PageTitle from "@/components/PageTitle";
 import React from "react";
+import withAuthorization from 'components/withAuthorization';
 
 const Size = ({sizes}) => {
   return (
@@ -21,5 +22,5 @@ export async function getServerSideProps() {
     };
 }
 
-export default Size;
+export default withAuthorization(Size);
 

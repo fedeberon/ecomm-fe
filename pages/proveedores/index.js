@@ -2,6 +2,7 @@ import List from "@/components/proveedores/List";
 import Link from "next/link";
 import PageTitle from "@/components/PageTitle";
 import { all } from "services/providersService";
+import withAuthorization from 'components/withAuthorization';
 
 const ProductsManager = ({provider}) => {
 
@@ -32,4 +33,4 @@ export async function getServerSideProps() {
     }
 }
 
-export default ProductsManager
+export default withAuthorization(ProductsManager);
