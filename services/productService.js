@@ -238,6 +238,16 @@ export async function search(value) {
     }
 }
 
+export async function searchList(name = "", categories = "", brands = "", orderBy = "", asc = false, page = 0, size = 12){
+    const fetchUrl = `${process.env.NEXT_PUBLIC_BACKEND_SERVICE}/product/searchlist?name=${name}&categories=${categories}&brands=${brands}&orderBy=${orderBy}&asc=${asc}&page=${page}&size=${size}`;
+    try {
+        const response = await axios.get(fetchUrl);
+        return response.data;
+    } catch (error) {
+        return []
+    }
+}
+
 export async function filterProductsByBrands(brands) {
     const fetchUrl = `${process.env.NEXT_PUBLIC_BACKEND_SERVICE}/product/search/brands`;
     try {
