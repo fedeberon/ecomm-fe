@@ -11,34 +11,35 @@ function FilterModal({ filterParams, searchFunction, columnList }) {
     const customParams = [searchTerm, queryParameters, selectedOrderCol, ascOrder ? "T" : "F"];
 
 
-    //Prepares the parameters for the query 
+    //Prepara los parametros para la consulta
     const handleChangeSubCat = (e, index) => {
         setQueryParameters((prevQueryParameters) => {
+            //Para cada parametro de la lista...
             const updatedParameters = prevQueryParameters.map((arr, i) => {
+                //Si el indice actual coincide con el brindado, creamos un nuevo array
                 // If the current index matches the provided index, we create a new array.
                 if (i === index) {
                     const existingIndex = arr.indexOf(e.target.value);
+                    //Remueve o elimina el elemento del array segun el caso
                     if (existingIndex !== -1) {
-                        //Removes the element from the array
                         return arr.filter((_, i) => i !== existingIndex);
                     } else {
-                        //Adds the element to the array
                         return [...arr, e.target.value];
                     }
                 }
-                // For other indices, return the original array as is.
+                //En caso de que no haya cambios, retorna el array tal como esta
                 return arr;
             });
             return updatedParameters;
         });
     };
 
-    //Changes the column of the table used for the search
+    //Indica cual sera la columna de la tabla que se utilizara para el orden.
     const handleChangeColumn = (e) => {
         setSelectedOrderCol(e.target.value);
     }
 
-    //Executes the search function that's passed to a specific instance of this component.
+    //Ejecuta la funcion de busqueda que se paso como parametro.
     function searchButton() {
         setShowFilter(false);
         const updatedCustomParams = [...customParams];
@@ -46,8 +47,7 @@ function FilterModal({ filterParams, searchFunction, columnList }) {
         searchFunction(updatedCustomParams);
     }
 
-
-    //Debounces the search reducing the updating time for the   
+    //Retrasa la busqueda 500ms para evitar multiples llamadas sucesivas 
     useEffect(() => {
         const debouncedSearch = debounce(searchFunction, 500);
         debouncedSearch(customParams);

@@ -29,6 +29,7 @@ function ProductListings({ brands, categories }) {
         { "type": "Marcas", "elements": brands, "column": false }
     ];
 
+    //Vuelve al inicio de la pantalla
     function backToTopButton() {
         window.scrollTo({
             top: 0,
@@ -36,7 +37,7 @@ function ProductListings({ brands, categories }) {
         });
     }
 
-    // Function to perform the initial search
+    //Realiza la busqueda inicial
     const initialSearch = async (query) => {
         if (query) {
             setInitParams(query)
@@ -51,7 +52,7 @@ function ProductListings({ brands, categories }) {
         }
     }
 
-    //Set the initial parameters for the search. This will change any time something is modified in the filter
+    //Indica los parametros para la primer pagina y para las subsecuentes cada vez que hay cambios en el fitro o se hace clic en Buscar.
     function setInitParams(query){
         setPage(1);
         setTermToSearch(query[0]);
@@ -61,32 +62,34 @@ function ProductListings({ brands, categories }) {
         setAsc(query[3] === "T");
     }
 
-    // Function to fetch additional pages
-    const fetchData = async () => {
-        console.log(page, totalPages)
+    // Obtiene las paginas posteriores a la primera, siempre y cuando haya mas paginas disponibles
+    const fetchNextPage = async () => {
         if (page < totalPages) {
             setIsLoading(true);
             setPage(page + 1); 
-            const result = await searchList(termToSearch, categoriesToSearch, brandsToSearch, orderBy, asc, page + 1); // Fetch the next page
+            const result = await searchList(termToSearch, categoriesToSearch, brandsToSearch, orderBy, asc, page + 1);
             setProductsToShow([...productsToShow, ...result.content]);
             setIsLoading(false);
         }
     };
 
+    /* triggerSearch cambia de valor de false a true una y otra vez cuando el scroll llega al final de la linea.
+     * Cuando eso suceda, el useEffect activa la funcion fetchNextPage();
+     */
     useEffect(() => {
-        console.log("Effected")
-        fetchData();
+        fetchNextPage();
     }, [triggerSearch]);
 
+    //Cuando se hace scroll al fin de la pagina, carga la proxima pagina
     let handleScroll = async (e) => {
         if (window.innerHeight + e.target.documentElement.scrollTop + 1 > e.target.documentElement.scrollHeight && !isLoading ) {
             setTriggerSearch((prevTriggerSearch) => {
-                console.log("Scrolled", !prevTriggerSearch);
                 return !prevTriggerSearch;
             });
         }
     }
 
+    //Añade el listener de scroll a la pagina
     useEffect(() => {
         window.addEventListener('scroll', handleScroll);
         return (() => { window.removeEventListener('scroll', handleScroll) });
