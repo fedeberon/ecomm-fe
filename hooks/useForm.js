@@ -10,7 +10,6 @@ import {useRouter} from "next/router";
   const [form, setForm] = useState(initialForm);
   const [errors, setErrors] = useState({});
   const router = useRouter();
-  // para poder agregar un loader mientras se guarda
   const [loading, setLoading] = useState(false);
   const [response, setResponse] = useState(null);
 
@@ -47,7 +46,6 @@ import {useRouter} from "next/router";
 
 
     if (Object.keys(tal).length === 0 && form.sizes[0].id !== "") {
-        debugger
       save(form).then((result) => {
         if (result.data.hasOwnProperty("name")) {
           NotificationManager.info('El articulo: ' +'\"'+ form.name +'\"'+ "se cargo correctamente", 'Administracion de productos' , 2000);
