@@ -8,7 +8,7 @@ import { getCartSubTotal } from '@/utils/helpers'
 import logo from "../../images/default.jpeg";
 import Image from 'next/image'
 
-function CartTable({ cart }) {
+function CartTableBill({ cart }) {
   const updateCartQuantity = useUpdateCartQuantityContext()
   const [cartItems, setCartItems] = useState([])
   const [subtotal, setSubtotal] = useState(0)
@@ -30,33 +30,42 @@ function CartTable({ cart }) {
 
 
   return (
-    <div className="min-h-50 max-w-4xl my-4 sm:my-8 mx-auto w-full">
-      <table className="mx-auto">
-        <thead>
-          <tr className="uppercase text-xs sm:text-sm text-palette-primary border-b border-palette-light">
-            <th className="text-left font-primary font-normal px-6 py-4">Producto</th>
-            <th className="font-primary font-normal px-6 py-4">Cantidad</th>
-            <th className="font-primary font-normal px-6 py-4">Precio</th>
-            <th className="font-primary font-normal px-6 py-4 hidden sm:table-cell">Talle</th>
-            <th className="font-primary font-normal px-6 py-4 hidden sm:table-cell">Eliminar</th>
-          </tr>
-        </thead>
-        <tbody className="divide-y overscroll-auto justify-between divide-palette-lighter">
+    <div className="flex items-center justify-center m-auto w-full mb-8">
+      <table className="shadow overflow-x-auto border-b border-gray-200 sm:rounded-lgz">
+      <thead className="">
+      <tr className="content-center">
+          <th scope="col"
+              className="pl-6 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider ">
+              Producto
+          </th>
+          <th scope="col"
+              className="px-4 py-2  text-xs font-medium text-gray-500 uppercase tracking-wider">
+              Cantidad
+          </th>
+          <th className="px-4 py-2  text-xs font-medium text-gray-500 uppercase tracking-wider hidden sm:table-cell">
+            Talle
+          </th>
+          <th scope="col"
+              className="px-4 py-2  text-xs font-medium text-gray-500 uppercase tracking-wider">
+              Precio
+          </th>
+      </tr>
+      </thead>
+        <tbody className="bg-white divide-y divide-gray-200 lg:w-3/4">
           {cartItems.map((item, index) => (
             <tr key={index} className="text-sm sm:text-base text-gray-600 text-center">
-              <td className="font-primary font-medium px-4 sm:px-6 py-4 flex items-center">
-                <Image src={item.productImage ? item.productImage : defaultImage}
+              <td className="text-left font-primary font-medium pl-4  px-4 sm:px-6 py-4 flex items-center">
+              <Image src={item.productImage ? item.productImage : defaultImage}
                        width={50}
                        height={50}
                   className="w-12 h-12 rounded-full"/>
-
-                <Link passHref href={`/products/${item.id}`}>
+               <Link passHref href={`/products/${item.id}`}>
                   <a className="pt-1 hover:text-palette-dark ml-4 truncate hidden sm:table-cell">
                     {item.productTitle}
                   </a>
-                </Link>
+              </Link>
               </td>
-              <td className="font-primary font-medium px-4 sm:px-6 py-4">
+              <td className="font-primary font-medium px-8 sm:px-6 py-4">
                 <input
                   type="number"
                   inputMode="numeric"
@@ -75,24 +84,15 @@ function CartTable({ cart }) {
                   }}
                 />
               </td>
+              <td className="font-primary text-base font-light px-4 sm:px-6 py-4 hidden sm:table-cell">
+                <label>{item.sizeName}</label>
+              </td>
               <td className="font-primary text-base font-light px-4 sm:px-6 py-4">
                 <Price
                   currency="$"
                   num={item.price}
                   numSize="text-lg"
                 />
-              </td>
-              <td className="font-primary text-base font-light px-4 sm:px-6 py-4 hidden sm:table-cell">
-                <label>{item.sizeName}</label>
-              </td>
-              <td className="font-primary font-medium px-4 sm:px-6 py-4 hidden sm:table-cell">
-                <button
-                  aria-label="delete-item"
-                  className=""
-                  onClick={() => updateItem(item.id, 0)}
-                >
-                  <FontAwesomeIcon icon={faTimes} className="w-8 h-8 text-palette-primary border border-palette-primary p-1 hover:bg-palette-lighter" />
-                </button>
               </td>
             </tr>
           ))}
@@ -115,4 +115,4 @@ function CartTable({ cart }) {
   )
 }
 
-export default CartTable
+export default CartTableBill

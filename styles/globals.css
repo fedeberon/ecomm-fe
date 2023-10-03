@@ -37,8 +37,8 @@ html {
 /*
 #card:hover { transform: rotateY(180deg); }
 */
-
 #card > div:nth-child(1) { transition-delay: 150ms;}
+
 
 /*
 #card:hover > div:nth-child(1) {

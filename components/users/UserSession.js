@@ -18,7 +18,7 @@ const UserSession = ({session}) => {
     if (session) {
         return (
                 <div className="relative inline-block text-left">
-                        <div className="text-smw block lg:relative lg:-mt-2">
+                        <div className="text-smw block lg:relative lg:-mt-2 hidden sm:table-cell">
                             <button type="button"
                                     onClick={showOptionsSession}
                                     className="inline-flex justify-center md:mt-2 md:ml-2 w-full rounded-md px-3 py-2 text-m font-primary text-palette-primary hover:text-palette-secondary capitalize  focus:ring-2 focus:ring-palette-lighter focus:ring-opacity-75"
@@ -30,6 +30,16 @@ const UserSession = ({session}) => {
                                           d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
                                           clipRule="evenodd"/>
                                 </svg>
+                            </button>
+                        </div>
+                        <div className="text-smw block lg:relative lg:-mt-2 md:invisible lg:hidden">
+                            <button type="button"
+                                    onClick={showOptionsSession}
+                                    className="inline-flex justify-center md:mt-2 md:ml-2 w-full rounded-md px-3 py-2 text-m font-primary text-palette-primary hover:text-palette-secondary capitalize  focus:ring-2 focus:ring-palette-lighter focus:ring-opacity-75"
+                                    id="menu-button" aria-expanded="true" aria-haspopup="true">
+                                        <FontAwesomeIcon 
+                                        className="text-palette-primary hover:text-palette-primary h-6"
+                                        icon={faUserCircle} />
                             </button>
                         </div>
                         <div
@@ -50,7 +60,7 @@ const UserSession = ({session}) => {
                                        tabIndex="-1" id="menu-item-2">Mis Datos</a>
                                 </Link>
                                 <form method="POST" action="#" role="none">
-                                    <button onClick={() => signOut({ callbackUrl: '/' })}
+                                    <button onClick={() => signOut({ callbackUrl: "/" })}
                                             className="text-palette-primary block w-full text-center px-4 py-2 text-sm hover:bg-gray-50"
                                             role="menuitem" tabIndex="-1" id="menu-item-3">
                                         Salir

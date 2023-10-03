@@ -204,6 +204,9 @@ const Payment = ({ myPoints, users }) => {
                   id="second"
                   className={`${tabs.data ? `` : `hidden`} justify-center  p-4`}
                 >
+                  <div  className="flex w-full">
+                    <CartTableBill cart={cart} />
+                  </div>
                   <div className=" py-8 px-5 md:px-10 bg-white m-auto w-full md:w-1/2">
                     <h1 className="text-gray-800 font-lg font-bold tracking-normal leading-tight mb-4">
                       Detalle de Facturaci&oacute;n
@@ -350,10 +353,7 @@ const Payment = ({ myPoints, users }) => {
                         placeholder="e-Mail"
                       />
                     </div>
-                    <div  className="flex items-center justify-center m-auto w-full">
-                    <CartTableBill cart={cart} />
-                    </div>
-                    <div className="flex items-center justify-center m-auto w-full">
+                    <div className="flex items-center justify-center">
                     
                     <label
                       className="block uppercase block tracking-wide text-palette-primary text-xs font-bold mb-10 mt-4"
@@ -387,7 +387,7 @@ const Payment = ({ myPoints, users }) => {
                           onClick={() => submit("A")}
                           aria-label="checkout-products"
                           className="bg-gray-500 text-white text-lg font-primary font-semibold pt-2 pb-1 leading-relaxed flex cursor-pointer
-                                                              justify-center items-center focus:ring-1 focus:ring-palette-light focus:outline-none w-1/3 hover:bg-gray-700 rounded-md mr-4"
+                          justify-center items-center focus:ring-1 focus:ring-palette-light focus:outline-none w-1/3 hover:bg-gray-700 rounded-md mr-2"
                         >
                           Factura A
                         </a>
@@ -396,7 +396,7 @@ const Payment = ({ myPoints, users }) => {
                           onClick={() => submit("B")}
                           aria-label="checkout-products"
                           className="bg-yellow-600 text-white text-lg font-primary font-semibold pt-2 pb-1 leading-relaxed flex cursor-pointer
-                                                          justify-center items-center focus:ring-1 focus:ring-palette-light focus:outline-none w-1/3 hover:bg-yellow-700 rounded-md ml-4"
+                          justify-center items-center focus:ring-1 focus:ring-palette-light focus:outline-none w-1/3 hover:bg-yellow-700 rounded-md ml-1"
                         >
                           Factura B
                         </a>
@@ -405,7 +405,7 @@ const Payment = ({ myPoints, users }) => {
                           onClick={() => submit("C")}
                           aria-label="checkout-products"
                           className="bg-yellow-600 text-white text-lg font-primary font-semibold pt-2 pb-1 leading-relaxed flex cursor-pointer
-                                                          justify-center items-center focus:ring-1 focus:ring-palette-light focus:outline-none w-1/3 hover:bg-yellow-700 rounded-md ml-4"
+                          justify-center items-center focus:ring-1 focus:ring-palette-light focus:outline-none w-1/3 hover:bg-yellow-700 rounded-md ml-4"
                         >
                           Consumidor Final
                         </a>

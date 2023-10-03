@@ -101,6 +101,7 @@ function Carousel({ }) {
             behavior: 'smooth',
             block: 'nearest',
             inline: 'start',
+            height:'200',
         });
     };
 
