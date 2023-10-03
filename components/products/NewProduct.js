@@ -17,7 +17,7 @@ const NewProduct = ({ categories, brands, sizes }) => {
             id: ""
         },
         sizes: [{
-            id: 0
+            id: ""
         }],
         code: "",
         stock: "",
@@ -189,10 +189,6 @@ const NewProduct = ({ categories, brands, sizes }) => {
                                 Talles
                             </label>
                             <div className="flex grid grid-cols-3 appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight">
-                                <div className="flex">
-                                    <input type={"checkbox"} onClick={handleChangeSize} onBlur={handleBlur} className="form-checkbox rounded text-red-500" value="0"></input>
-                                    <div className="mx-4">Sin Talle</div>
-                                </div>
                                 {
                                     sizes.map( size  => (
                                         <div className="flex">

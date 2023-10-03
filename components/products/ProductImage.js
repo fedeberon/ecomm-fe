@@ -32,10 +32,9 @@ function ProductImage({ images , id}) {
     setDelImg(img)
   }
 
-  function delImage(img){
-    debugger
-    let result = productService.deletedImagen(id, delImg.url)
-    window.location.reload()
+  function delImage(){
+   productService.deletedImagen(id, delImg.url)
+   window.location.reload()
   }
 
   return (
@@ -69,17 +68,14 @@ function ProductImage({ images , id}) {
           className="flex space-x-1 w-full overflow-auto border-t border-palette-lighter"
         >
           {
-            images.map((imgItem, index) => (
+            images.map((imgItem) => (
               <div className="relative w-40 h-32 flex-shrink-0 rounded-sm ">
-                key={index}
-                {
                   <Image
                       src={imgItem.link}
                       layout="fill"
                       className=""
                       onClick={() => setMainImg(imgItem.link)}
                   />
-                }
                 {
                   session?.user?.role?.includes("ADMIN")
                   ?

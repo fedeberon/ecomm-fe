@@ -2,7 +2,7 @@ import {getWalletUser} from "../../../services/walletService";
 import PageTitle from "@/components/PageTitle";
 import WalletOfUser from "../../../components/wallet";
 import { getByUsername } from "services/userService";
-
+import userAuthorization from "@/components/userAuthorization";
 
 const Wallet = ({walletOfUser, user}) => {
 
@@ -14,7 +14,7 @@ const Wallet = ({walletOfUser, user}) => {
 
     )
 }
-export default Wallet
+export default userAuthorization(Wallet)
 
 export async function getServerSideProps({query}) {
     const user = await getByUsername(query.id)

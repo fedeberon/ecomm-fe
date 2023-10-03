@@ -60,7 +60,9 @@ const UserSession = ({session}) => {
                                        tabIndex="-1" id="menu-item-2">Mis Datos</a>
                                 </Link>
                                 <form method="POST" action="#" role="none">
+
                                     <button onClick={() => signOut({ callbackUrl: "/" })}
+
                                             className="text-palette-primary block w-full text-center px-4 py-2 text-sm hover:bg-gray-50"
                                             role="menuitem" tabIndex="-1" id="menu-item-3">
                                         Salir
