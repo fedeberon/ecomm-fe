@@ -9,7 +9,7 @@ import Loading from "@/components/utils/Loading";
 import { getPoints } from "../../services/walletService";
 import logo from "../../images/Logo Dulce bb.png";
 import { findAll, getByUsername } from "../../services/userService";
-import CartTable from "@/components/cart/CartTable";
+import CartTableBill from "@/components/cart/CartTableBill";
 import { getPersonByCUIT } from "../../services/personService.js";
 import logo2 from "/images/logo3buhos.png";
 import {NotificationContainer, NotificationManager} from 'react-notifications';
@@ -194,58 +194,19 @@ const Payment = ({ myPoints, users }) => {
   };
 
   return (
-      <div className="mx-auto max-w-8xl">
+      <div className="mx-auto max-w-full">
         <PageTitle text="Pago" />
         <NotificationContainer/>
         {checkout ? (
           <div className="bg-white-100 lg:px-3">
-            <div className="lg:mx-6 bg-white  min-h-screen">
-              <ul id="tabs" className="inline-flex w-full px-1 pt-2 ">
-                <li
-                  className={`px-4 py-2 font-semibold text-gray-800 rounded-t opacity-50 border-b-2 ${tabs.factura ? `border-blue-400` : ``
-                    }`}
-              >
-                    <a name={`factura`} href="#" onClick={handleClick}>
-                    Detalle
-                  </a>
-                </li>
-                <li
-                  className={`px-4 py-2 font-semibold text-gray-800 border-b-2 ${
-                    tabs.data ? `border-blue-400` : ``
-                  } rounded-t opacity-50`}
-                >
-                  <a
-                    id="default-tab"
-                    name={`data`}
-                    href="#"
-                    onClick={handleClick}
-                  >
-                    Datos Personales
-                  </a>
-                </li>
-
-                <li
-                  className={`px-4 py-2 font-semibold text-gray-800 rounded-t opacity-50 border-b-2`}
-                >
-                  <a name={`paymentMethod`} href="#" onClick={handleClick}>
-                    Metodo de pago
-                  </a>
-                </li>
-              </ul>
-
-              <div>
-                <div
-                  id="first"
-                  className={`${
-                    tabs.factura ? `` : `hidden`
-                  }  flex bg-white justify-center p-2 `}
-                >
-                  <CartTable cart={cart} />
-                </div>
+            <div className="lg:mx-6 bg-white  min-h-screen w-full">
                 <div
                   id="second"
                   className={`${tabs.data ? `` : `hidden`} justify-center  p-4`}
                 >
+                  <div  className="flex w-full">
+                    <CartTableBill cart={cart} />
+                  </div>
                   <div className=" py-8 px-5 md:px-10 bg-white m-auto w-full md:w-1/2">
                     <h1 className="text-gray-800 font-lg font-bold tracking-normal leading-tight mb-4">
                       Detalle de Facturaci&oacute;n
@@ -392,6 +353,25 @@ const Payment = ({ myPoints, users }) => {
                         placeholder="e-Mail"
                       />
                     </div>
+                    <div className="flex items-center justify-center">
+                    
+                    <label
+                      className="block uppercase block tracking-wide text-palette-primary text-xs font-bold mb-10 mt-4"
+                      htmlFor="size"
+                    >
+                      SELECCIONA UN METODO DE PAGO
+                    </label>
+                    <select
+                      onChange={handleSelect}
+                      name="cardSelect"
+                      id="selectCard"
+                      className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-10 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                    >
+                      <option value={"seleccionar"}>SELECCIONAR</option>
+                      <option value={"credit card"}>TARJETA CREDITO</option>
+                      <option value={"point card"}>TARJETA PUNTOS</option>
+                    </select>
+                  </div>
 
                     {totalAmount == 0 ? (
                       <div
@@ -407,7 +387,7 @@ const Payment = ({ myPoints, users }) => {
                           onClick={() => submit("A")}
                           aria-label="checkout-products"
                           className="bg-gray-500 text-white text-lg font-primary font-semibold pt-2 pb-1 leading-relaxed flex cursor-pointer
-                                                              justify-center items-center focus:ring-1 focus:ring-palette-light focus:outline-none w-1/3 hover:bg-gray-700 rounded-md mr-4"
+                          justify-center items-center focus:ring-1 focus:ring-palette-light focus:outline-none w-1/3 hover:bg-gray-700 rounded-md mr-2"
                         >
                           Factura A
                         </a>
@@ -416,7 +396,7 @@ const Payment = ({ myPoints, users }) => {
                           onClick={() => submit("B")}
                           aria-label="checkout-products"
                           className="bg-yellow-600 text-white text-lg font-primary font-semibold pt-2 pb-1 leading-relaxed flex cursor-pointer
-                                                          justify-center items-center focus:ring-1 focus:ring-palette-light focus:outline-none w-1/3 hover:bg-yellow-700 rounded-md ml-4"
+                          justify-center items-center focus:ring-1 focus:ring-palette-light focus:outline-none w-1/3 hover:bg-yellow-700 rounded-md ml-1"
                         >
                           Factura B
                         </a>
@@ -425,12 +405,14 @@ const Payment = ({ myPoints, users }) => {
                           onClick={() => submit("C")}
                           aria-label="checkout-products"
                           className="bg-yellow-600 text-white text-lg font-primary font-semibold pt-2 pb-1 leading-relaxed flex cursor-pointer
-                                                          justify-center items-center focus:ring-1 focus:ring-palette-light focus:outline-none w-1/3 hover:bg-yellow-700 rounded-md ml-4"
+                          justify-center items-center focus:ring-1 focus:ring-palette-light focus:outline-none w-1/3 hover:bg-yellow-700 rounded-md ml-4"
                         >
                           Consumidor Final
                         </a>
                       </div>
+  
                     )}
+
                     <div className="cursor-pointer absolute top-0 right-0 mt-4 mr-5 text-gray-400 hover:text-gray-600 transition duration-150 ease-in-out">
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -458,24 +440,7 @@ const Payment = ({ myPoints, users }) => {
                   className={`${tabs.paymentMethod ? `` : `hidden`}`}
                 >
 
-                  <div className="w-full">
-                    <label
-                      className="block uppercase block tracking-wide text-palette-primary text-xs font-bold mb-2 mt-4"
-                      htmlFor="size"
-                    >
-                      SELECCIONA UN METODO DE PAGO
-                    </label>
-                    <select
-                      onChange={handleSelect}
-                      name="cardSelect"
-                      id="selectCard"
-                      className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-                    >
-                      <option value={"seleccionar"}>SELECCIONAR</option>
-                      <option value={"credit card"}>TARJETA CREDITO</option>
-                      <option value={"point card"}>TARJETA PUNTOS</option>
-                    </select>
-                  </div>
+           
 
                   {showCreditCard ? (
                     <div id="third" className="flex bg-white justify-center p-2">
@@ -615,7 +580,7 @@ const Payment = ({ myPoints, users }) => {
                     </div>
                   ) : null}
                 </div>
-              </div>
+              
             </div>
           </div>
         ) : (

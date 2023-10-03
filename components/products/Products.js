@@ -59,14 +59,14 @@ const Products = ({products}) => {
         },
         {
             name: 'Acciones',
-            cell: (row) => (
-                <div className="flex justify-between">
+            cell: (row) => ( 
+                <div className="flex justify-center absolute left-0">
                     <Link
                     href={`/products/${row.id}`}
                     passHref
                     >
-                    <button onClick={() => console.log('Button clicked!')} className="bg-green-500 ml-2 hover:bg-green-400 text-white w-10 h-auto p-2 rounded-full font-primary font-semibold text-xs flex
-                    justify-center items-baselinetransform transition duration-500 group cursor-pointer">
+                    <button onClick={() => console.log('Button clicked!')} className="bg-green-500 ml-0 hover:bg-green-400 text-white w-10 h-auto p-2 rounded-full font-primary font-semibold text-xs flex
+                         items-baselinetransform transition duration-500 group cursor-pointer">
                     <FontAwesomeIcon icon={faEye} className="w-5 m-auto"/>
                     </button>
                     </Link>
@@ -75,13 +75,13 @@ const Products = ({products}) => {
                     href={`/products/update/${row.id}`}
                     passHref
                     >
-                    <button className="bg-blue-500 ml-2 hover:bg-blue-400 text-white w-10 h-auto p-2 rounded-full font-primary font-semibold text-xs flex
+                    <button className="bg-blue-500 ml-0 hover:bg-blue-400 text-white w-10 h-auto p-2 rounded-full font-primary font-semibold text-xs flex
                     justify-center items-baselinetransform transition duration-500 group cursor-pointer">
                     <FontAwesomeIcon icon={faEdit} className="w-5 m-auto"/>
                     </button>
                     </Link>
 
-                    <button onClick={() => handleDelete(row.id)} className="bg-red-500 ml-2 hover:bg-red-400 text-white w-10 h-auto p-2 rounded-full font-primary font-semibold text-xs flex
+                    <button onClick={() => handleDelete(row.id)} className="bg-red-500 ml-0 hover:bg-red-400 text-white w-10 h-auto p-2 rounded-full font-primary font-semibold text-xs flex
                     justify-center items-baselinetransform transition duration-500 group cursor-pointer">
                     <FontAwesomeIcon icon={faTrash} className="w-5 m-auto"/>
                     </button>

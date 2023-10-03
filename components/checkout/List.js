@@ -88,7 +88,6 @@ const List = () => {
                     paginationTotalRows={total}
                     onChangePage={handlePageChange}
                     paginationDefaultPage={currentPage}
-                    persistTableHead
                 />
                 </div>
             )}

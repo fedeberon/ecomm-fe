@@ -1,8 +1,16 @@
-import { getCsrfToken } from "next-auth/client";
+import { getSession, getCsrfToken } from "next-auth/client";
+import { useRouter } from "next/router";
 import login from "/images/login.png";
 
-const Login = ({csrfToken}) => {
+const Login = ({csrfToken, session}) => {
+    const router = useRouter();
 
+    if (session) {
+      router.push('/'); // Redirigir al dashboard si está autenticado
+      return null; // O puedes renderizar un componente de carga aquí
+    }
+    
+   
      return (
         <div className="min-h-full flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
             <div className="max-w-md w-full space-y-8">
@@ -65,12 +73,22 @@ const Login = ({csrfToken}) => {
 }
 
 export async function getServerSideProps(context) {
-    return {
-        props: {
-            csrfToken: await getCsrfToken(context),
+    const session = await getSession(context);
+  
+    if (session) {
+      return {
+        redirect: {
+          destination: "/", // Redirigir al dashboard si está autenticado
+          permanent: false,
         },
+      };
     }
-}
-
-
-export default Login
+  
+    return {
+      props: {
+        csrfToken: await getCsrfToken(context),
+      },
+    };
+  }
+  
+  export default Login;

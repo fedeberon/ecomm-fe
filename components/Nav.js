@@ -56,7 +56,7 @@ function Nav() {
   })
 
   return (
-    <header className={color ? "w-full sticky lg:static top-0 z-50 bg-white ease-in duration-300" : "w-full sticky lg:static top-0 z-50 bg-palette-bg ease-in duration-300"}>
+    <header className={color ? "w-full sticky  lg:static top-0 z-50 bg-white ease-in duration-300" : "w-full sticky lg:static top-0 z-50 bg-palette-bg ease-in duration-300"}>
 
       <div >
         <div className="flex items-center justify-between flex-wrap p-2">
@@ -122,16 +122,16 @@ function Nav() {
                   </svg>
               </button>       
               <div
-                className={`${categoriesVisible ? "" : "hidden"} z-50 absolute mt-2 w-46 lg:w-32 lg:right-0 rounded-md shadow-lg bg-white ring-2 ring-palette-lighter ring-opacity-75 focus:outline-none md:-mx-2 -mx-0`}
+                className={`${categoriesVisible ? "" : "hidden"} z-50 absolute mt-2 w-46 lg:w-32 lg:right-0 md:w-32 rounded-md shadow-lg bg-white ring-2 ring-palette-lighter ring-opacity-75 focus:outline-none md:-mx-2 -mx-0`}
                 role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabIndex="-1">
-                <div className="overflow-y-auto no-scrollbar h-80" role="none">
+                <div className="overflow-y-auto no-scrollbar max-h-80 lg:max-h-44" role="none">
                   {categories?.map((category) =>(
                       <Link href={`/accessories/${category.id}`} passHref legacyBehavior>
                         <a href="#" onClick={showCategories} className="text-palette-primary block text-center hover:text-palette-secondary px-4 py-2 text-sm" role="menuitem"
                         tabIndex="-1" id="menu-item-0">{category.name}</a>
                       </Link>
                     ))
-                  }
+                  }   
                 </div>
             </div>
           </div>

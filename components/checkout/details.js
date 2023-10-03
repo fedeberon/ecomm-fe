@@ -4,7 +4,7 @@ import Link from "next/link";
 
 const Details = ({checkout}) => {
     return (
-        <>
+        <div className="">
             <table className="w-full divide-y divide-gray-200">
                 <thead className="bg-gray-50">
                 <tr>
@@ -86,7 +86,7 @@ const Details = ({checkout}) => {
                 </tbody>
             </table>
 
-        </>
+        </div>
 
 
 

@@ -124,7 +124,7 @@ const Presupuesto = ({ userSession, users }) => {
                             <div className="m-auto w-1/2">
                                 <select
                                     id="user"
-                                    className="text-gray-600 focus:outline-none  font-normal w-full h-10 flex items-center pl-3 text-sm border-gray-300 rounded border"
+                                    className="no-scrollbar text-gray-600 focus:outline-none  font-normal w-full h-10 flex items-center pl-3 text-sm border-gray-300 rounded border"
                                     onChange={handleChangeUsers}>
                                         <option value="seleccionar">Seleccione el usuario </option>
                                             {users.map((user, index) => {
