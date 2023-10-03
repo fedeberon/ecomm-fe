@@ -5,18 +5,18 @@ import { searchList } from "../../services/productService"
 
 function ProductListings({ brands, categories }) {
     const [isLoading, setIsLoading] = useState(false);
+    //Parametros de busqueda
     const [termToSearch, setTermToSearch] = useState("");
     const [categoriesToSearch, setCategoriesToSearch] = useState([]);
     const [brandsToSearch, setBrandsToSearch] = useState([]);
     const [orderBy, setOrderBy] = useState("");
     const [asc, setAsc] = useState(true);
-    
-    const [triggerSearch, setTriggerSearch] = useState(true);
 
-    const [productsToShow, setProductsToShow] = useState([]);
-    const [page, setPage] = useState(1);
-    const [totalPages, setTotalPages] = useState(0);
-    
+    const [results, setResults] = useState(null);               //Carga lo obtenido desde el endpoint
+    const [productsToShow, setProductsToShow] = useState([]);   //Contiene los productos a mostrar
+    const [page, setPage] = useState(0);                        //Pagina actual
+    const [totalPages, setTotalPages] = useState(0);            //Total de paginas
+
     const columnList = [
         { value: 'sales', label: 'Popularidad' },
         { value: 'price', label: 'Precio' },
@@ -37,55 +37,75 @@ function ProductListings({ brands, categories }) {
         });
     }
 
-    //Realiza la busqueda inicial
-    const initialSearch = async (query) => {
-        if (query) {
-            setInitParams(query)
-            const result = await searchList(query[0], query[1][0], query[1][1], query[2], query[3] === "T", 1); // Fetch the first page
-            if (result.totalPages > 0) {
-                setTotalPages(result.totalPages);
-                setProductsToShow(result.content);
-            }else{
-                setTotalPages(0);
-                setProductsToShow([])
-            }
-        }
+    //1 - Configura una nueva busqueda.
+    const initialSearch = async (q) => {
+        //Obtiene resultados de la busqueda hecha desde cero (se recarga desde 1er pagina).
+        setResults(q ? await searchList(q[0], q[1][0], q[1][1], q[2], q[3] === "T", 1) : await searchList());
+        //Se guardan los parametros de esta busqueda para despues obtener nuevas paginas.
+        setInitParams(q)
     }
 
-    //Indica los parametros para la primer pagina y para las subsecuentes cada vez que hay cambios en el fitro o se hace clic en Buscar.
-    function setInitParams(query){
-        setPage(1);
-        setTermToSearch(query[0]);
-        setCategoriesToSearch(query[1][0] || []);
-        setBrandsToSearch(query[1][1] || []);
-        setOrderBy(query[2]);
-        setAsc(query[3] === "T");
-    }
-
-    // Obtiene las paginas posteriores a la primera, siempre y cuando haya mas paginas disponibles
-    const fetchNextPage = async () => {
-        if (page < totalPages) {
-            setIsLoading(true);
-            setPage(page + 1); 
-            const result = await searchList(termToSearch, categoriesToSearch, brandsToSearch, orderBy, asc, page + 1);
-            setProductsToShow([...productsToShow, ...result.content]);
-            setIsLoading(false);
-        }
-    };
-
-    /* triggerSearch cambia de valor de false a true una y otra vez cuando el scroll llega al final de la linea.
-     * Cuando eso suceda, el useEffect activa la funcion fetchNextPage();
-     */
+    //2 - Cuando haya resultados nuevos, cambia las paginas. Sino las deja como estan...
     useEffect(() => {
-        fetchNextPage();
-    }, [triggerSearch]);
+        if (results != null) {
+            setProductsToShow(results.content)
+        }
+    }, [results]);
 
+    
+
+    //3 - Indica los parametros para la primer pagina y para las subsecuentes cada vez que hay cambios en el fitro o se hace clic en Buscar.
+    function setInitParams(q) {
+        if (q) {
+            setTermToSearch(q[0]);
+            setCategoriesToSearch(q[1][0] || []);
+            setBrandsToSearch(q[1][1] || []);
+            setOrderBy(q[2]);
+            setAsc(q[3] === "T");
+        }
+    }
+
+    // 4 - Tras ello, configuramos la pagina inicial
+    useEffect(() => {
+        //Si hay paginas para cargar, vamos a la 1era, de lo contrario no hay paginas.
+        if (totalPages > 0) {
+            setPage(1);
+            setProductsToShow(results.content);
+        } else setPage(0);
+        
+    }, [totalPages]);
+
+    // 5 - Carga la pagina indicada
+    useEffect(() => {
+        console.log("Pagina ", page, "; Total ", totalPages);
+    
+        // Define an async function to fetch data
+        const fetchData = async () => {
+            if (page !== 0) {
+                const result = await searchList(termToSearch, categoriesToSearch, brandsToSearch, orderBy, asc, page);
+                console.log(productsToShow);
+    
+                // Use proper conditional assignment for 'productsToShow'
+                setProductsToShow((prevProducts) => {
+                    if (prevProducts.length === 0) {
+                        return result.content;
+                    } else {
+                        return [...prevProducts, ...result.content];
+                    }
+                });
+            }
+        };
+    
+        // Call the async function
+        fetchData();
+    }, [page]);
+    
     //Cuando se hace scroll al fin de la pagina, carga la proxima pagina
     let handleScroll = async (e) => {
-        if (window.innerHeight + e.target.documentElement.scrollTop + 1 > e.target.documentElement.scrollHeight && !isLoading ) {
-            setTriggerSearch((prevTriggerSearch) => {
-                return !prevTriggerSearch;
-            });
+        if (window.innerHeight + e.target.documentElement.scrollTop + 1 > e.target.documentElement.scrollHeight && !isLoading) {
+            console.log("CHANGE")
+            if (page < totalPages) setPage((prevPage) => prevPage + 1);
+            console.log(page)
         }
     }
 
