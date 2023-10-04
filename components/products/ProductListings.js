@@ -4,15 +4,15 @@ import { useEffect, useState } from "react";
 import { searchList } from "../../services/productService"
 
 function ProductListings({ brands, categories }) {
-    const [isLoading, setIsLoading] = useState(false);
-    //Parametros de busqueda
-    const [termToSearch, setTermToSearch] = useState("");
-    const [categoriesToSearch, setCategoriesToSearch] = useState([]);
-    const [brandsToSearch, setBrandsToSearch] = useState([]);
-    const [orderBy, setOrderBy] = useState("");
-    const [asc, setAsc] = useState(true);
+    //Control de pagina
+    const [initSearch, setInitSearch] = useState(false);        //Indica si se esta generando una nueva busqueda
+    const [isRendering, setIsRendering] = useState(true)        //Indica si la pagina esta cargando por 1° vez
+    const [isLoading, setIsLoading] = useState(false);          //Indica si esta cargando nuevos productos
+    const [scrolling, setScrolling] = useState(false)           //Indica si se esta scrolleando ahora o no
 
-    const [results, setResults] = useState(null);               //Carga lo obtenido desde el endpoint
+    const [q, setQ] = useState("");                             //Obtiene todos los parametros
+    /*q[0] es el termino, q[1] las categorias, q[2] las marcas, q[3] el orden y q[4] si es ascendente*/
+    const [results, setResults] = useState([]);                 //Carga lo obtenido desde el endpoint
     const [productsToShow, setProductsToShow] = useState([]);   //Contiene los productos a mostrar
     const [page, setPage] = useState(0);                        //Pagina actual
     const [totalPages, setTotalPages] = useState(0);            //Total de paginas
@@ -37,83 +37,84 @@ function ProductListings({ brands, categories }) {
         });
     }
 
-    //1 - Configura una nueva busqueda.
-    const initialSearch = async (q) => {
-        //Obtiene resultados de la busqueda hecha desde cero (se recarga desde 1er pagina).
-        setResults(q ? await searchList(q[0], q[1][0], q[1][1], q[2], q[3] === "T", 1) : await searchList());
-        //Se guardan los parametros de esta busqueda para despues obtener nuevas paginas.
-        setInitParams(q)
-    }
-
-    //2 - Cuando haya resultados nuevos, cambia las paginas. Sino las deja como estan...
+    //NUEVA BUSQUEDA
+    //======================================================================================================
+    //0) Indica que ya no esta renderizando la pagina y añade el listener de scroll a la pagina
     useEffect(() => {
-        if (results != null) {
-            setProductsToShow(results.content)
-        }
-    }, [results]);
-
-    
-
-    //3 - Indica los parametros para la primer pagina y para las subsecuentes cada vez que hay cambios en el fitro o se hace clic en Buscar.
-    function setInitParams(q) {
-        if (q) {
-            setTermToSearch(q[0]);
-            setCategoriesToSearch(q[1][0] || []);
-            setBrandsToSearch(q[1][1] || []);
-            setOrderBy(q[2]);
-            setAsc(q[3] === "T");
-        }
-    }
-
-    // 4 - Tras ello, configuramos la pagina inicial
-    useEffect(() => {
-        //Si hay paginas para cargar, vamos a la 1era, de lo contrario no hay paginas.
-        if (totalPages > 0) {
-            setPage(1);
-            setProductsToShow(results.content);
-        } else setPage(0);
-        
-    }, [totalPages]);
-
-    // 5 - Carga la pagina indicada
-    useEffect(() => {
-        console.log("Pagina ", page, "; Total ", totalPages);
-    
-        // Define an async function to fetch data
-        const fetchData = async () => {
-            if (page !== 0) {
-                const result = await searchList(termToSearch, categoriesToSearch, brandsToSearch, orderBy, asc, page);
-                console.log(productsToShow);
-    
-                // Use proper conditional assignment for 'productsToShow'
-                setProductsToShow((prevProducts) => {
-                    if (prevProducts.length === 0) {
-                        return result.content;
-                    } else {
-                        return [...prevProducts, ...result.content];
-                    }
-                });
-            }
-        };
-    
-        // Call the async function
-        fetchData();
-    }, [page]);
-    
-    //Cuando se hace scroll al fin de la pagina, carga la proxima pagina
-    let handleScroll = async (e) => {
-        if (window.innerHeight + e.target.documentElement.scrollTop + 1 > e.target.documentElement.scrollHeight && !isLoading) {
-            console.log("CHANGE")
-            if (page < totalPages) setPage((prevPage) => prevPage + 1);
-            console.log(page)
-        }
-    }
-
-    //Añade el listener de scroll a la pagina
-    useEffect(() => {
+        setIsRendering(false);
         window.addEventListener('scroll', handleScroll);
         return (() => { window.removeEventListener('scroll', handleScroll) });
     }, []);
+
+    //1 - Obtiene los parametros de la nueva busqueda
+    const initialSearch = async (q) => {
+        await setInitSearch(true);
+        await setQ(q);
+    }
+
+    //2 - Cuando cambian los parametros de busqueda, ejecuta una nueva busqueda SIEMPRE DESDE PAGINA 1
+    useEffect(() => {
+        if (!isRendering)
+            (async () => { 
+        console.log(q)
+                setResults(await searchList(q[0], q[1][0], q[1][1], q[2], q[3] === "T", 1));
+            })();
+    }, [q]);
+
+    //3 - Cuando haya resultados nuevos, cambia el total de paginas. Sino las deja como estan...
+    useEffect(() => {
+        if (!isRendering) {
+            setTotalPages(results.totalPages);
+        }
+    }, [results]);
+
+    //4 - Luego, cargamos los productos.
+    useEffect(()=>{
+        if (!isRendering && results && results.content) {
+            setProductsToShow(initSearch ? [results.content] : [...productsToShow, ...results.content]);
+        }
+    },[totalPages]);
+
+
+    //5 - Si se han cargado nuevos productos, entonces registro que la pagina visible es la n°1
+    useEffect(() => {
+        if (!isRendering) 
+            if(initSearch) setPage(0);
+    }, [productsToShow]);
+
+
+
+    //------------------------------------- SCROLLING -------------------------------------
+
+    // 1 - Cuando se hace scroll al fin de la pagina, suma una pagina mas (si es posible)
+    const handleScroll = async (e) => {
+        if (window.innerHeight + e.target.documentElement.scrollTop + 1 > e.target.documentElement.scrollHeight && !isLoading) {
+            setScrolling(true);
+        }
+    }
+
+    // 2 - Al detectar que se esta haciendo scroll, se cambia el numero de pagina
+    useEffect(() => {
+        if (!isRendering && scrolling) {
+            if (page < totalPages) setPage((prevPage) => prevPage + 1);
+            setScrolling(false);
+        }
+    }, [scrolling]);
+
+    // 2 - Carga la pagina indicada
+    useEffect(() => {
+        if (!isRendering && !initSearch) {
+            setIsLoading(true);
+            (async () => {
+                if (page !== 0) {
+                    setResults(await searchList(q[0], q[1][0], q[1][1], q[2], q[3] === "T", page))
+                }
+            })();
+            setIsLoading(false);
+        }
+    }, [page]);
+
+
 
     return (
         <div className='w-full'>
@@ -125,9 +126,15 @@ function ProductListings({ brands, categories }) {
             <div className="mx-auto mt-3 w-11/12">
                 <div className="grid sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-9 2xl:gap-4 ">
                     {
-                        productsToShow.map((product, index) => (
-                            <ProductCard key={index} product={product} />
-                        ))
+                        !isRendering ? (
+                            productsToShow.map((product, index) => (
+                                <ProductCard key={index} product={product} />
+                            ))
+                        ) : (
+                            <div className='flex items-center justify-center py-6'>
+                                <div className='w-16 h-16 border-b-2 border-palette-secondary rounded-full animate-spin'></div>
+                            </div>
+                        )
                     }
                 </div>
                 <button
