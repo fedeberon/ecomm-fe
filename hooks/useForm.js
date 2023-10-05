@@ -51,7 +51,7 @@ import {useRouter} from "next/router";
       save(form).then((result) => {
         if (result.data.hasOwnProperty("name")) {
           NotificationManager.info('El articulo: ' +'\"'+ form.name +'\"'+ "se cargo correctamente", 'Administracion de productos' , 2000);
-          router.push(`/products/${result.data.id}`)
+          router.push(`/products`)
         }else{
           NotificationManager.info(result.status +'No fue posible cargar el articulo: ' +'\"'+ form.name +'\"', 'Administracion de productos' , 2000)
         }
