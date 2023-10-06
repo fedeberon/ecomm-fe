@@ -2,12 +2,10 @@ import ProductListings from '@/components/products/ProductListings'
 import Carrusel from "@/components/Carrusel";
 import * as brandsService from 'services/brandService';
 import * as categoriesService from 'services/categoriesService'
+import * as productService from 'services/productService'
 import Banner from '@/components/products/ProductBanner.js';
 
-
-
-
-function IndexPage({brands, categories}) {
+function IndexPage({brands, categories, initialSearch}) {
   return (
       <>
           <div className='bg-palette-bg'>
@@ -20,7 +18,7 @@ function IndexPage({brands, categories}) {
                 <Banner/>
               </div>
             </div>
-            <ProductListings brands={brands} categories={categories}/>
+            <ProductListings brands={brands} categories={categories} initialSearch={initialSearch}/>
           </div>
      </>
   )
@@ -29,11 +27,13 @@ function IndexPage({brands, categories}) {
 export async function getServerSideProps() {
   const brands = await brandsService.findAll();
   const categories = await categoriesService.findAll();
+  const initialSearch = await productService.searchList();
 
   return {
     props: {
       brands,
       categories,
+      initialSearch,
     },
   }
 }

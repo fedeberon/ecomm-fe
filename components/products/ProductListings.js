@@ -3,19 +3,24 @@ import FilterModal from '@/components/filter/FilterModal'
 import { useEffect, useState } from "react";
 import { searchList } from "../../services/productService"
 
-function ProductListings({ brands, categories }) {
+function ProductListings({ brands, categories, initialSearch }) {
     //Control de pagina
-    const [initSearch, setInitSearch] = useState(false);        //Indica si se esta generando una nueva busqueda
-    const [isRendering, setIsRendering] = useState(true)        //Indica si la pagina esta cargando por 1° vez
     const [isLoading, setIsLoading] = useState(false);          //Indica si esta cargando nuevos productos
-    const [scrolling, setScrolling] = useState(false)           //Indica si se esta scrolleando ahora o no
+    const [scrolling, setScrolling] = useState(false)          //Indica si se esta scrolleando ahora o no
 
-    const [q, setQ] = useState("");                             //Obtiene todos los parametros
-    /*q[0] es el termino, q[1] las categorias, q[2] las marcas, q[3] el orden y q[4] si es ascendente*/
-    const [results, setResults] = useState([]);                 //Carga lo obtenido desde el endpoint
-    const [productsToShow, setProductsToShow] = useState([]);   //Contiene los productos a mostrar
-    const [page, setPage] = useState(0);                        //Pagina actual
-    const [totalPages, setTotalPages] = useState(0);            //Total de paginas
+    //Obtiene todos los parametros, posee parametros por defecto
+    const [q, setQ] = useState();
+
+    //Carga los productos y el total de paginas                             
+    const [results, setResults] = useState({
+        products: initialSearch.content,
+        totalPages: initialSearch.totalPages,
+        newSearch: true
+    });
+
+    const [newSearch, setNewSearch] = useState(false);
+    const [productsToShow, setProductsToShow] = useState(initialSearch.content);    //Muestra los productos obtenidos
+    const [page, setPage] = useState(0);                                            //Pagina actual
 
     const columnList = [
         { value: 'sales', label: 'Popularidad' },
@@ -25,8 +30,8 @@ function ProductListings({ brands, categories }) {
     ];
 
     const filterParams = [
-        { "type": "Categorias", "elements": categories, "column": true },
-        { "type": "Marcas", "elements": brands, "column": false }
+        { type: "Categorias", elements: categories, column: true },
+        { type: "Marcas", elements: brands, column: false }
     ];
 
     //Vuelve al inicio de la pantalla
@@ -39,50 +44,38 @@ function ProductListings({ brands, categories }) {
 
     //NUEVA BUSQUEDA
     //======================================================================================================
-    //0) Indica que ya no esta renderizando la pagina y añade el listener de scroll a la pagina
+
+    //A - Añade el listener de scroll a la pagina
     useEffect(() => {
-        setIsRendering(false);
         window.addEventListener('scroll', handleScroll);
         return (() => { window.removeEventListener('scroll', handleScroll) });
     }, []);
 
     //1 - Obtiene los parametros de la nueva busqueda
-    const initialSearch = async (q) => {
-        await setInitSearch(true);
-        await setQ(q);
+    const search = async (query) => {
+        await setQ(query);
     }
 
-    //2 - Cuando cambian los parametros de busqueda, ejecuta una nueva busqueda SIEMPRE DESDE PAGINA 1
-    useEffect(() => {
-        if (!isRendering)
-            (async () => { 
-        console.log(q)
-                setResults(await searchList(q[0], q[1][0], q[1][1], q[2], q[3] === "T", 1));
-            })();
+    //
+    useEffect(async () => {
+        if (q){
+            console.log("I detected the change")
+            const newData = await searchList(q.term, q.params[0], q.params[1], q.orderBy, q.asc, 1);
+            setResults({
+                products: newData.content,
+                totalPages: newData.totalPages,
+                newSearch: true
+            });
+        }
     }, [q]);
 
-    //3 - Cuando haya resultados nuevos, cambia el total de paginas. Sino las deja como estan...
     useEffect(() => {
-        if (!isRendering) {
-            setTotalPages(results.totalPages);
+        console.log("RESULTS: ", results)
+        if (results.newSearch) {
+            console.log(results.products)
+            setProductsToShow(results.products);
         }
-    }, [results]);
-
-    //4 - Luego, cargamos los productos.
-    useEffect(()=>{
-        if (!isRendering && results && results.content) {
-            setProductsToShow(initSearch ? [results.content] : [...productsToShow, ...results.content]);
-        }
-    },[totalPages]);
-
-
-    //5 - Si se han cargado nuevos productos, entonces registro que la pagina visible es la n°1
-    useEffect(() => {
-        if (!isRendering) 
-            if(initSearch) setPage(0);
-    }, [productsToShow]);
-
-
+    }, [results])
 
     //------------------------------------- SCROLLING -------------------------------------
 
@@ -92,50 +85,43 @@ function ProductListings({ brands, categories }) {
             setScrolling(true);
         }
     }
-
-    // 2 - Al detectar que se esta haciendo scroll, se cambia el numero de pagina
-    useEffect(() => {
-        if (!isRendering && scrolling) {
-            if (page < totalPages) setPage((prevPage) => prevPage + 1);
-            setScrolling(false);
-        }
-    }, [scrolling]);
-
-    // 2 - Carga la pagina indicada
-    useEffect(() => {
-        if (!isRendering && !initSearch) {
-            setIsLoading(true);
-            (async () => {
-                if (page !== 0) {
-                    setResults(await searchList(q[0], q[1][0], q[1][1], q[2], q[3] === "T", page))
-                }
-            })();
-            setIsLoading(false);
-        }
-    }, [page]);
-
-
-
+    /*
+        // 2 - Al detectar que se esta haciendo scroll, se cambia el numero de pagina
+        useEffect(() => {
+            if (!isRendering && scrolling) {
+                if (page < results[0]) setPage((prevPage) => prevPage + 1);
+                setScrolling(false);
+            }
+        }, [scrolling]);
+    
+        // 2 - Carga la pagina indicada
+        useEffect(() => {
+            if (!isRendering && !initSearch) {
+                setIsLoading(true);
+                (async () => {
+                    if (page !== 0) {
+                        setResults(await searchList(q[0], q[1][0], q[1][1], q[2], q[3] === "T", page))
+                    }
+                })();
+                setIsLoading(false);
+            }
+        }, [page]);
+    */
     return (
         <div className='w-full'>
             <FilterModal
                 filterParams={filterParams}
-                searchFunction={initialSearch}
+                searchFunction={search}
                 columnList={columnList}
             ></FilterModal>
             <div className="mx-auto mt-3 w-11/12">
                 <div className="grid sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-9 2xl:gap-4 ">
                     {
-                        !isRendering ? (
-                            productsToShow.map((product, index) => (
-                                <ProductCard key={index} product={product} />
-                            ))
-                        ) : (
-                            <div className='flex items-center justify-center py-6'>
-                                <div className='w-16 h-16 border-b-2 border-palette-secondary rounded-full animate-spin'></div>
-                            </div>
-                        )
+                        productsToShow.map((product, index) => {
+                            return <ProductCard key={index} product={product} />;
+                        })
                     }
+
                 </div>
                 <button
                     type="button"

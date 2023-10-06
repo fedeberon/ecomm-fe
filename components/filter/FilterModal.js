@@ -46,32 +46,29 @@ function FilterModal({ filterParams, searchFunction, columnList }) {
     //Ejecuta la funcion de busqueda que se paso como parametro.
     function searchButton() {
         setShowFilter(false);
-        searchNow()
+        searchFunction(customParams);
     }
 
-    function searchNow(){
-        const debouncedSearch = debounce(searchFunction, 500);
-        debouncedSearch(customParams);
-        return () => {
-          debouncedSearch.cancel();
-        };
-    }
-
-    function registerTerm(term){
+    function registerTerm(term) {
         setSearchTerm(term);
         setChangesRegistered(true);
     }
 
     //Cuando cambie el termino a buscar, inicia una busqueda
     useEffect(() => {
-        if (changesRegistered) {
-            const debouncedSearch = debounce(searchFunction, 500);
-            debouncedSearch(searchNow);
+        if (changesRegistered) {/*
+            const debouncedSearch = debounce(() => {
+                searchFunction(customParams);
+            }, 500);
+
+            debouncedSearch();
             return () => {
-              debouncedSearch.cancel();
+                debouncedSearch.cancel();
             };
+*/
+            searchFunction(customParams);
         }
-      }, [searchTerm]);
+    }, [searchTerm]);
 
     return (
         <div className='sticky top-16 pt-4 md:top-14 md:pt-0 z-30 bg-white'>
