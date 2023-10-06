@@ -44,4 +44,3 @@ yarn-error.log*
 **/public/worker-*.js.map
 .vscode/settings.json
 
-package-lock.json
