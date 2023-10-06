@@ -96,6 +96,45 @@ html {
   100% {
     transform: rotate(360deg);
   }
+
+  
 }
 
 
+/* Webkit (Safari/Chrome) Scrollbar Styles */
+/* Note: These styles are only for Webkit-based browsers */
+::-webkit-scrollbar {
+  width: 12px; /* Width of the entire scrollbar */
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1; /* Color of the tracking area */
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #888; /* Color of the scrollbar handle */
+  border-radius: 20px; /* Rounded corners */
+  border: 3px solid #555; /* Border around the scrollbar handle */
+}
+
+/* Firefox Scrollbar Styles */
+/* Note: These styles are for Firefox */
+/* Use -moz prefix for Firefox compatibility */
+* {
+  scrollbar-width: thin; /* For Firefox */
+  scrollbar-color: #888 #f1f1f1; /* For Firefox */
+}
+
+*::-webkit-scrollbar {
+  width: 12px; /* Width of the entire scrollbar */
+}
+
+*::-webkit-scrollbar-track {
+  background: #f1f1f1; /* Color of the tracking area */
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: #888; /* Color of the scrollbar handle */
+  border-radius: 20px; /* Rounded corners */
+  border: 3px solid #555; /* Border around the scrollbar handle */
+}

@@ -70,8 +70,6 @@ function ProductListings({ brands, categories, initialSearch }) {
     //3 - Genera la lista de productos nueva desde cero
     useEffect(() => {
         setProductsToShow(results.products);
-
-
     }, [results])
 
     //------------------------------------- SCROLLING -------------------------------------

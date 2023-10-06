@@ -1,5 +1,22 @@
 import { useEffect, useState } from "react";
-import { debounce } from 'lodash';
+
+/*Elemplos de los tipos de parametros que deberia recibir en filterParams y columnList
+
+//Aqui se reciben los valores para utilizar en la consulta y el nombre a mostrar al usuario.
+const columnList = [
+    { value: 'sales', label: 'Popularidad' },
+    { value: 'price', label: 'Precio' },
+    { value: 'stock', label: 'Stock' },
+    { value: 'name', label: 'Nombre' },
+];
+
+//type es el nombre a mostrar al usuario.
+//elements es un array a devolver con los elementos seleccionados por numero.
+//column es utilizado para determinar si una columna deberia ser gruesa o mas fina.
+const filterParams = [
+    { type: "Categorias", elements: categories, column: true },
+    { type: "Marcas", elements: brands, column: false }
+];*/
 
 function FilterModal({ filterParams, searchFunction, columnList }) {
     const [showFilter, setShowFilter] = useState(false);
@@ -56,16 +73,7 @@ function FilterModal({ filterParams, searchFunction, columnList }) {
 
     //Cuando cambie el termino a buscar, inicia una busqueda
     useEffect(() => {
-        if (changesRegistered) {/*
-            const debouncedSearch = debounce(() => {
-                searchFunction(customParams);
-            }, 500);
-
-            debouncedSearch();
-            return () => {
-                debouncedSearch.cancel();
-            };
-*/
+        if (changesRegistered) {
             searchFunction(customParams);
         }
     }, [searchTerm]);
@@ -100,7 +108,7 @@ function FilterModal({ filterParams, searchFunction, columnList }) {
                     onChange={(e) => registerTerm(e.target.value)}
                     autoComplete="off" />
             </div>
-            <div className={`fixed z-50  top-0 w-full left-0 ${showFilter ? "" : "hidden"}  `} id="modal">
+            <div className={`fixed top-20 w-full left-0 ${showFilter ? "" : "hidden"}  `} id="modal">
                 <div className="flex items-center justify-center min-height-100vh pt-4 px-4 pb-20 text-center sm:block sm:p-0">
                     <div onClick={() => setShowFilter(false)} className="fixed inset-0 transition-opacity">
                         <div className="absolute inset-0 bg-gray-700 opacity-75" />
@@ -108,7 +116,7 @@ function FilterModal({ filterParams, searchFunction, columnList }) {
                     <span className=" sm:inline-block sm:align-middle sm:h-screen">&#8203;</span>
                     <div className="w-auto inline-block bg-white  rounded-lg text-left  shadow-xl transform transition-all my-8 align-middle"
                         role="dialog" aria-modal="true" aria-labelledby="modal-headline">
-                        <div className="flex grid-cols-2 m-auto px-4 pt-6 pb-2 sm:p-6 sm:pb-4">
+                        <div className="px-4 pt-6 pb-2 sm:p-6 sm:pb-4 flex justify-center items-center">
                             {
                                 filterParams
                                     ?
@@ -117,15 +125,15 @@ function FilterModal({ filterParams, searchFunction, columnList }) {
                                             <div className="w-auto bg-white text-sm text-palette-primary font-bold px-5 py-2">
                                                 <div className="m-2 -ml-4 text-2xl">{category.type}</div>
                                             </div>
-                                            <div id="menu" className={category.column ?
-                                                `overflow-y-auto max-h-96 no-scrollbar`
+                                            <div id="menu" style={{ maxHeight: '33vh' }} className={category.column ?
+                                                `overflow-y-auto max-h-96 scrollbar-thin lg:grid lg:grid-cols-1`
                                                 :
-                                                `overflow-y-auto max-h-96 no-scrollbar lg:grid lg:grid-cols-4`}>
+                                                `overflow-y-auto max-h-96 scrollbar-thin lg:grid lg:grid-cols-5`}>
                                                 {
                                                     category.elements
                                                         ?
                                                         category.elements.map((subcategory, index) => (
-                                                            <div key={index} className=" block mt-2 px-2">
+                                                            <div key={index} className=" block mt-2 px-2" >
                                                                 <label className="inline-flex items-center">
                                                                     <input type="checkbox"
                                                                         className="form-checkbox rounded text-red-500 "
@@ -142,44 +150,43 @@ function FilterModal({ filterParams, searchFunction, columnList }) {
                             }
                         </div>
                         {columnList ? (
-                            <div className="flex grid-cols-2 m-auto px-4 pt-6 pb-2 sm:p-6 sm:pb-4">
-                                <div className="flex flex-col col-span-2 w-auto rounded">
-                                    <div className="w-auto bg-white text-sm text-palette-primary font-bold px-5 py-2 m-2 -ml-4 text-2xl">Ordenar por:</div>
-                                    <select
-                                        className="text-palette-primary px-5 py-2"
-                                        id="orderBy"
-                                        value={selectedOrderCol}
-                                        onChange={handleChangeColumn}
-                                    >
-                                        {columnList.map((option) => (
-                                            <option key={option.value} value={option.value}>
-                                                {option.label}
-                                            </option>
-                                        ))}
-                                    </select>
-                                    <label className="flex items-center mt-2 px-2">
-                                        <input
-                                            type="radio"
-                                            className="form-radio rounded text-red-500"
-                                            id="ascRadio"
-                                            name="order"
-                                            checked={!ascOrder}
-                                            onChange={() => setAscOrder(false)}
-                                        />
-                                        <span className="ml-2">Mayor a menor</span>
-                                    </label>
-                                    <label className="flex items-center mt-2 px-2">
-                                        <input
-                                            type="radio"
-                                            className="form-radio rounded text-red-500"
-                                            id="descRadio"
-                                            name="order"
-                                            checked={ascOrder}
-                                            onChange={() => setAscOrder(true)}
-                                        />
-                                        <span className="ml-2">Menor a mayor</span>
-                                    </label>
-                                </div>
+                            <div className="grid lg:grid-cols-6 lg:gap-4 px-4 pt-6 pb-2 sm:p-6 sm:pb-4">
+
+                                <div className="w-auto bg-white text-sm text-palette-primary font-bold px-5 lg:pb-2 m-2 -ml-4 text-2xl">Ordenar por:</div>
+                                <select
+                                    className="text-palette-primary px-5  h-12"
+                                    id="orderBy"
+                                    value={selectedOrderCol}
+                                    onChange={handleChangeColumn}
+                                >
+                                    {columnList.map((option) => (
+                                        <option key={option.value} value={option.value}>
+                                            {option.label}
+                                        </option>
+                                    ))}
+                                </select>
+                                <label className="flex items-center mt-2 px-2 lg:pb-3">
+                                    <input
+                                        type="radio"
+                                        className="form-radio rounded text-red-500"
+                                        id="ascRadio"
+                                        name="order"
+                                        checked={!ascOrder}
+                                        onChange={() => setAscOrder(false)}
+                                    />
+                                    <span className="ml-2">Mayor a menor</span>
+                                </label>
+                                <label className="flex items-center mt-2 px-2 lg:pb-3">
+                                    <input
+                                        type="radio"
+                                        className="form-radio rounded text-red-500"
+                                        id="descRadio"
+                                        name="order"
+                                        checked={ascOrder}
+                                        onChange={() => setAscOrder(true)}
+                                    />
+                                    <span className="ml-2">Menor a mayor</span>
+                                </label>
                             </div>
                         ) : <></>}
 
