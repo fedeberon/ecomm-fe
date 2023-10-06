@@ -14,10 +14,10 @@ module.exports = {
         palette: {
           lighter: '#fff3f9',
           light: '#f9a8d4',
-          primary: '#545053',
-          dark: '#da32a9',
-          secondary: '#F8B9CA',
-          slight:'#79d7df',
+          primary: '#171f25',//color primario texto de nav 
+          dark: '#fc284f',//bordes
+          secondary: '#fc284f',//letras de hover y color secundario de textos
+          slight:'#505045', // hover del filto
           slighter:'#c6eced',
           sdark:'#31b8c3',
           bg:'#ffffff'
