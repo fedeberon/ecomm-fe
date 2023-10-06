@@ -115,16 +115,6 @@ function Nav() {
             </a>
           </Link>
 
-          <Link href="/diapers/inicio">
-            <a className="text-smw block mt-4 lg:inline-block lg:mt-0">
-              <h1>
-                <span className="text-xl font-primary text-palette-primary md:p-2 rounded-md hover:text-palette-secondary tracking-tight pt-1">
-                  PAÑALERIA
-                </span>
-              </h1>
-            </a>
-          </Link>
-
           <div className="relative text-smw block mt-4 lg:inline-block lg:mt-0">
             <button 
                 type="button"
