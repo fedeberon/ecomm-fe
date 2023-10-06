@@ -1,6 +1,6 @@
 import PageTitle from "@/components/PageTitle"
 import { findAll } from "services/categoriesService";
-import { getProducts } from "services/productService";
+import {getProducts, getProductsByType} from "services/productService";
 import * as brandsService from 'services/brandService';
 import ProductByCategoriesListings from "@/components/products/ProductByCategoriesListings";
 import { useEffect, useState } from "react";
@@ -35,16 +35,16 @@ function AccessoriesPage({categories, products, brands}) {
     )
   }
 
-  export async function getServerSideProps() {
-    const products = await getProducts(0);
+  export async function getServerSideProps({params}) {
     const brands = await brandsService.findAll();
     const categories = await findAll();
-  
+    const products = await getProductsByType(params.id)
+
     return {
       props: {
-        products: products.content,
-        brands, 
-        categories,
+        products: products,
+        brands,
+        categories
       },
     }
   }

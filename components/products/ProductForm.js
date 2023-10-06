@@ -1,13 +1,15 @@
 import { useState } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCloudUploadAlt, faEdit, faTrash, faTag} from '@fortawesome/free-solid-svg-icons'
+import {faCloudUploadAlt, faEdit, faTrash, faTag, faInfo} from '@fortawesome/free-solid-svg-icons'
 import { useCartContext, useAddToCartContext } from '@/context/Store'
 import UploadFile from "@/components/products/UploadFile";
 import {NotificationContainer, NotificationManager} from 'react-notifications';
 import 'react-notifications/lib/notifications.css';
 import {useSession} from "next-auth/client";
 import {useRouter} from "next/router";
-import { deleteProduct, updateAsAPromotion } from 'services/productService';
+import {activateProduct, deleteProduct, updateAsAPromotion} from 'services/productService';
+import { faPlus } from '@fortawesome/free-solid-svg-icons';
+import ProductCard from "@/components/products/ProductCard";
 
 
 function ProductForm({ productData, image}) {
@@ -21,6 +23,7 @@ function ProductForm({ productData, image}) {
   const router = useRouter();
   const [session, loading] = useSession();
   const [promo, setPromo] = useState(productData.promo);
+  const [status, setStatus] = useState(productData.deleted)
   
    
  
@@ -34,33 +37,62 @@ function ProductForm({ productData, image}) {
   }
 
   async function handleAddToCart() {
+    const element = document.getElementById('size');
+    let selectElement = 0;
+    let selectedOptionText = 'Talle Unico'
+    if (element.tagName === "SELECT") {
+      const selectedOption = element.options[element.selectedIndex];
+      selectElement = selectedOption.value;
+      selectedOptionText = selectedOption.text;
+    } else if (element.tagName === "LABEL") {
+      selectedOptionText = element.textContent;
+      selectElement = 0
+    } else {
+      console.log("Element is not a select or label");
+    }
+
     if (quantity != '') {
       addToCart({
         productTitle: title,
         productImage: mainImg,
         quantity: quantity,
         id: id,
-        price: price
+        price: price,
+        size: selectElement,
+        sizeName: selectedOptionText
+
       })
-      NotificationManager.info('Se agrego ' + title + '.', 'Carro de compras' , 1000 ,  () => {
+      NotificationManager.info(title, 'Agrado al carro de compras' , 2000 ,  () => {
         router.push('/cart')
       });
     }
   }
 
-  async function delateProduct () {
-    try{
-      
-      await deleteProduct(id)
+  async function delateProduct() {
+    try {
 
-      NotificationManager.info('Producto borrado', () => {
-        router.push('/')
-      });
+      let result = await deleteProduct(id)
 
-      window.location.href = '/'
+      setStatus(result.data.deleted)
+
+      NotificationManager.error('No se mostrara en los resultados de busqueda', 'Baja de producto' , 5000);
     }
     catch(error){
       throw new Error("Fallo en la funcion de borrar producto")
+    }
+  }
+
+  async function activeProduct() {
+    try {
+
+      let result = await activateProduct(id)
+
+      setStatus(result.data.deleted)
+
+      NotificationManager.info('Se mostrara en los resultados de busqueda', 'Producto Activo' , 5000);
+    }
+    catch(error){
+      throw new Error("Fallo en la funcion de activar producto")
     }
   }
 
@@ -79,60 +111,115 @@ function ProductForm({ productData, image}) {
   return (
     <>
       <NotificationContainer/>
+
       <div className="w-full">
-        <div className="flex justify-start space-x-2">
 
-          <div className="flex flex-col items-start space-y-1 flex-grow-0">
-            <label className="text-gray-500 text-base">Qty.</label>
-            <input
-                type="number"
-                inputMode="numeric"
-                id="quantity"
-                name="quantity"
-                min="1"
-                step="1"
-                value={quantity}
-                onChange={(e) => updateQuantity(e.target.value)}
-                className="text-gray-900 form-input border border-gray-300 w-16 rounded-sm focus:border-palette-light focus:ring-palette-light"
-            ></input>
-          </div>
+        <div className="w-full">
 
-          <div className="flex flex-col items-start space-y-1 flex-grow-0">
-            <label className="text-gray-500 text-base">&nbsp;</label>
-            <a
-                onClick={handleAddToCart}
-                aria-label="add-to-cart"
-                className="border border-palette-primary text-palette-primary text-lg font-primary font-semibold pt-2 pb-1 leading-relaxed flex
-                justify-center items-center focus:ring-1 focus:ring-palette-light focus:outline-none w-full hover:bg-palette-lighter rounded-md cursor-pointer  pl-4 pr-4">
-              Agregar al carrito
-            </a>
+          <div className="flex flex-col space-y-2">
+            <div className="flex">
+              <div className="flex-col items-start space-y-1 mr-2">
+                <input
+                    type="number"
+                    inputMode="numeric"
+                    id="quantity"
+                    name="quantity"
+                    min="1"
+                    step="1"
+                    value={quantity}
+                    onChange={(e) => updateQuantity(e.target.value)}
+                    className="text-gray-900 form-input border border-gray-300 w-16 rounded-sm focus:border-palette-light focus:ring-palette-light"
+                />
+              </div>
+              <div className="flex-col items-start space-y-1">
+
+                  {productData.sizes.length > 0 ? (
+                      <>
+                      <select
+                          name="category"
+                          className="appearance-none  w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-400"
+                          id="size"
+                      >
+                        <option disabled={true} value="-1">
+                          Seleccionar
+                        </option>
+                        {
+                          productData.sizes.map((provider) => (
+                            <option key={provider.id} name={provider.name} value={provider.id}>
+                              {provider.name}
+                            </option>
+                          ))
+                        }
+                      </select>
+                      </>
+                  ) : (
+                      <label id='size' className="block text-gray-700 text-sm font-bold mb-2 mt-3">Talle Único</label>
+                  )}
+              </div>
+            </div>
+
+
+            {
+                status == true
+                    ?
+                      <div className="bg-red-500 text-white p-4 rounded-lg">
+                        Producto inactivo
+                      </div>
+                    :
+                      <div className="flex flex-col items-start space-y-1">
+                        <button
+                            onClick={handleAddToCart}
+                            aria-label="add-to-cart"
+                            className="border border-palette-primary bg-purple-500 hover:bg-purple-600 text-lg text-white font-primary font-semibold pt-2 pb-1 leading-relaxed flex justify-center items-center focus:ring-1 focus:ring-palette-light focus:outline-none w-full rounded-md cursor-pointer  pl-4 pr-4"
+                        >
+                          Agregar al carrito
+                        </button>
+                      </div>
+            }
+
+
           </div>
 
         </div>
+
+
         {
                 session?.user?.role?.includes("ADMIN")
           
             ?
               <div className='display flex w-full justify-between h-12'>
-                <button onClick={delateProduct} className="bg-palette-primary text-white w-1/4 mt-2 mr-3  rounded-sm font-primary font-semibold text-xs flex
-                    justify-center items-baseline hover:scale-125 transform transition duration-500 group hover:bg-palette-light cursor-pointer">
-                      <p className="hidden m-1 group-hover:block">Eliminar Producto</p>
-                      <FontAwesomeIcon icon={faTrash} className="w-5 m-auto group-hover:hidden"/>
-                </button>
+
+                {
+
+                status == false
+                    ?
+                      <button onClick={delateProduct} className="bg-palette-primary text-white w-1/4 mt-2 mr-3  rounded-md font-primary font-semibold text-xs flex
+                          justify-center items-baselinetransform transition duration-500 group cursor-pointer">
+                            <p className="hidden m-1 group-hover:block">Eliminar Producto</p>
+                            <FontAwesomeIcon icon={faTrash} className="w-5 m-auto group-hover:hidden"/>
+                      </button>
+                    :
+                   <>
+                     <button onClick={activeProduct} className="bg-blue-500 text-white w-1/4 mt-2 mr-3 rounded-md font-primary font-semibold text-xs flex justify-center items-baseline transform transition duration-500 group cursor-pointer">
+                       <p className="hidden m-1 group-hover:block">Activar Producto</p>
+                       <FontAwesomeIcon icon={faPlus} className="w-5 m-auto group-hover:hidden"/>
+                     </button>
+                   </>
+                }
                 <div
                     aria-label="upload-images"
-                    className="bg-palette-primary text-white w-1/4 mt-2 mr-3 h-auto rounded-sm font-primary font-semibold text-xs flex
-                    justify-center items-baseline hover:scale-125 transform transition duration-500 group hover:bg-palette-light cursor-pointer"
+                    className="bg-palette-primary text-white w-1/4 mt-2 mr-3 h-auto  font-primary font-semibold text-xs flex
+                   justify-center items-baseline group rounded-md cursor-pointer"
                     onClick={() => setOpenUploadFile(true)}
                 >
-                  <p className="hidden m-1 group-hover:block">Subir Imagenes</p>
+                  <p className="hidden m-1 group-hover:block text-center">Subir Imagenes</p>
                   <FontAwesomeIcon icon={faCloudUploadAlt} className="w-5 m-auto group-hover:hidden" />
                 </div>
 
                 <div
                     aria-label="edit-data"
-                    className="bg-palette-primary text-white w-1/4 mt-2 mr-3 rounded-sm font-primary font-semibold text-xs flex
-                    justify-center items-baseline hover:scale-125 transform transition duration-500 group hover:bg-palette-light cursor-pointer"
+                    className="bg-palette-primary text-white text-center w-1/4 mt-2 mr-3 rounded-md font-primary font-semibold text-xs flex
+                    justify-center items-baseline group  cursor-pointer"
                     onClick={goToEdit}>
                   <p className="hidden m-1  group-hover:block">Editar Producto</p>
                   <FontAwesomeIcon icon={faEdit} className="w-5 m-auto group-hover:hidden" />
@@ -143,8 +230,8 @@ function ProductForm({ productData, image}) {
                     promo
                     ?
                       <imput type='checkbox'
-                      className="bg-blue-400 text-white w-1/4 mt-2 mr-3 rounded-sm font-primary font-semibold text-xs flex
-                      justify-center items-baseline hover:scale-125 transform transition duration-500 group hover:bg-blue-400 cursor-pointer"
+                      className="bg-blue-300 text-white text-center w-1/4 mt-2 rounded-md font-primary font-semibold text-xs flex
+                        justify-center items-baseline hover:scale-125 transform transition duration-500 group cursor-pointer"
                         onClick={handlePromo} >
                           <p className="hidden m-1 group-hover:block">Eliminar Promocion</p>
                         <FontAwesomeIcon icon={faTag} className="w-5 m-auto group-hover:hidden" />
@@ -152,15 +239,13 @@ function ProductForm({ productData, image}) {
 
                     :
                       <imput type='checkbox'
-                      className="bg-red-600 text-white w-1/4 mt-2 rounded-sm font-primary font-semibold text-xs flex
-                        justify-center items-baseline hover:scale-125 transform transition duration-500 group hover:bg-red-400 cursor-pointer"
+                      className="bg-palette-secondary text-white text-center w-1/4 mt-2 rounded-md font-primary font-semibold text-xs flex
+                        justify-center items-baseline hover:scale-125 transform transition duration-500 group cursor-pointer"
                         onClick={handlePromo} >
                           <p className="hidden m-1 group-hover:block">Añadir Promocion</p>
                         <FontAwesomeIcon icon={faTag} className="w-5 m-auto group-hover:hidden" />
                       </imput>
                 }
-
-                
 
                 <UploadFile
                     isOpen={openUploadFile}

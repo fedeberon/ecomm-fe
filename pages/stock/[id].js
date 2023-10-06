@@ -10,7 +10,7 @@ const StockDetail = ({stock}) => {
     const router = useRouter()
     return (
         <div className="mx-auto max-w-6xl">
-            <PageTitle text = {`${stock.provider.name} - Detalle # ${stock.id}`} />
+            <PageTitle text = {`${stock?.provider?.name} - Detalle # ${stock.id}`} />
             <ItemStock stock={stock}/>
 
             <a

@@ -22,7 +22,7 @@ function ProductCard({ product }) {
       href={`/products/${product.id}`}
       passHref
     >
-      <a className="h-120 w-80 bg-white rounded-lg shadow-lg mx-auto border border-palette-lighter">
+      <a className="h-120 w-80 max-w-80 bg-white overflow-hidden rounded-lg shadow-lg mx-auto border border-palette-lighter">
         <div className="h-72 border-b-2 m-2 border-palette-lighter relative">
           {
             <Image
@@ -47,12 +47,15 @@ function ProductCard({ product }) {
 
           
 
-          <div className="font-primary truncate text-palette-primary text-2xl pt-4 px-4 font-bold">
+          <div className="w-full bg-white font-primary truncate text-palette-primary text-2xl pt-4 px-4 font-bold">
             {title}
           </div>
 
-          <div className="text-lg text-palette-secondary p-4 font-primary font-semibold">
-            {description}
+
+          <div className="relative text-lg bg-white h-20 overflow-hidden text-palette-secondary p-4 font-primary font-semibold">
+            <div className="relative">
+              {description}
+            </div>
           </div>
 
           <div className="absolute bottom-0 left-0 text-lg text-palette-secondary p-4 truncate font-primary font-light">

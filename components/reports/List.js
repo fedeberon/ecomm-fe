@@ -3,6 +3,7 @@ import {useMemo, useState} from "react";
 import {paginationComponentOptions} from "../../DataTableUtils";
 import FilterCardComponent from '../filter/FilterCardComponent';
 import ExcelExport from "@/components/reports/ExcelExport";
+import Link from "next/link";
 
 const List = ({report}) => {
     const [filterText, setFilterText] = useState('');
@@ -16,14 +17,14 @@ const List = ({report}) => {
 
     const columns = [
         {
-            name: 'ID Reporte',
+            name: '#',
             selector: row => row.id,
             sortable: true
         },
         {
             name:'ID ckeckout',
-            selector: row=>row.checkout.id
-        }, 
+            cell: row => <Link passHref href={`/checkout/${row.checkout.id}`}><a className={`text-indigo-600`}>{row.id}</a></Link>
+        },
         {
             name:"CUIT",
             selector: row=> row.cuit

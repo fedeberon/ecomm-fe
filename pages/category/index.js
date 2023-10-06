@@ -1,6 +1,7 @@
 import { findAll } from "services/categoriesService";
 import CategoriesList from "@/components/categories/CategoriesList";
 import PageTitle from "@/components/PageTitle";
+import withAuthorization from 'components/withAuthorization';
 import React from "react";
 
 const Category = ({categories}) => {
@@ -21,5 +22,5 @@ export async function getServerSideProps() {
     };
 }
 
-export default Category;
+export default withAuthorization(Category);
 

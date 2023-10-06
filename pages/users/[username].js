@@ -5,6 +5,7 @@ import { getByUsername } from "services/userService";
 import BillsOfUser from "@/components/users/BillsOfUser";
 import { findAllByUsername } from "services/billingService";
 import StoreHeading from "@/components/StoreHeading";
+import userAuthorization from "@/components/userAuthorization";
 
 const Username = ({userSession, billsOfUSer})  => {
   
@@ -78,7 +79,7 @@ const Username = ({userSession, billsOfUSer})  => {
     )
 }
 
-export default Username;
+export default userAuthorization(Username);
 
  
 

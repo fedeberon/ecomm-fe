@@ -1,8 +1,7 @@
 import axios from 'axios';
 
 export async function getProducts(page) {
-    const fetchUrl = `${process.env.NEXT_PUBLIC_BACKEND_SERVICE}/product?page=${page}&size=12&sortBy=sales`;
-
+    const fetchUrl = `${process.env.NEXT_PUBLIC_BACKEND_SERVICE}/product?page=${page}&size=12&sortBy=name`;
     const fetchOptions = {
         endpoint: fetchUrl,
         method: "GET",
@@ -11,11 +10,28 @@ export async function getProducts(page) {
             "Content-Type": "application/json",
         },
     };
-
     try {
-        const data = await fetch(fetchUrl, fetchOptions)
-            .then((response) => response.json())
-            .catch(error => console.log(error));
+        const response = await fetch(fetchUrl, fetchOptions);
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        throw new Error("Could not fetch products!");
+    }
+}
+
+export async function all(page) {
+    const fetchUrl = `${process.env.NEXT_PUBLIC_BACKEND_SERVICE}/product/all`;
+    const fetchOptions = {
+        endpoint: fetchUrl,
+        method: "GET",
+        headers: {
+            "Accept": "application/json",
+            "Content-Type": "application/json",
+        },
+    };
+    try {
+        const response = await fetch(fetchUrl, fetchOptions);
+        const data = await response.json();
         return data;
     } catch (error) {
         throw new Error("Could not fetch products!");
@@ -67,17 +83,6 @@ export async function getProduct(id) {
     }
 }
 
-export async function all() {
-    const fetchUrl = `${process.env.BACKEND_SERVICE}/product/all`;
-
-    try {
-        let response = await axios.get(fetchUrl);
-        return response.data;
-    } catch (error) {
-        throw new Error("Could not get all users !");
-    }
-}
-
 export async function save(product) {
     const fetchUrl = `${process.env.NEXT_PUBLIC_BACKEND_SERVICE}/product`;
     try {
@@ -101,6 +106,16 @@ export async function update(id, product) {
 
 export async function deleteProduct(id) {
     const fetchUrl = `${process.env.NEXT_PUBLIC_BACKEND_SERVICE}/product/delete/${id}`;
+    try {
+        let response = await axios.put(fetchUrl);
+        return response;
+    } catch (error) {
+        throw new Error("Could not delete product!");
+    }
+}
+
+export async function activateProduct(id) {
+    const fetchUrl = `${process.env.NEXT_PUBLIC_BACKEND_SERVICE}/product/activate/${id}`;
     try {
         let response = await axios.put(fetchUrl);
         return response;
@@ -161,12 +176,14 @@ export async function getCallback(id) {
 
 
 export async function createCheckout(cart){
+    debugger
     const fetchUrl = `${process.env.NEXT_PUBLIC_BACKEND_SERVICE}/checkout`;
     let details = []
     cart.forEach(function(value) {
         let detail = {
             "id": value.id,
-            "quantity" : value.quantity
+            "quantity" : value.quantity,
+            "size": value.size
         }
         details.push(detail);
     });
@@ -174,6 +191,28 @@ export async function createCheckout(cart){
         let response = await axios.post(fetchUrl, details);
         return response;
     } catch (error) {
+        throw new Error("Could not create preference!");
+    }
+}
+
+export async function createBudget(cart){
+    debugger
+    const fetchUrl = `${process.env.NEXT_PUBLIC_BACKEND_SERVICE}/checkout/budget`;
+    let details = []
+    cart.forEach(function(value) {
+        let detail = {
+            "id": value.id,
+            "quantity" : value.quantity,
+            "size": value.size
+        }
+        details.push(detail);
+    });
+    let response = "";
+    try {
+        response = await axios.post(fetchUrl, details);
+        return response;
+    } catch (error) {
+        console.error(response)
         throw new Error("Could not create preference!");
     }
 }
@@ -195,7 +234,17 @@ export async function search(value) {
         const response = await axios.get(fetchUrl);
         return response.data;
     } catch (error) {
-        throw new Error("Could not search products!");
+        return []
+    }
+}
+
+export async function searchList(name = "", categories = "", brands = "", orderBy = "", asc = false, page = 0, size = 12){
+    const fetchUrl = `${process.env.NEXT_PUBLIC_BACKEND_SERVICE}/product/searchlist?name=${name}&categories=${categories}&brands=${brands}&orderBy=${orderBy}&asc=${asc}&page=${page}&size=${size}`;
+    try {
+        const response = await axios.get(fetchUrl);
+        return response.data;
+    } catch (error) {
+        return []
     }
 }
 
@@ -226,6 +275,27 @@ export async function updateTwinsCard(user) {
         let response = await axios.post(fetchUrl, user);                                         
         return response;                                                                               
     } catch (error) {                                                                                       
-        throw new Error("Could not update twings of user !" , user.username , ". Error:" , error);                                     
+        throw new Error("Could not update twings of user !" + user.username + ". Error:" + error);
     }                                                                                               
+}
+
+export async function deletedImagen(productId, image) {
+    debugger
+    const fetchUrl = `${process.env.NEXT_PUBLIC_BACKEND_SERVICE}/product/delete/${productId}/${image}`;
+    try {
+        let response = await axios.delete(fetchUrl);
+        return response;
+    } catch (error) {
+        throw new Error("Could not delete image !", ". Error:" , error);
+    }
+}
+
+export async function getProductsRelated(product) {
+    const fetchUrl = `${process.env.NEXT_PUBLIC_BACKEND_SERVICE}/product/relationship/${product.id}`;
+    try {
+        let response = await axios.get(fetchUrl);
+        return response.data;
+    } catch (error) {
+        throw new Error("Could not get products related about " + product.name + ". Error:" + error);
+    }
 }
