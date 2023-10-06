@@ -238,7 +238,7 @@ export async function search(value) {
     }
 }
 
-export async function searchList(name = "", categories = "", brands = "", orderBy = "", asc = false, page = 0, size = 12){
+export async function searchList(page = 0, name = "", categories = "", brands = "", orderBy = "", asc = false, size = 12){
     const fetchUrl = `${process.env.NEXT_PUBLIC_BACKEND_SERVICE}/product/searchlist?name=${name}&categories=${categories}&brands=${brands}&orderBy=${orderBy}&asc=${asc}&page=${page}&size=${size}`;
     try {
         const response = await axios.get(fetchUrl);

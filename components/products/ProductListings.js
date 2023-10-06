@@ -1,10 +1,11 @@
 import ProductCard from '@/components/products/ProductCard'
 import FilterModal from '@/components/filter/FilterModal'
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { searchList } from "../../services/productService"
 
 function ProductListings({ brands, categories, initialSearch }) {
     //Control de pagina
+    const productListRef = useRef(null);
     const [isLoading, setIsLoading] = useState(false);          //Indica si esta cargando nuevos productos
     const [scrolling, setScrolling] = useState(false)          //Indica si se esta scrolleando ahora o no
 
@@ -14,11 +15,9 @@ function ProductListings({ brands, categories, initialSearch }) {
     //Carga los productos y el total de paginas                             
     const [results, setResults] = useState({
         products: initialSearch.content,
-        totalPages: initialSearch.totalPages,
-        newSearch: true
+        totalPages: initialSearch.totalPages
     });
 
-    const [newSearch, setNewSearch] = useState(false);
     const [productsToShow, setProductsToShow] = useState(initialSearch.content);    //Muestra los productos obtenidos
     const [page, setPage] = useState(0);                                            //Pagina actual
 
@@ -56,59 +55,72 @@ function ProductListings({ brands, categories, initialSearch }) {
         await setQ(query);
     }
 
-    //
+    //2 - Si hay consulta nueva, busca los resultados y los coloca en results.
     useEffect(async () => {
-        if (q){
-            console.log("I detected the change")
-            const newData = await searchList(q.term, q.params[0], q.params[1], q.orderBy, q.asc, 1);
-            setResults({
+        if (q) {
+            const newData = await searchList(0, q.term, q.params[0], q.params[1], q.orderBy, q.asc == "T" ? true : false);
+            await setResults({
                 products: newData.content,
-                totalPages: newData.totalPages,
-                newSearch: true
+                totalPages: newData.totalPages
             });
+            await setPage(0);
         }
     }, [q]);
 
+    //3 - Genera la lista de productos nueva desde cero
     useEffect(() => {
-        console.log("RESULTS: ", results)
-        if (results.newSearch) {
-            console.log(results.products)
-            setProductsToShow(results.products);
-        }
+        setProductsToShow(results.products);
+
+
     }, [results])
 
     //------------------------------------- SCROLLING -------------------------------------
 
-    // 1 - Cuando se hace scroll al fin de la pagina, suma una pagina mas (si es posible)
+    //1 - Inicia el scrolling
     const handleScroll = async (e) => {
         if (window.innerHeight + e.target.documentElement.scrollTop + 1 > e.target.documentElement.scrollHeight && !isLoading) {
-            setScrolling(true);
+            await setScrolling(true);
         }
     }
-    /*
-        // 2 - Al detectar que se esta haciendo scroll, se cambia el numero de pagina
-        useEffect(() => {
-            if (!isRendering && scrolling) {
-                if (page < results[0]) setPage((prevPage) => prevPage + 1);
-                setScrolling(false);
-            }
-        }, [scrolling]);
-    
-        // 2 - Carga la pagina indicada
-        useEffect(() => {
-            if (!isRendering && !initSearch) {
-                setIsLoading(true);
-                (async () => {
-                    if (page !== 0) {
-                        setResults(await searchList(q[0], q[1][0], q[1][1], q[2], q[3] === "T", page))
-                    }
-                })();
-                setIsLoading(false);
-            }
-        }, [page]);
-    */
+
+    //2 - Añade una pagina mas para scrollear (si se hizo scroll)
+    useEffect(() => {
+        if (scrolling) {
+            if (page < results.totalPages) setPage((prevPage) => prevPage + 1);
+        }
+    }, [scrolling]);
+
+    //3 - Si esta haciendo scroll trae mas resultados y los añade a la lista de productos a mostrar.
+    useEffect(() => {
+        console.log("Pag.:", page, "; Total pag.: ", results.totalPages)
+        if (scrolling) {
+            setIsLoading(true);
+            (async () => {
+                if (page !== 0) {
+                    const newResults = q ?
+                        await searchList(page, q.term, q.params[0], q.params[1], q.orderBy, q.asc == "T" ? true : false)
+                        :
+                        await searchList(page, "", [], [], "sales", false);
+                    const products = [...productsToShow, ...newResults.content];
+                    setProductsToShow(products);
+                }
+            })();
+            setScrolling(false);
+            setIsLoading(false);
+        }
+    }, [page]);
+
+    useEffect(()=>{
+        if(page == 0)
+        productListRef.current.scrollIntoView({
+            behavior: "smooth", block: "start", offsetTop: -50
+        });
+    },[page],[results])
+
     return (
-        <div className='w-full'>
+        
+        <div  className='w-full'>
+            <div ref={productListRef}></div>
             <FilterModal
                 filterParams={filterParams}
                 searchFunction={search}
@@ -121,7 +133,6 @@ function ProductListings({ brands, categories, initialSearch }) {
                             return <ProductCard key={index} product={product} />;
                         })
                     }
-
                 </div>
                 <button
                     type="button"
