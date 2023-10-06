@@ -12,6 +12,7 @@ import { getPoints } from "services/walletService";
 
 
 
+
 const WalletOfUser = ({ walletOfUser, user }) => {
     const [isWallet, setIsWallet] = useState(false);
     const [points, setPoints] = useState(0);
@@ -26,13 +27,14 @@ const WalletOfUser = ({ walletOfUser, user }) => {
         walletOfUser.length == 0 ? setIsWallet(false) : setIsWallet(true);
         setPoints(await getPoints(user.username))
     }, [walletOfUser]);
-  
+
+
     const columns = [
 
         {
-            name: 'id',
+            name: 'ID',
             selector: row => row.id,
-            sortable: true
+            sortable: true,
         },
         {
             name: 'Producto',
@@ -45,12 +47,11 @@ const WalletOfUser = ({ walletOfUser, user }) => {
             sortable: true
         },
         {
-            name: 'cantidad',
+            name: 'Cantidad',
             selector: row => row.quantity,
             sortable: true
         },
         {
-
             name: 'Fecha',
             selector: row => testDuePoints(row.date),
             sortable: true
@@ -62,6 +63,7 @@ const WalletOfUser = ({ walletOfUser, user }) => {
         {
             when: row => row.points,
             style: row => ({
+            
                 textDecoration: row.isConsumed === true ? "line-through" : null,
                 color: row.isConsumed === true ? "red" : null
             }),
@@ -75,7 +77,7 @@ const WalletOfUser = ({ walletOfUser, user }) => {
             }
         };
         return (
-            <FilterComponent onFilter={e => setFilterText(e.target.value)} onClear={handleClear} filterText={filterText} />
+            <FilterComponent  onFilter={e => setFilterText(e.target.value)} onClear={handleClear} filterText={filterText} />
         );
     }, [filterText]);
 
@@ -184,7 +186,7 @@ const WalletOfUser = ({ walletOfUser, user }) => {
                         <div className="py-2 inline-block min-w-full sm:px-6 lg:px-8">
                             <div className="overflow-hidden">
 
-                                <DataTable
+                            <DataTable
                                     columns={columns}
                                     data={filteredItems}
                                     pagination
@@ -192,8 +194,7 @@ const WalletOfUser = ({ walletOfUser, user }) => {
                                     subHeaderComponent={subHeaderComponentMemo}
                                     conditionalRowStyles={conditionalRowStyles}
                                 />
-
-
+                                
                             </div>
                         </div>
                     </div>

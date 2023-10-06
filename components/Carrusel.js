@@ -1,117 +1,150 @@
-import {createRef, useEffect, useState} from "react"; 
 
-const imagess = ['/images/panaleria.png','/images/lactancia.png','/images/CarrouselAccesorios.png']  
-const responsiveImages = ['/images/PanaleriaResponsive.png','/images/LactanciaResponsive.png','/images/AccesoriosResponsive.png']  
-// images must be an array of urls , if using Next JS this could something like
-// const images = ['/img/img1.png', '/img/img2.png', '/img/img3.png']
-// images must be an array of urls , if using Next JS this could something like
-// const images = ['/img/img1.png', '/img/img2.png', '/img/img3.png']
+import React, { useEffect, useRef, useState } from 'react';
 
+const largeImages = ['/images/panaleria.png', '/images/lactancia.png', '/images/CarrouselAccesorios.png']
+const responsiveImages = ['/images/PanaleriaResponsive.png', '/images/LactanciaResponsive.png', '/images/AccesoriosResponsive.png']
 
-const Carousel = () => {
-    // We will start by storing the index of the current image in the state.
+function Carousel({ }) {
+    const containerRef = useRef(null);
     const [currentImage, setCurrentImage] = useState(0);
-    const [images,setImages]=useState([])
+    const [images, setImages] = useState([])
+    const [windowDimensions, setWindowDimensions] = useState([0, 0]);
+    const [imgs, setImgs] = useState([]);
+    const [initialHeight, setInitialHeight] = useState(null);
 
-    useEffect(()=>{
-        if(typeof screen !== 'undefined'){
-            if (screen.width >= 640) 
-            {setImages(imagess)} 
-        else{
-            setImages(responsiveImages)}
+    //Obtains the img elements that will be set
+    useEffect(() => {
+        const container = containerRef.current;
+        if (container) {
+            const newimgs = container.getElementsByTagName("img");
+            setImgs(newimgs);
         }
-    })
+    }, [containerRef]);
 
+    //Gets the right type of image depending on the size of the screen
+    //Used to get the true height of the window and pass it to the carousel    
+    useEffect(() => {
+        const updateWindowDimensions = () => {
+            let height;
 
-    // We are using react ref to 'tag' each of the images. Below will create an array of
-    // objects with numbered keys. We will use those numbers (i) later to access a ref of a
-    // specific image in this array.
-    const refs = images.reduce((acc, val, i) => {
-        acc[i] = createRef();
-        return acc;
-    }, {});
+            setImages(largeImages)
+            if (window.innerWidth >= 1024) {                
+                height = window.innerHeight - 60;
+            } else if (window.innerWidth >= 768) {
+                height = window.innerHeight - 74.37;
+            } else {
+                setImages(responsiveImages)
+                height = window.innerHeight - 88;
+            }
 
-    const scrollToImage = i => {
-        // First let's set the index of the image we want to see next
-        setCurrentImage(i);
-        // Now, this is where the magic happens. We 'tagged' each one of the images with a ref,
-        // we can then use built-in scrollIntoView API to do eaxactly what it says on the box - scroll it into
-        // your current view! To do so we pass an index of the image, which is then use to identify our current
-        // image's ref in 'refs' array above.
-        refs[i].current.scrollIntoView({
-            //     Defines the transition animation.
+            setWindowDimensions([height, window.innerWidth * 3]);
+
+            imgs[1] && imgs[1].scrollIntoView({ block: 'nearest',inline: 'start'});
+        };
+
+        window.addEventListener('resize', updateWindowDimensions);
+        updateWindowDimensions();
+
+        setInitialHeight(windowDimensions[0]);
+
+        return () => {
+            window.removeEventListener('resize', updateWindowDimensions);
+        };
+    }, [imgs, initialHeight]);
+
+    //This ensures the central element will remain in the center
+
+    /*
+    * spin(backwards) is able to generate a carousel that can move in an endless cycle in both directions. The first things it needs are the
+    * container that will hold inside the three imgs that will cycle around (previous, current and next), these three imgs as well and
+    * the number of imgs that will be cycled around (obtained from the length of the imgs array).
+    * 
+    * This function works by swapping the three imgs around in the desired direction. For example by pressing the backwards button, it will
+    * rearrange the contents of the 3 imgs (prev, current, next) in a list of 9 imgs from 0, 1, 2 into 8, 0, 1. 
+    * 
+    * Then it will quickly move from the middle element to the final one (so fast it'll be unnoticeable) and will go back to the center (from 1
+    * to 0). The opposite will happen if you press the forward button.
+    */
+    const spin = (backwards) => {
+        const numimgs = imgs.length;
+
+        if (numimgs < 2) { return; }
+        if (backwards) {
+            const prevImgIndex = currentImage !== 0 ? currentImage - 1 : images.length - 1;
+            setCurrentImage(prevImgIndex);
+            imgs[0].setAttribute("src", `${images[prevImgIndex]}`);
+
+            const temp = imgs[numimgs - 1].cloneNode(true);
+
+            for (let i = numimgs - 1; i > 0; i--) {
+                const prevElement = imgs[i - 1].cloneNode(true);
+                imgs[i].parentNode.replaceChild(prevElement, imgs[i]);
+            }
+            imgs[0].parentNode.replaceChild(temp, imgs[0]);
+            container.scrollTo({ left: container.scrollWidth - container.clientWidth });
+        } else {
+            const nextImgIndex = currentImage !== images.length - 1 ? currentImage + 1 : 0;
+            setCurrentImage(nextImgIndex);
+            imgs[2].setAttribute("src", `${images[nextImgIndex]}`);
+
+            const temp = imgs[0].cloneNode(true);
+
+            for (let i = 0; i < numimgs - 1; i++) {
+                const nextElement = imgs[i + 1].cloneNode(true);
+                imgs[i].parentNode.replaceChild(nextElement, imgs[i]);
+            }
+            imgs[numimgs - 1].parentNode.replaceChild(temp, imgs[numimgs - 1]);
+            container.scrollTo({ left: 0 });
+        }
+
+        imgs[1].scrollIntoView({
             behavior: 'smooth',
-            //      Defines vertical alignment.
             block: 'nearest',
-            //      Defines horizontal alignment.
             inline: 'start',
+            height:'200',
         });
     };
 
-    // Some validation for checking the array length could be added if needed
-    const totalImages = images.length;
-
-    // Below functions will assure that after last image we'll scroll back to the start,
-    // or another way round - first to last in previousImage method.
-    const nextImage = () => {
-        if (currentImage >= totalImages - 1) {
-            scrollToImage(0);
-        } else {
-            scrollToImage(currentImage + 1);
-        }
+    // We need the height to adjust the carousel image
+    const heightAdjust = {
+        height: `${initialHeight}px`
     };
 
-    const previousImage = () => {
-        if (currentImage === 0) {
-            scrollToImage(totalImages - 1);
-        } else {
-            scrollToImage(currentImage - 1);
-        }
-    };
-
-    // Tailwind styles. Most importantly notice position absolute, this will sit relative to the carousel's outer div.
-    const arrowStyle =
-        'absolute text-white text-2xl z-10 bg-white h-10 w-10 rounded-full opacity-75 flex items-center justify-center';
-
-    // Let's create dynamic buttons. It can be either left or right. Using
-    // isLeft boolean we can determine which side we'll be rendering our button
-    // as well as change its position and content.
+    //Buttons to navigate inside the carousel
+    const arrowStyle = 'absolute text-white text-2xl z-10 bg-white h-10 w-10 rounded-full opacity-75 flex items-center justify-center';
     const sliderControl = isLeft => (
-        <button type="button" onClick={isLeft ? previousImage : nextImage} className={`${arrowStyle} ${isLeft ? 'left-2' : 'right-2'}`} style={{ top: '40%' }}>
+        <button type="button" onClick={isLeft ? () => spin(true) : () => spin()} className={`${arrowStyle} ${isLeft ? 'left-2' : 'right-2'}`} style={{ top: '40%' }}>
             <span role="img" aria-label={`Arrow ${isLeft ? 'left' : 'right'}`} className={"bg-slate-900"}>
-                {isLeft 
-                ? 
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 hover:scale-125" viewBox="0 0 24 24" stroke="#ed7aad">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="7" d="M15 19l-7-7 7-7"></path>
-                </svg> 
-                :
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="#ed7aad">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="7" d="M9 5l7 7-7 7" />
-                </svg>} 
+                {isLeft
+                    ?
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 hover:scale-125" viewBox="0 0 24 24" stroke="#ed7aad">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="7" d="M15 19l-7-7 7-7"></path>
+                    </svg>
+                    :
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="#ed7aad">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="7" d="M9 5l7 7-7 7" />
+                    </svg>}
             </span>
         </button>
     );
 
+    const positions = [1, 2, 3];
     return (
-        // Images are placed using inline flex. We then wrap an image in a div
-        // with flex-shrink-0 to stop it from 'shrinking' to fit the outer div.
-        // Finally the image itself will be 100% of a parent div. Outer div is
-        // set with position relative, so we can place our cotrol buttons using
-        // absolute positioning on each side of the image.
-        <div className="flex justify-center w-screen md:w-full items-center">
-            <div className=" relative w-full max-h-96 min-h-96">
-                <div className="carousel">
-                    {sliderControl(true)}
-                    {images.map((img, i) => (
-                        <div className="w-full flex-shrink-0" key={img} ref={refs[i]}>
-                            <img src={img} className="w-full object-contain" />
-                        </div>
+        <div style={heightAdjust} className='relative'>
+            <div id="container" ref={containerRef} className="w-full overflow-hidden">
+                {sliderControl(true)}
+                <div className=" flex " style={{ width: `${windowDimensions[1]}px`}}>
+                    {positions.map((item, index) => (
+                        <img key={index}
+                            className="w-1/3"
+                            style={heightAdjust}
+                            src={`${images[0]}`}></img>
                     ))}
-                    {sliderControl()}
                 </div>
             </div>
+            {sliderControl()}
         </div>
     );
-};
+}
 
- export default Carousel
+export default Carousel;

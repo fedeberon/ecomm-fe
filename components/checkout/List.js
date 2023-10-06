@@ -1,13 +1,43 @@
 import DataTable from 'react-data-table-component'
 import Link from 'next/link'
 import FilterComponent from "@/components/filter/FilterComponent";
-import {useMemo, useState} from "react";
+import {useEffect, useMemo, useState} from "react";
 import {paginationComponentOptions} from "../../DataTableUtils";
+import Loading from "@/components/utils/Loading";
+import {findAll, getById, search} from "../../services/checkoutService";
+
+
 /*https://react-data-table-component.netlify.app/?path=/story/getting-started-intro--page*/
-const List = ({checkout}) => {
-    const [filterText, setFilterText] = useState('');
+const List = () => {
+    const [currentPage, setCurrentPage] = useState(1);
+    const [content, setContent] = useState([])
     const [resetPaginationToggle, setResetPaginationToggle] = useState(false);
-    const filteredItems = checkout.filter(item => filterText == '' || filterText.toLowerCase().includes(item.id));
+
+    const filteredItems = async item => {
+        const value = item.target.value
+        debugger
+        const result = await search(value)
+        setContent(result)
+    };
+
+    const [total, setTotal] = useState([])
+    const [loading, setLoading] = useState(false)
+
+    const handlePageChange = async (page) => {
+        setCurrentPage(page);
+        setLoading(true)
+        const data =  await findAll(page);
+        setContent(data.content);
+        setLoading(false)
+    };
+
+    useEffect(async () => {
+        setLoading(true)
+        const data =  await findAll(1);
+        setContent(data.content);
+        setTotal(data.totalElements)
+        setLoading(false)
+    }, []);
 
     const columns = [
         {
@@ -18,10 +48,10 @@ const List = ({checkout}) => {
         },
         {
             name: 'Estado',
-            selector: row => row.checkoutState,
+            selector: row => row.status,
         },
         {
-            name: 'Cantidad',
+            name: 'Cantidad de Productos',
             selector: row => row.products.length
         },
         {
@@ -30,33 +60,39 @@ const List = ({checkout}) => {
         }
     ];
 
-
-    const subHeaderComponentMemo = useMemo(() => {
-        const handleClear = () => {
-            if (filterText) {
-                setResetPaginationToggle(!resetPaginationToggle);
-                setFilterText('');
-            }
-        };
-        return (
-            <FilterComponent onFilter={e => setFilterText(e.target.value)} onClear={handleClear} filterText={filterText} />
-        );
-    }, [filterText, resetPaginationToggle]);
-
-
     return (
-        <div className="min-h-80 max-w-12 my-4 sm:my-8 mx-auto w-full">
-            <DataTable
-                columns={columns}
-                data={filteredItems}
-                pagination
-                paginationResetDefaultPage={resetPaginationToggle} // optionally, a hook to reset pagination to page 1
-                subHeader
-                subHeaderComponent={subHeaderComponentMemo}
-                persistTableHead
-                paginationComponentOptions={paginationComponentOptions}
+        <>
+            <input
+                className="w-full p-2 bg-gray-100 border border-purple-500 border-gray-200 rounded-lg"
+                id="search"
+                type="text"
+                placeholder="Buscar por id"
+                aria-label="Search Input"
+                onChange={filteredItems}
             />
-        </div>
+
+            { loading ? (
+                <Loading/>
+            ) : (
+                <div className="min-h-80 max-w-12 my-4 sm:my-8 mx-auto w-full">
+                <DataTable
+                    columns={columns}
+                    data={content}
+                    pagination
+                    paginationResetDefaultPage={resetPaginationToggle} // optionally, a hook to reset pagination to page 1
+                    subHeader
+                    persistTableHead
+                    paginationServer
+                    paginationComponentOptions={paginationComponentOptions}
+                    paginationPerPage={10}
+                    paginationTotalRows={total}
+                    onChangePage={handlePageChange}
+                    paginationDefaultPage={currentPage}
+                />
+                </div>
+            )}
+        </>
+
     )
 }
 

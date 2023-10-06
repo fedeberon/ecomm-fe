@@ -1,27 +1,17 @@
 import List from "@/components/checkout/List";
-import React from "react";
+import React, {useEffect, useState} from "react";
 import {findAll} from "../../services/checkoutService";
 import PageTitle from "@/components/PageTitle";
+import withAuthorization from 'components/withAuthorization';
 
-const Index = ({data}) => {
+const Index = () => {
 
     return (
         <div className="mx-auto max-w-6xl">
             <PageTitle text={`Checkout`} />
-            <List checkout={data}/>
+            <List/>
         </div>
     )
 }
 
-export async function getServerSideProps() {
-    const data = await findAll();
-
-    return {
-        props: {
-            data
-        },
-    }
-}
-
-export default Index
-
+export default withAuthorization(Index);

@@ -11,6 +11,8 @@ import {getPoints} from "../services/walletService";
 import {useRouter} from "next/router";
 import Link from "next/link";
 import { useSession } from "next-auth/client";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faArchive, faMoneyBill, faNewspaper} from "@fortawesome/free-solid-svg-icons";
 
 
 function CartPage({myPoints, user}) {
@@ -66,9 +68,10 @@ function CartPage({myPoints, user}) {
   }
 
   return (
-      <div className='bg-blue-100 lg:px-6'>
-            <div className='bg-white'>
-            <div className="container bg-white mx-auto mb-20 min-h-screen">
+    
+      <div className='bg-blue-100 lg:px-6 '>
+            <div className='flex bg-white  sm:content-start'>
+            <div className="px-10 bg-white mx-auto">
             <SEO title={pageTitle} />
             <PageTitle text="Tu Compra" />
 
@@ -95,7 +98,7 @@ function CartPage({myPoints, user}) {
                             </div>
                         </>
                     :
-                        <>
+                            <>
                             <CartTable
                                 cart={cart}
                             />
@@ -111,7 +114,7 @@ function CartPage({myPoints, user}) {
                                             </a>
                                     </Link>
 
-                                
+
                                 {
                                 session?.user?.role?.includes("ADMIN") 
                                     ?
@@ -121,8 +124,6 @@ function CartPage({myPoints, user}) {
                                                                justify-center items-center focus:ring-1 focus:ring-palette-light
                                                                focus:outline-none w-full hover:bg-blue-600 rounded-sm">
                                                     Facturar
-
-
                                                 </a>
                                         </Link>
                                     :
@@ -186,3 +187,4 @@ export async function getServerSideProps(context) {
         },
     }
 }
+

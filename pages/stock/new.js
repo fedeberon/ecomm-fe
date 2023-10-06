@@ -2,6 +2,7 @@ import Create   from '/components/stock/Create'
 import PageTitle from "@/components/PageTitle";
 import React from "react";
 import { all } from "services/providersService";
+import withAuthorization from 'components/withAuthorization';
 
 
 const New = ({providers}) => {
@@ -10,11 +11,8 @@ const New = ({providers}) => {
             <PageTitle text="Cargar Stock" />
             <Create providers={providers}/>
         </div>
-
     )
-
 }
-
 
 export async function getServerSideProps() {
     const providers = await all()
@@ -24,4 +22,5 @@ export async function getServerSideProps() {
         }
     }
 }
-export default New
+
+export default withAuthorization(New);

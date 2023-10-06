@@ -48,7 +48,7 @@ const NewProduct = ({ categories, brands, sizes }) => {
             errors.brand = "El campo 'Marcas' es requerido";
         }
 
-        if (!form.sizes[0] || form.sizes[0].id === ""){
+        if (!form.sizes[0] || form.sizes[0].id === 0){
             errors.sizes = "El campo 'Sizes' es requerido";
         }
 
@@ -70,7 +70,7 @@ const NewProduct = ({ categories, brands, sizes }) => {
         form,
         errors,
         handleChange,
-        handleBlur,
+        handleBlur, 
         handleSubmit, } = useForm(initialForm, validationsForm);
 
     const handleChangeSize =(e)=>{
