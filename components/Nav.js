@@ -54,6 +54,20 @@ function Nav() {
   const showCategories = (() => {
     setCategoriesVisible(!categoriesVisible)
   })
+  
+  const handleDocumentClick = (e) => {
+    if (categoriesVisible) {
+      setCategoriesVisible(false);
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener('click', handleDocumentClick);
+
+    return () => {
+      document.removeEventListener('click', handleDocumentClick);
+    };
+  }, [categoriesVisible]);
 
   return (
     <header className={color ? "w-full sticky  lg:static top-0 z-50 bg-white ease-in duration-300" : "w-full sticky lg:static top-0 z-50 bg-palette-bg ease-in duration-300"}>
