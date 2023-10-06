@@ -3,13 +3,17 @@ import { debounce } from 'lodash';
 
 function FilterModal({ filterParams, searchFunction, columnList }) {
     const [showFilter, setShowFilter] = useState(false);
-
     const [selectedOrderCol, setSelectedOrderCol] = useState(columnList[0].value);
     const [ascOrder, setAscOrder] = useState(false);
     const [queryParameters, setQueryParameters] = useState(new Array(filterParams.length).fill([]));
     const [searchTerm, setSearchTerm] = useState('');
-    const customParams = [searchTerm, queryParameters, selectedOrderCol, ascOrder ? "T" : "F"];
-
+    const customParams = {
+        term: searchTerm,
+        params: queryParameters,
+        orderBy: selectedOrderCol,
+        asc: ascOrder ? "T" : "F"
+    };
+    const [changesRegistered, setChangesRegistered] = useState(false);
 
     //Prepara los parametros para la consulta
     const handleChangeSubCat = (e, index) => {
@@ -42,19 +46,32 @@ function FilterModal({ filterParams, searchFunction, columnList }) {
     //Ejecuta la funcion de busqueda que se paso como parametro.
     function searchButton() {
         setShowFilter(false);
-        const updatedCustomParams = [...customParams];
-        updatedCustomParams[0] = searchTerm;
-        searchFunction(updatedCustomParams);
+        searchNow()
     }
 
-    //Retrasa la busqueda 500ms para evitar multiples llamadas sucesivas 
-    useEffect(() => {
+    function searchNow(){
         const debouncedSearch = debounce(searchFunction, 500);
         debouncedSearch(customParams);
         return () => {
-            debouncedSearch.cancel();
+          debouncedSearch.cancel();
         };
-    }, [searchTerm]);
+    }
+
+    function registerTerm(term){
+        setSearchTerm(term);
+        setChangesRegistered(true);
+    }
+
+    //Cuando cambie el termino a buscar, inicia una busqueda
+    useEffect(() => {
+        if (changesRegistered) {
+            const debouncedSearch = debounce(searchFunction, 500);
+            debouncedSearch(searchNow);
+            return () => {
+              debouncedSearch.cancel();
+            };
+        }
+      }, [searchTerm]);
 
     return (
         <div className='sticky top-16 pt-4 md:top-14 md:pt-0 z-30 bg-white'>
@@ -83,7 +100,7 @@ function FilterModal({ filterParams, searchFunction, columnList }) {
                     placeholder="Buscar"
                     id="search"
                     value={searchTerm}
-                    onChange={(e) => setSearchTerm(e.target.value)}
+                    onChange={(e) => registerTerm(e.target.value)}
                     autoComplete="off" />
             </div>
             <div className={`fixed z-50  top-0 w-full left-0 ${showFilter ? "" : "hidden"}  `} id="modal">
@@ -150,7 +167,7 @@ function FilterModal({ filterParams, searchFunction, columnList }) {
                                             id="ascRadio"
                                             name="order"
                                             checked={!ascOrder}
-                                            onChange={() => setAscOrder(false)}                                    
+                                            onChange={() => setAscOrder(false)}
                                         />
                                         <span className="ml-2">Mayor a menor</span>
                                     </label>
