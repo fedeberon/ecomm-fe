@@ -44,4 +44,5 @@ yarn-error.log*
 **/public/worker-*.js.map
 .vscode/settings.json
 
-tailwind.config.js
+package-lock.json
+yarn.lock
