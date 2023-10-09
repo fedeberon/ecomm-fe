@@ -1,5 +1,6 @@
 import Moment from "react-moment";
-import logo from "../../images/logo.png";
+import logo from "/images/logoMati.png";
+import About from "@/components/about/About"
 
 const BillPrintBody = ({bill}) => {
 
@@ -8,13 +9,7 @@ const BillPrintBody = ({bill}) => {
                 <div id="factura" className="m-auto lg:w-1/2">
                     <div id="head-factura" className="flex justify-between border-b-4 border-grey-800">
                         <img id="img-factura" src={logo.src} className="w-32" />
-                        <div id="local-factura" className="text-right text-gray-500">
-                            Dulce Bebe<br />
-                            Av. Alsina 472<br />
-                            San Carlos de Bolivar<br />
-                            Prov Buenos Aires<br />
-                            B6550<br />
-                        </div>
+                        <About></About>
                     </div>
                     <div id="body-factura" className="border-b-4 border-grey-800">
                         <div id="form-factura" className="flex justify-between mt-8 text-gray-500">
