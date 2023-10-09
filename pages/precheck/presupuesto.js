@@ -159,11 +159,6 @@ const Presupuesto = ({ userSession, users }) => {
                             <button onClick={print} type="button" className="md:m-3 justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-red-600 text-base font-medium text-white hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">
                                 Imprimir
                             </button>
-                            <p aria-label="checkout-products"
-                                className="md:m-3 justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-red-600 text-base font-medium text-white hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">
-                                SELECCIONAR USUARIO
-                            </p>
-                        </div>
 
 
 
@@ -199,8 +194,7 @@ const Presupuesto = ({ userSession, users }) => {
                                         )
                                 )
                         }
-
-
+                        </div>
                     </div>
 
             }

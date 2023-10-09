@@ -112,15 +112,12 @@ const WalletOfUser = ({ walletOfUser, user }) => {
             {user.twins
                 ?
                 <div id="myDiv">
-                    <div className='m-auto w-80 h-48 rounded-2xl font-mono text-white overflow-hidden cursor-pointer transition-all duration-500 bg-gradient-to-r from-blue-500 to-green-400 p-4 py-3 px-5 rounded-xl'>
+                    <div className='m-auto w-80 h-48 rounded-2xl font-mono text-white overflow-hidden cursor-pointer transition-all duration-500 bg-gradient-to-r from-blue-500 to-green-400 p-4 py-3 px-5'>
                         <div className="relative flex justify-between">
                             <div>
-                                <h2 className='relative text-left font-bold text-xl decoration-pink-500 font-bold'>Tarjeta Mellizos</h2>
+                                <h2 className='relative text-left font-bold text-xl decoration-pink-500'>Tarjeta Mellizos</h2>
                                 <h2 className="relative italic">20% de descuento</h2>
 
-                            </div>
-                            <div className="relative flex items-center">
-                                <img src={logo2.src} className={"w-24 relative lg:w-32 mt-2"} />
                             </div>
                         </div>
                         <div className='relative flex justify-between mt-8 w-48 '>
@@ -133,15 +130,12 @@ const WalletOfUser = ({ walletOfUser, user }) => {
                 </div>
                 :
                 <>
-                    <div className='m-auto w-80 h-48 rounded-2xl font-mono text-white overflow-hidden cursor-pointer transition-all duration-500 bg-gradient-to-r from-pink-500 to-purple-500 p-4 py-5 px-5'>
+                    <div className='m-auto w-80 h-48 rounded-2xl font-mono text-white overflow-hidden cursor-pointer transition-all duration-500 bg-gradient-to-r from-black to-purple-500 p-4 py-5 px-5'>
                         <div className="flex justify-between">
                             <div>
 
                                 <h2> Mis puntos</h2>
                                 <p className='text-2xl font-bold'> {points} </p>
-                            </div>
-                            <div className="flex items-center">
-                                <img src={logo.src} className={"w-16 relative lg:w-24"} />
                             </div>
                         </div>
                         <div className='flex justify-between mt-8 w-48 '>

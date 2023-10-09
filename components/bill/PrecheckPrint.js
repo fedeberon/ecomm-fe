@@ -19,7 +19,7 @@ const PrecheckPrint = ({checkout}) => {
                    </div>
 
 
-                   <div  className="border-b-4 border-grey-800 m-auto">
+                   <div  className="border-b-4 border-grey-800 w-3/4 m-auto">
                        <div className="flex-col max-w-full">
                            <div className="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-0">
                                <div className="py-12  inline-block w-full">
@@ -46,7 +46,7 @@ const PrecheckPrint = ({checkout}) => {
                                            </tr>
                                            </thead>
                                            <tbody
-                                               className="bg-white divide-y divide-gray-200 lg:w-3/4 ">
+                                               className="bg-white divide-y divide-gray-200 w-3/4 ">
 
                                            {
                                                checkout.products.map((p, index) => (
