@@ -39,6 +39,10 @@ function Nav() {
     setIsShow(!isShow)
   }
 
+  const handleButtonClick = (e) => {
+    setIsShow(false);
+  };
+
   useEffect(async() => {
     setCategories(await findAll())
   }, [])
@@ -72,11 +76,10 @@ function Nav() {
   return (
     <header className={color ? "w-full sticky  lg:static top-0 z-50 bg-white ease-in duration-300" : "w-full sticky lg:static top-0 z-50 bg-palette-bg ease-in duration-300"}>
 
-      <div >
+      <div>
         <div className="flex items-center justify-between flex-wrap p-2">
-        
         <div className="block lg:hidden">
-          <button onClick={handleMenu} className="flex py-2 hover:border-grey">
+          <button id="menuButton" onClick={handleMenu} className="flex py-2 hover:border-grey">
             <FontAwesomeIcon icon={faBars} className="w-5 top-6 ml-2 mr-0 items-center" />
           </button>
         </div>
@@ -181,6 +184,9 @@ function Nav() {
         }
         </div>
       </div>
+      {isShow && (
+        <div className="fixed top-0 left-40 right-20 bottom-0 z-40" onClick={handleButtonClick}></div>
+      )}
     </header>
   );
 }
