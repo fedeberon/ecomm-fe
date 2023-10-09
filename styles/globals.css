@@ -114,7 +114,7 @@ html {
 ::-webkit-scrollbar-thumb {
   background-color: #888; /* Color of the scrollbar handle */
   border-radius: 20px; /* Rounded corners */
-  border: 3px solid #555; /* Border around the scrollbar handle */
+  border: 3px solid #ffffff; /* Border around the scrollbar handle */
 }
 
 /* Firefox Scrollbar Styles */

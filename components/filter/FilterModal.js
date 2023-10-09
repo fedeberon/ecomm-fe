@@ -19,6 +19,8 @@ const filterParams = [
 ];*/
 
 function FilterModal({ filterParams, searchFunction, columnList }) {
+    const [windowWidth, setWindowWidth] = useState();
+    const [windowHeight, setWindowHeight] = useState();
     const [showFilter, setShowFilter] = useState(false);
     const [selectedOrderCol, setSelectedOrderCol] = useState(columnList[0].value);
     const [ascOrder, setAscOrder] = useState(false);
@@ -78,8 +80,27 @@ function FilterModal({ filterParams, searchFunction, columnList }) {
         }
     }, [searchTerm]);
 
+    useEffect(() => {
+        // Update the window width when the window is resized
+        const handleResize = () => {
+            setWindowWidth(window.innerWidth);
+            setWindowHeight(window.innerHeight);
+        };
+
+        window.addEventListener("resize", handleResize);
+
+        // Clean up the event listener when the component unmounts
+        return () => {
+            window.removeEventListener("resize", handleResize);
+        };
+    }, []);
+
+    useEffect(()=>{
+        console.log("I TRIGGERED")
+    },[showFilter])
+
     return (
-        <div className='sticky top-16 pt-4 md:top-14 md:pt-0 z-30 bg-white'>
+        <div className='sticky top-16 pt-4 md:top-14 md:pt-0 z-40 bg-white'>
             <div className='flex justify-center py-2 h-20 '>
                 <button
                     className="justify-between my-auto mx-4 text-white  bg-palette-secondary border 
@@ -108,15 +129,23 @@ function FilterModal({ filterParams, searchFunction, columnList }) {
                     onChange={(e) => registerTerm(e.target.value)}
                     autoComplete="off" />
             </div>
-            <div className={`fixed top-20 w-full left-0 ${showFilter ? "" : "hidden"}  `} id="modal">
-                <div className="flex items-center justify-center min-height-100vh pt-4 px-4 pb-20 text-center sm:block sm:p-0">
-                    <div onClick={() => setShowFilter(false)} className="fixed inset-0 transition-opacity">
-                        <div className="absolute inset-0 bg-gray-700 opacity-75" />
-                    </div>
-                    <span className=" sm:inline-block sm:align-middle sm:h-screen">&#8203;</span>
-                    <div className="w-auto inline-block bg-white  rounded-lg text-left  shadow-xl transform transition-all my-8 align-middle"
+
+            <div id="fondoGris" onClick={() => setShowFilter(false)} 
+                 className={`fixed inset-0 transition-opacity ${showFilter ? "" : "hidden"}`}>
+                <div className="absolute inset-0 bg-gray-700 opacity-75" />
+            </div>
+
+            <div id="modal" className={`top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2
+            fixed ${showFilter ? "" : "hidden"}  `}>
+                <div className="flex shadow-xl items-center bg-white rounded-lg justify-center min-height-100vh text-center sm:block sm:p-0" 
+                     style={{ width: windowWidth >= 1200 ? "70rem" : (windowWidth < 1024 ? (windowWidth < 768 ? "100vw" : "50rem") : "60rem") }}>
+
+                    <div className="w-auto inline-block text-left 
+                         transform transition-all align-middle
+                        sm:min-height-full md:min-height-full"
                         role="dialog" aria-modal="true" aria-labelledby="modal-headline">
-                        <div className="px-4 pt-6 pb-2 sm:p-6 sm:pb-4 flex justify-center items-center">
+                        <div className="px-4 pt-6 pb-2 sm:p-6 sm:pb-4 flex justify-center items-center "
+                            style={{  maxHeight: windowWidth < 768 ? "62vh" : "55vh"}}>
                             {
                                 filterParams
                                     ?
@@ -125,10 +154,11 @@ function FilterModal({ filterParams, searchFunction, columnList }) {
                                             <div className="w-auto bg-white text-sm text-palette-primary font-bold px-5 py-2">
                                                 <div className="m-2 -ml-4 text-2xl">{category.type}</div>
                                             </div>
-                                            <div id="menu" style={{ maxHeight: '33vh' }} className={category.column ?
-                                                `overflow-y-auto max-h-96 scrollbar-thin lg:grid lg:grid-cols-1`
-                                                :
-                                                `overflow-y-auto max-h-96 scrollbar-thin lg:grid lg:grid-cols-5`}>
+                                            <div id="menu"
+                                                style={{ maxHeight: windowWidth < 768 ? "52vh" : "45vh"}}
+                                                className={`overflow-y-auto scrollbar-thin lg:grid md:grid
+                                                ${category.column ? "lg:grid-cols-1" : "lg:grid-cols-4 md:grid-cols-3"}`}>
+
                                                 {
                                                     category.elements
                                                         ?
@@ -149,50 +179,52 @@ function FilterModal({ filterParams, searchFunction, columnList }) {
                                     )) : <></>
                             }
                         </div>
-                        {columnList ? (
-                            <div className="grid lg:grid-cols-6 lg:gap-4 px-4 pt-6 pb-2 sm:p-6 sm:pb-4">
+                        <div style={{ minHeight: windowWidth < 768 ? "30vh" : "33vh",  maxHeight: "45vh"}}>
+                            {columnList ? (
+                                <div className="grid lg:grid-cols-6 lg:gap-4 px-4 pt-6 pb-2 sm:p-6 sm:pb-4">
 
-                                <div className="w-auto bg-white text-sm text-palette-primary font-bold px-5 lg:pb-2 m-2 -ml-4 text-2xl">Ordenar por:</div>
-                                <select
-                                    className="text-palette-primary px-5  h-12"
-                                    id="orderBy"
-                                    value={selectedOrderCol}
-                                    onChange={handleChangeColumn}
-                                >
-                                    {columnList.map((option) => (
-                                        <option key={option.value} value={option.value}>
-                                            {option.label}
-                                        </option>
-                                    ))}
-                                </select>
-                                <label className="flex items-center mt-2 px-2 lg:pb-3">
-                                    <input
-                                        type="radio"
-                                        className="form-radio rounded text-red-500"
-                                        id="ascRadio"
-                                        name="order"
-                                        checked={!ascOrder}
-                                        onChange={() => setAscOrder(false)}
-                                    />
-                                    <span className="ml-2">Mayor a menor</span>
-                                </label>
-                                <label className="flex items-center mt-2 px-2 lg:pb-3">
-                                    <input
-                                        type="radio"
-                                        className="form-radio rounded text-red-500"
-                                        id="descRadio"
-                                        name="order"
-                                        checked={ascOrder}
-                                        onChange={() => setAscOrder(true)}
-                                    />
-                                    <span className="ml-2">Menor a mayor</span>
-                                </label>
+                                    <div className="w-auto lg:col-span-2  text-sm text-palette-primary font-bold px-5 lg:pb-2 m-2 -ml-4 text-2xl">Ordenar por:</div>
+                                    <select
+                                        className="text-palette-primary bg-blue px-5  h-12"
+                                        id="orderBy"
+                                        value={selectedOrderCol}
+                                        onChange={handleChangeColumn}
+                                    >
+                                        {columnList.map((option) => (
+                                            <option key={option.value} value={option.value}>
+                                                {option.label}
+                                            </option>
+                                        ))}
+                                    </select>
+                                    <label className="flex items-center mt-2 px-2 lg:pb-3">
+                                        <input
+                                            type="radio"
+                                            className="form-radio rounded text-red-500"
+                                            id="ascRadio"
+                                            name="order"
+                                            checked={!ascOrder}
+                                            onChange={() => setAscOrder(false)}
+                                        />
+                                        <span className="ml-2">Mayor a menor</span>
+                                    </label>
+                                    <label className="flex items-center mt-2 px-2 lg:pb-3">
+                                        <input
+                                            type="radio"
+                                            className="form-radio rounded text-red-500"
+                                            id="descRadio"
+                                            name="order"
+                                            checked={ascOrder}
+                                            onChange={() => setAscOrder(true)}
+                                        />
+                                        <span className="ml-2">Menor a mayor</span>
+                                    </label>
+                                </div>
+                            ) : <></>}
+
+                            <div className="p-3 md:mt-2 lg:mt-2 text-center space-x-4 md:block">
+                                <button className="mb-2 md:mb-0 bg-palette-slight border border-black-500 px-5 py-2 text-sm shadow-sm font-medium tracking-wider text-white hover:text-white rounded-full hover:shadow-lg hover:bg-palette-secondary" onClick={() => setShowFilter(false)}>Cerrar</button>
+                                <button className="mb-2 md:mb-0 bg-palette-slight border-black-500 px-5 py-2 text-sm shadow-sm font-medium tracking-wider text-white hover:text-white rounded-full hover:shadow-lg hover:bg-palette-secondary" onClick={() => searchButton()}>Buscar</button>
                             </div>
-                        ) : <></>}
-
-                        <div className="p-3  mt-2 text-center space-x-4 md:block">
-                            <button className="mb-2 md:mb-0 bg-palette-slight border border-black-500 px-5 py-2 text-sm shadow-sm font-medium tracking-wider text-white hover:text-white rounded-full hover:shadow-lg hover:bg-palette-secondary" onClick={() => setShowFilter(false)}>Cerrar</button>
-                            <button className="mb-2 md:mb-0 bg-palette-slight border-black-500 px-5 py-2 text-sm shadow-sm font-medium tracking-wider text-white hover:text-white rounded-full hover:shadow-lg hover:bg-palette-secondary" onClick={() => searchButton()}>Buscar</button>
                         </div>
                     </div>
                 </div>

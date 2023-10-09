@@ -109,11 +109,10 @@ function ProductListings({ brands, categories, initialSearch }) {
     }, [page]);
 
     useEffect(()=>{
-        if(page == 0)
         productListRef.current.scrollIntoView({
             behavior: "smooth", block: "start", offsetTop: -50
         });
-    },[page],[results])
+    },[results.totalPages])
 
     return (
         
