@@ -15,7 +15,8 @@ function ProductListings({ brands, categories, initialSearch }) {
     //Carga los productos y el total de paginas                             
     const [results, setResults] = useState({
         products: initialSearch.content,
-        totalPages: initialSearch.totalPages
+        totalPages: initialSearch.totalPages,
+        newSearch: null
     });
 
     const [productsToShow, setProductsToShow] = useState(initialSearch.content);    //Muestra los productos obtenidos
@@ -58,12 +59,14 @@ function ProductListings({ brands, categories, initialSearch }) {
     //2 - Si hay consulta nueva, busca los resultados y los coloca en results.
     useEffect(async () => {
         if (q) {
+
             const newData = await searchList(0, q.term, q.params[0], q.params[1], q.orderBy, q.asc == "T" ? true : false);
             await setResults({
                 products: newData.content,
                 totalPages: newData.totalPages
             });
             await setPage(0);
+            await goBackToTheTop();
         }
     }, [q]);
 
@@ -71,6 +74,13 @@ function ProductListings({ brands, categories, initialSearch }) {
     useEffect(() => {
         setProductsToShow(results.products);
     }, [results])
+
+    //Habia que esperar a que cargue bien cada detalle antes de que esto se ejecute
+    async function goBackToTheTop(){
+        productListRef.current.scrollIntoView({
+            behavior: "smooth", block: "start"
+        });
+    }
 
     //------------------------------------- SCROLLING -------------------------------------
 
@@ -108,16 +118,10 @@ function ProductListings({ brands, categories, initialSearch }) {
         }
     }, [page]);
 
-    useEffect(()=>{
-        productListRef.current.scrollIntoView({
-            behavior: "smooth", block: "start", offsetTop: -50
-        });
-    },[results.totalPages])
-
     return (
         
         <div  className='w-full'>
-            <div ref={productListRef}></div>
+            <div  ref={productListRef}>&nbsp;</div>
             <FilterModal
                 filterParams={filterParams}
                 searchFunction={search}
