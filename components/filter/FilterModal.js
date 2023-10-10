@@ -140,7 +140,7 @@ function FilterModal({ filterParams, searchFunction, columnList }) {
                 tyle={{ minHeight: windowWidth < 768 ? "100vh" : "85vh" }}>
                 <div className="flex shadow-xl items-center bg-white rounded-lg justify-center min-height-100vh text-center sm:block sm:p-0"
                     style={{ width: windowWidth >= 1200 ? "70rem" : (windowWidth < 1024 ? (windowWidth < 768 ? "100vw" : "50rem") : "60rem") }}>
-                    <div className="w-auto inline-block text-left 
+                    <div className="w-auto sm:w-11/12 inline-block text-left 
                         transform transition-all align-middle
                         sm:min-height-full md:min-height-full"
                         role="dialog"
@@ -153,7 +153,9 @@ function FilterModal({ filterParams, searchFunction, columnList }) {
                             {filterParams
                                 ?
                                 filterParams.map((category, arrayIndex) => (
-                                    <div className="flex-center col-span-2 w-auto rounded">
+                                    <div className="flex-center col-span-2 rounded"
+                                    style={{ minWidth: windowWidth < 768 ? "50%" : "auto" }}
+                                    >
                                         <div className="w-auto bg-white text-sm text-palette-primary font-bold px-5 py-2 m-2 -ml-4 text-2xl">
                                             {category.type}
                                         </div>
