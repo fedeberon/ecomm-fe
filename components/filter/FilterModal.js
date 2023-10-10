@@ -135,25 +135,27 @@ function FilterModal({ filterParams, searchFunction, columnList }) {
                 <div className="absolute inset-0 bg-gray-700 opacity-75" />
             </div>
 
-            
-            <div id="modal" className={`top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2
-            fixed ${showFilter ? "" : "hidden"}  `}>
-                <div className="flex shadow-xl items-center bg-white rounded-lg 
-                justify-center min-height-100vh text-center sm:block sm:p-0"
-                    style={{ width: windowWidth >= 1200 ? "70rem" : (windowWidth < 1024 ? (windowWidth < 768 ? "100vw" : "50rem") : "60rem") }}>
 
+            <div id="modal" className={`top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 fixed ${showFilter ? "" : "hidden"}  `}
+                tyle={{ minHeight: windowWidth < 768 ? "100vh" : "85vh" }}>
+                <div className="flex shadow-xl items-center bg-white rounded-lg justify-center min-height-100vh text-center sm:block sm:p-0"
+                    style={{ width: windowWidth >= 1200 ? "70rem" : (windowWidth < 1024 ? (windowWidth < 768 ? "100vw" : "50rem") : "60rem") }}>
                     <div className="w-auto inline-block text-left 
                         transform transition-all align-middle
                         sm:min-height-full md:min-height-full"
-                        role="dialog" aria-modal="true" aria-labelledby="modal-headline">
-                        <div className="px-4 pt-6 pb-2 sm:p-6 sm:pb-4 flex justify-center items-center" 
-                        style={{ maxHeight: windowWidth < 768 ? "62vh" : "55vh" }}>
+                        role="dialog"
+                        aria-modal="true"
+                        aria-labelledby="modal-headline">
+                        
+                        <div id="categoriesAndBrands" 
+                            className="px-4 pt-6 pb-2 sm:p-6 sm:pb-4 flex justify-center items-center"
+                            style={{ maxHeight: windowWidth < 768 ? "85vh" : "55vh" }}>
                             {filterParams
                                 ?
                                 filterParams.map((category, arrayIndex) => (
                                     <div className="flex-center col-span-2 w-auto rounded">
-                                        <div className="w-auto bg-white text-sm text-palette-primary font-bold px-5 py-2">
-                                            <div className="m-2 -ml-4 text-2xl">{category.type}</div>
+                                        <div className="w-auto bg-white text-sm text-palette-primary font-bold px-5 py-2 m-2 -ml-4 text-2xl">
+                                            {category.type}
                                         </div>
                                         <div id="menu"
                                             style={{ maxHeight: windowWidth < 768 ? "52vh" : "45vh" }}
@@ -177,14 +179,16 @@ function FilterModal({ filterParams, searchFunction, columnList }) {
                                     </div>
                                 )) : <></>}
                         </div>
-                        <div style={{ minHeight: windowWidth < 768 ? "30vh" : "33vh", maxHeight: "45vh" }}>
+
+                        <div id="orderAndButtons"
+                            >
                             {columnList ? (
-                                <div className={`px-4 pt-6 pb-2 sm:p-6 sm:pb-4 ${windowWidth < 768 ? "grid" : "flex flex-wrap"}`}>
-                                    <div className="w-auto text-sm text-palette-primary font-bold px-5 lg:pb-2 m-2 -ml-4 text-2xl">
+                                <div className={`px-4 md:pt-6 lg:pt-6 pb-2 ${windowWidth < 768 ? "grid" : "flex flex-wrap"}`}>
+                                    <div className="w-auto text-sm text-palette-primary font-bold px-5 m-2 -ml-4 text-2xl">
                                         Ordenar por:
                                     </div>
                                     <select
-                                        className="text-palette-primary px-5  h-12"
+                                        className="text-palette-primary px-5 h-12"
                                         id="orderBy"
                                         value={selectedOrderCol}
                                         onChange={handleChangeColumn}>
@@ -219,7 +223,7 @@ function FilterModal({ filterParams, searchFunction, columnList }) {
                                 </div>
                             ) : <></>}
 
-                            <div className="p-3  text-center space-x-4 md:block">
+                            <div className="pl-3 pr-3 pb-3 md:pt-2 lg:pt-2 text-center space-x-4 md:block">
                                 <button className="mb-2 md:mb-0 bg-palette-slight border border-black-500 px-5 py-2 text-sm shadow-sm font-medium tracking-wider text-white hover:text-white rounded-full hover:shadow-lg hover:bg-palette-secondary" onClick={() => setShowFilter(false)}>Cerrar</button>
                                 <button className="mb-2 md:mb-0 bg-palette-slight border-black-500 px-5 py-2 text-sm shadow-sm font-medium tracking-wider text-white hover:text-white rounded-full hover:shadow-lg hover:bg-palette-secondary" onClick={() => searchButton()}>Buscar</button>
                             </div>
