@@ -6,7 +6,7 @@ const PrecheckPrint = ({checkout}) => {
     return(
        <>
            <div className="justify-between w-screen h-200 mt-10">
-               <div className="m-auto lg:w-9/12">
+               <div className="m-auto lg:w-11/12 sm:w-11/12">
                    <div id="head-factura" className="flex justify-around border-b-4 border-grey-800">
                        <img id="img-factura" src={logo.src} className="w-32" />
                        <div id="local-factura" className="text-right text-gray-500">
@@ -20,23 +20,23 @@ const PrecheckPrint = ({checkout}) => {
 
 
                    <div  className="border-b-4 border-grey-800 m-auto">
-                       <div className="flex flex-col">
+                       <div className="flex-col max-w-full">
                            <div className="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-0">
-                               <div className="py-5 align-middle inline-block w-full">
+                               <div className="py-12  inline-block w-full">
                                    <div className="shadow overflow-x-auto border-b border-gray-200 sm:rounded-lg">
-                                       <table className="min-w-full divide-y divide-gray-200">
+                                       <table className="w-full divide-y divide-gray-200">
                                            <thead className="">
-                                           <tr className="content-center">
+                                           <tr className="">
                                                <th scope="col"
-                                                   className="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider ">
+                                                   className="px-4 lg:px-12  py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                                    Nombre
                                                </th>
                                                <th scope="col"
-                                                   className="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                                   className="px-4 py-2  text-left text-xs font-medium text-gray-500 uppercase tracking-wider hidden sm:table-cell">
                                                    Cantidad
                                                </th>
                                                <th scope="col"
-                                                   className="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                                   className="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider hidden sm:table-cell">
                                                    Precio Unitario
                                                </th>
                                                <th scope="col"
@@ -51,7 +51,7 @@ const PrecheckPrint = ({checkout}) => {
                                            {
                                                checkout.products.map((p, index) => (
                                                    <tr key={index}>
-                                                       <td className="px-4 py-2 whitespace-nowrap">
+                                                       <td className="px-4 lg:px-12 py-2 whitespace-nowrap">
                                                            <div className="flex items-center">
                                                                <div className="ml-0 w-1/4">
                                                                    <div
@@ -61,13 +61,13 @@ const PrecheckPrint = ({checkout}) => {
                                                                </div>
                                                            </div>
                                                        </td>
-                                                       <td className="px-4 py-2 whitespace-nowrap text-sm text-gray-500">
+                                                       <td className="px-4 py-2 whitespace-nowrap text-sm text-gray-500 hidden sm:table-cell">
                                                         {p.quantity}
                                                        </td>
-                                                       <td className="px-4 py-2 whitespace-nowrap text-sm text-gray-500">
+                                                       <td className="px-4 py-2 whitespace-nowrap text-sm text-gray-500 hidden sm:table-cell">
                                                            $ {p.product.price}
                                                        </td>
-                                                       <td className="px-8 py-3 whitespace-nowrap text-sm text-gray-500">
+                                                       <td className="px-4 py-3 whitespace-nowrap text-sm text-gray-500">
                                                            $ {p.price}
                                                        </td>
                                                    </tr>

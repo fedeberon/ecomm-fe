@@ -39,6 +39,10 @@ function Nav() {
     setIsShow(!isShow)
   }
 
+  const handleButtonClick = (e) => {
+    setIsShow(false);
+  };
+
   useEffect(async() => {
     setCategories(await findAll())
   }, [])
@@ -54,15 +58,28 @@ function Nav() {
   const showCategories = (() => {
     setCategoriesVisible(!categoriesVisible)
   })
+  
+  const handleDocumentClick = (e) => {
+    if (categoriesVisible) {
+      setCategoriesVisible(false);
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener('click', handleDocumentClick);
+
+    return () => {
+      document.removeEventListener('click', handleDocumentClick);
+    };
+  }, [categoriesVisible]);
 
   return (
-    <header className={color ? "w-full sticky lg:static top-0 z-50 bg-white ease-in duration-300" : "w-full sticky lg:static top-0 z-50 bg-palette-bg ease-in duration-300"}>
+    <header className={color ? "w-full sticky  lg:static top-0 z-50 bg-white ease-in duration-300" : "w-full sticky lg:static top-0 z-50 bg-palette-bg ease-in duration-300"}>
 
-      <div >
+      <div>
         <div className="flex items-center justify-between flex-wrap p-2">
-        
         <div className="block lg:hidden">
-          <button onClick={handleMenu} className="flex py-2 hover:border-grey">
+          <button id="menuButton" onClick={handleMenu} className="flex py-2 hover:border-grey">
             <FontAwesomeIcon icon={faBars} className="w-5 top-6 ml-2 mr-0 items-center" />
           </button>
         </div>
@@ -122,16 +139,16 @@ function Nav() {
                   </svg>
               </button>       
               <div
-                className={`${categoriesVisible ? "" : "hidden"} z-50 absolute mt-2 w-46 lg:w-32 lg:right-0 rounded-md shadow-lg bg-white ring-2 ring-palette-lighter ring-opacity-75 focus:outline-none md:-mx-2 -mx-0`}
+                className={`${categoriesVisible ? "" : "hidden"} z-50 absolute mt-2 w-46 lg:w-32 lg:right-0 md:w-32 rounded-md shadow-lg bg-white ring-2 ring-palette-lighter ring-opacity-75 focus:outline-none md:-mx-2 -mx-0`}
                 role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabIndex="-1">
-                <div className="overflow-y-auto no-scrollbar h-80" role="none">
+                <div className="overflow-y-auto no-scrollbar max-h-80 lg:max-h-44" role="none">
                   {categories?.map((category) =>(
                       <Link href={`/accessories/${category.id}`} passHref legacyBehavior>
                         <a href="#" onClick={showCategories} className="text-palette-primary block text-center hover:text-palette-secondary px-4 py-2 text-sm" role="menuitem"
                         tabIndex="-1" id="menu-item-0">{category.name}</a>
                       </Link>
                     ))
-                  }
+                  }   
                 </div>
             </div>
           </div>
@@ -167,6 +184,9 @@ function Nav() {
         }
         </div>
       </div>
+      {isShow && (
+        <div className="fixed top-0 left-40 right-20 bottom-0 z-40" onClick={handleButtonClick}></div>
+      )}
     </header>
   );
 }

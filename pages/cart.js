@@ -68,9 +68,10 @@ function CartPage({myPoints, user}) {
   }
 
   return (
-      <div className='bg-blue-100 lg:px-6'>
-            <div className='bg-white'>
-            <div className="container bg-white mx-auto mb-20 min-h-screen">
+    
+      <div className='bg-blue-100 lg:px-6 '>
+            <div className='flex bg-white  sm:content-start'>
+            <div className="px-10 bg-white mx-auto">
             <SEO title={pageTitle} />
             <PageTitle text="Tu Compra" />
 
@@ -97,7 +98,7 @@ function CartPage({myPoints, user}) {
                             </div>
                         </>
                     :
-                        <>
+                            <>
                             <CartTable
                                 cart={cart}
                             />
@@ -186,3 +187,4 @@ export async function getServerSideProps(context) {
         },
     }
 }
+

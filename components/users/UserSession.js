@@ -1,26 +1,40 @@
-import {signOut} from "next-auth/client"
+import { signOut } from "next-auth/client";
 import Link from "next/link";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faUserCircle} from "@fortawesome/free-solid-svg-icons";
-import useComponentVisible from "../../hooks/UseComponentVisible";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faUserCircle } from "@fortawesome/free-solid-svg-icons";
+import { useState, useRef, useEffect} from "react"; // Importamos useState, useRef y useEffect
 
-const UserSession = ({session}) => {
-    const {
-        ref,
-        isComponentVisible,
-        setIsComponentVisible
-    } = useComponentVisible(false);
+const UserSession = ({ session }) => {
+    const [isComponentVisible, setIsComponentVisible] = useState(false); 
+    const componentRef = useRef(null); // Crea una referencia para el componente
 
-    const showOptionsSession = () => {
-        setIsComponentVisible(true)
+    const toggleOptionsSession = () => {
+        setIsComponentVisible(prev => !prev);
     }
+
+    useEffect(() => {
+        // Función para cerrar el componente cuando se hace clic fuera de él
+        const handleClickOutside = (event) => {
+            if (componentRef.current && !componentRef.current.contains(event.target)) {
+                setIsComponentVisible(false);
+            }
+        }
+
+        // Agregar event listener cuando el componente se monta
+        document.addEventListener("mousedown", handleClickOutside);
+
+        // Remover event listener cuando el componente se desmonta
+        return () => {
+            document.removeEventListener("mousedown", handleClickOutside);
+        }
+    }, []);
 
     if (session) {
         return (
-                <div className="relative inline-block text-left">
-                        <div className="text-smw block lg:relative lg:-mt-2">
+                <div ref={componentRef} className="relative inline-block text-left">
+                        <div className="text-smw block lg:relative lg:-mt-2 hidden sm:table-cell">
                             <button type="button"
-                                    onClick={showOptionsSession}
+                                    onClick={toggleOptionsSession}
                                     className="inline-flex justify-center md:mt-2 md:ml-2 w-full rounded-md px-3 py-2 text-m font-primary text-palette-primary hover:text-palette-secondary capitalize  focus:ring-2 focus:ring-palette-lighter focus:ring-opacity-75"
                                     id="menu-button" aria-expanded="true" aria-haspopup="true">
                                 {(session.user.name).toUpperCase()}
@@ -32,8 +46,18 @@ const UserSession = ({session}) => {
                                 </svg>
                             </button>
                         </div>
+                        <div className="text-smw block lg:relative lg:-mt-2 md:invisible lg:hidden">
+                            <button type="button"
+                                    onClick={toggleOptionsSession}
+                                    className="inline-flex justify-center md:mt-2 md:ml-2 w-full rounded-md px-3 py-2 text-m font-primary text-palette-primary hover:text-palette-secondary capitalize  focus:ring-2 focus:ring-palette-lighter focus:ring-opacity-75"
+                                    id="menu-button" aria-expanded="true" aria-haspopup="true">
+                                        <FontAwesomeIcon 
+                                        className="text-palette-primary hover:text-palette-primary h-6"
+                                        icon={faUserCircle} />
+                            </button>
+                        </div>
                         <div
-                            ref={ref}
+                            ref={componentRef}
                             className={`${isComponentVisible ? "" : "hidden"}  z-50 absolute mt-2 w-46 lg:w-32 lg:right-0 rounded-md shadow-lg bg-white ring-2 ring-palette-lighter ring-opacity-75 focus:outline-none md:-mx-2 -mx-0`}
                             role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabIndex="-1">
                             <div className="py-1 " role="none">
@@ -50,7 +74,9 @@ const UserSession = ({session}) => {
                                        tabIndex="-1" id="menu-item-2">Mis Datos</a>
                                 </Link>
                                 <form method="POST" action="#" role="none">
-                                    <button onClick={() => signOut({ callbackUrl:"/" })}
+
+                                    <button onClick={() => signOut({ callbackUrl: "/" })}
+
                                             className="text-palette-primary block w-full text-center px-4 py-2 text-sm hover:bg-gray-50"
                                             role="menuitem" tabIndex="-1" id="menu-item-3">
                                         Salir

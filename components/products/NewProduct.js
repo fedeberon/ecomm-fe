@@ -70,7 +70,7 @@ const NewProduct = ({ categories, brands, sizes }) => {
         form,
         errors,
         handleChange,
-        handleBlur,
+        handleBlur, 
         handleSubmit, } = useForm(initialForm, validationsForm);
 
     const handleChangeSize =(e)=>{
