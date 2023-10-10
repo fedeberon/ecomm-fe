@@ -190,7 +190,7 @@ function FilterModal({ filterParams, searchFunction, columnList }) {
                                         Ordenar por:
                                     </div>
                                     <select
-                                        className="text-palette-primary px-5 h-12"
+                                        className="text-palette-primary px-5 h-12 bg-gray-200"
                                         id="orderBy"
                                         value={selectedOrderCol}
                                         onChange={handleChangeColumn}>
