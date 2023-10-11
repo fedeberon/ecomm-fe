@@ -1,12 +1,14 @@
 import StoreHeading from "@/components/StoreHeading";
 import {useState} from "react";
 import {save} from "../../services/userService";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import {faEye, faEyeSlash} from '@fortawesome/free-solid-svg-icons'
 
 const Create = () => {
-
+    
 
     const [enable, setEnable] = useState(false)
-
+    const [showPassword, setShowPassword] = useState(false);
     const [user, setUser] = useState({
         "name": "",
         "lastName": "",
@@ -157,34 +159,44 @@ const Create = () => {
                                 }
                         </div>
                     </div>
-
-                    <div className="flex flex-wrap -mx-3 mb-6">
-                        <div className="w-full px-3">
-                            <label className="block tracking-wide text-gray-700 text-xs font-bold mb-2"
+                    <div className="relative">
+                    <label className="block tracking-wide text-gray-700 text-xs font-bold mb-2"
                                    htmlFor="grid-password">
-                                Contraseña 
-                            </label>
-                            <input 
-                                autocomplete="off"
-                                onChange={handleChange} 
-                                value={user.password}
-                                name={"password"}
-                                className="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
-                                type="text" 
-                                placeholder="Ingrese una contraseña"/> 
-                                {
-                                   user.password && user.password.length > 7
-                                   ?
-                                   <></>     
-                                   :
-                                   <p className="text-red-500 text-xs italic">Complete su Contraseña (de 8 a 16 caracteres al menos 1 mayuscula y 1 digito)</p>
-                                   
-                                }
+                                Contraseña
+                             </label>
+                        <input
+                            autoComplete="off"
+                            onChange={handleChange}
+                            value={user.password}
+                            name="password"
+                            className="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 pr-10 leading-tight focus:outline-none focus:bg-white"
+                            type={showPassword ? "text" : "password"}
+                            placeholder="Ingrese una contraseña"
+                        />
+                        <div className="absolute inset-y-0 right-0 pr-3 py-9">
+                            <input
+                                autoComplete="off"
+                                type="checkbox"
+                                id="showPasswordCheckbox"
+                                onChange={() => setShowPassword(!showPassword)}
+                                checked={showPassword}
+                                className="hidden"
+                            />
+                            <label htmlFor="showPasswordCheckbox" >{showPassword ? <FontAwesomeIcon icon={faEye} className="w-5 m-auto"/>:<FontAwesomeIcon icon={faEyeSlash} className="w-5 m-auto"/>}</label>
                         </div>
+                    </div>
+                    <div>
+                        {
+                            user.password && user.password.length > 7
+                            ?
+                            <></>     
+                            :
+                            <p className="text-red-500 text-xs italic py-3">Complete su Contraseña (de 8 a 16 caracteres al menos 1 mayuscula y 1 digito)</p>   
+                        }
                     </div>  
 
                     <div
-                        className="grid justify-items-center ">               
+                        className="grid justify-items-center py-2">               
                             <button type="submit" onClick={submit}
                                     className={`bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded `}>
                                 Listo !

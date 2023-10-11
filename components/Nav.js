@@ -21,20 +21,6 @@ function Nav() {
   const [categories, setCategories] = useState([])
 
 
-  const [color, setColor] = useState(false)
-  
-  useEffect(()=> {
-    const changeColor = () => {
-      if(window.scrollY >= 90){
-        setColor(true)
-      } else {
-        setColor(false)
-      }
-    }
-
-    window.addEventListener('scroll', changeColor)
-  }, [])
-
   const handleMenu = () => {
     setIsShow(!isShow)
   }
@@ -74,7 +60,7 @@ function Nav() {
   }, [categoriesVisible]);
 
   return (
-    <header className={color ? "w-full sticky  lg:static top-0 z-50 bg-white ease-in duration-300" : "w-full sticky lg:static top-0 z-50 bg-palette-bg ease-in duration-300"}>
+    <header className="w-full sticky  lg:static top-0 z-50 bg-white">
 
       <div>
         <div className="flex items-center justify-between flex-wrap p-2">
