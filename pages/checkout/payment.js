@@ -94,6 +94,13 @@ const Payment = ({ myPoints, users }) => {
     setLoading(false);
   };
 
+  const buy = (type) =>{
+    setLoading(true);
+    let response = submit(type)
+    cleanCart();
+    setLoading(false);
+  }
+
   const handleChange = (e) => {
     setPerson({
       ...person,
@@ -384,7 +391,7 @@ const Payment = ({ myPoints, users }) => {
                     ) : (
                       <div className="flex items-center justify-center m-auto w-full">
                         <a
-                          onClick={() => submit("A")}
+                          onClick={() => buy("A")}
                           aria-label="checkout-products"
                           className="bg-gray-500 text-white text-lg font-primary font-semibold pt-2 pb-1 leading-relaxed flex cursor-pointer
                           justify-center items-center focus:ring-1 focus:ring-palette-light focus:outline-none w-1/3 hover:bg-gray-700 rounded-md mr-2"
@@ -393,7 +400,7 @@ const Payment = ({ myPoints, users }) => {
                         </a>
 
                         <a
-                          onClick={() => submit("B")}
+                          onClick={() => buy("B")}
                           aria-label="checkout-products"
                           className="bg-yellow-600 text-white text-lg font-primary font-semibold pt-2 pb-1 leading-relaxed flex cursor-pointer
                           justify-center items-center focus:ring-1 focus:ring-palette-light focus:outline-none w-1/3 hover:bg-yellow-700 rounded-md ml-1"
@@ -402,7 +409,7 @@ const Payment = ({ myPoints, users }) => {
                         </a>
 
                         <a
-                          onClick={() => submit("C")}
+                          onClick={() => buy("C")}
                           aria-label="checkout-products"
                           className="bg-yellow-600 text-white text-lg font-primary font-semibold pt-2 pb-1 leading-relaxed flex cursor-pointer
                           justify-center items-center focus:ring-1 focus:ring-palette-light focus:outline-none w-1/3 hover:bg-yellow-700 rounded-md ml-4"
