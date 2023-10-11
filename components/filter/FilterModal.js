@@ -100,8 +100,8 @@ function FilterModal({ filterParams, searchFunction, columnList }) {
     }, [showFilter])
 
     return (
-        <div className='sticky top-16 pt-4 md:top-14 md:pt-0 z-40 bg-white'>
-            <div className='flex justify-center py-2 h-20 '>
+        <div className='sticky top-16 pt-4 md:top-14 md:pt-0 z-30 bg-white'>
+            <div className='flex justify-center py-2 h-20'>
                 <button
                     className="justify-between my-auto mx-4 text-white  bg-palette-secondary border 
                                 border-solid border-palette-secondary hover:bg-palette-slight 
@@ -148,14 +148,15 @@ function FilterModal({ filterParams, searchFunction, columnList }) {
                         aria-labelledby="modal-headline">
                         
                         <div id="categoriesAndBrands" 
-                            className="px-4 pt-6 pb-2 sm:p-6 sm:pb-4 flex justify-center items-center"
+                            className="px-4 pt-6 pb-2 sm:p-6 sm:pb-4 flex"
                             style={{ maxHeight: windowWidth < 768 ? "85vh" : "55vh" }}>
                             {filterParams
                                 ?
                                 filterParams.map((category, arrayIndex) => (
-                                    <div className="flex-center col-span-2 rounded"
-                                    style={{ minWidth: windowWidth < 768 ? "50%" : "auto" }}
-                                    >
+                                    <div className={`flex-center col-span-2 rounded 
+                                            ${category.column? "lg:w-1/4 md:w-1/4" : "lg:w-3/4 md:w-3/4"}`}
+                                        style={{ minWidth: windowWidth < 768 ? "50%" : "auto" }}
+                                        >
                                         <div className="w-auto bg-white text-sm text-palette-primary font-bold px-5 py-2 m-2 -ml-4 text-2xl">
                                             {category.type}
                                         </div>
