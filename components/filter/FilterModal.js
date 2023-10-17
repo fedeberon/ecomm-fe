@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 
 /*Elemplos de los tipos de parametros que deberia recibir en filterParams y columnList
 
@@ -19,6 +19,7 @@ const filterParams = [
 ];*/
 
 function FilterModal({ filterParams, searchFunction, columnList }) {
+    const filterElementRef = useRef(null);
     const [windowWidth, setWindowWidth] = useState();
     const [windowHeight, setWindowHeight] = useState();
     const [showFilter, setShowFilter] = useState(false);
@@ -33,6 +34,7 @@ function FilterModal({ filterParams, searchFunction, columnList }) {
         asc: ascOrder ? "T" : "F"
     };
     const [changesRegistered, setChangesRegistered] = useState(false);
+
 
     //Prepara los parametros para la consulta
     const handleChangeSubCat = (e, index) => {
@@ -96,11 +98,15 @@ function FilterModal({ filterParams, searchFunction, columnList }) {
     }, []);
 
     useEffect(() => {
-        console.log("I TRIGGERED")
-    }, [showFilter])
+        if (showFilter) {
+            filterElementRef.current.style.zIndex = 50; // Set your desired z-index value here
+        } else {
+            filterElementRef.current.style.zIndex = 30; // Resetting to default value if necessary
+        }
+    }, [showFilter]);
 
     return (
-        <div className='sticky top-16 pt-4 md:top-14 md:pt-0 z-30 bg-white'>
+        <div ref={filterElementRef} className='sticky top-16 pt-4 md:top-14 md:pt-0 z-30 bg-white'>
             <div className='flex justify-center py-2 h-20'>
                 <button
                     className="justify-between my-auto mx-4 text-white  bg-palette-secondary border 
@@ -136,7 +142,7 @@ function FilterModal({ filterParams, searchFunction, columnList }) {
             </div>
 
 
-            <div id="modal" className={`top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 fixed ${showFilter ? "" : "hidden"}  `}
+            <div id="modal" className={`top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 fixed z-50 ${showFilter ? "" : "hidden"}  `}
                 tyle={{ minHeight: windowWidth < 768 ? "100vh" : "85vh" }}>
                 <div className="flex shadow-xl items-center bg-white rounded-lg justify-center min-height-100vh text-center sm:block sm:p-0"
                     style={{ width: windowWidth >= 1200 ? "70rem" : (windowWidth < 1024 ? (windowWidth < 768 ? "100vw" : "50rem") : "60rem") }}>
@@ -146,22 +152,24 @@ function FilterModal({ filterParams, searchFunction, columnList }) {
                         role="dialog"
                         aria-modal="true"
                         aria-labelledby="modal-headline">
-                        
-                        <div id="categoriesAndBrands" 
+
+                        <div id="categoriesAndBrands"
                             className="px-4 pt-6 pb-2 sm:p-6 sm:pb-4 flex"
                             style={{ maxHeight: windowWidth < 768 ? "85vh" : "55vh" }}>
                             {filterParams
                                 ?
                                 filterParams.map((category, arrayIndex) => (
                                     <div className={`flex-center col-span-2 rounded 
-                                            ${category.column? "lg:w-1/4 md:w-1/4" : "lg:w-3/4 md:w-3/4"}`}
-                                        style={{ minWidth: windowWidth < 768 ? "50%" : "auto" }}
-                                        >
+                                            ${category.column ? "lg:w-1/4 md:w-1/4" : "lg:w-3/4 md:w-3/4"}`}
+                                         style={{
+                                            minWidth: windowWidth < 768 ? "50%" : "auto",
+                                            maxHeight: windowWidth < 768 ? "52vh" : "45vh"
+                                        }}>
                                         <div className="w-auto bg-white text-sm text-palette-primary font-bold px-5 py-2 m-2 -ml-4 text-2xl">
                                             {category.type}
                                         </div>
-                                        <div id="menu"
-                                            style={{ maxHeight: windowWidth < 768 ? "52vh" : "45vh" }}
+                                        <div
+                                            style={{ maxHeight: "80%"}}
                                             className={`overflow-y-auto scrollbar-thin lg:grid md:grid
                                                 ${category.column ? "lg:grid-cols-1" : "lg:grid-cols-4 md:grid-cols-3"}`}>
 
@@ -184,7 +192,7 @@ function FilterModal({ filterParams, searchFunction, columnList }) {
                         </div>
 
                         <div id="orderAndButtons"
-                            >
+                        >
                             {columnList ? (
                                 <div className={`px-4 md:pt-6 lg:pt-6 pb-2 ${windowWidth < 768 ? "grid" : "flex flex-wrap"}`}>
                                     <div className="w-auto text-sm text-palette-primary font-bold px-5 m-2 -ml-4 text-2xl">
