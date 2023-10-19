@@ -15,7 +15,7 @@ export async function getServerSideProps({query}) {
 
     return {
         redirect: {
-            destination: '/checkout/' + data.id,
+            destination: '/checkout/' + data,
             permanent: false,
         },
     }
