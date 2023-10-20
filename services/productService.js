@@ -185,7 +185,7 @@ export async function createCheckout(cart){
         let detail = {
             "id": value.id,
             "quantity" : value.quantity,
-            "size": value.size ? value.size : null
+            "size": value.size
         }
         details.push(detail);
     });

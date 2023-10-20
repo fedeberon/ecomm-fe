@@ -83,7 +83,7 @@ export function CartProvider({ children }) {
     setisLoading(false)
   }
 
-  function emptyCart() {
+  async function emptyCart() {
     setCart([])
   }
 
