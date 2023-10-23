@@ -37,47 +37,46 @@ const Details = ({ checkout }) => {
                 </thead>
                 <tbody className="bg-white divide-y divide-gray-200">
                     {
-                        // TEMPORALMENTE NO DISPONIBLE...
-                        
-                        // checkout == undefined
-                        //     ?
-                        //     <></>
-                        //     :
-                        //     checkout.products.map((p, index) => (
-                        //         <tr key={index}>
-                        //             <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 cursor-pointer">
-                        //                 <Link href={'/products/' + p.product.id}>
-                        //                     <Image product={p.product}/>
-                        //                 </Link>
-                        //             </td>
-                        //             <td className="px-6 py-4 whitespace-nowrap max-w-40">
-                        //                 <Link href={'/products/' + p.product.id}>
-                        //                     <div className="flex items-center cursor-pointer">
-                        //                         <div className="ml-4">
-                        //                             <div className="text-sm font-medium text-gray-900">
-                        //                                 <div>{p.product.name}</div>
-                        //                             </div>
-                        //                         </div>
-                        //                     </div>
-                        //                 </Link>
-                        //             </td>
-                        //             <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-center">
-                        //                 {p.quantity}
-                        //             </td>
-                        //             <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-center">
-                        //                 {p.size?.name}
-                        //             </td>
-                        //             <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-center">
-                        //                 $ {p.product.price}
-                        //             </td>
-                        //             <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-center">
-                        //                 {p.status}
-                        //             </td>
-                        //             <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-center">
-                        //                 $ {p.price}
-                        //             </td>
-                        //         </tr>
-                        //     ))
+                                              
+                         checkout == undefined
+                             ?
+                             <></>
+                             :
+                             checkout.products.map((p, index) => (
+                                 <tr key={index}>
+                                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 cursor-pointer">
+                                         <Link href={'/products/' + p.product.id}>
+                                             <Image product={p.product}/>
+                                         </Link>
+                                     </td>
+                                     <td className="px-6 py-4 whitespace-nowrap max-w-40">
+                                         <Link href={'/products/' + p.product.id}>
+                                             <div className="flex items-center cursor-pointer">
+                                                 <div className="ml-4">
+                                                     <div className="text-sm font-medium text-gray-900">
+                                                         <div>{p.product.name}</div>
+                                                     </div>
+                                                 </div>
+                                             </div>
+                                         </Link>
+                                     </td>
+                                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-center">
+                                         {p.quantity}
+                                     </td>
+                                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-center">
+                                         {p.size?.name}
+                                     </td>
+                                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-center">
+                                         $ {p.product.price}
+                                     </td>
+                                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-center">
+                                         {p.status}
+                                     </td>
+                                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-center">
+                                         $ {p.price}
+                                     </td>
+                                 </tr>
+                             ))
                     }
                 </tbody>
 
