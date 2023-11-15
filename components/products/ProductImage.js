@@ -3,7 +3,7 @@ import Image from 'next/image'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowLeft, faArrowRight , faTimes} from '@fortawesome/free-solid-svg-icons'
 import logo  from '../../images/default.jpeg'
-import {useSession} from "next-auth/client";
+import {useSession} from "next-auth/react";
 import * as productService from 'services/productService'
 
 function ProductImage({ images , id}) {
@@ -17,7 +17,7 @@ function ProductImage({ images , id}) {
     const image = images && images.length != 0 ? images[0].link : defaultImage.link
     const [mainImg, setMainImg] = useState(image);
     const [delImg, setDelImg] = useState()
-    const [session, loading] = useSession();
+    const { data: session } = useSession()
     const ref = useRef();
 
     const [deletedModal,setDeletedModal] = useState(false)

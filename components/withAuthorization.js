@@ -1,10 +1,10 @@
 
 import React from 'react';
-import { useSession } from "next-auth/client";
+import { useSession } from "next-auth/react";
 import ForbiddenPage from './ForbiddenPage';
 
 function AuthorizationWrapper({ children }) {
-  const [session, loading] = useSession();
+  const { data: session } = useSession()
 
   if (!session?.user?.role?.includes('ADMIN')) return <ForbiddenPage />;
   return <>{children}</>;

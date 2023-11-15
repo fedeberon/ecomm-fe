@@ -6,11 +6,11 @@ import {useCartContext, useCleanCartContext} from '@/context/Store'
 import {buyWithPoints, createCheckout, getPreference} from "../services/productService";
 import React, {useEffect, useState} from "react";
 import Loading from "@/components/utils/Loading";
-import {getSession} from "next-auth/client";
+import {getSession} from "next-auth/react";
 import {getPoints} from "../services/walletService";
 import {useRouter} from "next/router";
 import Link from "next/link";
-import { useSession } from "next-auth/client";
+import { useSession } from "next-auth/react";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faArchive, faMoneyBill, faNewspaper} from "@fortawesome/free-solid-svg-icons";
 
@@ -23,7 +23,7 @@ function CartPage({myPoints, user}) {
   const [loading, setLoading] = useState(false);
   const router = useRouter();
   const cleanCart = useCleanCartContext();
-  const [session] = useSession()
+  const { data: session ,status} = useSession()
   const [totalAmount, setTotalAmount] = useState(0)
   const [items, setItems] = useState(cart.length);
 
@@ -79,7 +79,7 @@ function CartPage({myPoints, user}) {
                     totalAmount  == 0 && cart.length >=1 
                         ?
                         <div
-                            className="flex items-center justify-center m-auto w-3/6 bg-red-100 rounded-lg py-5 px-6 mb-4 text-base text-center text-red-700 mb-3"
+                            className="flex items-center justify-center m-auto w-3/6 bg-red-100 rounded-lg py-5 px-6 mb-4 text-base text-center text-red-700"
                             role="alert">
                             Encontramos el item en el carro con importes igual a CERO !!
                         </div>
@@ -105,7 +105,7 @@ function CartPage({myPoints, user}) {
                             <div className="max-w-sm mx-auto space-y-4 px-2">
                                 <BackToProductButton />
 
-                                    <Link href={"/precheck/presupuesto"} passHref>
+                                    <Link legacyBehavior href={"/precheck/presupuesto"} passHref>
                                             <a href="#" className="w-1/2 bg-blue-500 text-white text-lg font-primary
                                                             font-semibold pt-2 pb-1 leading-relaxed flex cursor-pointer
                                                             justify-center items-center focus:ring-1 focus:ring-palette-light
@@ -118,7 +118,7 @@ function CartPage({myPoints, user}) {
                                 {
                                 session?.user?.role?.includes("ADMIN") 
                                     ?
-                                        <Link href={"/checkout/payment"} passHref>
+                                        <Link legacyBehavior href={"/checkout/payment"} passHref>
                                                 <a href="#" className="w-1/2 bg-blue-500 text-white text-lg font-primary
                                                                font-semibold pt-2 pb-1 leading-relaxed flex cursor-pointer
                                                                justify-center items-center focus:ring-1 focus:ring-palette-light

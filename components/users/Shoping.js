@@ -76,10 +76,10 @@ const Shopping = ({bills}) => {
                                                     </div>
                                                 </td>
                                                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                                    <Link href={`/checkout/${bill.checkout.id}`}>
-                                                        <a> 
+                                                    <Link legacyBehavior href={`/checkout/${bill.checkout.id}`}>
+                                                        
                                                             {bill.checkout.id}
-                                                        </a>
+                                                        
                                                     </Link>
                                                 </td>
                                                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">

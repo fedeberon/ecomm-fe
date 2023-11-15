@@ -5,7 +5,7 @@ import {getPersonByCUIT} from "../../services/personService";
 import Loading from "@/components/utils/Loading";
 import {getBilling} from "../../services/billingService";
 import {useCleanCartContext} from "@/context/Store";
-import {getSession} from "next-auth/client";
+import {getSession} from "next-auth/react";
 
 const Billing = ({isShowing, checkout, type}) => {
     const [show, setShow] = useState(false);

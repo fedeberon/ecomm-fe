@@ -91,14 +91,19 @@ const NewProduct = ({ categories, brands, sizes }) => {
     }
     
 
-    return (
-            <>
-            <NotificationContainer />
-            <div className="flex justify-center">
-                <form className="w-full max-w-lg" onSubmit={handleSubmit}>
-                    <div className="flex flex-wrap -mx-3 mb-6">
+    const handleClose = () => {
+        
+        handleCloseModal();
+    }
+    return <>
+        <NotificationContainer />
+        <div className="flex justify-center bg-white p-8 rounded shadow-lg ">
+            <form className="w-full max-w-2xl" onSubmit={handleSubmit}>
+                <h2 className="text-black text-center font-bold text-xl mb-5">Agregar Producto</h2>
+                <div className="flex flex-wrap -mx-3 mb-6">
+                    <div className="w-full md:w-1/2 px-3 mb-4">
                         <div className="w-full">
-                            <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+                            <label className="block uppercase  text-gray-700 text-xs font-bold mb-3"
                                 htmlFor="name">
                                 Nombre
                             </label>
@@ -122,7 +127,7 @@ const NewProduct = ({ categories, brands, sizes }) => {
                             </label>
                             <textarea
                                 autoComplete="off"
-                                className="resize-none appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                                className="resize-none appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-6 px-3 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                                 id="descripcion" placeholder="Descripci&oacute;n del producto" name="description" rows="3"
                                 value={form.description}
                                 onChange={handleChange}
@@ -150,23 +155,23 @@ const NewProduct = ({ categories, brands, sizes }) => {
                             {errors.code && <p className={`text-red-500 text-xs italic`}>{errors.code}</p>}
                         </div>
 
+                    </div>
+                    <div className="w-full md:w-1/2 px-3 mb-4">
                         <div className="w-full">
                             <label className="block uppercase block tracking-wide text-gray-700 text-xs font-bold mb-3"
                                 htmlFor="category">
                                 Categoria
                             </label>
                             <select value={form.category.id} onChange={handleChange} name="category" onBlur={handleBlur} className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="category">
-                                    <option disabled={true} value="">Seleccionar</option>
+                                <option disabled={true} value="">Seleccionar</option>
                                 {
-                                    categories.map(category => (
+                                    categories && categories.map(category => (
                                         <option value={category.id}>{category.name}</option>
                                     ))
                                 }
                             </select>
                             {errors.category && <p className={`text-red-500 text-xs italic`}>{errors.category}</p>}
                         </div>
-
-
                         <div className="w-full">
                             <label className="block uppercase block tracking-wide text-gray-700 text-xs font-bold mb-3"
                                 htmlFor="brand">
@@ -175,7 +180,7 @@ const NewProduct = ({ categories, brands, sizes }) => {
                             <select value={form.brand.id} onChange={handleChange} name="brand" onBlur={handleBlur} className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="brand">
                                 <option disabled={true} value="">Seleccionar</option>
                                 {
-                                    brands.map(brand => (
+                                    brands && brands.map(brand => (
                                         <option value={brand.id}>{brand.name}</option>
                                     ))
                                 }
@@ -184,109 +189,81 @@ const NewProduct = ({ categories, brands, sizes }) => {
                         </div>
 
                         <div className="w-full">
-                            <label className="block uppercase block tracking-wide text-gray-700 text-xs font-bold mb-3"
-                                htmlFor="size">
-                                Talles
+                            <label htmlFor="price" className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
+                                Precio
                             </label>
-                            <div className="flex grid grid-cols-3 appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight">
-                                {
-                                    sizes.map( size  => (
-                                        <div className="flex">
-                                            <input type={"checkbox"} onClick={handleChangeSize} onBlur={handleBlur} className="form-checkbox rounded text-red-500" value={size.id}></input>
-                                            <div className="mx-4">{size.name}</div>
-                                        </div>
-                                    ))
-                                }
-                                {errors.sizes &&  <p className={`text-red-500 text-xs italic`}>{errors.sizes}</p>} 
+                            <div className="mt-1 relative rounded-md shadow-sm">
+                                <div>
+                                    <span className="text-center flex p-3 absolute text-gray-500 sm:text-sm align-middle">
+                                        $
+                                    </span>
+                                    <input
+                                        type="number"
+                                        id="price"
+                                        autoComplete="off"
+                                        className="appearance-none block w-90 bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-1 pl-6 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                                        placeholder="0.00" name="price"
+                                        value={form.price}
+                                        onChange={handleChange}
+                                        onBlur={handleBlur}
+                                        required
+                                        maxLength="7"
+                                        onKeyPress={(event) => {
+                                            if (!/[0-9]?[0-9]?(\.[0-9][0-9]?)?/.test(event.key)) {
+                                                event.preventDefault();
+                                            }
+                                        }}
+                                    />
+                                </div>
+                                {errors.price && <p className={`text-red-500 text-xs italic`}>{errors.price}</p>}
                             </div>
-                        </div>   
+                        </div>
+
 
                         <div className="w-full">
-                            <label className="block uppercase block tracking-wide text-gray-700 text-xs font-bold mb-3"
-                                htmlFor="puntos">
-                                Puntos de producto
+                            <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+                                htmlFor="Stock">
+                                Stocks
                             </label>
                             <input
+                                id="Stock" type="number"
+                                placeholder="Stocks"
+                                name="stock"
                                 autoComplete="off"
-                                className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-                                id="puntos" type="number"
-                                placeholder="Puntos del producto"
-                                name="points"
-                                value={form.points}
+                                className="appearance-none block w-90 bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                                value={form.stock}
                                 onChange={handleChange}
                                 onBlur={handleBlur}
                                 required
+                                onKeyPress={(event) => {
+                                    if (!/[0-9]/.test(event.key)) {
+                                        event.preventDefault();
+                                    }
+                                }}
                             />
-                            {errors.points && <p className={`text-red-500 text-xs italic`}>{errors.points}</p>}
+                            {errors.stock && <p className={`text-red-500 text-xs italic`}>{errors.stock}</p>}
+
                         </div>
 
-                        <div className="flex flex-wrap -mx-3 mb-2">
-                            <div className="block uppercase w-full md:w-1/2 px-3 mb-6 md:mb-0">
-                                <div>
-                                    <label htmlFor="price" className="block text-sm font-medium text-gray-700">
-                                        Precio
-                                    </label>
-                                    <div className="mt-1 relative rounded-md shadow-sm">
-                                        <div>
-                                            <span className="text-center flex p-3 absolute text-gray-500 sm:text-sm align-middle">
-                                                $
-                                            </span>
-                                            <input
-                                                type="number"
-                                                id="price"
-                                                autoComplete="off"
-                                                className="appearance-none block w-90 bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-1 pl-6 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-                                                placeholder="0.00" name="price"
-                                                value={form.price}
-                                                onChange={handleChange}
-                                                onBlur={handleBlur}
-                                                required
-                                                maxLength="7"
-                                                onKeyPress={(event) => {
-                                                    if (!/[0-9]?[0-9]?(\.[0-9][0-9]?)?/.test(event.key)) {
-                                                        event.preventDefault();
-                                                    }
-                                                }}
-                                            />
-                                        </div>
-                                        {errors.price && <p className={`text-red-500 text-xs italic`}>{errors.price}</p>}
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
-                                <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-                                    htmlFor="Stock">
-                                    Stocks
-                                </label>
-                                <input
-                                    id="Stock" type="number"
-                                    placeholder="Stocks"
-                                    name="stock"
-                                    autoComplete="off"
-                                    className="appearance-none block w-90 bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-                                    value={form.stock}
-                                    onChange={handleChange}
-                                    onBlur={handleBlur}
-                                    required
-                                    onKeyPress={(event) => {
-                                        if (!/[0-9]/.test(event.key)) {
-                                            event.preventDefault();
-                                        }
-                                    }}
-                                />
-                                {errors.stock && <p className={`text-red-500 text-xs italic`}>{errors.stock}</p>}
-                            </div>
-                        </div>
+
                     </div>
+                </div>
 
-                    <button type="submit"
-                        className={`bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-8`}
+                <div className="flex justify-center space-x-4 mt-8">
+                    <button type="submit" className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
                     >
                         Guardar
                     </button>
-                </form>
-            </div>
-        </>)
+                    <button className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
+                        onClick={handleClose}
+                    >
+                        Cancelar
+                    </button>
+                </div>
+
+            </form>
+        </div>
+    </>;
 }
 
 export default NewProduct;

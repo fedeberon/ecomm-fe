@@ -7,7 +7,7 @@ import DataTable from "react-data-table-component";
 import DateObject from "react-date-object";
 import AddPoints from "./AddPoints";
 import RemovePoints from "./RemovePoints";
-import { useSession } from "next-auth/client";
+import { useSession } from "next-auth/react";
 import { getPoints } from "services/walletService";
 
 
@@ -18,7 +18,8 @@ const WalletOfUser = ({ walletOfUser, user }) => {
     const [points, setPoints] = useState(0);
     const [addPoints, setAddPoints] = useState(false)
     const [removePoints, setRemovePoints] = useState(false)
-    const [session, loading] = useSession();
+    const { data: session } = useSession()
+    console.log(session);
 
     const [filterText, setFilterText] = useState('');
     const filteredItems = walletOfUser && walletOfUser.filter(item => filterText == '' || filterText.toLowerCase().includes(item.id));

@@ -47,12 +47,12 @@ const Details = ({checkout}) => {
 
                             <tr key={index}>
                                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 cursor-pointer">
-                                    <Link href={'/products/' + p.product.id}>
+                                    <Link legacyBehavior href={'/products/' + p.product.id}>
                                         <Image product={p.product}/>
                                     </Link>
                                 </td>
                                 <td className="px-6 py-4 whitespace-nowrap max-w-40">
-                                    <Link href={'/products/' + p.product.id}>
+                                    <Link legacyBehavior href={'/products/' + p.product.id}>
                                         <div className="flex items-center cursor-pointer">
                                             <div className="ml-4">
                                                 <div className="text-sm font-medium text-gray-900">

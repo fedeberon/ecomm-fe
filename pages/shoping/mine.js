@@ -1,6 +1,6 @@
 import PageTitle from "@/components/PageTitle";
 import Shopping from "@/components/users/Shoping";
-import {getSession} from 'next-auth/client';
+import {getSession} from 'next-auth/react';
 import getMyShopping from "../../services/shoppingService";
 
 

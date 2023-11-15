@@ -1,4 +1,4 @@
-import { getCsrfToken } from "next-auth/client"
+import { getCsrfToken } from "next-auth/react"
 
 const LoginError = ({csrfToken}) => {
 

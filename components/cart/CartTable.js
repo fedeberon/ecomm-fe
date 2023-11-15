@@ -50,7 +50,7 @@ function CartTable({ cart }) {
                        height={50}
                   className="w-12 h-12 rounded-full"/>
 
-                <Link passHref href={`/products/${item.id}`}>
+                <Link legacyBehavior passHref href={`/products/${item.id}`}>
                   <a className="pt-1 hover:text-palette-dark ml-4 truncate hidden sm:table-cell">
                     {item.productTitle}
                   </a>
@@ -112,7 +112,7 @@ function CartTable({ cart }) {
         </tbody>
       </table>
     </div>
-  )
+  );
 }
 
 export default CartTable

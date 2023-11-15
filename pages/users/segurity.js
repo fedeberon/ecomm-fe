@@ -1,6 +1,6 @@
 import UserSegurity from "@/components/users/UserSegurity";
 import UserNav from "@/components/users/UserNav";
-import { getSession } from "next-auth/client";
+import { getSession } from "next-auth/react";
 import { getByUsername } from "services/userService";
 
 const Profile = ({userSession}) => {

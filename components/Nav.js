@@ -6,7 +6,7 @@ import { faBars } from "@fortawesome/free-solid-svg-icons";
 import { faShoppingCart } from "@fortawesome/free-solid-svg-icons";
 import logo from "/images/logoMati.png";
 import UserSession from "@/components/users/UserSession";
-import { useSession } from "next-auth/client";
+import { useSession } from "next-auth/react";
 import Loading from "./utils/Loading";
 import { findAll } from "services/categoriesService";
 
@@ -14,7 +14,8 @@ import { findAll } from "services/categoriesService";
 function Nav() {
   const cart = useCartContext()[0];
   const [cartItems, setCartItems] = useState(0);
-  const [session, loading] = useSession();
+  const { data: session, status } = useSession()
+  const loading = status === "loading"
   const [isShow, setIsShow] = useState(false)
   const [load, setLoad] = useState(false)
   const [categoriesVisible, setCategoriesVisible] = useState(false);
@@ -69,7 +70,7 @@ function Nav() {
             <FontAwesomeIcon icon={faBars} className="w-5 top-6 ml-2 mr-0 items-center" />
           </button>
         </div>
-        <Link href="/">
+        <Link  legacyBehavior href="/">
           <div className="flex sm:block cursor-pointer flex-row items-center">
             <img src={logo.src} className="w-16 mx-16 ml-8 md:mx-64 lg:mx-4 lg:w-12" />
           </div>
@@ -78,7 +79,7 @@ function Nav() {
           <UserSession session={session} />
         </div>
         <div className="lg:order-3">
-          <Link href="/cart" passHref>
+          <Link legacyBehavior href="/cart" passHref>
             <a className="flex md:-mt-1 flex-wrap ml-2 md:ml-1 object-right p-6 lg:order-last md:p-3 rounded-lg hover:text-palette-secondary" aria-label="cart">
               <FontAwesomeIcon
                 className="text-palette-primary hover:text-palette-secondary h-6"
@@ -97,14 +98,14 @@ function Nav() {
           id="menu"
           className={`w-full block flex-grow ${isShow ? "" : "hidden"} divide-y divide-y-reverse justify-between divide-gray-200 lg:divide-none lg:flex lg:justify-self-center lg:w-auto`}
         >
-          <Link href="/" >
+          <Link legacyBehavior href="/" >
             <a className="text-smw border-b border-gray-200 block mt-4 lg:inline-block lg:border-none lg:mt-0
                text-m font-primary text-palette-primary md:p-2 rounded-md hover:text-palette-secondary tracking-tight pt-1">
                 INICIO                
             </a>
           </Link>
 
-          <Link href="/diapers/inicio">
+          <Link legacyBehavior href="/diapers/inicio">
             <a className="text-smw block mt-4 lg:inline-block lg:mt-0
                 text-m font-primary text-palette-primary md:p-2 rounded-md hover:text-palette-secondary tracking-tight pt-1">
                   PAÑALERIA
@@ -128,9 +129,9 @@ function Nav() {
                 className={`${categoriesVisible ? "" : "hidden"} z-50 absolute mt-2 w-46 lg:w-32 lg:right-0 md:w-32 rounded-md shadow-lg bg-white ring-2 ring-palette-lighter ring-opacity-75 focus:outline-none md:-mx-2 -mx-0`}
                 role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabIndex="-1">
                 <div className="overflow-y-auto no-scrollbar max-h-80 lg:max-h-44" role="none">
-                  {categories?.map((category) =>(
-                      <Link href={`/accessories/${category.id}`} passHref legacyBehavior>
-                        <a href="#" onClick={showCategories} className="text-palette-primary block text-center hover:text-palette-secondary px-4 py-2 text-sm" role="menuitem"
+                  {categories?.map((category) => (
+                    <Link legacyBehavior href={`/accessories/${category.id}`} passHref>
+                      <a href="#" onClick={showCategories} className="text-palette-primary block text-center hover:text-palette-secondary px-4 py-2 text-sm" role="menuitem"
                         tabIndex="-1" id="menu-item-0">{category.name}</a>
                       </Link>
                     ))
@@ -139,14 +140,14 @@ function Nav() {
             </div>
           </div>
 
-          <Link href="/about/inicio">
+          <Link legacyBehavior href="/about/inicio">
             <a className="text-smw block mt-4 lg:inline-block lg:mt-0 text-m font-primary text-palette-primary tracking-tight md:p-2 rounded-md hover:text-palette-secondary">
                   QUIENES SOMOS
             </a>
           </Link>
 
           {session?.user?.role?.includes("ADMIN") ? (
-            <Link href="/admin">
+            <Link legacyBehavior href="/admin">
               <a className="top-4 right-3 lg:order-last text-smw block mt-4 mr-4 lg:inline-block lg:mt-0">
                 <h1>
                   <div className="text-m font-primary text-palette-primary md:p-2 rounded-md hover:text-palette-secondary tracking-tight pt-1">

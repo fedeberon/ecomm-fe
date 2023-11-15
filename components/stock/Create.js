@@ -209,7 +209,7 @@ const Create = ({providers}) => {
                                 stocks.map((item, index) => (
                                     <tr className="text-gray-700">
                                         <td className="px-4 py-3 border">
-                                            <Link href={`/products/${item.product.id}`}>
+                                            <Link legacyBehavior href={`/products/${item.product.id}`}>
                                                 <a target={"_blank"}>
                                                     <div className="flex items-center text-sm">
                                                         <div className="relative w-8 h-8 mr-3 rounded-full md:block">

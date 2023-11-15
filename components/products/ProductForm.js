@@ -5,7 +5,7 @@ import { useCartContext, useAddToCartContext } from '@/context/Store'
 import UploadFile from "@/components/products/UploadFile";
 import {NotificationContainer, NotificationManager} from 'react-notifications';
 import 'react-notifications/lib/notifications.css';
-import {useSession} from "next-auth/client";
+import {useSession} from "next-auth/react";
 import {useRouter} from "next/router";
 import {activateProduct, deleteProduct, updateAsAPromotion} from 'services/productService';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
@@ -21,7 +21,7 @@ function ProductForm({ productData, image}) {
   const addToCart = useAddToCartContext();
   const [openUploadFile, setOpenUploadFile] = useState(false);
   const router = useRouter();
-  const [session, loading] = useSession();
+  const { data: session } = useSession()
   const [promo, setPromo] = useState(productData.promo);
   const [status, setStatus] = useState(productData.deleted)
   

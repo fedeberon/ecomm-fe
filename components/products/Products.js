@@ -61,20 +61,14 @@ const Products = ({products}) => {
             name: 'Acciones',
             cell: (row) => ( 
                 <div className="flex justify-center absolute left-0">
-                    <Link
-                    href={`/products/${row.id}`}
-                    passHref
-                    >
+                    <Link href={`/products/${row.id}`} passHref legacyBehavior>
                     <button onClick={() => console.log('Button clicked!')} className="bg-green-500 ml-0 hover:bg-green-400 text-white w-10 h-auto p-2 rounded-full font-primary font-semibold text-xs flex
                          items-baselinetransform transition duration-500 group cursor-pointer">
                     <FontAwesomeIcon icon={faEye} className="w-5 m-auto"/>
                     </button>
                     </Link>
 
-                    <Link
-                    href={`/products/update/${row.id}`}
-                    passHref
-                    >
+                    <Link href={`/products/update/${row.id}`} passHref legacyBehavior>
                     <button className="bg-blue-500 ml-0 hover:bg-blue-400 text-white w-10 h-auto p-2 rounded-full font-primary font-semibold text-xs flex
                     justify-center items-baselinetransform transition duration-500 group cursor-pointer">
                     <FontAwesomeIcon icon={faEdit} className="w-5 m-auto"/>

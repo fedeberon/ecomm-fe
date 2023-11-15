@@ -1,4 +1,4 @@
-import { signOut } from "next-auth/client";
+import { signOut } from "next-auth/react";
 import Link from "next/link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUserCircle } from "@fortawesome/free-solid-svg-icons";
@@ -61,15 +61,15 @@ const UserSession = ({ session }) => {
                             className={`${isComponentVisible ? "" : "hidden"}  z-50 absolute mt-2 w-46 lg:w-32 lg:right-0 rounded-md shadow-lg bg-white ring-2 ring-palette-lighter ring-opacity-75 focus:outline-none md:-mx-2 -mx-0`}
                             role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabIndex="-1">
                             <div className="py-1 " role="none">
-                                <Link href="/shoping/mine">
+                                <Link legacyBehavior href="/shoping/mine">
                                 <a href="#" className="text-palette-primary block text-center hover:bg-gray-50 px-4 py-2 text-sm" role="menuitem"
                                    tabIndex="-1" id="menu-item-0">Mis Compras</a>
                                 </Link>
-                                <Link href={`/users/wallet/${session.user.username}`}>
+                                <Link legacyBehavior href={`/users/wallet/${session.user.username}`}>
                                 <a href="#" className="text-palette-primary block px-4 py-2 text-center text-sm hover:bg-gray-50" role="menuitem"
                                    tabIndex="-1" id="menu-item-1">Mi Billetera</a> 
                                 </Link>
-                                <Link href={`/users/${session.user.username}`}>
+                                <Link legacyBehavior href={`/users/${session.user.username}`}>
                                     <a className="text-palette-primary block px-4 py-2 text-center text-sm hover:bg-gray-50" role="menuitem"
                                        tabIndex="-1" id="menu-item-2">Mis Datos</a>
                                 </Link>
@@ -88,7 +88,7 @@ const UserSession = ({ session }) => {
         )
     } else {
         return (
-            <Link href="/api/auth/signin">
+            <Link legacyBehavior href="/api/auth/signin">
                 <a className="flex  md:-mt-1 flex-wrap ml-2 md:ml-1 object-right p-6 lg:order-last md:p-3 rounded-lg hover:text-palette-secondary" aria-label="cart">
                     <FontAwesomeIcon
                         className="text-palette-primary hover:text-palette-secondary h-6"

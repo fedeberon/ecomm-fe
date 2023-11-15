@@ -12,7 +12,7 @@ const Index = ({stock}) => {
             <PageTitle text="Stock" />
             <List stock={stock}/>
             <div>
-                <Link href="/stock/new">
+                <Link legacyBehavior href="/stock/new">
                     <button className="py-2 px-4 ml-4 bg-green-500 text-white rounded hover:bg-blue-700">Agregar Stock</button>
                 </Link>
             </div>
