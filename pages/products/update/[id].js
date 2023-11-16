@@ -85,8 +85,7 @@ const Update = ({product, brands, categories, sizes}) => {
     }
 
     const handleChangeSize = (e) => {
-        const {value} = e.target
-        value = Number(value)
+        const value = Number(e.target.value)
         if(value !== null && e.target.value !== 'Seleccionar' && !(data.sizes.map(size => size.id)).includes(value)){
             setData({
                 ...data,
@@ -98,8 +97,7 @@ const Update = ({product, brands, categories, sizes}) => {
     }
 
     const deleteSize = (e) => {
-        const {value} = e.target
-        value = Number(value)
+        const value = Number(e.target.value)
         setData({
             ...data,
             sizes: data.sizes.filter(size => size.id !== value)
