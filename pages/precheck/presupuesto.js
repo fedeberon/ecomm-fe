@@ -229,8 +229,8 @@ export async function getServerSideProps(context) {
             props: {},
         };
     }
-    const myPoints = await getPoints(session.user.username);
-    const userSession = session.user;
+    const myPoints = await getPoints(session.token.token.token.token.user.username);
+    const userSession = session.token.token.token.token.user;
     return {
         props: {
             myPoints,

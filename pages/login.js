@@ -1,9 +1,9 @@
-import { getSession, getCsrfToken, signIn } from "next-auth/react";
+import { useSession,getSession, getCsrfToken, signIn } from "next-auth/react";
 import { useState } from "react";
 import { useRouter } from "next/router";
 import login from "/images/login.png";
 
-const Login = ({ csrfToken ,session}) => {
+const Login = ({ csrfToken, session }) => {
   const router = useRouter()
 
   if (session) {

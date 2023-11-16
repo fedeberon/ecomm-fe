@@ -116,7 +116,7 @@ function CartPage({myPoints, user}) {
 
 
                                 {
-                                session?.user?.role?.includes("ADMIN") 
+                                session?.token?.token?.token?.token?.user?.role =='ADMIN'
                                     ?
                                         <Link legacyBehavior href={"/checkout/payment"} passHref>
                                                 <a href="#" className="w-1/2 bg-blue-500 text-white text-lg font-primary

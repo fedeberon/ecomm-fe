@@ -161,7 +161,7 @@ const WalletOfUser = ({ walletOfUser, user }) => {
                 <div className="leading-relaxed font-primary font-extrabold text-2xl text-center text-palette-primary mt-4 py-2 sm:py-4">Adquisicion de puntos</div>
             
            {
-           session?.user?.role?.includes("ADMIN")
+           session?.token?.token?.token?.token?.user?.role =='ADMIN'
           ? 
             <div className="flex justify-between m-auto w-80 h-10">
                 <a

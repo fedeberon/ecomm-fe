@@ -77,7 +77,7 @@ function ProductImage({ images , id}) {
                       onClick={() => setMainImg(imgItem.link)}
                   />
                 {
-                  session?.user?.role?.includes("ADMIN")
+                  session?.token?.token?.token?.token?.user?.role =='ADMIN'
                   ?
                   <button className='absolute left-0' onClick={() => deleteProduct(imgItem)}><FontAwesomeIcon icon={faTimes} className="w-8 h-8 text-white bg-red-500 rounded-full p-1" /></button>
                   :
