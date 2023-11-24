@@ -6,13 +6,12 @@ import * as productService from "../../services/productService";
 
 
 function ProductSection({ productData }) {
-    const [productsRelated, setProductsRelated] = useState([])
+    // const [productsRelated, setProductsRelated] = useState([])
+    // const porductToRlated = productService.getProductsRelated(productData)
 
-    useEffect(async () => {
-        let products = await productService.getProductsRelated(productData)
-        setProductsRelated(products)
-        debugger
-    }, [])
+    // useEffect( () => {
+    //     setProductsRelated(setProductsRelated)
+    // }, [])
 
     return (
         <>
@@ -24,7 +23,7 @@ function ProductSection({ productData }) {
                     <ProductDetails productData={productData} />
                 </div>
             </div>
-            <Gallery productData={productsRelated}/>
+            {/* <Gallery productData={productsRelated}/> */}
         </>
   )
 }

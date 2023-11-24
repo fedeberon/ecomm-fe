@@ -7,7 +7,7 @@ const Login = ({ csrfToken, session }) => {
   const router = useRouter()
 
   if (session) {
-  router.push('/stores/list'); // Redirigir al dashboard si está autenticado
+  router.push('/'); // Redirigir al dashboard si está autenticado
   return null; // O puedes renderizar un componente de carga aquí
   }
   const [credentials,setCredentials]= useState({username:"",password:"",csrfToken: csrfToken,remember:true})
@@ -121,7 +121,7 @@ export async function getServerSideProps(context) {
   if (session) {
     return {
       redirect: {
-        destination: "/stores/list", // Redirigir al dashboard si está autenticado
+        destination: "/", // Redirigir al dashboard si está autenticado
         permanent: false,
       },
     };

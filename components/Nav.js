@@ -6,7 +6,7 @@ import { faBars } from "@fortawesome/free-solid-svg-icons";
 import { faShoppingCart } from "@fortawesome/free-solid-svg-icons";
 import logo from "/images/logoMati.png";
 import UserSession from "@/components/users/UserSession";
-import { useSession } from "next-auth/react";
+import { useSession,signOut } from "next-auth/react";
 import Loading from "./utils/Loading";
 import { findAll } from "services/categoriesService";
 
@@ -21,6 +21,28 @@ function Nav() {
   const [categoriesVisible, setCategoriesVisible] = useState(false);
   const [categories, setCategories] = useState([])
 
+  const [color, setColor] = useState(false)
+
+  const handleSignOut = async () => {
+    try {
+      await signOut(); 
+    } catch (error) {
+      
+      console.error("Error al cerrar sesión:", error);
+    }
+  };
+
+  useEffect(() => {
+    const changeColor = () => {
+      if (window.scrollY >= 90) {
+        setColor(true)
+      } else {
+        setColor(false)
+      }
+    }
+
+    window.addEventListener('scroll', changeColor)
+  }, [])
 
   const handleMenu = () => {
     setIsShow(!isShow)

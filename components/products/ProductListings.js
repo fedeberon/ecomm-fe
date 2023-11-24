@@ -14,7 +14,7 @@ function ProductListings({ brands, categories }) {
     const [triggerSearch, setTriggerSearch] = useState(true);
 
     const [productsToShow, setProductsToShow] = useState([]);
-    const [page, setPage] = useState(1);
+    const [page, setPage] = useState(0);
     const [totalPages, setTotalPages] = useState(0);
     
     const columnList = [
@@ -40,21 +40,23 @@ function ProductListings({ brands, categories }) {
     //Realiza la busqueda inicial
     const initialSearch = async (query) => {
         if (query) {
-            setInitParams(query)
-            const result = await searchList(query[0], query[1][0], query[1][1], query[2], query[3] === "T", 1); // Fetch the first page
+            setInitParams(query);
+            const result = await searchList(query[0], query[1][0], query[1][1], query[2], query[3] === "T", 0);
+            console.log("Result for initial search:", result);
             if (result.totalPages > 0) {
                 setTotalPages(result.totalPages);
                 setProductsToShow(result.content);
-            }else{
+            } else {
                 setTotalPages(0);
-                setProductsToShow([])
+                setProductsToShow([]);
             }
         }
-    }
+    };
+    
 
     //Indica los parametros para la primer pagina y para las subsecuentes cada vez que hay cambios en el fitro o se hace clic en Buscar.
     function setInitParams(query){
-        setPage(1);
+        setPage(0);
         setTermToSearch(query[0]);
         setCategoriesToSearch(query[1][0] || []);
         setBrandsToSearch(query[1][1] || []);
@@ -66,7 +68,7 @@ function ProductListings({ brands, categories }) {
     const fetchNextPage = async () => {
         if (page < totalPages) {
             setIsLoading(true);
-            setPage(page + 1); 
+            setPage(page + 1);
             const result = await searchList(termToSearch, categoriesToSearch, brandsToSearch, orderBy, asc, page + 1);
             setProductsToShow([...productsToShow, ...result.content]);
             setIsLoading(false);
