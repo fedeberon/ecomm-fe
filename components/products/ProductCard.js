@@ -4,72 +4,41 @@ import Price from '@/components/products/Price'
 import logo from "../../images/default.jpeg";
 
 function ProductCard({ product }) {
-  const title = product.name;
-  const description = product.description;
-  const price = product.price;
-  const promo = product.promo;
-
-  let defaultImage = {
-        "url": "default.jpeg",
-        "link": logo,
-        "main": false
-      };
-
-  let image = product.images && product.images.length != 0 ? product.images[0].link : defaultImage.link
+  const image = product.images && product.images.length !== 0 ? product.images[0].link : logo;
 
   return (
-    <Link
-      href={`/products/${product.id}`}
-      passHref
-    >
-      <a className="h-120 w-80 max-w-80 bg-white overflow-hidden rounded-lg shadow-lg mx-auto border border-palette-lighter">
-        <div className="h-72 border-b-2 m-2 border-palette-lighter relative">
-          {
-            <Image
-                src={image.src ? image.src : image}
-                layout="fill"
-                className="transform imgproduct duration-500 ease-in-out hover:scale-110"
-            />
-          }
+    <Link href={`/products/${product.id}`} passHref>
+      <a className="group block bg-white border border-gray-200 rounded-xl overflow-hidden hover:shadow-lg transition-shadow duration-200">
+        <div className="relative h-56 bg-gray-50 overflow-hidden">
+          <Image
+            src={image.src ? image.src : image}
+            layout="fill"
+            objectFit="contain"
+            className="transition-transform duration-300 group-hover:scale-105"
+            alt={product.name || 'Producto'}
+          />
+          {product.promo && (
+            <span className="absolute top-3 left-3 bg-palette-secondary text-white text-xs font-bold px-3 py-1 rounded-full">
+              Promo
+            </span>
+          )}
         </div>
-        <div className="h-48 relative">
 
-            {
-
-              promo
-              ?
-                <div>
-                  <span className={'absolute py-2 px-8 text-sm text-white -top-2 right-4 bg-palette-secondary rounded-md transform translate-x-5 -translate-y-5 shadow-xl'}>Promo</span>
-                </div>
-              :
-                <div></div>
-            }
-
-          
-
-          <div className="w-full bg-white font-primary truncate text-palette-primary text-2xl pt-4 px-4 font-bold">
-            {title}
+        <div className="p-4">
+          <p className="text-xs text-gray-500 mb-1 truncate">
+            {product.category ? product.category.name : 'Producto'}
+          </p>
+          <h3 className="text-base font-semibold text-gray-800 leading-snug h-12 overflow-hidden">
+            {product.name}
+          </h3>
+          <div className="mt-3 text-xl font-bold text-gray-900">
+            <Price currency="$" num={product.price} numSize="text-xl" />
           </div>
-
-
-          <div className="relative text-lg bg-white h-20 overflow-hidden text-palette-secondary p-4 font-primary font-semibold">
-            <div className="relative">
-              {description}
-            </div>
-          </div>
-
-          <div className="absolute bottom-0 left-0 text-lg text-palette-secondary p-4 truncate font-primary font-light">
-            {product.category ? product.category.name : ''}
-          </div>
-          <div
-            className="text-palette-dark font-primary font-medium text-base absolute bottom-0 right-0 mb-4 pl-8 pr-4 pb-1 pt-2 bg-palette-lighter 
-            rounded-tl-sm triangle"
-          >
-            <Price
-              currency="$"
-              num={price}
-              numSize="text-lg"
-            />
+          <p className="mt-2 text-xs text-gray-500 h-8 overflow-hidden">
+            {product.description}
+          </p>
+          <div className="mt-4 text-sm font-semibold text-palette-dark group-hover:underline">
+            Ver producto
           </div>
         </div>
       </a>

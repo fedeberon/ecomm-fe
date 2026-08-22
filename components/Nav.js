@@ -2,177 +2,120 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useCartContext } from "@/context/Store";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBars } from "@fortawesome/free-solid-svg-icons";
-import { faShoppingCart } from "@fortawesome/free-solid-svg-icons";
+import { faBars, faShoppingCart, faSearch } from "@fortawesome/free-solid-svg-icons";
 import logo from "/images/logoMati.png";
 import UserSession from "@/components/users/UserSession";
 import { useSession } from "next-auth/client";
-import Loading from "./utils/Loading";
 import { findAll } from "services/categoriesService";
-
 
 function Nav() {
   const cart = useCartContext()[0];
   const [cartItems, setCartItems] = useState(0);
-  const [session, loading] = useSession();
-  const [isShow, setIsShow] = useState(false)
-  const [load, setLoad] = useState(false)
+  const [session] = useSession();
+  const [isShow, setIsShow] = useState(false);
   const [categoriesVisible, setCategoriesVisible] = useState(false);
-  const [categories, setCategories] = useState([])
-
-
-  const handleMenu = () => {
-    setIsShow(!isShow)
-  }
-
-  const handleButtonClick = (e) => {
-    setIsShow(false);
-  };
-
-  useEffect(async() => {
-    setCategories(await findAll())
-  }, [])
+  const [categories, setCategories] = useState([]);
 
   useEffect(() => {
-    let numItems = 0;
-    cart.forEach((item) => {
-      numItems += item.quantity;
-    });
-    setCartItems(numItems);
+    const loadCategories = async () => {
+      setCategories(await findAll());
+    };
+    loadCategories();
+  }, []);
+
+  useEffect(() => {
+    const total = cart.reduce((acc, item) => acc + item.quantity, 0);
+    setCartItems(total);
   }, [cart]);
 
-  const showCategories = (() => {
-    setCategoriesVisible(!categoriesVisible)
-  })
-  
-  const handleDocumentClick = (e) => {
-    if (categoriesVisible) {
-      setCategoriesVisible(false);
-    }
-  };
-
-  useEffect(() => {
-    document.addEventListener('click', handleDocumentClick);
-
-    return () => {
-      document.removeEventListener('click', handleDocumentClick);
-    };
-  }, [categoriesVisible]);
-
   return (
-    <header className="w-full sticky  lg:static top-0 z-50 bg-white">
-
-      <div>
-        <div className="flex items-center justify-between flex-wrap p-2">
-        <div className="block lg:hidden">
-          <button id="menuButton" onClick={handleMenu} className="flex py-2 hover:border-grey">
-            <FontAwesomeIcon icon={faBars} className="w-5 top-6 ml-2 mr-0 items-center" />
+    <header className="sticky top-0 z-50 w-full bg-white border-b border-gray-200 shadow-sm">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex items-center gap-4 h-16">
+          <button
+            id="menuButton"
+            onClick={() => setIsShow(!isShow)}
+            className="lg:hidden p-2 rounded-lg hover:bg-gray-100"
+            aria-label="Abrir menú"
+          >
+            <FontAwesomeIcon icon={faBars} className="w-5 text-gray-700" />
           </button>
-        </div>
-        <Link href="/">
-          <div className="flex sm:block cursor-pointer flex-row items-center">
-            <img src={logo.src} className="w-16 mx-16 ml-8 md:mx-64 lg:mx-4 lg:w-12" />
+
+          <Link href="/">
+            <a className="flex-shrink-0 flex items-center">
+              <img src={logo.src} className="w-12 h-12 object-contain" alt="Tienda" />
+            </a>
+          </Link>
+
+          <div className="hidden md:flex flex-1 max-w-2xl relative">
+            <FontAwesomeIcon icon={faSearch} className="absolute left-4 top-1/2 transform -translate-y-1/2 w-4 text-gray-400" />
+            <input
+              type="search"
+              placeholder="Buscar productos, marcas y categorías"
+              className="w-full bg-gray-100 border border-gray-200 rounded-full py-2.5 pl-11 pr-4 text-sm text-gray-700 focus:outline-none focus:ring-2 focus:ring-palette-secondary focus:bg-white"
+            />
           </div>
-        </Link>
-        <div className="lg:order-2 -mx-8 lg:m-auto">
-          <UserSession session={session} />
-        </div>
-        <div className="lg:order-3">
-          <Link href="/cart" passHref>
-            <a className="flex md:-mt-1 flex-wrap ml-2 md:ml-1 object-right p-6 lg:order-last md:p-3 rounded-lg hover:text-palette-secondary" aria-label="cart">
-              <FontAwesomeIcon
-                className="text-palette-primary hover:text-palette-secondary h-6"
-                icon={faShoppingCart}
-              />
-              {cartItems === 0 ? null : (
-                <div className=" text-xs bg-palette-secondary rounded-full text-white font-semibold py-1 px-2 ">
-                  {cartItems}
-                </div>
-              )}
-            </a>
-          </Link>
-        </div>
 
-        <div
-          id="menu"
-          className={`w-full block flex-grow ${isShow ? "" : "hidden"} divide-y divide-y-reverse justify-between divide-gray-200 lg:divide-none lg:flex lg:justify-self-center lg:w-auto`}
-        >
-          <Link href="/" >
-            <a className="text-smw border-b border-gray-200 block mt-4 lg:inline-block lg:border-none lg:mt-0
-               text-m font-primary text-palette-primary md:p-2 rounded-md hover:text-palette-secondary tracking-tight pt-1">
-                INICIO                
-            </a>
-          </Link>
-
-          <Link href="/diapers/inicio">
-            <a className="text-smw block mt-4 lg:inline-block lg:mt-0
-                text-m font-primary text-palette-primary md:p-2 rounded-md hover:text-palette-secondary tracking-tight pt-1">
-                  PAÑALERIA
-            </a>
-          </Link>
-
-          <div className="relative text-smw block mt-4 lg:inline-block lg:mt-0">
-            <button 
-                type="button"
-                onClick={showCategories}
-                className="inline-flex text-m font-primary text-palette-primary tracking-tight md:p-2 rounded-md hover:text-palette-secondary">
-                CATEGORÍAS
-                  <svg className="h-5 w-5 align-items-lg-stretch" xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                      <path fillRule="evenodd"
-                        d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                        clipRule="evenodd"/>
-                  </svg>
-              </button>       
-              <div
-                className={`${categoriesVisible ? "" : "hidden"} z-50 absolute mt-2 w-46 lg:w-32 lg:right-0 md:w-32 rounded-md shadow-lg bg-white ring-2 ring-palette-lighter ring-opacity-75 focus:outline-none md:-mx-2 -mx-0`}
-                role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabIndex="-1">
-                <div className="overflow-y-auto no-scrollbar max-h-80 lg:max-h-44" role="none">
-                  {categories?.map((category) =>(
-                      <Link href={`/accessories/${category.id}`} passHref legacyBehavior>
-                        <a href="#" onClick={showCategories} className="text-palette-primary block text-center hover:text-palette-secondary px-4 py-2 text-sm" role="menuitem"
-                        tabIndex="-1" id="menu-item-0">{category.name}</a>
-                      </Link>
-                    ))
-                  }   
-                </div>
+          <div className="ml-auto flex items-center gap-1 sm:gap-3">
+            <div className="hidden sm:block">
+              <UserSession session={session} />
             </div>
-          </div>
-
-          <Link href="/about/inicio">
-            <a className="text-smw block mt-4 lg:inline-block lg:mt-0 text-m font-primary text-palette-primary tracking-tight md:p-2 rounded-md hover:text-palette-secondary">
-                  QUIENES SOMOS
-            </a>
-          </Link>
-
-          {session?.user?.role?.includes("ADMIN") ? (
-            <Link href="/admin">
-              <a className="top-4 right-3 lg:order-last text-smw block mt-4 mr-4 lg:inline-block lg:mt-0">
-                <h1>
-                  <div className="text-m font-primary text-palette-primary md:p-2 rounded-md hover:text-palette-secondary tracking-tight pt-1">
-                    ADMINISTRACION
-                  </div>
-                </h1>
+            <Link href="/cart" passHref>
+              <a className="relative flex items-center justify-center w-10 h-10 rounded-full hover:bg-gray-100" aria-label="Carrito">
+                <FontAwesomeIcon icon={faShoppingCart} className="h-5 text-gray-700" />
+                {cartItems > 0 && (
+                  <span className="absolute -top-1 -right-1 min-w-5 h-5 px-1 flex items-center justify-center text-xs bg-palette-secondary text-white font-bold rounded-full">
+                    {cartItems}
+                  </span>
+                )}
               </a>
             </Link>
-          ) : (
-            ""
+          </div>
+        </div>
+
+        <div className="md:hidden pb-3 relative">
+          <FontAwesomeIcon icon={faSearch} className="absolute left-4 top-1/2 transform -translate-y-1/2 -mt-1.5 w-4 text-gray-400" />
+          <input
+            type="search"
+            placeholder="Buscar productos"
+            className="w-full bg-gray-100 border border-gray-200 rounded-full py-2 pl-11 pr-4 text-sm focus:outline-none"
+          />
+        </div>
+
+        <nav className={`${isShow ? "block" : "hidden"} lg:flex lg:items-center lg:justify-center lg:gap-8 border-t border-gray-100 lg:border-0`}>
+          <Link href="/"><a className="block py-3 text-sm font-semibold text-gray-700 hover:text-palette-dark">Inicio</a></Link>
+          <Link href="/diapers/inicio"><a className="block py-3 text-sm font-semibold text-gray-700 hover:text-palette-dark">Pañalería</a></Link>
+
+          <div className="relative">
+            <button
+              type="button"
+              onClick={() => setCategoriesVisible(!categoriesVisible)}
+              className="flex items-center gap-1 py-3 text-sm font-semibold text-gray-700 hover:text-palette-dark"
+            >
+              Categorías
+              <span className="text-xs">⌄</span>
+            </button>
+            {categoriesVisible && (
+              <div className="lg:absolute lg:left-1/2 lg:transform lg:-translate-x-1/2 w-full lg:w-64 bg-white border border-gray-200 rounded-xl shadow-xl p-2 mb-3 lg:mb-0">
+                <div className="max-h-72 overflow-y-auto no-scrollbar">
+                  {categories?.map((category) => (
+                    <Link key={category.id} href={`/accessories/${category.id}`} passHref>
+                      <a onClick={() => setCategoriesVisible(false)} className="block px-4 py-2.5 rounded-lg text-sm text-gray-700 hover:bg-gray-50 hover:text-palette-dark">
+                        {category.name}
+                      </a>
+                    </Link>
+                  ))}
+                </div>
+              </div>
+            )}
+          </div>
+
+          <Link href="/about/inicio"><a className="block py-3 text-sm font-semibold text-gray-700 hover:text-palette-dark">Quiénes somos</a></Link>
+          {session?.user?.role?.includes("ADMIN") && (
+            <Link href="/admin"><a className="block py-3 text-sm font-semibold text-gray-700 hover:text-palette-dark">Administración</a></Link>
           )}
-        </div>
-
-        {
-          load ?
-            <Loading>
-            </Loading>
-            :
-            <></>
-
-        }
-        </div>
+        </nav>
       </div>
-      {isShow && (
-        <div className="fixed top-0 left-40 right-20 bottom-0 z-40" onClick={handleButtonClick}></div>
-      )}
     </header>
   );
 }
