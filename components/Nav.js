@@ -63,8 +63,8 @@ function Nav() {
             </div>
 
             <Link href="/">
-              <a className="absolute left-1/2 transform -translate-x-1/2 top-1 lg:-top-4 z-20 flex items-center justify-center w-20 h-20 lg:w-28 lg:h-28 rounded-full bg-white shadow-xl border border-gray-100">
-                <img src={logo.src} className="w-16 h-16 lg:w-24 lg:h-24 object-contain" alt="Dulce Bebé" />
+              <a className="absolute left-1/2 transform -translate-x-1/2 top-1 lg:-top-4 z-20 flex items-center justify-center w-20 h-20 lg:w-28 lg:h-28 rounded-full bg-white shadow-xl border border-gray-100 p-2 lg:p-3">
+                <img src={logo.src} className="w-full h-full object-contain" alt="Dulce Bebé" />
               </a>
             </Link>
 
