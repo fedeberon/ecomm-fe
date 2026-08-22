@@ -1,8 +1,8 @@
 import ProductCard from "@/components/products/ProductCard";
 import { useEffect, useMemo, useState } from "react";
 
-const Gallery = ({ productData = [] }) => {
-    const chunkSize = 4;
+const Gallery = ({ productData = [], compact = false }) => {
+    const chunkSize = compact ? 5 : 4;
     const [currentSlide, setCurrentSlide] = useState(0);
 
     const groupedProducts = useMemo(() => {
@@ -11,7 +11,7 @@ const Gallery = ({ productData = [] }) => {
             groups.push(productData.slice(i, i + chunkSize));
         }
         return groups;
-    }, [productData]);
+    }, [productData, chunkSize]);
 
     useEffect(() => {
         setCurrentSlide(0);
@@ -43,11 +43,13 @@ const Gallery = ({ productData = [] }) => {
                     style={{ transform: `translateX(-${currentSlide * 100}%)` }}
                 >
                     {groupedProducts.map((products, index) => (
-                        <div className="min-w-full px-12 py-2" key={index}>
-                            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4">
+                        <div className={`min-w-full ${compact ? 'px-8 py-1' : 'px-12 py-2'}`} key={index}>
+                            <div className={compact
+                                ? "grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5"
+                                : "grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4"}>
                                 {products.map((product, innerIndex) => (
-                                    <div key={product?.id || innerIndex} className="mx-auto w-full max-w-[280px]">
-                                        <ProductCard product={product} />
+                                    <div key={product?.id || innerIndex} className={`mx-auto w-full ${compact ? 'max-w-[190px]' : 'max-w-[280px]'}`}>
+                                        <ProductCard product={product} compact={compact} />
                                     </div>
                                 ))}
                             </div>
@@ -62,7 +64,7 @@ const Gallery = ({ productData = [] }) => {
                         type="button"
                         onClick={previousSlide}
                         aria-label="Anterior"
-                        className="absolute left-2 top-1/2 z-20 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full border border-slate-200 bg-white/95 text-2xl text-slate-700 shadow-md transition hover:text-palette-sdark"
+                        className={`absolute left-2 top-1/2 z-20 flex -translate-y-1/2 items-center justify-center rounded-full border border-slate-200 bg-white/95 text-slate-700 shadow-md transition hover:text-palette-sdark ${compact ? 'h-8 w-8 text-lg' : 'h-10 w-10 text-2xl'}`}
                     >
                         ‹
                     </button>
@@ -70,11 +72,11 @@ const Gallery = ({ productData = [] }) => {
                         type="button"
                         onClick={nextSlide}
                         aria-label="Siguiente"
-                        className="absolute right-2 top-1/2 z-20 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full border border-slate-200 bg-white/95 text-2xl text-slate-700 shadow-md transition hover:text-palette-sdark"
+                        className={`absolute right-2 top-1/2 z-20 flex -translate-y-1/2 items-center justify-center rounded-full border border-slate-200 bg-white/95 text-slate-700 shadow-md transition hover:text-palette-sdark ${compact ? 'h-8 w-8 text-lg' : 'h-10 w-10 text-2xl'}`}
                     >
                         ›
                     </button>
-                    <div className="mt-3 flex justify-center gap-2">
+                    <div className="mt-2 flex justify-center gap-2">
                         {groupedProducts.map((_, index) => (
                             <button
                                 type="button"
