@@ -13,13 +13,13 @@ function ProductCard({ product, compact = false }) {
   if (compact) {
     return (
       <Link href={`/products/${product.id}`} passHref>
-        <a className="group flex h-full flex-col overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm transition hover:-translate-y-0.5 hover:shadow-md">
-          <div className="relative h-28 bg-white overflow-hidden">
+        <a className="group flex min-h-[132px] overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm transition hover:border-slate-300 hover:shadow-md">
+          <div className="relative w-[118px] flex-shrink-0 bg-white border-r border-slate-100">
             <Image
               src={image.src ? image.src : image}
               layout="fill"
               objectFit="contain"
-              className="p-2.5 transition-transform duration-300 group-hover:scale-[1.03]"
+              className="p-3 transition-transform duration-300 group-hover:scale-[1.04]"
               alt={product.name || 'Producto'}
             />
             {product.promo && (
@@ -27,32 +27,31 @@ function ProductCard({ product, compact = false }) {
             )}
           </div>
 
-          <div className="flex flex-1 flex-col border-t border-slate-100 p-2.5">
+          <div className="flex min-w-0 flex-1 flex-col p-3">
             <div className="flex items-center gap-1 text-[9px] text-slate-500">
               <span className="truncate">{category}</span>
               {brand && <><span>·</span><span className="truncate">{brand}</span></>}
             </div>
 
-            <h3 className="mt-1 min-h-[34px] text-[12px] font-semibold leading-4 text-slate-900 line-clamp-2">
+            <h3 className="mt-1 text-[13px] font-semibold leading-4 text-slate-900 line-clamp-2">
               {product.name}
             </h3>
 
-            <div className="mt-1.5 text-slate-950 font-bold">
-              <Price currency="$" num={product.price} numSize="text-[17px]" />
-            </div>
-
-            <div className="mt-2 flex items-center gap-1.5">
-              {sizes.length > 0 && sizes[0] !== 'S/T' && (
-                <span className="rounded-full bg-slate-100 px-1.5 py-0.5 text-[8px] font-medium text-slate-600">
-                  {sizes[0]}
-                </span>
-              )}
-              <span className={`rounded-full px-1.5 py-0.5 text-[8px] font-medium ${hasStock ? 'bg-emerald-50 text-emerald-700' : 'bg-rose-50 text-rose-600'}`}>
+            <div className="mt-2 flex items-center justify-between gap-2">
+              <div className="font-bold text-slate-950">
+                <Price currency="$" num={product.price} numSize="text-[18px]" />
+              </div>
+              <span className={`rounded-full px-2 py-1 text-[9px] font-medium ${hasStock ? 'bg-emerald-50 text-emerald-700' : 'bg-rose-50 text-rose-600'}`}>
                 {hasStock ? `Stock ${product.stock}` : 'Sin stock'}
               </span>
             </div>
 
-            <div className="mt-auto pt-2 text-[10px] font-semibold text-palette-sdark">Ver detalle →</div>
+            <div className="mt-auto flex items-center justify-between pt-2">
+              {sizes.length > 0 && sizes[0] !== 'S/T' ? (
+                <span className="text-[9px] text-slate-400">Talle {sizes[0]}</span>
+              ) : <span />}
+              <span className="text-[10px] font-semibold text-palette-sdark">Ver →</span>
+            </div>
           </div>
         </a>
       </Link>
