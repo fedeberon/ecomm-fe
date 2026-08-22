@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import ProductListings from '@/components/products/ProductListings'
+import FilterModal from '@/components/filter/FilterModal'
 import * as brandsService from 'services/brandService';
 import * as categoriesService from 'services/categoriesService'
 
@@ -7,9 +8,37 @@ const categoryIcons = ['🧷', '🍼', '🛁', '🧸', '👕', '🛒', '🛏️'
 
 function IndexPage({brands, categories}) {
   const featuredCategories = (categories || []).slice(0, 8);
+  const columnList = [
+    { value: 'sales', label: 'Popularidad' },
+    { value: 'price', label: 'Precio' },
+    { value: 'stock', label: 'Stock' },
+    { value: 'name', label: 'Nombre' },
+  ];
+  const filterParams = [
+    { type: 'Categorias', elements: categories, column: true },
+    { type: 'Marcas', elements: brands, column: false },
+  ];
+
+  const searchCatalog = (query) => {
+    if (typeof window !== 'undefined') {
+      window.dispatchEvent(new CustomEvent('catalog-search', { detail: query }));
+    }
+  };
 
   return (
     <div className="bg-white min-h-screen">
+      <section className="bg-white border-b border-gray-100 px-3 sm:px-5 lg:px-6 py-3">
+        <div className="max-w-7xl mx-auto">
+          <div className="bg-white rounded-2xl border border-gray-200 overflow-hidden shadow-sm">
+            <FilterModal
+              filterParams={filterParams}
+              searchFunction={searchCatalog}
+              columnList={columnList}
+            />
+          </div>
+        </div>
+      </section>
+
       <section className="px-3 sm:px-5 lg:px-6 pt-4">
         <div className="max-w-7xl mx-auto overflow-hidden rounded-2xl bg-palette-slighter border border-gray-100 shadow-sm">
           <div className="grid lg:grid-cols-2 min-h-72 lg:min-h-80">
@@ -110,7 +139,7 @@ function IndexPage({brands, categories}) {
       </section>
 
       <section className="bg-gray-50 border-t border-gray-100 pt-4">
-        <ProductListings brands={brands} categories={categories}/>
+        <ProductListings />
       </section>
     </div>
   )
