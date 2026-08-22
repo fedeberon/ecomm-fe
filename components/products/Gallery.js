@@ -4,7 +4,7 @@ import ProductCard from "@/components/products/ProductCard";
 import { useMemo } from "react";
 
 const Gallery = ({ productData = [] }) => {
-    const chunkSize = 3;
+    const chunkSize = 4;
 
     const groupedProducts = useMemo(() => {
         const groups = [];
@@ -36,7 +36,7 @@ const Gallery = ({ productData = [] }) => {
                             type="button"
                             onClick={onClickHandler}
                             aria-label={label || "Anterior"}
-                            className={`absolute left-3 top-1/2 z-20 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full border border-slate-200 bg-white/95 text-2xl text-slate-700 shadow-lg transition hover:bg-white hover:text-palette-sdark ${!hasPrev && !groupedProducts.length ? 'hidden' : ''}`}
+                            className="absolute left-2 top-1/2 z-20 flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full border border-slate-200 bg-white/95 text-xl text-slate-700 shadow-md transition hover:text-palette-sdark"
                         >
                             ‹
                         </button>
@@ -48,7 +48,7 @@ const Gallery = ({ productData = [] }) => {
                             type="button"
                             onClick={onClickHandler}
                             aria-label={label || "Siguiente"}
-                            className={`absolute right-3 top-1/2 z-20 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full border border-slate-200 bg-white/95 text-2xl text-slate-700 shadow-lg transition hover:bg-white hover:text-palette-sdark ${!hasNext && !groupedProducts.length ? 'hidden' : ''}`}
+                            className="absolute right-2 top-1/2 z-20 flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full border border-slate-200 bg-white/95 text-xl text-slate-700 shadow-md transition hover:text-palette-sdark"
                         >
                             ›
                         </button>
@@ -57,12 +57,9 @@ const Gallery = ({ productData = [] }) => {
                 className="relative"
             >
                 {groupedProducts.map((products, index) => (
-                    <div className="grid grid-cols-1 gap-5 px-14 sm:grid-cols-2 xl:grid-cols-3" key={index}>
+                    <div className="grid grid-cols-1 gap-4 px-12 py-2 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4" key={index}>
                         {products.map((product, innerIndex) => (
-                            <div
-                                key={product?.id || innerIndex}
-                                className="m-auto w-full max-w-sm rounded-2xl bg-white p-4 shadow-md"
-                            >
+                            <div key={product?.id || innerIndex} className="mx-auto w-full max-w-[280px]">
                                 <ProductCard product={product} />
                             </div>
                         ))}
