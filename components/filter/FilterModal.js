@@ -3,181 +3,153 @@ import { debounce } from 'lodash';
 
 function FilterModal({ filterParams, searchFunction, columnList }) {
     const [showFilter, setShowFilter] = useState(false);
-
     const [selectedOrderCol, setSelectedOrderCol] = useState(columnList[0].value);
     const [ascOrder, setAscOrder] = useState(false);
     const [queryParameters, setQueryParameters] = useState(new Array(filterParams.length).fill([]));
     const [searchTerm, setSearchTerm] = useState('');
     const customParams = [searchTerm, queryParameters, selectedOrderCol, ascOrder ? "T" : "F"];
 
-
-    //Prepara los parametros para la consulta
     const handleChangeSubCat = (e, index) => {
         setQueryParameters((prevQueryParameters) => {
-            //Para cada parametro de la lista...
-            const updatedParameters = prevQueryParameters.map((arr, i) => {
-                //Si el indice actual coincide con el brindado, creamos un nuevo array
-                // If the current index matches the provided index, we create a new array.
-                if (i === index) {
-                    const existingIndex = arr.indexOf(e.target.value);
-                    //Remueve o elimina el elemento del array segun el caso
-                    if (existingIndex !== -1) {
-                        return arr.filter((_, i) => i !== existingIndex);
-                    } else {
-                        return [...arr, e.target.value];
-                    }
-                }
-                //En caso de que no haya cambios, retorna el array tal como esta
-                return arr;
+            return prevQueryParameters.map((arr, i) => {
+                if (i !== index) return arr;
+                const existingIndex = arr.indexOf(e.target.value);
+                return existingIndex !== -1
+                    ? arr.filter((_, itemIndex) => itemIndex !== existingIndex)
+                    : [...arr, e.target.value];
             });
-            return updatedParameters;
         });
     };
 
-    //Indica cual sera la columna de la tabla que se utilizara para el orden.
     const handleChangeColumn = (e) => {
         setSelectedOrderCol(e.target.value);
-    }
+    };
 
-    //Ejecuta la funcion de busqueda que se paso como parametro.
     function searchButton() {
         setShowFilter(false);
-        const updatedCustomParams = [...customParams];
-        updatedCustomParams[0] = searchTerm;
-        searchFunction(updatedCustomParams);
+        searchFunction([...customParams]);
     }
 
-    //Retrasa la busqueda 500ms para evitar multiples llamadas sucesivas 
     useEffect(() => {
         const debouncedSearch = debounce(searchFunction, 500);
         debouncedSearch(customParams);
-        return () => {
-            debouncedSearch.cancel();
-        };
+        return () => debouncedSearch.cancel();
     }, [searchTerm]);
 
     return (
-        <div className='sticky top-16 pt-4 md:top-14 md:pt-0 z-30 bg-white'>
-            <div className='flex justify-center py-2 h-20 '>
-                <button
-                    className="justify-between my-auto mx-4 text-white  bg-palette-secondary border 
-                                border-solid border-palette-secondary hover:bg-palette-slight 
-                                hover:text-white active:bg-palette-slight font-bold
-                                uppercase
-                                text-xl
-                                p-2
-                                my-auto
-                                rounded-xl
-                                shadow-lg shadow-indigo-500/50
-                                outline-none
-                                focus:outline-none
-                                ease-linear
-                                transition-all
-                                duration-150"
-                    type="button"
-                    onClick={() => setShowFilter(true)}>
-                    Filtros
-                </button>
-                <input
-                    className="w-2/3 text-palette-secondary border border-solid border-palette-secondary placeholder-palette-slighter font-semibold text-xl p-2 my-auto rounded-xl shadow-lg shadow-indigo-500/50 outline-none transition-all"
-                    placeholder="Buscar"
-                    id="search"
-                    value={searchTerm}
-                    onChange={(e) => setSearchTerm(e.target.value)}
-                    autoComplete="off" />
+        <div className="w-full bg-white py-3">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div className="flex flex-col sm:flex-row items-stretch gap-3 p-3 rounded-2xl border border-gray-200 bg-white shadow-sm">
+                    <button
+                        className="sm:w-auto px-5 h-11 rounded-xl bg-palette-sdark hover:bg-palette-dark text-white text-sm font-bold transition-colors"
+                        type="button"
+                        onClick={() => setShowFilter(true)}
+                    >
+                        Filtros
+                    </button>
+
+                    <input
+                        className="flex-1 h-11 rounded-xl border border-gray-200 bg-gray-50 px-4 text-sm text-gray-700 placeholder-gray-400 outline-none focus:bg-white focus:border-palette-sdark focus:ring-1 focus:ring-palette-sdark transition-all"
+                        placeholder="Buscar productos"
+                        id="search"
+                        value={searchTerm}
+                        onChange={(e) => setSearchTerm(e.target.value)}
+                        autoComplete="off"
+                    />
+                </div>
             </div>
-            <div className={`fixed z-50  top-0 w-full left-0 ${showFilter ? "" : "hidden"}  `} id="modal">
-                <div className="flex items-center justify-center min-height-100vh pt-4 px-4 pb-20 text-center sm:block sm:p-0">
-                    <div onClick={() => setShowFilter(false)} className="fixed inset-0 transition-opacity">
-                        <div className="absolute inset-0 bg-gray-700 opacity-75" />
-                    </div>
-                    <span className=" sm:inline-block sm:align-middle sm:h-screen">&#8203;</span>
-                    <div className="w-auto inline-block bg-white  rounded-lg text-left  shadow-xl transform transition-all my-8 align-middle"
-                        role="dialog" aria-modal="true" aria-labelledby="modal-headline">
-                        <div className="flex grid-cols-2 m-auto px-4 pt-6 pb-2 sm:p-6 sm:pb-4">
-                            {
-                                filterParams
-                                    ?
-                                    filterParams.map((category, arrayIndex) => (
-                                        <div className="flex-center col-span-2 w-auto rounded">
-                                            <div className="w-auto bg-white text-sm text-palette-primary font-bold px-5 py-2">
-                                                <div className="m-2 -ml-4 text-2xl">{category.type}</div>
-                                            </div>
-                                            <div id="menu" className={category.column ?
-                                                `overflow-y-auto max-h-96 no-scrollbar`
-                                                :
-                                                `overflow-y-auto max-h-96 no-scrollbar lg:grid lg:grid-cols-4`}>
-                                                {
-                                                    category.elements
-                                                        ?
-                                                        category.elements.map((subcategory, index) => (
-                                                            <div key={index} className=" block mt-2 px-2">
-                                                                <label className="inline-flex items-center">
-                                                                    <input type="checkbox"
-                                                                        className="form-checkbox rounded text-red-500 "
-                                                                        onChange={(e) => handleChangeSubCat(e, arrayIndex)}
-                                                                        value={subcategory.id} />
-                                                                    <span className="ml-2">{subcategory.name}</span>
-                                                                </label>
-                                                            </div>
-                                                        )) : <></>
-                                                }
-                                            </div>
+
+            <div className={`fixed z-50 top-0 w-full left-0 ${showFilter ? "" : "hidden"}`} id="modal">
+                <div className="flex items-center justify-center min-h-screen px-4 py-8 text-center">
+                    <div onClick={() => setShowFilter(false)} className="fixed inset-0 bg-gray-800 bg-opacity-70" />
+
+                    <div className="relative z-10 w-full max-w-4xl max-h-screen overflow-y-auto bg-white rounded-2xl text-left shadow-2xl">
+                        <div className="p-6">
+                            <h2 className="text-2xl font-bold text-gray-800 mb-5">Filtrar productos</h2>
+
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                {filterParams?.map((category, arrayIndex) => (
+                                    <div key={category.type} className="rounded-xl border border-gray-100 p-4">
+                                        <h3 className="text-lg font-bold text-gray-800 mb-3">{category.type}</h3>
+                                        <div className={category.column
+                                            ? "overflow-y-auto max-h-64 no-scrollbar space-y-2"
+                                            : "overflow-y-auto max-h-64 no-scrollbar grid grid-cols-1 sm:grid-cols-2 gap-2"
+                                        }>
+                                            {category.elements?.map((subcategory, index) => (
+                                                <label key={index} className="inline-flex items-center text-sm text-gray-700">
+                                                    <input
+                                                        type="checkbox"
+                                                        className="form-checkbox rounded text-palette-sdark"
+                                                        onChange={(e) => handleChangeSubCat(e, arrayIndex)}
+                                                        value={subcategory.id}
+                                                    />
+                                                    <span className="ml-2">{subcategory.name}</span>
+                                                </label>
+                                            ))}
                                         </div>
-                                    )) : <></>
-                            }
-                        </div>
-                        {columnList ? (
-                            <div className="flex grid-cols-2 m-auto px-4 pt-6 pb-2 sm:p-6 sm:pb-4">
-                                <div className="flex flex-col col-span-2 w-auto rounded">
-                                    <div className="w-auto bg-white text-sm text-palette-primary font-bold px-5 py-2 m-2 -ml-4 text-2xl">Ordenar por:</div>
+                                    </div>
+                                ))}
+                            </div>
+
+                            {columnList && (
+                                <div className="mt-6 rounded-xl border border-gray-100 p-4">
+                                    <h3 className="text-lg font-bold text-gray-800 mb-3">Ordenar por</h3>
                                     <select
-                                        className="text-palette-primary px-5 py-2"
+                                        className="w-full rounded-xl border-gray-200 text-gray-700"
                                         id="orderBy"
                                         value={selectedOrderCol}
                                         onChange={handleChangeColumn}
                                     >
                                         {columnList.map((option) => (
-                                            <option key={option.value} value={option.value}>
-                                                {option.label}
-                                            </option>
+                                            <option key={option.value} value={option.value}>{option.label}</option>
                                         ))}
                                     </select>
-                                    <label className="flex items-center mt-2 px-2">
-                                        <input
-                                            type="radio"
-                                            className="form-radio rounded text-red-500"
-                                            id="ascRadio"
-                                            name="order"
-                                            checked={!ascOrder}
-                                            onChange={() => setAscOrder(false)}                                    
-                                        />
-                                        <span className="ml-2">Mayor a menor</span>
-                                    </label>
-                                    <label className="flex items-center mt-2 px-2">
-                                        <input
-                                            type="radio"
-                                            className="form-radio rounded text-red-500"
-                                            id="descRadio"
-                                            name="order"
-                                            checked={ascOrder}
-                                            onChange={() => setAscOrder(true)}
-                                        />
-                                        <span className="ml-2">Menor a mayor</span>
-                                    </label>
-                                </div>
-                            </div>
-                        ) : <></>}
 
-                        <div className="p-3  mt-2 text-center space-x-4 md:block">
-                            <button className="mb-2 md:mb-0 bg-palette-slight border border-black-500 px-5 py-2 text-sm shadow-sm font-medium tracking-wider text-white hover:text-white rounded-full hover:shadow-lg hover:bg-palette-secondary" onClick={() => setShowFilter(false)}>Cerrar</button>
-                            <button className="mb-2 md:mb-0 bg-palette-slight border-black-500 px-5 py-2 text-sm shadow-sm font-medium tracking-wider text-white hover:text-white rounded-full hover:shadow-lg hover:bg-palette-secondary" onClick={() => searchButton()}>Buscar</button>
+                                    <div className="flex flex-wrap gap-5 mt-4 text-sm text-gray-700">
+                                        <label className="flex items-center">
+                                            <input
+                                                type="radio"
+                                                className="form-radio text-palette-sdark"
+                                                name="order"
+                                                checked={!ascOrder}
+                                                onChange={() => setAscOrder(false)}
+                                            />
+                                            <span className="ml-2">Mayor a menor</span>
+                                        </label>
+                                        <label className="flex items-center">
+                                            <input
+                                                type="radio"
+                                                className="form-radio text-palette-sdark"
+                                                name="order"
+                                                checked={ascOrder}
+                                                onChange={() => setAscOrder(true)}
+                                            />
+                                            <span className="ml-2">Menor a mayor</span>
+                                        </label>
+                                    </div>
+                                </div>
+                            )}
+
+                            <div className="mt-6 flex justify-end gap-3">
+                                <button
+                                    className="px-5 py-2.5 rounded-xl border border-gray-200 text-gray-700 font-semibold hover:bg-gray-50"
+                                    onClick={() => setShowFilter(false)}
+                                >
+                                    Cerrar
+                                </button>
+                                <button
+                                    className="px-5 py-2.5 rounded-xl bg-palette-sdark hover:bg-palette-dark text-white font-semibold"
+                                    onClick={searchButton}
+                                >
+                                    Aplicar filtros
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    )
+    );
 }
 
 export default FilterModal;
