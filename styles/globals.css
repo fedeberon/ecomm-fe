@@ -54,6 +54,15 @@ html {
     margin-right: auto;
   }
 
+  /* The Tailwind h-8 on the announcement row was clipping bottom spacing. */
+  header.sticky > div:first-child > div {
+    height: auto !important;
+    min-height: 2.65rem;
+    padding-top: 0.4rem;
+    padding-bottom: 0.65rem;
+    box-sizing: border-box;
+  }
+
   header.sticky > div:nth-child(2) > div > div {
     display: grid !important;
     grid-template-columns: auto auto auto;
@@ -126,7 +135,7 @@ html {
 
 @keyframes storeTopBarCollapse {
   from {
-    max-height: 32px;
+    max-height: 44px;
     opacity: 1;
     transform: translateY(0);
   }
