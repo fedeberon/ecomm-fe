@@ -1,13 +1,23 @@
 import Link from 'next/link'
+import { useEffect, useState } from 'react'
 import ProductListings from '@/components/products/ProductListings'
 import FilterModal from '@/components/filter/FilterModal'
 import * as brandsService from 'services/brandService';
 import * as categoriesService from 'services/categoriesService'
 
 const categoryIcons = ['🧷', '🍼', '🛁', '🧸', '👕', '🛒', '🛏️', '🧴'];
+const heroImages = [
+  '/images/carrousel/panalera-02.jpg',
+  '/images/carrousel/panalera-01.jpg',
+  '/images/carrousel/panalera-03.jpg',
+  '/images/carrousel/panalera-04.jpg',
+  '/images/carrousel/panalera-05.jpg',
+  '/images/carrousel/panalera-06.jpg',
+];
 
 function IndexPage({brands, categories}) {
   const featuredCategories = (categories || []).slice(0, 8);
+  const [heroIndex, setHeroIndex] = useState(0);
   const columnList = [
     { value: 'sales', label: 'Popularidad' },
     { value: 'price', label: 'Precio' },
@@ -24,6 +34,14 @@ function IndexPage({brands, categories}) {
       window.dispatchEvent(new CustomEvent('catalog-search', { detail: query }));
     }
   };
+
+  const previousHero = () => setHeroIndex((current) => (current - 1 + heroImages.length) % heroImages.length);
+  const nextHero = () => setHeroIndex((current) => (current + 1) % heroImages.length);
+
+  useEffect(() => {
+    const timer = window.setInterval(nextHero, 5000);
+    return () => window.clearInterval(timer);
+  }, []);
 
   return (
     <div className="bg-white min-h-screen">
@@ -57,20 +75,25 @@ function IndexPage({brands, categories}) {
               </div>
             </div>
 
-            <div className="relative min-h-64 lg:min-h-full bg-white">
+            <div className="relative min-h-64 lg:min-h-full bg-white overflow-hidden">
               <img
-                src="/images/carrousel/panalera-02.jpg"
-                alt="Productos para bebés"
-                className="absolute inset-0 w-full h-full object-cover"
+                src={heroImages[heroIndex]}
+                alt={`Promoción Dulce Bebé ${heroIndex + 1}`}
+                className="absolute inset-0 w-full h-full object-cover transition-opacity duration-300"
               />
-              <div className="absolute inset-0 bg-gradient-to-r from-white via-transparent to-transparent opacity-15"></div>
-              <button aria-label="Anterior" className="hidden md:flex absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white shadow items-center justify-center text-2xl text-gray-700">‹</button>
-              <button aria-label="Siguiente" className="hidden md:flex absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white shadow items-center justify-center text-2xl text-gray-700">›</button>
-              <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex gap-2 px-3 py-1.5 rounded-full bg-white bg-opacity-90 shadow-sm">
-                <span className="w-2.5 h-2.5 rounded-full bg-palette-sdark"></span>
-                <span className="w-2.5 h-2.5 rounded-full bg-gray-300"></span>
-                <span className="w-2.5 h-2.5 rounded-full bg-gray-300"></span>
-                <span className="w-2.5 h-2.5 rounded-full bg-gray-300"></span>
+              <div className="absolute inset-0 bg-gradient-to-r from-white via-transparent to-transparent opacity-15 pointer-events-none"></div>
+              <button type="button" onClick={previousHero} aria-label="Anterior" className="hidden md:flex absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white/95 shadow items-center justify-center text-2xl text-gray-700 z-10 hover:scale-105 transition">‹</button>
+              <button type="button" onClick={nextHero} aria-label="Siguiente" className="hidden md:flex absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white/95 shadow items-center justify-center text-2xl text-gray-700 z-10 hover:scale-105 transition">›</button>
+              <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex gap-2 px-3 py-1.5 rounded-full bg-white bg-opacity-90 shadow-sm z-10">
+                {heroImages.map((image, index) => (
+                  <button
+                    key={image}
+                    type="button"
+                    aria-label={`Ir a imagen ${index + 1}`}
+                    onClick={() => setHeroIndex(index)}
+                    className={`w-2.5 h-2.5 rounded-full transition ${index === heroIndex ? 'bg-palette-sdark scale-110' : 'bg-gray-300 hover:bg-gray-400'}`}
+                  />
+                ))}
               </div>
             </div>
           </div>
