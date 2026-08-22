@@ -58,6 +58,24 @@ html {
   min-height: 200px;
 }
 
+/* Compact desktop store navigation */
+@media (min-width: 1024px) {
+  header.sticky > div:nth-child(2) > div {
+    width: calc(100% - 48px);
+    max-width: 1180px !important;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  header.sticky > div:nth-child(2) > div > div > div:first-child {
+    gap: 1.25rem !important;
+  }
+
+  header.sticky > div:nth-child(2) > div > div > div:last-child {
+    gap: 1.25rem !important;
+  }
+}
+
 /*
     https://github.com/tailwindlabs/tailwindcss/discussions/2394
     https://github.com/tailwindlabs/tailwindcss/pull/5732
