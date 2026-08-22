@@ -33,11 +33,11 @@ function ProductSection({ productData }) {
 
                 {productsRelated?.length > 0 && (
                     <section className="mt-5">
-                        <div className="mb-3">
-                            <h2 className="text-lg font-bold text-slate-900">También te puede interesar</h2>
-                            <p className="text-xs text-slate-500 mt-1">Productos relacionados</p>
+                        <div className="mb-2">
+                            <h2 className="text-base sm:text-lg font-bold text-slate-900">También te puede interesar</h2>
+                            <p className="text-[11px] text-slate-500 mt-0.5">Productos relacionados</p>
                         </div>
-                        <Gallery productData={productsRelated} />
+                        <Gallery productData={productsRelated} compact />
                     </section>
                 )}
             </div>
