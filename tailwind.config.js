@@ -1,15 +1,18 @@
 module.exports = {
-  purge: ['./pages/**/*.{js,ts,jsx,tsx}', './components/**/*.{js,ts,jsx,tsx}'],
-  darkMode: false,
+  content: [
+    './pages/**/*.{js,ts,jsx,tsx}',
+    './components/**/*.{js,ts,jsx,tsx}',
+  ],
+  darkMode: 'class',
   theme: {
     extend: {
-      height: theme => ({
+      height: {
         '112': '28rem',
         '120': '30rem',
-      }),
-      minHeight: theme => ({
+      },
+      minHeight: {
         '80': '20rem',
-      }),
+      },
       colors: {
         palette: {
           lighter: '#fff3f9',
@@ -20,21 +23,16 @@ module.exports = {
           slight: '#45aebd',
           slighter: '#e8f7f9',
           sdark: '#148aa0',
-          bg: '#ffffff'
+          bg: '#ffffff',
         },
       },
       fontFamily: {
-        primary: ['"Josefin Sans"']
-      }
-    },
-  },
-  variants: {
-    extend: {
-      display: ["group-hover"],
+        primary: ['"Josefin Sans"'],
+      },
     },
   },
   plugins: [
-    require("@tailwindcss/forms")({
+    require('@tailwindcss/forms')({
       strategy: 'class',
     }),
   ],
