@@ -1,56 +1,67 @@
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { Carousel } from "react-responsive-carousel";
 import ProductCard from "@/components/products/ProductCard";
-import {useEffect, useState} from "react";
+import { useMemo } from "react";
 
-const Gallery = ({ productData }) => {
-    const chunkSize = 3; // Tamaño de cada conjunto de productos
+const Gallery = ({ productData = [] }) => {
+    const chunkSize = 3;
 
-    // Agrupa los productos en conjuntos de tamaño chunkSize
-    const [groupedProducts, setGroupedProducts] = useState([]);
+    const groupedProducts = useMemo(() => {
+        const groups = [];
+        for (let i = 0; i < productData.length; i += chunkSize) {
+            groups.push(productData.slice(i, i + chunkSize));
+        }
+        return groups;
+    }, [productData]);
 
-    for (let i = 0; i < productData.length; i += chunkSize) {
-        groupedProducts.push(productData.slice(i, i + chunkSize));
-    }
+    if (!groupedProducts.length) return null;
 
     return (
-        <div>
+        <div className="relative">
             <Carousel
                 showArrows={true}
-                infiniteLoop={true}
-                selectedItem={0}
-                renderArrowPrev={(onClickHandler, hasPrev, label) =>
-                    hasPrev && (
+                showStatus={false}
+                showThumbs={false}
+                showIndicators={groupedProducts.length > 1}
+                infiniteLoop={groupedProducts.length > 1}
+                swipeable={true}
+                emulateTouch={true}
+                useKeyboardArrows={true}
+                interval={5000}
+                transitionTime={450}
+                stopOnHover={true}
+                renderArrowPrev={(onClickHandler, hasPrev, label) => (
+                    groupedProducts.length > 1 && (
                         <button
                             type="button"
-                            className="absolute left-0 top-1/2 transform -translate-y-1/2 z-10"
                             onClick={onClickHandler}
-                            aria-label={label}
+                            aria-label={label || "Anterior"}
+                            className={`absolute left-3 top-1/2 z-20 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full border border-slate-200 bg-white/95 text-2xl text-slate-700 shadow-lg transition hover:bg-white hover:text-palette-sdark ${!hasPrev && !groupedProducts.length ? 'hidden' : ''}`}
                         >
-                            {/* Agrega aquí tu icono de flecha izquierda */}
+                            ‹
                         </button>
                     )
-                }
-                renderArrowNext={(onClickHandler, hasNext, label) =>
-                    hasNext && (
+                )}
+                renderArrowNext={(onClickHandler, hasNext, label) => (
+                    groupedProducts.length > 1 && (
                         <button
                             type="button"
-                            className="absolute right-0 top-1/2 transform -translate-y-1/2 z-10"
                             onClick={onClickHandler}
-                            aria-label={label}
+                            aria-label={label || "Siguiente"}
+                            className={`absolute right-3 top-1/2 z-20 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full border border-slate-200 bg-white/95 text-2xl text-slate-700 shadow-lg transition hover:bg-white hover:text-palette-sdark ${!hasNext && !groupedProducts.length ? 'hidden' : ''}`}
                         >
-                            {/* Agrega aquí tu icono de flecha derecha */}
+                            ›
                         </button>
                     )
-                }
+                )}
                 className="relative"
             >
                 {groupedProducts.map((products, index) => (
-                    <div className="grid sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-9 2xl:gap-4" key={index} >
+                    <div className="grid grid-cols-1 gap-5 px-14 sm:grid-cols-2 xl:grid-cols-3" key={index}>
                         {products.map((product, innerIndex) => (
                             <div
-                                key={innerIndex}
-                                className="m-auto bg-white shadow-md rounded-lg p-4 w-80 h-120"
+                                key={product?.id || innerIndex}
+                                className="m-auto w-full max-w-sm rounded-2xl bg-white p-4 shadow-md"
                             >
                                 <ProductCard product={product} />
                             </div>
@@ -62,4 +73,4 @@ const Gallery = ({ productData }) => {
     );
 };
 
-export default Gallery
+export default Gallery;
