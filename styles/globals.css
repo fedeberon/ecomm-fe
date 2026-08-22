@@ -44,30 +44,9 @@ html {
   min-height: 200px;
 }
 
-/* Desktop ecommerce navigation */
+/* Desktop navigation: keep all actions on a single baseline */
 @media (min-width: 1024px) {
-  /* Keep the blue utility bar on the same horizontal grid as the nav below. */
-  header.sticky > div:first-child > div {
-    width: calc(100% - 48px);
-    max-width: 1240px !important;
-    height: 2rem;
-    margin-left: auto !important;
-    margin-right: auto !important;
-    padding-left: 0 !important;
-    padding-right: 0 !important;
-  }
-
-  header.sticky > div:first-child > div > div:first-child {
-    display: flex;
-    align-items: center;
-    gap: 1.25rem !important;
-  }
-
-  header.sticky > div:first-child > div > span:last-child {
-    margin-left: auto;
-    text-align: right;
-  }
-
+  header.sticky > div:first-child > div,
   header.sticky > div:nth-child(2) > div {
     width: calc(100% - 48px);
     max-width: 1240px !important;
@@ -76,41 +55,50 @@ html {
   }
 
   header.sticky > div:nth-child(2) > div > div {
+    display: grid !important;
+    grid-template-columns: auto auto auto;
+    justify-content: center;
+    align-items: center;
+    column-gap: 2rem;
+    height: 5.25rem;
+  }
+
+  header.sticky > div:nth-child(2) > div > div > div:first-child {
+    order: 1;
     display: flex !important;
     align-items: center;
-    height: 4.75rem;
-    gap: 1.75rem;
+    justify-content: flex-end;
+    gap: 1.75rem !important;
+    padding: 0 !important;
+    margin: 0 !important;
   }
 
   header.sticky > div:nth-child(2) > div > div > a {
-    order: 1;
+    order: 2;
     position: relative !important;
     inset: auto !important;
     left: auto !important;
     top: auto !important;
     transform: none !important;
-    width: 4.5rem !important;
-    height: 4.5rem !important;
+    width: 5.4rem !important;
+    height: 5.4rem !important;
     margin: 0 !important;
     flex: 0 0 auto;
-  }
-
-  header.sticky > div:nth-child(2) > div > div > div:first-child {
-    order: 2;
-    display: flex !important;
-    align-items: center;
-    gap: 1.5rem !important;
-    padding: 0 !important;
-    margin: 0 !important;
   }
 
   header.sticky > div:nth-child(2) > div > div > div:last-child {
     order: 3;
     display: flex !important;
     align-items: center;
-    gap: 1.35rem !important;
+    justify-content: flex-start;
+    gap: 1.5rem !important;
     padding: 0 !important;
-    margin-left: auto !important;
+    margin: 0 !important;
+  }
+
+  header.sticky > div:nth-child(2) a,
+  header.sticky > div:nth-child(2) button {
+    line-height: 1;
   }
 
   @supports (animation-timeline: scroll()) {
@@ -150,18 +138,18 @@ html {
 }
 
 @keyframes storeNavHeight {
-  from { height: 4.75rem; }
+  from { height: 5.25rem; }
   to { height: 3.25rem; }
 }
 
 @keyframes storeLogoCompact {
   from {
-    width: 4.5rem;
-    height: 4.5rem;
+    width: 5.4rem;
+    height: 5.4rem;
   }
   to {
-    width: 2.5rem;
-    height: 2.5rem;
+    width: 2.65rem;
+    height: 2.65rem;
   }
 }
 
