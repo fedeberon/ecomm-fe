@@ -73,7 +73,7 @@ html {
     gap: 1.15rem !important;
   }
 
-  header.sticky > div:nth-child(2) > div > a {
+  header.sticky > div:nth-child(2) > div > div > a {
     left: 50% !important;
     transform: translateX(-50%) !important;
   }
@@ -93,8 +93,8 @@ html {
       animation-range: 0 90px;
     }
 
-    header.sticky > div:nth-child(2) > div > a {
-      transform-origin: center top;
+    header.sticky > div:nth-child(2) > div > div > a {
+      transform-origin: center center;
       animation: storeLogoCompact linear both;
       animation-timeline: scroll(root block);
       animation-range: 0 90px;
@@ -127,7 +127,7 @@ html {
 
 @keyframes storeNavHeight {
   from { height: 5rem; }
-  to { height: 3.6rem; }
+  to { height: 3.25rem; }
 }
 
 @keyframes storeLogoCompact {
@@ -135,13 +135,13 @@ html {
     top: -1.25rem;
     width: 7.5rem;
     height: 7.5rem;
-    transform: translateX(-50%) scale(1);
+    transform: translateX(-50%);
   }
   to {
-    top: 0.15rem;
-    width: 4.5rem;
-    height: 4.5rem;
-    transform: translateX(-50%) scale(1);
+    top: 0.35rem;
+    width: 2.5rem;
+    height: 2.5rem;
+    transform: translateX(-50%);
   }
 }
 
