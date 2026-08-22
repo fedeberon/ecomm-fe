@@ -44,21 +44,40 @@ html {
   min-height: 200px;
 }
 
-/* Compact desktop store navigation */
+/* Desktop navigation: keep both groups visually balanced around the centered logo */
 @media (min-width: 1024px) {
   header.sticky > div:nth-child(2) > div {
     width: calc(100% - 48px);
-    max-width: 1180px !important;
+    max-width: 1280px !important;
     margin-left: auto;
     margin-right: auto;
   }
 
-  header.sticky > div:nth-child(2) > div > div > div:first-child,
-  header.sticky > div:nth-child(2) > div > div > div:last-child {
-    gap: 1.25rem !important;
+  header.sticky > div:nth-child(2) > div > div {
+    position: relative;
+    display: grid !important;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
   }
 
-  /* Chrome/Edge: smoothly collapse the sticky header as the page starts scrolling */
+  header.sticky > div:nth-child(2) > div > div > div:first-child {
+    justify-self: end;
+    padding-right: 128px;
+    gap: 1.35rem !important;
+  }
+
+  header.sticky > div:nth-child(2) > div > div > div:last-child {
+    justify-self: start;
+    padding-left: 128px;
+    margin-left: 0 !important;
+    gap: 1.15rem !important;
+  }
+
+  header.sticky > div:nth-child(2) > div > a {
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+  }
+
   @supports (animation-timeline: scroll()) {
     header.sticky > div:first-child {
       transform-origin: top;
@@ -80,6 +99,16 @@ html {
       animation-timeline: scroll(root block);
       animation-range: 0 90px;
     }
+  }
+}
+
+@media (min-width: 1280px) {
+  header.sticky > div:nth-child(2) > div > div > div:first-child {
+    padding-right: 142px;
+  }
+
+  header.sticky > div:nth-child(2) > div > div > div:last-child {
+    padding-left: 142px;
   }
 }
 
