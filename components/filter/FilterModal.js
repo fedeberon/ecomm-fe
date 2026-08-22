@@ -38,6 +38,7 @@ function FilterModal({ filterParams, searchFunction, columnList }) {
         setQueryParameters(emptyFilters);
         setSelectedOrderCol(columnList[0].value);
         setAscOrder(false);
+        setShowAllBrands(false);
         searchFunction([searchTerm, emptyFilters, columnList[0].value, "F"]);
     };
 
@@ -93,11 +94,11 @@ function FilterModal({ filterParams, searchFunction, columnList }) {
                     aria-label="Cerrar filtros"
                 />
 
-                <div className="relative z-10 flex items-center justify-center min-h-screen p-2 sm:p-3 lg:p-4">
-                    <div className="w-full max-w-[96vw] max-h-[94vh] bg-white rounded-2xl text-left shadow-2xl overflow-hidden flex flex-col">
-                        <div className="px-4 sm:px-6 pt-4 sm:pt-5 pb-3 flex items-start justify-between gap-4 border-b border-gray-100">
+                <div className="relative z-10 flex items-center justify-center min-h-screen p-3 sm:p-4">
+                    <div className="w-full max-w-[1180px] max-h-[86vh] bg-white rounded-2xl text-left shadow-2xl overflow-hidden flex flex-col">
+                        <div className="px-5 sm:px-7 pt-4 pb-3 flex items-start justify-between gap-4 border-b border-gray-100">
                             <div>
-                                <h2 className="text-2xl sm:text-[28px] leading-tight font-bold text-gray-800">Filtrar productos</h2>
+                                <h2 className="text-2xl font-bold leading-tight text-gray-800">Filtrar productos</h2>
                                 <p className="text-xs sm:text-sm text-gray-500 mt-1">Elegí las opciones y aplicá los filtros.</p>
                             </div>
                             <button
@@ -110,24 +111,40 @@ function FilterModal({ filterParams, searchFunction, columnList }) {
                             </button>
                         </div>
 
-                        <div className="flex-1 overflow-y-auto lg:overflow-hidden px-4 sm:px-6 py-3 sm:py-4">
-                            <div className="grid grid-cols-1 lg:grid-cols-2 gap-3 sm:gap-4">
+                        <div className="flex-1 min-h-0 overflow-y-auto px-5 sm:px-7 py-4">
+                            <div className="grid grid-cols-1 lg:grid-cols-[0.85fr_1.35fr] gap-4">
                                 {filterParams?.map((category, arrayIndex) => {
                                     const isBrands = category.type?.toLowerCase().includes('marca');
                                     const visibleElements = isBrands && !showAllBrands
-                                        ? (category.elements || []).slice(0, 40)
+                                        ? (category.elements || []).slice(0, 24)
                                         : (category.elements || []);
 
                                     return (
-                                        <section key={category.type} className="rounded-xl border border-gray-200 px-3 sm:px-4 py-3 bg-white min-h-0">
-                                            <div className="flex items-center justify-between mb-2.5">
-                                                <h3 className="text-base sm:text-lg font-bold text-gray-800">{category.type}</h3>
-                                                <span className="text-[11px] sm:text-xs text-gray-400">{category.elements?.length || 0} opciones</span>
+                                        <section key={category.type} className="rounded-xl border border-gray-200 px-4 py-3 bg-white">
+                                            <div className="flex items-center justify-between mb-3">
+                                                <h3 className="text-sm sm:text-base font-bold text-gray-800">
+                                                    {category.type} <span className="font-normal text-gray-400">({category.elements?.length || 0})</span>
+                                                </h3>
+                                                {isBrands && (category.elements?.length || 0) > 24 && (
+                                                    <button
+                                                        type="button"
+                                                        onClick={() => setShowAllBrands((prev) => !prev)}
+                                                        className="text-[11px] sm:text-xs font-semibold text-palette-sdark hover:text-palette-dark whitespace-nowrap"
+                                                    >
+                                                        {showAllBrands ? 'Ver menos' : 'Ver más marcas'} {showAllBrands ? '⌃' : '⌄'}
+                                                    </button>
+                                                )}
                                             </div>
 
-                                            <div className="grid grid-cols-2 sm:grid-cols-3 xl:grid-cols-4 gap-x-3 sm:gap-x-4 gap-y-1.5">
+                                            <div className={isBrands
+                                                ? "grid grid-cols-2 sm:grid-cols-3 xl:grid-cols-4 gap-x-4 gap-y-2"
+                                                : "grid grid-cols-2 sm:grid-cols-3 gap-x-4 gap-y-2"
+                                            }>
                                                 {visibleElements.map((subcategory, index) => (
-                                                    <label key={subcategory.id || index} className="inline-flex items-center min-w-0 text-[12px] sm:text-[13px] text-gray-700 cursor-pointer py-0.5 leading-5">
+                                                    <label
+                                                        key={subcategory.id || index}
+                                                        className="inline-flex items-center min-w-0 text-[11px] sm:text-xs text-gray-700 cursor-pointer leading-5"
+                                                    >
                                                         <input
                                                             type="checkbox"
                                                             className="form-checkbox w-4 h-4 rounded text-palette-sdark focus:ring-palette-sdark flex-shrink-0"
@@ -139,29 +156,19 @@ function FilterModal({ filterParams, searchFunction, columnList }) {
                                                     </label>
                                                 ))}
                                             </div>
-
-                                            {isBrands && (category.elements?.length || 0) > 40 && (
-                                                <button
-                                                    type="button"
-                                                    onClick={() => setShowAllBrands((prev) => !prev)}
-                                                    className="mt-2 text-xs font-semibold text-palette-sdark hover:text-palette-dark"
-                                                >
-                                                    {showAllBrands ? 'Ver menos marcas' : 'Ver más marcas'} {showAllBrands ? '⌃' : '⌄'}
-                                                </button>
-                                            )}
                                         </section>
                                     );
                                 })}
                             </div>
                         </div>
 
-                        <div className="px-4 sm:px-6 py-3 border-t border-gray-200 bg-white">
+                        <div className="px-5 sm:px-7 py-3 border-t border-gray-200 bg-gray-50">
                             <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-3">
                                 {columnList && (
                                     <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3 min-w-0">
-                                        <span className="text-xs sm:text-sm font-semibold text-gray-700 whitespace-nowrap">Ordenar por</span>
+                                        <span className="text-xs font-semibold text-gray-700 whitespace-nowrap">Ordenar por</span>
                                         <select
-                                            className="h-9 min-w-[180px] rounded-lg border-gray-200 text-xs sm:text-sm text-gray-700 focus:border-palette-sdark focus:ring-palette-sdark"
+                                            className="h-9 min-w-[180px] rounded-lg border-gray-200 text-xs text-gray-700 focus:border-palette-sdark focus:ring-palette-sdark"
                                             id="orderBy"
                                             value={selectedOrderCol}
                                             onChange={handleChangeColumn}
@@ -171,7 +178,7 @@ function FilterModal({ filterParams, searchFunction, columnList }) {
                                             ))}
                                         </select>
 
-                                        <div className="flex flex-wrap gap-3 text-xs text-gray-600">
+                                        <div className="flex flex-wrap gap-3 text-[11px] text-gray-600">
                                             <label className="flex items-center cursor-pointer whitespace-nowrap">
                                                 <input
                                                     type="radio"
@@ -199,14 +206,14 @@ function FilterModal({ filterParams, searchFunction, columnList }) {
                                 <div className="flex flex-col-reverse sm:flex-row sm:justify-end gap-2 sm:gap-3">
                                     <button
                                         type="button"
-                                        className="px-4 py-2 rounded-lg border border-gray-200 text-xs sm:text-sm text-gray-700 font-semibold hover:bg-gray-50"
+                                        className="px-4 py-2 rounded-lg border border-gray-200 bg-white text-xs text-gray-700 font-semibold hover:bg-gray-50"
                                         onClick={clearFilters}
                                     >
                                         Limpiar filtros
                                     </button>
                                     <button
                                         type="button"
-                                        className="px-5 py-2 rounded-lg bg-palette-sdark hover:bg-palette-dark text-white text-xs sm:text-sm font-bold shadow-sm"
+                                        className="px-5 py-2 rounded-lg bg-palette-sdark hover:bg-palette-dark text-white text-xs font-bold shadow-sm"
                                         onClick={applyFilters}
                                     >
                                         Aplicar filtros
