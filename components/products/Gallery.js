@@ -2,7 +2,7 @@ import ProductCard from "@/components/products/ProductCard";
 import { useEffect, useMemo, useState } from "react";
 
 const Gallery = ({ productData = [], compact = false }) => {
-    const chunkSize = compact ? 4 : 4;
+    const chunkSize = compact ? 6 : 4;
     const [currentSlide, setCurrentSlide] = useState(0);
 
     const groupedProducts = useMemo(() => {
@@ -43,12 +43,12 @@ const Gallery = ({ productData = [], compact = false }) => {
                     style={{ transform: `translateX(-${currentSlide * 100}%)` }}
                 >
                     {groupedProducts.map((products, index) => (
-                        <div className={`min-w-full ${compact ? 'px-8 py-1' : 'px-12 py-2'}`} key={index}>
+                        <div className={`min-w-full ${compact ? 'px-6 py-1' : 'px-12 py-2'}`} key={index}>
                             <div className={compact
-                                ? "grid grid-cols-1 gap-3 md:grid-cols-2"
+                                ? "grid grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-3 justify-items-center"
                                 : "grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4"}>
                                 {products.map((product, innerIndex) => (
-                                    <div key={product?.id || innerIndex} className="w-full">
+                                    <div key={product?.id || innerIndex} className={compact ? "w-full max-w-[390px]" : "w-full"}>
                                         <ProductCard product={product} compact={compact} />
                                     </div>
                                 ))}
