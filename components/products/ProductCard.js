@@ -5,40 +5,58 @@ import logo from "../../images/default.jpeg";
 
 function ProductCard({ product }) {
   const image = product.images && product.images.length !== 0 ? product.images[0].link : logo;
+  const category = product.category?.name || 'Producto';
+  const brand = product.brand?.name;
+  const sizes = product.sizes?.map((size) => size.name).filter(Boolean) || [];
+  const hasStock = Number(product.stock) > 0;
 
   return (
     <Link href={`/products/${product.id}`} passHref>
-      <a className="group block bg-white border border-gray-200 rounded-xl overflow-hidden hover:shadow-lg transition-shadow duration-200">
-        <div className="relative h-56 bg-gray-50 overflow-hidden">
+      <a className="group flex h-full flex-col overflow-hidden rounded-[18px] border border-slate-200 bg-white shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:shadow-lg">
+        <div className="relative h-44 bg-white overflow-hidden">
           <Image
             src={image.src ? image.src : image}
             layout="fill"
             objectFit="contain"
-            className="transition-transform duration-300 group-hover:scale-105"
+            className="p-3 transition-transform duration-300 group-hover:scale-[1.03]"
             alt={product.name || 'Producto'}
           />
+
           {product.promo && (
-            <span className="absolute top-3 left-3 bg-palette-secondary text-white text-xs font-bold px-3 py-1 rounded-full">
+            <span className="absolute left-3 top-3 rounded-full bg-palette-secondary px-2.5 py-1 text-[11px] font-bold text-white shadow-sm">
               Promo
             </span>
           )}
         </div>
 
-        <div className="p-4">
-          <p className="text-xs text-gray-500 mb-1 truncate">
-            {product.category ? product.category.name : 'Producto'}
-          </p>
-          <h3 className="text-base font-semibold text-gray-800 leading-snug h-12 overflow-hidden">
+        <div className="flex flex-1 flex-col border-t border-slate-100 p-3.5">
+          <div className="mb-1 flex items-center gap-1 text-[11px] text-slate-500">
+            <span className="truncate">{category}</span>
+            {brand && <><span>·</span><span className="truncate">{brand}</span></>}
+          </div>
+
+          <h3 className="min-h-[42px] text-[15px] font-semibold leading-5 text-slate-900 line-clamp-2">
             {product.name}
           </h3>
-          <div className="mt-3 text-xl font-bold text-gray-900">
-            <Price currency="$" num={product.price} numSize="text-xl" />
+
+          <div className="mt-2 text-[22px] font-bold leading-none text-slate-950">
+            <Price currency="$" num={product.price} numSize="text-[22px]" />
           </div>
-          <p className="mt-2 text-xs text-gray-500 h-8 overflow-hidden">
-            {product.description}
-          </p>
-          <div className="mt-4 text-sm font-semibold text-palette-dark group-hover:underline">
-            Ver producto
+
+          <div className="mt-3 flex flex-wrap gap-1.5">
+            {sizes.length > 0 && (
+              <span className="rounded-full bg-slate-100 px-2 py-1 text-[10px] font-medium text-slate-600">
+                Talle {sizes.join(' / ')}
+              </span>
+            )}
+
+            <span className={`rounded-full px-2 py-1 text-[10px] font-medium ${hasStock ? 'bg-emerald-50 text-emerald-700' : 'bg-rose-50 text-rose-600'}`}>
+              {hasStock ? `Stock ${product.stock}` : 'Sin stock'}
+            </span>
+          </div>
+
+          <div className="mt-auto pt-3 text-[12px] font-semibold text-palette-sdark transition-colors group-hover:text-palette-dark">
+            Ver detalle →
           </div>
         </div>
       </a>
