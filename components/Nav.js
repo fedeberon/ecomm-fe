@@ -3,6 +3,7 @@ import Link from "next/link";
 import { useCartContext } from "@/context/Store";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars, faShoppingCart, faHome } from "@fortawesome/free-solid-svg-icons";
+import logo from "/images/logoMati.png";
 import UserSession from "@/components/users/UserSession";
 import { useSession } from "next-auth/client";
 import { findAll } from "services/categoriesService";
@@ -41,8 +42,8 @@ function Nav() {
               <Link href="/diapers/inicio"><a className="hidden lg:block py-3 text-sm font-bold text-gray-800 hover:text-palette-sdark">Pañalería</a></Link>
             </div>
             <Link href="/">
-              <a className="absolute left-1/2 -translate-x-1/2 top-0 lg:-top-7 z-20 flex items-center justify-center w-24 h-24 lg:w-32 lg:h-32">
-                <img src="/images/logo-dulce-bebe-fixed.svg" className="w-full h-full object-contain drop-shadow-[0_10px_18px_rgba(15,23,42,0.18)]" alt="Dulce Bebé" />
+              <a className="absolute left-1/2 -translate-x-1/2 top-0 lg:-top-5 z-20 flex items-center justify-center w-24 h-24 lg:w-30 lg:h-30 rounded-full bg-white border border-gray-100 shadow-xl p-2">
+                <img src={logo.src} className="w-full h-full object-contain" alt="Dulce Bebé" />
               </a>
             </Link>
             <div className="flex items-center gap-2 lg:gap-6 ml-auto">
