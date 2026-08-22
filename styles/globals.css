@@ -4,7 +4,6 @@
 @tailwind components;
 @tailwind utilities;
 
-
 .triangle {
 
 }
@@ -16,41 +15,28 @@ html {
   content: '';
   height: 100%;
   position: absolute;
-  top: 0; 
+  top: 0;
   left: 0em;
   border: 1em solid transparent;
   border-left-color: #ffffff;
 }
 
-
 .carousel {
   display: inline-flex;
   overflow-x: hidden;
-  /*  scroll snap is a great feature which will center the image on snap on touch screen devices  */
   scroll-snap-type: x mandatory;
-  /* all below will hide the scrollbar on all browsers.    */
   -webkit-overflow-scrolling: touch;
-  scrollbar-width: none; /* For Firefox */
-  -ms-overflow-style: none; /* For Internet Explorer and Edge */
+  scrollbar-width: none;
+  -ms-overflow-style: none;
 }
 
-/*
-#card:hover { transform: rotateY(180deg); }
-*/
 #card > div:nth-child(1) { transition-delay: 150ms;}
 
-
-/*
-#card:hover > div:nth-child(1) {
-  opacity: 0;
-  z-index: -1;
-}
-*/
 .imgproduct {
   padding: 10px;
   margin-bottom: 2px;
   overflow: hidden;
-  width: 100%;  
+  width: 100%;
   height: 65vh;
   min-height: 300px;
   background: no-repeat center center scroll;
@@ -67,28 +53,77 @@ html {
     margin-right: auto;
   }
 
-  header.sticky > div:nth-child(2) > div > div > div:first-child {
-    gap: 1.25rem !important;
-  }
-
+  header.sticky > div:nth-child(2) > div > div > div:first-child,
   header.sticky > div:nth-child(2) > div > div > div:last-child {
     gap: 1.25rem !important;
   }
+
+  /* Chrome/Edge: smoothly collapse the sticky header as the page starts scrolling */
+  @supports (animation-timeline: scroll()) {
+    header.sticky > div:first-child {
+      transform-origin: top;
+      animation: storeTopBarCollapse linear both;
+      animation-timeline: scroll(root block);
+      animation-range: 0 90px;
+      overflow: hidden;
+    }
+
+    header.sticky > div:nth-child(2) > div > div {
+      animation: storeNavHeight linear both;
+      animation-timeline: scroll(root block);
+      animation-range: 0 90px;
+    }
+
+    header.sticky > div:nth-child(2) > div > a {
+      transform-origin: center top;
+      animation: storeLogoCompact linear both;
+      animation-timeline: scroll(root block);
+      animation-range: 0 90px;
+    }
+  }
 }
 
-/*
-    https://github.com/tailwindlabs/tailwindcss/discussions/2394
-    https://github.com/tailwindlabs/tailwindcss/pull/5732
-*/
+@keyframes storeTopBarCollapse {
+  from {
+    max-height: 32px;
+    opacity: 1;
+    transform: translateY(0);
+  }
+  to {
+    max-height: 0;
+    opacity: 0;
+    transform: translateY(-100%);
+  }
+}
+
+@keyframes storeNavHeight {
+  from { height: 5rem; }
+  to { height: 3.6rem; }
+}
+
+@keyframes storeLogoCompact {
+  from {
+    top: -1.25rem;
+    width: 7.5rem;
+    height: 7.5rem;
+    transform: translateX(-50%) scale(1);
+  }
+  to {
+    top: 0.15rem;
+    width: 4.5rem;
+    height: 4.5rem;
+    transform: translateX(-50%) scale(1);
+  }
+}
+
 @layer utilities {
-  /* Chrome, Safari and Opera */
   .no-scrollbar::-webkit-scrollbar {
     display: none;
   }
 
-.no-scrollbar {
-    -ms-overflow-style: none; /* IE and Edge */
-    scrollbar-width: none; /* Firefox */
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
   }
 }
 
@@ -99,21 +134,11 @@ html {
 }
 
 @-webkit-keyframes spinner {
-  0% {
-    -webkit-transform: rotate(0deg);
-  }
-  100% {
-    -webkit-transform: rotate(360deg);
-  }
+  0% { -webkit-transform: rotate(0deg); }
+  100% { -webkit-transform: rotate(360deg); }
 }
 
 @keyframes spinner {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(360deg);
-  }
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }
-
-
