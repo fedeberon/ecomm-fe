@@ -44,47 +44,51 @@ html {
   min-height: 200px;
 }
 
-/* Desktop navigation: true three-column structure */
+/* Desktop ecommerce navigation: logo participates in the row instead of floating */
 @media (min-width: 1024px) {
   header.sticky > div:nth-child(2) > div {
     width: calc(100% - 48px);
-    max-width: 1180px !important;
+    max-width: 1240px !important;
     margin-left: auto;
     margin-right: auto;
   }
 
   header.sticky > div:nth-child(2) > div > div {
-    position: relative;
-    display: grid !important;
-    grid-template-columns: minmax(0, 1fr) 112px minmax(0, 1fr);
+    display: flex !important;
     align-items: center;
-    column-gap: 1.5rem;
-  }
-
-  header.sticky > div:nth-child(2) > div > div > div:first-child {
-    grid-column: 1;
-    justify-self: end;
-    padding-right: 0 !important;
-    gap: 1.25rem !important;
+    height: 4.75rem;
+    gap: 1.75rem;
   }
 
   header.sticky > div:nth-child(2) > div > div > a {
-    grid-column: 2;
+    order: 1;
     position: relative !important;
     inset: auto !important;
     left: auto !important;
     top: auto !important;
     transform: none !important;
-    justify-self: center;
+    width: 4.5rem !important;
+    height: 4.5rem !important;
+    margin: 0 !important;
+    flex: 0 0 auto;
+  }
+
+  header.sticky > div:nth-child(2) > div > div > div:first-child {
+    order: 2;
+    display: flex !important;
+    align-items: center;
+    gap: 1.5rem !important;
+    padding: 0 !important;
     margin: 0 !important;
   }
 
   header.sticky > div:nth-child(2) > div > div > div:last-child {
-    grid-column: 3;
-    justify-self: start;
-    padding-left: 0 !important;
-    margin-left: 0 !important;
-    gap: 1rem !important;
+    order: 3;
+    display: flex !important;
+    align-items: center;
+    gap: 1.35rem !important;
+    padding: 0 !important;
+    margin-left: auto !important;
   }
 
   @supports (animation-timeline: scroll()) {
@@ -124,14 +128,14 @@ html {
 }
 
 @keyframes storeNavHeight {
-  from { height: 5rem; }
+  from { height: 4.75rem; }
   to { height: 3.25rem; }
 }
 
 @keyframes storeLogoCompact {
   from {
-    width: 7.5rem;
-    height: 7.5rem;
+    width: 4.5rem;
+    height: 4.5rem;
   }
   to {
     width: 2.5rem;
