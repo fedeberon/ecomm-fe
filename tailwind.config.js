@@ -1,6 +1,6 @@
 module.exports = {
   purge: ['./pages/**/*.{js,ts,jsx,tsx}', './components/**/*.{js,ts,jsx,tsx}'],
-  darkMode: false, // or 'media' or 'class'
+  darkMode: false,
   theme: {
     extend: {
       height: theme => ({
@@ -13,28 +13,16 @@ module.exports = {
       colors: {
         palette: {
           lighter: '#fff3f9',
-          light: '#f9a8d4',
-          primary: '#545053',
-          dark: '#da32a9',
-          secondary: '#F8B9CA',
-          slight:'#79d7df',
-          slighter:'#c6eced',
-          sdark:'#31b8c3',
-          bg:'#ffffff'
+          light: '#f5c1d3',
+          primary: '#3f4652',
+          dark: '#11788b',
+          secondary: '#ef8fb1',
+          slight: '#45aebd',
+          slighter: '#e8f7f9',
+          sdark: '#148aa0',
+          bg: '#ffffff'
         },
       },
-      // colors: {
-      //   palette: {
-      //     lighter: '#fff3f9',
-      //     light: '#f9a8d4',
-      //     primary: '#ed7aad',
-      //     dark: '#da32a9',
-      //     secondary: '#60c3cb',
-      //     slight:'#79d7df',
-      //     slighter:'#c6eced',
-      //     sdark:'#31b8c3'
-      //   },
-      // },
       fontFamily: {
         primary: ['"Josefin Sans"']
       }
