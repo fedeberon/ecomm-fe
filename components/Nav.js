@@ -17,22 +17,19 @@ function Nav() {
   const [categories, setCategories] = useState([]);
 
   useEffect(() => {
-    const loadCategories = async () => {
-      setCategories(await findAll());
-    };
+    const loadCategories = async () => setCategories(await findAll());
     loadCategories();
   }, []);
 
   useEffect(() => {
-    const total = cart.reduce((acc, item) => acc + item.quantity, 0);
-    setCartItems(total);
+    setCartItems(cart.reduce((acc, item) => acc + item.quantity, 0));
   }, [cart]);
 
   return (
     <header className="sticky top-0 z-50 w-full bg-white shadow-sm">
       <div className="hidden md:block bg-palette-sdark text-white">
-        <div className="max-w-7xl mx-auto px-6 lg:px-8 h-9 flex items-center justify-between text-xs font-semibold tracking-wide">
-          <div className="flex items-center gap-6">
+        <div className="max-w-7xl mx-auto px-6 lg:px-8 h-8 flex items-center justify-between text-xs font-semibold tracking-wide">
+          <div className="flex items-center gap-5">
             <span>Envíos a todo el país</span>
             <span className="opacity-40">|</span>
             <span>Compras 100% seguras</span>
@@ -43,8 +40,8 @@ function Nav() {
 
       <div className="border-b border-gray-100">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
-          <div className="h-20 flex items-center justify-between">
-            <div className="flex items-center gap-3 lg:gap-8">
+          <div className="h-16 lg:h-20 flex items-center justify-between">
+            <div className="flex items-center gap-3 lg:gap-10">
               <button
                 id="menuButton"
                 onClick={() => setIsShow(!isShow)}
@@ -55,19 +52,19 @@ function Nav() {
               </button>
 
               <Link href="/">
-                <a className="hidden lg:flex items-center gap-2 py-3 text-sm font-bold text-gray-700 hover:text-palette-sdark">
+                <a className="hidden lg:flex items-center gap-2 py-3 text-sm font-bold text-gray-800 hover:text-palette-sdark">
                   <FontAwesomeIcon icon={faHome} className="w-4 text-palette-sdark" />
                   Inicio
                 </a>
               </Link>
               <Link href="/diapers/inicio">
-                <a className="hidden lg:block py-3 text-sm font-bold text-gray-700 hover:text-palette-sdark">Pañalería</a>
+                <a className="hidden lg:block py-3 text-sm font-bold text-gray-800 hover:text-palette-sdark">Pañalería</a>
               </Link>
             </div>
 
             <Link href="/">
-              <a className="absolute left-1/2 transform -translate-x-1/2 top-2 lg:-top-5 z-20 flex items-center justify-center w-24 h-24 lg:w-32 lg:h-32 rounded-full bg-white shadow-xl border border-gray-100">
-                <img src={logo.src} className="w-20 h-20 lg:w-28 lg:h-28 object-contain" alt="Dulce Bebé" />
+              <a className="absolute left-1/2 transform -translate-x-1/2 top-1 lg:-top-4 z-20 flex items-center justify-center w-20 h-20 lg:w-28 lg:h-28 rounded-full bg-white shadow-xl border border-gray-100">
+                <img src={logo.src} className="w-16 h-16 lg:w-24 lg:h-24 object-contain" alt="Dulce Bebé" />
               </a>
             </Link>
 
@@ -76,7 +73,7 @@ function Nav() {
                 <button
                   type="button"
                   onClick={() => setCategoriesVisible(!categoriesVisible)}
-                  className="flex items-center gap-1 py-3 text-sm font-bold text-gray-700 hover:text-palette-sdark"
+                  className="flex items-center gap-1 py-3 text-sm font-bold text-gray-800 hover:text-palette-sdark"
                 >
                   Categorías <span className="text-xs">⌄</span>
                 </button>
@@ -96,15 +93,15 @@ function Nav() {
               </div>
 
               <Link href="/about/inicio">
-                <a className="hidden lg:block py-3 text-sm font-bold text-gray-700 hover:text-palette-sdark">Quiénes somos</a>
+                <a className="hidden lg:block py-3 text-sm font-bold text-gray-800 hover:text-palette-sdark">Quiénes somos</a>
               </Link>
 
-              <div className="hidden sm:flex items-center justify-center w-10 h-10 rounded-full border border-gray-200 bg-white shadow-sm">
+              <div className="hidden sm:flex items-center justify-center w-9 h-9 rounded-full border border-gray-200 bg-white shadow-sm">
                 <UserSession session={session} />
               </div>
 
               <Link href="/cart" passHref>
-                <a className="relative flex items-center justify-center w-11 h-11 rounded-xl bg-palette-sdark hover:bg-palette-dark shadow-md" aria-label="Carrito">
+                <a className="relative flex items-center justify-center w-10 h-10 rounded-xl bg-palette-sdark hover:bg-palette-dark shadow-md" aria-label="Carrito">
                   <FontAwesomeIcon icon={faShoppingCart} className="h-5 text-white" />
                   {cartItems > 0 && (
                     <span className="absolute -top-2 -right-2 min-w-5 h-5 px-1 flex items-center justify-center text-xs bg-white text-palette-sdark font-bold rounded-full shadow">
@@ -116,15 +113,15 @@ function Nav() {
             </div>
           </div>
 
-          <div className="pb-4 pt-1 lg:pt-2">
-            <div className="max-w-5xl mx-auto relative">
+          <div className="pb-3 pt-1 lg:pt-1">
+            <div className="max-w-6xl mx-auto relative">
               <FontAwesomeIcon icon={faSearch} className="absolute left-5 top-1/2 transform -translate-y-1/2 w-4 text-gray-400" />
               <input
                 type="search"
                 placeholder="Buscar productos para tu bebé..."
-                className="w-full bg-white border border-gray-200 rounded-full py-3 pl-12 pr-16 text-sm text-gray-700 shadow-sm focus:outline-none focus:ring-2 focus:ring-palette-slight"
+                className="w-full h-10 bg-white border border-gray-200 rounded-full pl-12 pr-16 text-sm text-gray-700 shadow-sm focus:outline-none focus:ring-2 focus:ring-palette-slight"
               />
-              <button type="button" aria-label="Buscar" className="absolute right-0 top-0 h-full w-14 rounded-r-full bg-palette-sdark hover:bg-palette-dark text-white flex items-center justify-center">
+              <button type="button" aria-label="Buscar" className="absolute right-0 top-0 h-10 w-14 rounded-r-full bg-palette-sdark hover:bg-palette-dark text-white flex items-center justify-center">
                 <FontAwesomeIcon icon={faSearch} className="w-4" />
               </button>
             </div>
