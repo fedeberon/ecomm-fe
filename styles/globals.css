@@ -54,13 +54,16 @@ html {
     margin-right: auto;
   }
 
-  /* The Tailwind h-8 on the announcement row was clipping bottom spacing. */
   header.sticky > div:first-child > div {
     height: auto !important;
     min-height: 2.65rem;
     padding-top: 0.4rem;
     padding-bottom: 0.65rem;
     box-sizing: border-box;
+  }
+
+  header.sticky > div:nth-child(2) {
+    padding-bottom: 0.35rem;
   }
 
   header.sticky > div:nth-child(2) > div > div {
@@ -148,7 +151,7 @@ html {
 
 @keyframes storeNavHeight {
   from { height: 5.25rem; }
-  to { height: 3.25rem; }
+  to { height: 3.85rem; }
 }
 
 @keyframes storeLogoCompact {
