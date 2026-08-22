@@ -20,11 +20,7 @@ function FilterModal({ filterParams, searchFunction, columnList }) {
             const selected = queryParameters[categoryIndex] || [];
             (category.elements || []).forEach((item) => {
                 if (selected.includes(String(item.id)) || selected.includes(item.id)) {
-                    pills.push({
-                        categoryIndex,
-                        value: String(item.id),
-                        label: `${category.type}: ${item.name}`
-                    });
+                    pills.push({ categoryIndex, value: String(item.id), label: `${category.type}: ${item.name}` });
                 }
             });
         });
@@ -86,44 +82,48 @@ function FilterModal({ filterParams, searchFunction, columnList }) {
                 </button>
             </div>
 
-            <div className={`fixed z-50 inset-0 ${showFilter ? "" : "hidden"}`}>
+            <div className={`fixed inset-0 z-50 ${showFilter ? '' : 'hidden'}`}>
                 <button
                     type="button"
                     onClick={() => setShowFilter(false)}
-                    className="absolute inset-0 w-full h-full bg-gray-900 bg-opacity-40 backdrop-filter backdrop-blur-sm"
+                    className="absolute inset-0 h-full w-full bg-slate-900/35 backdrop-blur-[3px]"
                     aria-label="Cerrar filtros"
                 />
 
-                <div className="relative z-10 flex items-center justify-center h-screen p-4 sm:p-6">
-                    <div className="w-full max-w-[1180px] max-h-[86vh] bg-white rounded-[34px] border border-gray-100 shadow-2xl overflow-hidden flex flex-col">
-                        <div className="px-6 sm:px-8 py-4 flex items-start justify-between border-b border-gray-100 bg-gradient-to-b from-white to-gray-50 flex-shrink-0">
+                <div className="relative z-10 flex h-screen items-center justify-center p-4 sm:p-6 lg:p-8">
+                    <div className="flex w-full max-w-[1160px] max-h-[84vh] flex-col overflow-hidden rounded-[32px] border border-white/80 bg-white shadow-[0_28px_90px_rgba(15,23,42,0.22)]">
+                        <div className="flex flex-shrink-0 items-start justify-between bg-gradient-to-b from-white to-slate-50/70 px-6 py-4 sm:px-8">
                             <div>
-                                <h2 className="text-2xl sm:text-3xl font-bold leading-tight text-gray-900">Filtrar productos</h2>
-                                <p className="text-xs sm:text-sm text-gray-500 mt-1">Elegí las opciones y aplicá los filtros.</p>
+                                <h2 className="text-[28px] font-bold leading-tight text-slate-900">Filtrar productos</h2>
+                                <p className="mt-1 text-[13px] text-slate-500">Elegí las opciones y aplicá los filtros.</p>
                             </div>
-                            <button type="button" onClick={() => setShowFilter(false)} className="w-9 h-9 rounded-full border border-gray-200 bg-white hover:bg-gray-50 text-gray-500 text-xl shadow-sm">×</button>
+                            <button
+                                type="button"
+                                onClick={() => setShowFilter(false)}
+                                className="flex h-9 w-9 items-center justify-center rounded-full border border-slate-200 bg-white text-lg text-slate-500 shadow-sm transition hover:bg-slate-50"
+                            >×</button>
                         </div>
 
                         {selectedPills.length > 0 && (
-                            <div className="px-6 sm:px-8 py-2.5 border-b border-gray-100 flex flex-wrap items-center gap-1.5 bg-white flex-shrink-0">
-                                <span className="text-[10px] font-semibold text-gray-500 mr-1">Filtros aplicados:</span>
+                            <div className="flex flex-shrink-0 flex-wrap items-center gap-1.5 border-y border-slate-100 bg-white px-6 py-2.5 sm:px-8">
+                                <span className="mr-1 text-[10px] font-semibold uppercase tracking-wide text-slate-400">Filtros aplicados</span>
                                 {selectedPills.map((pill) => (
                                     <button
                                         key={`${pill.categoryIndex}-${pill.value}`}
                                         type="button"
                                         onClick={() => toggleValue(pill.value, pill.categoryIndex)}
-                                        className="inline-flex items-center gap-1 rounded-full border border-gray-200 bg-gray-50 px-2.5 py-1 text-[9px] sm:text-[10px] font-medium text-gray-600 hover:border-palette-sdark hover:text-palette-sdark hover:bg-white transition-colors"
+                                        className="inline-flex max-w-[170px] items-center gap-1 rounded-full border border-slate-200 bg-slate-50 px-2.5 py-1 text-[9px] font-medium text-slate-600 transition hover:border-palette-sdark hover:bg-white hover:text-palette-sdark"
                                     >
-                                        <span className="truncate max-w-[150px]">{pill.label}</span>
+                                        <span className="truncate">{pill.label}</span>
                                         <span className="text-[11px] leading-none">×</span>
                                     </button>
                                 ))}
-                                <button type="button" onClick={clearFilters} className="text-[10px] font-semibold text-palette-sdark hover:text-palette-dark ml-1">Limpiar todos</button>
+                                <button type="button" onClick={clearFilters} className="ml-1 text-[10px] font-semibold text-palette-sdark hover:text-palette-dark">Limpiar todos</button>
                             </div>
                         )}
 
-                        <div className="flex-1 min-h-0 overflow-y-auto px-6 sm:px-8 py-4 bg-gray-50 bg-opacity-30">
-                            <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                        <div className="min-h-0 flex-1 overflow-y-auto bg-slate-50/40 px-6 py-4 sm:px-8">
+                            <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
                                 {filterParams?.map((category, arrayIndex) => {
                                     const isBrands = category.type?.toLowerCase().includes('marca');
                                     const sectionKey = isBrands ? 'Marcas' : 'Categorias';
@@ -135,47 +135,43 @@ function FilterModal({ filterParams, searchFunction, columnList }) {
                                         elements = elements.filter((item) => item.name?.toLowerCase().includes(query));
                                     }
 
-                                    if (isBrands && !showAllBrands) {
-                                        elements = elements.slice(0, 20);
-                                    }
+                                    if (isBrands && !showAllBrands) elements = elements.slice(0, 16);
 
                                     return (
-                                        <section key={category.type} className="rounded-[22px] border border-gray-200 bg-white overflow-hidden shadow-sm">
+                                        <section key={category.type} className="overflow-hidden rounded-[22px] border border-slate-200 bg-white shadow-[0_6px_20px_rgba(15,23,42,0.05)]">
                                             <button
                                                 type="button"
                                                 onClick={() => toggleSection(sectionKey)}
-                                                className="w-full px-4 py-3 flex items-center justify-between text-left hover:bg-gray-50"
+                                                className="flex w-full items-center justify-between px-4 py-3 text-left transition hover:bg-slate-50"
                                             >
-                                                <div className="flex items-center gap-2">
-                                                    <span className="w-7 h-7 rounded-lg bg-palette-slighter text-palette-sdark flex items-center justify-center text-sm font-bold">{isBrands ? '✿' : '◇'}</span>
-                                                    <h3 className="text-sm sm:text-base font-bold text-gray-900">{category.type} <span className="font-normal text-gray-400">({category.elements?.length || 0})</span></h3>
+                                                <div className="flex items-center gap-2.5">
+                                                    <span className="flex h-8 w-8 items-center justify-center rounded-xl bg-palette-slighter text-sm font-bold text-palette-sdark">{isBrands ? '✿' : '◇'}</span>
+                                                    <h3 className="text-[15px] font-bold text-slate-900">{category.type} <span className="font-normal text-slate-400">({category.elements?.length || 0})</span></h3>
                                                 </div>
-                                                <span className="text-palette-sdark text-sm">{isOpen ? '⌃' : '⌄'}</span>
+                                                <span className="text-sm font-bold text-palette-sdark">{isOpen ? '⌃' : '⌄'}</span>
                                             </button>
 
                                             {isOpen && (
                                                 <div className="px-4 pb-4">
                                                     {isBrands && (
-                                                        <div className="mb-3">
-                                                            <input
-                                                                type="search"
-                                                                value={brandSearch}
-                                                                onChange={(e) => setBrandSearch(e.target.value)}
-                                                                placeholder="Buscar marca..."
-                                                                className="w-full h-9 rounded-xl border border-gray-200 bg-gray-50 px-3 text-xs text-gray-700 focus:bg-white focus:border-palette-sdark focus:ring-palette-sdark"
-                                                            />
-                                                        </div>
+                                                        <input
+                                                            type="search"
+                                                            value={brandSearch}
+                                                            onChange={(e) => setBrandSearch(e.target.value)}
+                                                            placeholder="Buscar marca..."
+                                                            className="mb-3 h-9 w-full rounded-xl border border-slate-200 bg-slate-50 px-3 text-xs text-slate-700 placeholder:text-slate-400 focus:border-palette-sdark focus:bg-white focus:ring-palette-sdark"
+                                                        />
                                                     )}
 
-                                                    <div className={isBrands ? "grid grid-cols-2 sm:grid-cols-4 gap-x-4 gap-y-2" : "grid grid-cols-2 sm:grid-cols-3 xl:grid-cols-4 gap-x-4 gap-y-2"}>
+                                                    <div className={isBrands ? "grid grid-cols-2 gap-x-4 gap-y-2 sm:grid-cols-4" : "grid grid-cols-2 gap-x-4 gap-y-2 sm:grid-cols-3 xl:grid-cols-4"}>
                                                         {elements.map((subcategory, index) => {
                                                             const value = String(subcategory.id);
                                                             const checked = queryParameters[arrayIndex]?.includes(value);
                                                             return (
-                                                                <label key={subcategory.id || index} className="inline-flex items-center min-w-0 text-[11px] sm:text-xs text-gray-700 cursor-pointer leading-5">
+                                                                <label key={subcategory.id || index} className="inline-flex min-w-0 cursor-pointer items-center text-[11px] leading-5 text-slate-700 sm:text-xs">
                                                                     <input
                                                                         type="checkbox"
-                                                                        className="form-checkbox w-4 h-4 rounded text-palette-sdark focus:ring-palette-sdark flex-shrink-0"
+                                                                        className="form-checkbox h-4 w-4 flex-shrink-0 rounded border-slate-300 text-palette-sdark focus:ring-palette-sdark"
                                                                         checked={checked}
                                                                         onChange={() => toggleValue(value, arrayIndex)}
                                                                     />
@@ -185,7 +181,7 @@ function FilterModal({ filterParams, searchFunction, columnList }) {
                                                         })}
                                                     </div>
 
-                                                    {isBrands && (category.elements?.length || 0) > 20 && !brandSearch.trim() && (
+                                                    {isBrands && (category.elements?.length || 0) > 16 && !brandSearch.trim() && (
                                                         <button type="button" onClick={() => setShowAllBrands((prev) => !prev)} className="mt-3 text-[11px] font-semibold text-palette-sdark hover:text-palette-dark">
                                                             {showAllBrands ? 'Ver menos marcas' : 'Ver más marcas'} {showAllBrands ? '⌃' : '⌄'}
                                                         </button>
@@ -198,12 +194,12 @@ function FilterModal({ filterParams, searchFunction, columnList }) {
                             </div>
                         </div>
 
-                        <div className="px-6 sm:px-8 py-3 border-t border-gray-200 bg-white flex-shrink-0">
-                            <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-3">
+                        <div className="flex-shrink-0 border-t border-slate-200 bg-white px-6 py-3 sm:px-8">
+                            <div className="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
                                 {columnList && (
-                                    <div className="flex flex-wrap items-center gap-3 text-[11px] text-gray-600">
-                                        <span className="font-semibold text-gray-700">Ordenar por</span>
-                                        <select className="h-9 min-w-[180px] rounded-xl border-gray-200 text-xs text-gray-700" value={selectedOrderCol} onChange={(e) => setSelectedOrderCol(e.target.value)}>
+                                    <div className="flex flex-wrap items-center gap-3 text-[11px] text-slate-600">
+                                        <span className="font-semibold text-slate-700">Ordenar por</span>
+                                        <select className="h-9 min-w-[180px] rounded-xl border-slate-200 text-xs text-slate-700 focus:border-palette-sdark focus:ring-palette-sdark" value={selectedOrderCol} onChange={(e) => setSelectedOrderCol(e.target.value)}>
                                             {columnList.map((option) => <option key={option.value} value={option.value}>{option.label}</option>)}
                                         </select>
                                         <label className="flex items-center"><input type="radio" className="form-radio text-palette-sdark" name="order" checked={!ascOrder} onChange={() => setAscOrder(false)} /><span className="ml-1.5">Mayor a menor</span></label>
@@ -212,8 +208,8 @@ function FilterModal({ filterParams, searchFunction, columnList }) {
                                 )}
 
                                 <div className="flex justify-end gap-2 sm:gap-3">
-                                    <button type="button" onClick={clearFilters} className="px-4 h-9 rounded-xl border border-gray-200 bg-white text-xs text-gray-700 font-semibold hover:bg-gray-50">Limpiar filtros</button>
-                                    <button type="button" onClick={applyFilters} className="px-5 h-9 rounded-xl bg-palette-sdark hover:bg-palette-dark text-white text-xs font-bold shadow-sm">Aplicar filtros</button>
+                                    <button type="button" onClick={clearFilters} className="h-9 rounded-xl border border-slate-200 bg-white px-4 text-xs font-semibold text-slate-700 transition hover:bg-slate-50">Limpiar filtros</button>
+                                    <button type="button" onClick={applyFilters} className="h-9 rounded-xl bg-palette-sdark px-5 text-xs font-bold text-white shadow-sm transition hover:bg-palette-dark">Aplicar filtros</button>
                                 </div>
                             </div>
                         </div>
