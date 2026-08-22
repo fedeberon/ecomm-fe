@@ -3,11 +3,10 @@ import Link from "next/link";
 import { useCartContext } from "@/context/Store";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars, faShoppingCart, faHome } from "@fortawesome/free-solid-svg-icons";
+import logo from "/images/logoMati.png";
 import UserSession from "@/components/users/UserSession";
 import { useSession } from "next-auth/client";
 import { findAll } from "services/categoriesService";
-
-const logo = "data:image/webp;base64,UklGRmLoAABXRUJQVlA4IFYAAAAwVwCdASoAAgACPpE6l0eloyIhMAgAsBIJbACdMoR/7QZt0G3qH3Y+...";
 
 function Nav() {
   const cart = useCartContext()[0];
@@ -30,32 +29,19 @@ function Nav() {
     <header className="sticky top-0 z-50 w-full bg-white shadow-sm">
       <div className="hidden md:block bg-palette-sdark text-white">
         <div className="max-w-7xl mx-auto px-6 lg:px-8 h-8 flex items-center justify-between text-xs font-semibold tracking-wide">
-          <div className="flex items-center gap-5">
-            <span>Envíos a todo el país</span>
-            <span className="opacity-40">|</span>
-            <span>Compras 100% seguras</span>
-          </div>
+          <div className="flex items-center gap-5"><span>Envíos a todo el país</span><span className="opacity-40">|</span><span>Compras 100% seguras</span></div>
           <span className="opacity-90">Todo para acompañar cada etapa</span>
         </div>
       </div>
-
       <div className="border-b border-gray-100">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
           <div className="h-16 lg:h-20 flex items-center justify-between">
             <div className="flex items-center gap-3 lg:gap-10">
-              <button id="menuButton" onClick={() => setIsShow(!isShow)} className="lg:hidden p-2 rounded-xl hover:bg-gray-100" aria-label="Abrir menú">
-                <FontAwesomeIcon icon={faBars} className="w-5 text-gray-700" />
-              </button>
+              <button id="menuButton" onClick={() => setIsShow(!isShow)} className="lg:hidden p-2 rounded-xl hover:bg-gray-100" aria-label="Abrir menú"><FontAwesomeIcon icon={faBars} className="w-5 text-gray-700" /></button>
               <Link href="/"><a className="hidden lg:flex items-center gap-2 py-3 text-sm font-bold text-gray-800 hover:text-palette-sdark"><FontAwesomeIcon icon={faHome} className="w-4 text-palette-sdark" />Inicio</a></Link>
               <Link href="/diapers/inicio"><a className="hidden lg:block py-3 text-sm font-bold text-gray-800 hover:text-palette-sdark">Pañalería</a></Link>
             </div>
-
-            <Link href="/">
-              <a className="absolute left-1/2 -translate-x-1/2 top-0 lg:-top-7 z-20 flex items-center justify-center w-24 h-24 lg:w-36 lg:h-36 drop-shadow-[0_12px_18px_rgba(15,23,42,0.18)] transition-transform duration-200 hover:scale-[1.03]">
-                <img src={logo} className="w-full h-full object-contain" alt="Dulce Bebé" />
-              </a>
-            </Link>
-
+            <Link href="/"><a className="absolute left-1/2 -translate-x-1/2 top-0 lg:-top-7 z-20 flex items-center justify-center w-24 h-24 lg:w-36 lg:h-36 rounded-full bg-white shadow-xl border border-gray-100 p-2"><img src={logo.src} className="w-full h-full object-contain" alt="Dulce Bebé" /></a></Link>
             <div className="flex items-center gap-2 lg:gap-6 ml-auto">
               <div className="hidden lg:block relative">
                 <button type="button" onClick={() => setCategoriesVisible(!categoriesVisible)} className="flex items-center gap-1 py-3 text-sm font-bold text-gray-800 hover:text-palette-sdark">Categorías <span className="text-xs">⌄</span></button>
@@ -66,7 +52,6 @@ function Nav() {
               <Link href="/cart" passHref><a className="relative flex items-center justify-center w-10 h-10 rounded-xl bg-palette-sdark hover:bg-palette-dark shadow-md" aria-label="Carrito"><FontAwesomeIcon icon={faShoppingCart} className="h-5 text-white" />{cartItems > 0 && <span className="absolute -top-2 -right-2 min-w-5 h-5 px-1 flex items-center justify-center text-xs bg-white text-palette-sdark font-bold rounded-full shadow">{cartItems}</span>}</a></Link>
             </div>
           </div>
-
           <nav className={`${isShow ? "block" : "hidden"} lg:hidden border-t border-gray-100 pb-3`}>
             <Link href="/"><a className="block py-3 text-sm font-bold text-gray-700">Inicio</a></Link>
             <Link href="/diapers/inicio"><a className="block py-3 text-sm font-bold text-gray-700">Pañalería</a></Link>
