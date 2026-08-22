@@ -33,11 +33,11 @@ function FilterModal({ filterParams, searchFunction, columnList }) {
     };
 
     const clearFilters = () => {
-        setQueryParameters(filterParams.map(() => []));
+        const emptyFilters = filterParams.map(() => []);
+        setQueryParameters(emptyFilters);
         setSelectedOrderCol(columnList[0].value);
         setAscOrder(false);
-        const clearedParams = [searchTerm, filterParams.map(() => []), columnList[0].value, "F"];
-        searchFunction(clearedParams);
+        searchFunction([searchTerm, emptyFilters, columnList[0].value, "F"]);
     };
 
     useEffect(() => {
@@ -84,97 +84,99 @@ function FilterModal({ filterParams, searchFunction, columnList }) {
                 </button>
             </div>
 
-            <div className={`fixed z-50 top-0 w-full left-0 ${showFilter ? "" : "hidden"}`} id="modal">
-                <div className="flex items-center justify-center min-h-screen px-4 py-8 text-center">
-                    <button
-                        type="button"
-                        onClick={() => setShowFilter(false)}
-                        className="fixed inset-0 bg-gray-800 bg-opacity-70 w-full h-full"
-                        aria-label="Cerrar filtros"
-                    />
+            <div className={`fixed z-50 inset-0 ${showFilter ? "" : "hidden"}`} id="modal">
+                <button
+                    type="button"
+                    onClick={() => setShowFilter(false)}
+                    className="absolute inset-0 bg-gray-800 bg-opacity-70 w-full h-full"
+                    aria-label="Cerrar filtros"
+                />
 
-                    <div className="relative z-10 w-full max-w-4xl max-h-screen overflow-y-auto bg-white rounded-2xl text-left shadow-2xl">
-                        <div className="p-6">
-                            <div className="flex items-center justify-between mb-5">
+                <div className="relative z-10 flex items-center justify-center min-h-screen p-2 sm:p-3 lg:p-4">
+                    <div className="w-full max-w-[96vw] max-h-[94vh] overflow-y-auto lg:overflow-hidden bg-white rounded-2xl text-left shadow-2xl">
+                        <div className="p-4 sm:p-5">
+                            <div className="flex items-start justify-between gap-4 mb-4">
                                 <div>
-                                    <h2 className="text-2xl font-bold text-gray-800">Filtrar productos</h2>
-                                    <p className="text-sm text-gray-500 mt-1">Elegí las opciones y después presioná Aplicar filtros.</p>
+                                    <h2 className="text-2xl sm:text-3xl font-bold text-gray-800">Filtrar productos</h2>
+                                    <p className="text-sm text-gray-500 mt-1">Elegí las opciones y aplicá los filtros.</p>
                                 </div>
                                 <button
                                     type="button"
                                     onClick={() => setShowFilter(false)}
-                                    className="w-9 h-9 rounded-full hover:bg-gray-100 text-gray-500 text-xl"
+                                    className="w-9 h-9 rounded-full hover:bg-gray-100 text-gray-500 text-xl flex items-center justify-center"
                                     aria-label="Cerrar"
                                 >
                                     ×
                                 </button>
                             </div>
 
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
                                 {filterParams?.map((category, arrayIndex) => (
-                                    <div key={category.type} className="rounded-xl border border-gray-100 p-4">
-                                        <h3 className="text-lg font-bold text-gray-800 mb-3">{category.type}</h3>
-                                        <div className={category.column
-                                            ? "overflow-y-auto max-h-64 no-scrollbar space-y-2"
-                                            : "overflow-y-auto max-h-64 no-scrollbar grid grid-cols-1 sm:grid-cols-2 gap-2"
-                                        }>
+                                    <section key={category.type} className="rounded-xl border border-gray-200 p-3 sm:p-4 bg-white">
+                                        <div className="flex items-center justify-between mb-3">
+                                            <h3 className="text-lg sm:text-xl font-bold text-gray-800">{category.type}</h3>
+                                            <span className="text-xs text-gray-400">{category.elements?.length || 0} opciones</span>
+                                        </div>
+                                        <div className="grid grid-cols-2 sm:grid-cols-3 xl:grid-cols-4 gap-x-4 gap-y-2">
                                             {category.elements?.map((subcategory, index) => (
-                                                <label key={subcategory.id || index} className="inline-flex items-center text-sm text-gray-700 cursor-pointer">
+                                                <label key={subcategory.id || index} className="inline-flex items-center min-w-0 text-sm text-gray-700 cursor-pointer py-1">
                                                     <input
                                                         type="checkbox"
-                                                        className="form-checkbox rounded text-palette-sdark focus:ring-palette-sdark"
+                                                        className="form-checkbox rounded text-palette-sdark focus:ring-palette-sdark flex-shrink-0"
                                                         onChange={(e) => handleChangeSubCat(e, arrayIndex)}
                                                         checked={queryParameters[arrayIndex]?.includes(String(subcategory.id)) || queryParameters[arrayIndex]?.includes(subcategory.id)}
                                                         value={subcategory.id}
                                                     />
-                                                    <span className="ml-2">{subcategory.name}</span>
+                                                    <span className="ml-2 truncate" title={subcategory.name}>{subcategory.name}</span>
                                                 </label>
                                             ))}
                                         </div>
-                                    </div>
+                                    </section>
                                 ))}
                             </div>
 
                             {columnList && (
-                                <div className="mt-6 rounded-xl border border-gray-100 p-4">
-                                    <h3 className="text-lg font-bold text-gray-800 mb-3">Ordenar por</h3>
-                                    <select
-                                        className="w-full rounded-xl border-gray-200 text-gray-700 focus:border-palette-sdark focus:ring-palette-sdark"
-                                        id="orderBy"
-                                        value={selectedOrderCol}
-                                        onChange={handleChangeColumn}
-                                    >
-                                        {columnList.map((option) => (
-                                            <option key={option.value} value={option.value}>{option.label}</option>
-                                        ))}
-                                    </select>
+                                <section className="mt-4 rounded-xl border border-gray-200 px-3 py-3 sm:px-4">
+                                    <div className="grid grid-cols-1 lg:grid-cols-[140px_minmax(220px,1fr)_auto] items-center gap-3">
+                                        <h3 className="text-base sm:text-lg font-bold text-gray-800">Ordenar por</h3>
+                                        <select
+                                            className="w-full h-10 rounded-xl border-gray-200 text-sm text-gray-700 focus:border-palette-sdark focus:ring-palette-sdark"
+                                            id="orderBy"
+                                            value={selectedOrderCol}
+                                            onChange={handleChangeColumn}
+                                        >
+                                            {columnList.map((option) => (
+                                                <option key={option.value} value={option.value}>{option.label}</option>
+                                            ))}
+                                        </select>
 
-                                    <div className="flex flex-wrap gap-5 mt-4 text-sm text-gray-700">
-                                        <label className="flex items-center cursor-pointer">
-                                            <input
-                                                type="radio"
-                                                className="form-radio text-palette-sdark focus:ring-palette-sdark"
-                                                name="order"
-                                                checked={!ascOrder}
-                                                onChange={() => setAscOrder(false)}
-                                            />
-                                            <span className="ml-2">Mayor a menor</span>
-                                        </label>
-                                        <label className="flex items-center cursor-pointer">
-                                            <input
-                                                type="radio"
-                                                className="form-radio text-palette-sdark focus:ring-palette-sdark"
-                                                name="order"
-                                                checked={ascOrder}
-                                                onChange={() => setAscOrder(true)}
-                                            />
-                                            <span className="ml-2">Menor a mayor</span>
-                                        </label>
+                                        <div className="flex flex-wrap gap-4 text-sm text-gray-700">
+                                            <label className="flex items-center cursor-pointer whitespace-nowrap">
+                                                <input
+                                                    type="radio"
+                                                    className="form-radio text-palette-sdark focus:ring-palette-sdark"
+                                                    name="order"
+                                                    checked={!ascOrder}
+                                                    onChange={() => setAscOrder(false)}
+                                                />
+                                                <span className="ml-2">Mayor a menor</span>
+                                            </label>
+                                            <label className="flex items-center cursor-pointer whitespace-nowrap">
+                                                <input
+                                                    type="radio"
+                                                    className="form-radio text-palette-sdark focus:ring-palette-sdark"
+                                                    name="order"
+                                                    checked={ascOrder}
+                                                    onChange={() => setAscOrder(true)}
+                                                />
+                                                <span className="ml-2">Menor a mayor</span>
+                                            </label>
+                                        </div>
                                     </div>
-                                </div>
+                                </section>
                             )}
 
-                            <div className="mt-6 flex flex-col-reverse sm:flex-row sm:justify-end gap-3">
+                            <div className="mt-4 pt-4 border-t border-gray-100 flex flex-col-reverse sm:flex-row sm:justify-end gap-3">
                                 <button
                                     type="button"
                                     className="px-5 py-2.5 rounded-xl border border-gray-200 text-gray-700 font-semibold hover:bg-gray-50"
