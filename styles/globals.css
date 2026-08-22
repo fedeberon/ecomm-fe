@@ -44,7 +44,7 @@ html {
   min-height: 200px;
 }
 
-/* Desktop navigation: keep all actions on a single baseline */
+/* Desktop navigation: brand on the left, all actions aligned to the right */
 @media (min-width: 1024px) {
   header.sticky > div:first-child > div,
   header.sticky > div:nth-child(2) > div {
@@ -63,37 +63,52 @@ html {
   }
 
   header.sticky > div:nth-child(2) {
-    padding-bottom: 0.35rem;
+    padding-bottom: 0.25rem;
   }
 
   header.sticky > div:nth-child(2) > div > div {
-    display: grid !important;
-    grid-template-columns: auto auto auto;
-    justify-content: center;
-    align-items: center;
-    column-gap: 2rem;
-    height: 5.25rem;
-  }
-
-  header.sticky > div:nth-child(2) > div > div > div:first-child {
-    order: 1;
     display: flex !important;
-    align-items: center;
-    justify-content: flex-end;
-    gap: 1.75rem !important;
-    padding: 0 !important;
-    margin: 0 !important;
+    align-items: center !important;
+    justify-content: flex-start !important;
+    height: 5.5rem;
+    gap: 1.7rem;
   }
 
   header.sticky > div:nth-child(2) > div > div > a {
-    order: 2;
+    order: 1;
     position: relative !important;
     inset: auto !important;
     left: auto !important;
     top: auto !important;
     transform: none !important;
-    width: 5.4rem !important;
-    height: 5.4rem !important;
+    width: 21rem !important;
+    height: 5rem !important;
+    margin: 0 auto 0 0 !important;
+    flex: 0 0 auto;
+    border-radius: 0 !important;
+    background-color: transparent !important;
+    background-image: url('/images/dulce-bebe-logo-horizontal.svg') !important;
+    background-repeat: no-repeat !important;
+    background-position: left center !important;
+    background-size: contain !important;
+    box-shadow: none !important;
+    border: 0 !important;
+    overflow: visible !important;
+  }
+
+  header.sticky > div:nth-child(2) > div > div > a img,
+  header.sticky > div:nth-child(2) > div > div > a picture,
+  header.sticky > div:nth-child(2) > div > div > a > span {
+    opacity: 0 !important;
+  }
+
+  header.sticky > div:nth-child(2) > div > div > div:first-child {
+    order: 2;
+    display: flex !important;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 1.7rem !important;
+    padding: 0 !important;
     margin: 0 !important;
     flex: 0 0 auto;
   }
@@ -102,10 +117,11 @@ html {
     order: 3;
     display: flex !important;
     align-items: center;
-    justify-content: flex-start;
-    gap: 1.5rem !important;
+    justify-content: flex-end;
+    gap: 1.45rem !important;
     padding: 0 !important;
     margin: 0 !important;
+    flex: 0 0 auto;
   }
 
   header.sticky > div:nth-child(2) a,
@@ -129,7 +145,7 @@ html {
     }
 
     header.sticky > div:nth-child(2) > div > div > a {
-      animation: storeLogoCompact linear both;
+      animation: storeLogoHorizontalCompact linear both;
       animation-timeline: scroll(root block);
       animation-range: 0 90px;
     }
@@ -150,18 +166,18 @@ html {
 }
 
 @keyframes storeNavHeight {
-  from { height: 5.25rem; }
-  to { height: 3.85rem; }
+  from { height: 5.5rem; }
+  to { height: 3.9rem; }
 }
 
-@keyframes storeLogoCompact {
+@keyframes storeLogoHorizontalCompact {
   from {
-    width: 5.4rem;
-    height: 5.4rem;
+    width: 21rem;
+    height: 5rem;
   }
   to {
-    width: 2.65rem;
-    height: 2.65rem;
+    width: 12.5rem;
+    height: 3.15rem;
   }
 }
 
