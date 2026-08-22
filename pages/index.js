@@ -40,9 +40,9 @@ function IndexPage({brands, categories}) {
         <div className="mx-auto max-w-[1180px]">
           <div className="overflow-hidden rounded-[28px] border border-slate-100 bg-[#f4fbff] shadow-sm">
             <img
-              src="/images/dulce-bebe-hero.webp"
+              src="/images/dulce-bebe-hero-v2.svg"
               alt="Todo lo que tu bebé necesita, en un solo lugar"
-              className="block h-auto w-full object-cover"
+              className="block h-auto w-full"
             />
           </div>
         </div>
@@ -64,7 +64,7 @@ export async function getServerSideProps() {
       brands,
       categories,
     },
-  };
+  }
 }
 
 export default IndexPage
