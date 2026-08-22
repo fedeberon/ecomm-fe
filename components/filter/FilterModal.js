@@ -105,20 +105,20 @@ function FilterModal({ filterParams, searchFunction, columnList }) {
                         </div>
 
                         {selectedPills.length > 0 && (
-                            <div className="flex flex-shrink-0 flex-wrap items-center gap-1.5 border-y border-slate-100 bg-white px-6 py-2.5 sm:px-8">
-                                <span className="mr-1 text-[10px] font-semibold uppercase tracking-wide text-slate-400">Filtros aplicados</span>
+                            <div className="flex flex-shrink-0 flex-wrap items-center gap-2 border-y border-slate-100 bg-white px-6 py-3 sm:px-8">
+                                <span className="mr-1 text-[11px] font-semibold uppercase tracking-wide text-slate-400">Filtros aplicados</span>
                                 {selectedPills.map((pill) => (
                                     <button
                                         key={`${pill.categoryIndex}-${pill.value}`}
                                         type="button"
                                         onClick={() => toggleValue(pill.value, pill.categoryIndex)}
-                                        className="inline-flex max-w-[170px] items-center gap-1 rounded-full border border-slate-200 bg-slate-50 px-2.5 py-1 text-[9px] font-medium text-slate-600 transition hover:border-palette-sdark hover:bg-white hover:text-palette-sdark"
+                                        className="inline-flex max-w-[220px] items-center gap-1.5 rounded-full border border-slate-200 bg-slate-50 px-3 py-1.5 text-[12px] font-medium text-slate-700 transition hover:border-palette-sdark hover:bg-white hover:text-palette-sdark"
                                     >
                                         <span className="truncate">{pill.label}</span>
-                                        <span className="text-[11px] leading-none">×</span>
+                                        <span className="text-[14px] leading-none">×</span>
                                     </button>
                                 ))}
-                                <button type="button" onClick={clearFilters} className="ml-1 text-[10px] font-semibold text-palette-sdark hover:text-palette-dark">Limpiar todos</button>
+                                <button type="button" onClick={clearFilters} className="ml-1 text-[11px] font-semibold text-palette-sdark hover:text-palette-dark">Limpiar todos</button>
                             </div>
                         )}
 
