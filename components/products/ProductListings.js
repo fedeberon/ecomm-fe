@@ -10,13 +10,11 @@ function ProductListings({ brands, categories }) {
     const [brandsToSearch, setBrandsToSearch] = useState([]);
     const [orderBy, setOrderBy] = useState("");
     const [asc, setAsc] = useState(true);
-    
     const [triggerSearch, setTriggerSearch] = useState(true);
-
     const [productsToShow, setProductsToShow] = useState([]);
     const [page, setPage] = useState(1);
     const [totalPages, setTotalPages] = useState(0);
-    
+
     const columnList = [
         { value: 'sales', label: 'Popularidad' },
         { value: 'price', label: 'Precio' },
@@ -29,30 +27,20 @@ function ProductListings({ brands, categories }) {
         { "type": "Marcas", "elements": brands, "column": false }
     ];
 
-    //Vuelve al inicio de la pantalla
-    function backToTopButton() {
-        window.scrollTo({
-            top: 0,
-            behavior: 'smooth'
-        });
-    }
-
-    //Realiza la busqueda inicial
     const initialSearch = async (query) => {
         if (query) {
-            setInitParams(query)
-            const result = await searchList(query[0], query[1][0], query[1][1], query[2], query[3] === "T", 1); // Fetch the first page
+            setInitParams(query);
+            const result = await searchList(query[0], query[1][0], query[1][1], query[2], query[3] === "T", 1);
             if (result.totalPages > 0) {
                 setTotalPages(result.totalPages);
                 setProductsToShow(result.content);
-            }else{
+            } else {
                 setTotalPages(0);
-                setProductsToShow([])
+                setProductsToShow([]);
             }
         }
     }
 
-    //Indica los parametros para la primer pagina y para las subsecuentes cada vez que hay cambios en el fitro o se hace clic en Buscar.
     function setInitParams(query){
         setPage(1);
         setTermToSearch(query[0]);
@@ -62,88 +50,65 @@ function ProductListings({ brands, categories }) {
         setAsc(query[3] === "T");
     }
 
-    // Obtiene las paginas posteriores a la primera, siempre y cuando haya mas paginas disponibles
     const fetchNextPage = async () => {
         if (page < totalPages) {
             setIsLoading(true);
-            setPage(page + 1); 
+            setPage(page + 1);
             const result = await searchList(termToSearch, categoriesToSearch, brandsToSearch, orderBy, asc, page + 1);
             setProductsToShow([...productsToShow, ...result.content]);
             setIsLoading(false);
         }
     };
 
-    /* triggerSearch cambia de valor de false a true una y otra vez cuando el scroll llega al final de la linea.
-     * Cuando eso suceda, el useEffect activa la funcion fetchNextPage();
-     */
     useEffect(() => {
         fetchNextPage();
     }, [triggerSearch]);
 
-    //Cuando se hace scroll al fin de la pagina, carga la proxima pagina
-    let handleScroll = async (e) => {
-        if (window.innerHeight + e.target.documentElement.scrollTop + 1 > e.target.documentElement.scrollHeight && !isLoading ) {
-            setTriggerSearch((prevTriggerSearch) => {
-                return !prevTriggerSearch;
-            });
-        }
-    }
-
-    //Añade el listener de scroll a la pagina
     useEffect(() => {
+        const handleScroll = (e) => {
+            if (window.innerHeight + e.target.documentElement.scrollTop + 1 > e.target.documentElement.scrollHeight && !isLoading) {
+                setTriggerSearch((prev) => !prev);
+            }
+        };
         window.addEventListener('scroll', handleScroll);
-        return (() => { window.removeEventListener('scroll', handleScroll) });
-    }, []);
+        return () => window.removeEventListener('scroll', handleScroll);
+    }, [isLoading, page, totalPages]);
 
     return (
-        <div className='w-full'>
-            <FilterModal
-                filterParams={filterParams}
-                searchFunction={initialSearch}
-                columnList={columnList}
-            ></FilterModal>
-            <div className="mx-auto mt-3 w-11/12">
-                <div className="grid sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-9 2xl:gap-4 ">
-                    {
-                        productsToShow.map((product, index) => (
-                            <ProductCard key={index} product={product} />
-                        ))
-                    }
+        <section className="w-full bg-gray-50 py-8">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div className="mb-4">
+                    <h2 className="text-2xl font-bold text-gray-900">Productos destacados</h2>
+                    <p className="text-sm text-gray-500 mt-1">Encontrá lo que necesitás y compará opciones fácilmente.</p>
                 </div>
-                <button
-                    type="button"
-                    data-mdb-ripple="true"
-                    onClick={backToTopButton}
-                    data-mdb-ripple-color="light"
-                    className="z-0 -mx-9 md:-mx-7 shadow-lg invisible md:visible ease-out duration-500 sticky p-2 bg-palette-secondary animate-bounce text-white font-medium text-xs leading-tight uppercase rounded-full hover:bg-palette-sdark hover:shadow-lg  focus:shadow-lg focus:outline-none focus:ring-0 active:shadow-lg bottom-5 right-2"
-                    id="btn-back-to-top"
-                >
-                    <svg
-                        aria-hidden="true"
-                        focusable="false"
-                        data-prefix="fas"
-                        className="w-5 h-5"
-                        role="img"
-                        xmlns="http://www.w3.org/2000/svg"
-                        viewBox="0 0 448 512"
-                    >
-                        <path
-                            fill="currentColor"
-                            d="M34.9 289.5l-22.2-22.2c-9.4-9.4-9.4-24.6 0-33.9L207 39c9.4-9.4 24.6-9.4 33.9 0l194.3 194.3c9.4 9.4 9.4 24.6 0 33.9L413 289.4c-9.5 9.5-25 9.3-34.3-.4L264 168.6V456c0 13.3-10.7 24-24 24h-32c-13.3 0-24-10.7-24-24V168.6L69.2 289.1c-9.3 9.8-24.8 10-34.3.4z"
-                        ></path>
-                    </svg>
-                </button>
-            </div>
-            {
-                isLoading
-                    ?
-                    <div className='flex items-center justify-center py-6'>
-                        <div className='w-16 h-16 border-b-2 border-palette-secondary rounded-full animate-spin'></div>
+
+                <div className="bg-white rounded-xl border border-gray-200 mb-6 overflow-hidden">
+                    <FilterModal
+                        filterParams={filterParams}
+                        searchFunction={initialSearch}
+                        columnList={columnList}
+                    />
+                </div>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-5">
+                    {productsToShow.map((product) => (
+                        <ProductCard key={product.id} product={product} />
+                    ))}
+                </div>
+
+                {!isLoading && productsToShow.length === 0 && (
+                    <div className="bg-white border border-gray-200 rounded-xl p-10 text-center text-gray-500">
+                        No encontramos productos para esta búsqueda.
                     </div>
-                    :
-                    <></>
-            }
-        </div>
+                )}
+
+                {isLoading && (
+                    <div className='flex items-center justify-center py-8'>
+                        <div className='w-10 h-10 border-2 border-gray-200 border-t-palette-secondary rounded-full animate-spin'></div>
+                    </div>
+                )}
+            </div>
+        </section>
     )
 }
 
