@@ -44,11 +44,11 @@ html {
   min-height: 200px;
 }
 
-/* Desktop navigation: keep both groups visually balanced around the centered logo */
+/* Desktop navigation: true three-column structure */
 @media (min-width: 1024px) {
   header.sticky > div:nth-child(2) > div {
     width: calc(100% - 48px);
-    max-width: 1280px !important;
+    max-width: 1180px !important;
     margin-left: auto;
     margin-right: auto;
   }
@@ -56,26 +56,35 @@ html {
   header.sticky > div:nth-child(2) > div > div {
     position: relative;
     display: grid !important;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: minmax(0, 1fr) 112px minmax(0, 1fr);
     align-items: center;
+    column-gap: 1.5rem;
   }
 
   header.sticky > div:nth-child(2) > div > div > div:first-child {
+    grid-column: 1;
     justify-self: end;
-    padding-right: 128px;
-    gap: 1.35rem !important;
-  }
-
-  header.sticky > div:nth-child(2) > div > div > div:last-child {
-    justify-self: start;
-    padding-left: 128px;
-    margin-left: 0 !important;
-    gap: 1.15rem !important;
+    padding-right: 0 !important;
+    gap: 1.25rem !important;
   }
 
   header.sticky > div:nth-child(2) > div > div > a {
-    left: 50% !important;
-    transform: translateX(-50%) !important;
+    grid-column: 2;
+    position: relative !important;
+    inset: auto !important;
+    left: auto !important;
+    top: auto !important;
+    transform: none !important;
+    justify-self: center;
+    margin: 0 !important;
+  }
+
+  header.sticky > div:nth-child(2) > div > div > div:last-child {
+    grid-column: 3;
+    justify-self: start;
+    padding-left: 0 !important;
+    margin-left: 0 !important;
+    gap: 1rem !important;
   }
 
   @supports (animation-timeline: scroll()) {
@@ -94,21 +103,10 @@ html {
     }
 
     header.sticky > div:nth-child(2) > div > div > a {
-      transform-origin: center center;
       animation: storeLogoCompact linear both;
       animation-timeline: scroll(root block);
       animation-range: 0 90px;
     }
-  }
-}
-
-@media (min-width: 1280px) {
-  header.sticky > div:nth-child(2) > div > div > div:first-child {
-    padding-right: 142px;
-  }
-
-  header.sticky > div:nth-child(2) > div > div > div:last-child {
-    padding-left: 142px;
   }
 }
 
@@ -132,16 +130,12 @@ html {
 
 @keyframes storeLogoCompact {
   from {
-    top: -1.25rem;
     width: 7.5rem;
     height: 7.5rem;
-    transform: translateX(-50%);
   }
   to {
-    top: 0.35rem;
     width: 2.5rem;
     height: 2.5rem;
-    transform: translateX(-50%);
   }
 }
 
