@@ -7,6 +7,7 @@ function FilterModal({ filterParams, searchFunction, columnList }) {
     const [ascOrder, setAscOrder] = useState(false);
     const [queryParameters, setQueryParameters] = useState(filterParams.map(() => []));
     const [searchTerm, setSearchTerm] = useState('');
+    const [showAllBrands, setShowAllBrands] = useState(false);
 
     const customParams = [searchTerm, queryParameters, selectedOrderCol, ascOrder ? "T" : "F"];
     const activeFilters = queryParameters.reduce((total, values) => total + values.length, 0);
@@ -93,54 +94,74 @@ function FilterModal({ filterParams, searchFunction, columnList }) {
                 />
 
                 <div className="relative z-10 flex items-center justify-center min-h-screen p-2 sm:p-3 lg:p-4">
-                    <div className="w-full max-w-[96vw] max-h-[94vh] overflow-y-auto lg:overflow-hidden bg-white rounded-2xl text-left shadow-2xl">
-                        <div className="p-4 sm:p-5">
-                            <div className="flex items-start justify-between gap-4 mb-4">
-                                <div>
-                                    <h2 className="text-2xl sm:text-3xl font-bold text-gray-800">Filtrar productos</h2>
-                                    <p className="text-sm text-gray-500 mt-1">Elegí las opciones y aplicá los filtros.</p>
-                                </div>
-                                <button
-                                    type="button"
-                                    onClick={() => setShowFilter(false)}
-                                    className="w-9 h-9 rounded-full hover:bg-gray-100 text-gray-500 text-xl flex items-center justify-center"
-                                    aria-label="Cerrar"
-                                >
-                                    ×
-                                </button>
+                    <div className="w-full max-w-[96vw] max-h-[94vh] bg-white rounded-2xl text-left shadow-2xl overflow-hidden flex flex-col">
+                        <div className="px-4 sm:px-6 pt-4 sm:pt-5 pb-3 flex items-start justify-between gap-4 border-b border-gray-100">
+                            <div>
+                                <h2 className="text-2xl sm:text-[28px] leading-tight font-bold text-gray-800">Filtrar productos</h2>
+                                <p className="text-xs sm:text-sm text-gray-500 mt-1">Elegí las opciones y aplicá los filtros.</p>
                             </div>
+                            <button
+                                type="button"
+                                onClick={() => setShowFilter(false)}
+                                className="w-8 h-8 rounded-full hover:bg-gray-100 text-gray-500 text-lg flex items-center justify-center"
+                                aria-label="Cerrar"
+                            >
+                                ×
+                            </button>
+                        </div>
 
-                            <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-                                {filterParams?.map((category, arrayIndex) => (
-                                    <section key={category.type} className="rounded-xl border border-gray-200 p-3 sm:p-4 bg-white">
-                                        <div className="flex items-center justify-between mb-3">
-                                            <h3 className="text-lg sm:text-xl font-bold text-gray-800">{category.type}</h3>
-                                            <span className="text-xs text-gray-400">{category.elements?.length || 0} opciones</span>
-                                        </div>
-                                        <div className="grid grid-cols-2 sm:grid-cols-3 xl:grid-cols-4 gap-x-4 gap-y-2">
-                                            {category.elements?.map((subcategory, index) => (
-                                                <label key={subcategory.id || index} className="inline-flex items-center min-w-0 text-sm text-gray-700 cursor-pointer py-1">
-                                                    <input
-                                                        type="checkbox"
-                                                        className="form-checkbox rounded text-palette-sdark focus:ring-palette-sdark flex-shrink-0"
-                                                        onChange={(e) => handleChangeSubCat(e, arrayIndex)}
-                                                        checked={queryParameters[arrayIndex]?.includes(String(subcategory.id)) || queryParameters[arrayIndex]?.includes(subcategory.id)}
-                                                        value={subcategory.id}
-                                                    />
-                                                    <span className="ml-2 truncate" title={subcategory.name}>{subcategory.name}</span>
-                                                </label>
-                                            ))}
-                                        </div>
-                                    </section>
-                                ))}
+                        <div className="flex-1 overflow-y-auto lg:overflow-hidden px-4 sm:px-6 py-3 sm:py-4">
+                            <div className="grid grid-cols-1 lg:grid-cols-2 gap-3 sm:gap-4">
+                                {filterParams?.map((category, arrayIndex) => {
+                                    const isBrands = category.type?.toLowerCase().includes('marca');
+                                    const visibleElements = isBrands && !showAllBrands
+                                        ? (category.elements || []).slice(0, 40)
+                                        : (category.elements || []);
+
+                                    return (
+                                        <section key={category.type} className="rounded-xl border border-gray-200 px-3 sm:px-4 py-3 bg-white min-h-0">
+                                            <div className="flex items-center justify-between mb-2.5">
+                                                <h3 className="text-base sm:text-lg font-bold text-gray-800">{category.type}</h3>
+                                                <span className="text-[11px] sm:text-xs text-gray-400">{category.elements?.length || 0} opciones</span>
+                                            </div>
+
+                                            <div className="grid grid-cols-2 sm:grid-cols-3 xl:grid-cols-4 gap-x-3 sm:gap-x-4 gap-y-1.5">
+                                                {visibleElements.map((subcategory, index) => (
+                                                    <label key={subcategory.id || index} className="inline-flex items-center min-w-0 text-[12px] sm:text-[13px] text-gray-700 cursor-pointer py-0.5 leading-5">
+                                                        <input
+                                                            type="checkbox"
+                                                            className="form-checkbox w-4 h-4 rounded text-palette-sdark focus:ring-palette-sdark flex-shrink-0"
+                                                            onChange={(e) => handleChangeSubCat(e, arrayIndex)}
+                                                            checked={queryParameters[arrayIndex]?.includes(String(subcategory.id)) || queryParameters[arrayIndex]?.includes(subcategory.id)}
+                                                            value={subcategory.id}
+                                                        />
+                                                        <span className="ml-2 truncate" title={subcategory.name}>{subcategory.name}</span>
+                                                    </label>
+                                                ))}
+                                            </div>
+
+                                            {isBrands && (category.elements?.length || 0) > 40 && (
+                                                <button
+                                                    type="button"
+                                                    onClick={() => setShowAllBrands((prev) => !prev)}
+                                                    className="mt-2 text-xs font-semibold text-palette-sdark hover:text-palette-dark"
+                                                >
+                                                    {showAllBrands ? 'Ver menos marcas' : 'Ver más marcas'} {showAllBrands ? '⌃' : '⌄'}
+                                                </button>
+                                            )}
+                                        </section>
+                                    );
+                                })}
                             </div>
+                        </div>
 
-                            {columnList && (
-                                <section className="mt-4 rounded-xl border border-gray-200 px-3 py-3 sm:px-4">
-                                    <div className="grid grid-cols-1 lg:grid-cols-[140px_minmax(220px,1fr)_auto] items-center gap-3">
-                                        <h3 className="text-base sm:text-lg font-bold text-gray-800">Ordenar por</h3>
+                        <div className="px-4 sm:px-6 py-3 border-t border-gray-200 bg-white">
+                            <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-3">
+                                {columnList && (
+                                    <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3 min-w-0">
+                                        <span className="text-xs sm:text-sm font-semibold text-gray-700 whitespace-nowrap">Ordenar por</span>
                                         <select
-                                            className="w-full h-10 rounded-xl border-gray-200 text-sm text-gray-700 focus:border-palette-sdark focus:ring-palette-sdark"
+                                            className="h-9 min-w-[180px] rounded-lg border-gray-200 text-xs sm:text-sm text-gray-700 focus:border-palette-sdark focus:ring-palette-sdark"
                                             id="orderBy"
                                             value={selectedOrderCol}
                                             onChange={handleChangeColumn}
@@ -150,7 +171,7 @@ function FilterModal({ filterParams, searchFunction, columnList }) {
                                             ))}
                                         </select>
 
-                                        <div className="flex flex-wrap gap-4 text-sm text-gray-700">
+                                        <div className="flex flex-wrap gap-3 text-xs text-gray-600">
                                             <label className="flex items-center cursor-pointer whitespace-nowrap">
                                                 <input
                                                     type="radio"
@@ -159,7 +180,7 @@ function FilterModal({ filterParams, searchFunction, columnList }) {
                                                     checked={!ascOrder}
                                                     onChange={() => setAscOrder(false)}
                                                 />
-                                                <span className="ml-2">Mayor a menor</span>
+                                                <span className="ml-1.5">Mayor a menor</span>
                                             </label>
                                             <label className="flex items-center cursor-pointer whitespace-nowrap">
                                                 <input
@@ -169,28 +190,28 @@ function FilterModal({ filterParams, searchFunction, columnList }) {
                                                     checked={ascOrder}
                                                     onChange={() => setAscOrder(true)}
                                                 />
-                                                <span className="ml-2">Menor a mayor</span>
+                                                <span className="ml-1.5">Menor a mayor</span>
                                             </label>
                                         </div>
                                     </div>
-                                </section>
-                            )}
+                                )}
 
-                            <div className="mt-4 pt-4 border-t border-gray-100 flex flex-col-reverse sm:flex-row sm:justify-end gap-3">
-                                <button
-                                    type="button"
-                                    className="px-5 py-2.5 rounded-xl border border-gray-200 text-gray-700 font-semibold hover:bg-gray-50"
-                                    onClick={clearFilters}
-                                >
-                                    Limpiar filtros
-                                </button>
-                                <button
-                                    type="button"
-                                    className="px-6 py-2.5 rounded-xl bg-palette-sdark hover:bg-palette-dark text-white font-bold shadow-sm"
-                                    onClick={applyFilters}
-                                >
-                                    Aplicar filtros
-                                </button>
+                                <div className="flex flex-col-reverse sm:flex-row sm:justify-end gap-2 sm:gap-3">
+                                    <button
+                                        type="button"
+                                        className="px-4 py-2 rounded-lg border border-gray-200 text-xs sm:text-sm text-gray-700 font-semibold hover:bg-gray-50"
+                                        onClick={clearFilters}
+                                    >
+                                        Limpiar filtros
+                                    </button>
+                                    <button
+                                        type="button"
+                                        className="px-5 py-2 rounded-lg bg-palette-sdark hover:bg-palette-dark text-white text-xs sm:text-sm font-bold shadow-sm"
+                                        onClick={applyFilters}
+                                    >
+                                        Aplicar filtros
+                                    </button>
+                                </div>
                             </div>
                         </div>
                     </div>
