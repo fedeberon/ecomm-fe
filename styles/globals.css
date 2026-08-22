@@ -44,8 +44,30 @@ html {
   min-height: 200px;
 }
 
-/* Desktop ecommerce navigation: logo participates in the row instead of floating */
+/* Desktop ecommerce navigation */
 @media (min-width: 1024px) {
+  /* Keep the blue utility bar on the same horizontal grid as the nav below. */
+  header.sticky > div:first-child > div {
+    width: calc(100% - 48px);
+    max-width: 1240px !important;
+    height: 2rem;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+
+  header.sticky > div:first-child > div > div:first-child {
+    display: flex;
+    align-items: center;
+    gap: 1.25rem !important;
+  }
+
+  header.sticky > div:first-child > div > span:last-child {
+    margin-left: auto;
+    text-align: right;
+  }
+
   header.sticky > div:nth-child(2) > div {
     width: calc(100% - 48px);
     max-width: 1240px !important;
