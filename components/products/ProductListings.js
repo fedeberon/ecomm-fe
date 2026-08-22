@@ -1,35 +1,31 @@
 import ProductCard from '@/components/products/ProductCard'
-import FilterModal from '@/components/filter/FilterModal'
 import { useEffect, useState } from "react";
 import { searchList } from "../../services/productService"
 
-function ProductListings({ brands, categories }) {
+function ProductListings() {
     const [isLoading, setIsLoading] = useState(false);
     const [termToSearch, setTermToSearch] = useState("");
     const [categoriesToSearch, setCategoriesToSearch] = useState([]);
     const [brandsToSearch, setBrandsToSearch] = useState([]);
-    const [orderBy, setOrderBy] = useState("");
-    const [asc, setAsc] = useState(true);
+    const [orderBy, setOrderBy] = useState("sales");
+    const [asc, setAsc] = useState(false);
     const [triggerSearch, setTriggerSearch] = useState(true);
     const [productsToShow, setProductsToShow] = useState([]);
     const [page, setPage] = useState(1);
     const [totalPages, setTotalPages] = useState(0);
 
-    const columnList = [
-        { value: 'sales', label: 'Popularidad' },
-        { value: 'price', label: 'Precio' },
-        { value: 'stock', label: 'Stock' },
-        { value: 'name', label: 'Nombre' },
-    ];
-
-    const filterParams = [
-        { "type": "Categorias", "elements": categories, "column": true },
-        { "type": "Marcas", "elements": brands, "column": false }
-    ];
-
     const initialSearch = async (query) => {
-        if (query) {
-            setInitParams(query);
+        if (!query) return;
+
+        setPage(1);
+        setTermToSearch(query[0]);
+        setCategoriesToSearch(query[1][0] || []);
+        setBrandsToSearch(query[1][1] || []);
+        setOrderBy(query[2]);
+        setAsc(query[3] === "T");
+        setIsLoading(true);
+
+        try {
             const result = await searchList(query[0], query[1][0], query[1][1], query[2], query[3] === "T", 1);
             if (result.totalPages > 0) {
                 setTotalPages(result.totalPages);
@@ -38,16 +34,9 @@ function ProductListings({ brands, categories }) {
                 setTotalPages(0);
                 setProductsToShow([]);
             }
+        } finally {
+            setIsLoading(false);
         }
-    }
-
-    function setInitParams(query){
-        setPage(1);
-        setTermToSearch(query[0]);
-        setCategoriesToSearch(query[1][0] || []);
-        setBrandsToSearch(query[1][1] || []);
-        setOrderBy(query[2]);
-        setAsc(query[3] === "T");
     }
 
     const fetchNextPage = async () => {
@@ -55,10 +44,21 @@ function ProductListings({ brands, categories }) {
             setIsLoading(true);
             setPage(page + 1);
             const result = await searchList(termToSearch, categoriesToSearch, brandsToSearch, orderBy, asc, page + 1);
-            setProductsToShow([...productsToShow, ...result.content]);
+            setProductsToShow((current) => [...current, ...result.content]);
             setIsLoading(false);
         }
     };
+
+    useEffect(() => {
+        initialSearch(["", [[], []], "sales", "F"]);
+
+        const handleCatalogSearch = (event) => {
+            initialSearch(event.detail);
+        };
+
+        window.addEventListener('catalog-search', handleCatalogSearch);
+        return () => window.removeEventListener('catalog-search', handleCatalogSearch);
+    }, []);
 
     useEffect(() => {
         fetchNextPage();
@@ -76,18 +76,6 @@ function ProductListings({ brands, categories }) {
 
     return (
         <section className="w-full bg-gray-50 pb-6">
-            <div className="sticky top-[61px] z-40 w-full bg-gray-50/95 border-b border-gray-200 backdrop-blur-md">
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2">
-                    <div className="bg-white rounded-2xl border border-gray-200 overflow-hidden shadow-sm">
-                        <FilterModal
-                            filterParams={filterParams}
-                            searchFunction={initialSearch}
-                            columnList={columnList}
-                        />
-                    </div>
-                </div>
-            </div>
-
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-5">
                 <div className="mb-4">
                     <h2 className="text-2xl font-bold text-gray-900">Productos destacados</h2>
