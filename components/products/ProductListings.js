@@ -75,14 +75,9 @@ function ProductListings({ brands, categories }) {
     }, [isLoading, page, totalPages]);
 
     return (
-        <section className="w-full bg-gray-50 py-6">
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div className="mb-4">
-                    <h2 className="text-2xl font-bold text-gray-900">Productos destacados</h2>
-                    <p className="text-sm text-gray-500 mt-1">Encontrá lo que necesitás y compará opciones fácilmente.</p>
-                </div>
-
-                <div className="sticky top-[52px] z-40 -mx-2 sm:-mx-3 mb-5 bg-gray-50/95 px-2 sm:px-3 py-2 backdrop-blur-md">
+        <section className="w-full bg-gray-50 pb-6">
+            <div className="sticky top-[61px] z-40 w-full bg-gray-50/95 border-b border-gray-200 backdrop-blur-md">
+                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2">
                     <div className="bg-white rounded-2xl border border-gray-200 overflow-hidden shadow-sm">
                         <FilterModal
                             filterParams={filterParams}
@@ -90,6 +85,13 @@ function ProductListings({ brands, categories }) {
                             columnList={columnList}
                         />
                     </div>
+                </div>
+            </div>
+
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-5">
+                <div className="mb-4">
+                    <h2 className="text-2xl font-bold text-gray-900">Productos destacados</h2>
+                    <p className="text-sm text-gray-500 mt-1">Encontrá lo que necesitás y compará opciones fácilmente.</p>
                 </div>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-5">
