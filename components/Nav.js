@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useCartContext } from "@/context/Store";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBars, faShoppingCart, faSearch, faHome } from "@fortawesome/free-solid-svg-icons";
+import { faBars, faShoppingCart, faHome } from "@fortawesome/free-solid-svg-icons";
 import logo from "/images/logoMati.png";
 import UserSession from "@/components/users/UserSession";
 import { useSession } from "next-auth/client";
@@ -110,20 +110,6 @@ function Nav() {
                   )}
                 </a>
               </Link>
-            </div>
-          </div>
-
-          <div className="pb-3 pt-1 lg:pt-1">
-            <div className="max-w-6xl mx-auto relative">
-              <FontAwesomeIcon icon={faSearch} className="absolute left-5 top-1/2 transform -translate-y-1/2 w-4 text-gray-400" />
-              <input
-                type="search"
-                placeholder="Buscar productos para tu bebé..."
-                className="w-full h-10 bg-white border border-gray-200 rounded-full pl-12 pr-16 text-sm text-gray-700 shadow-sm focus:outline-none focus:ring-2 focus:ring-palette-slight"
-              />
-              <button type="button" aria-label="Buscar" className="absolute right-0 top-0 h-10 w-14 rounded-r-full bg-palette-sdark hover:bg-palette-dark text-white flex items-center justify-center">
-                <FontAwesomeIcon icon={faSearch} className="w-4" />
-              </button>
             </div>
           </div>
 
