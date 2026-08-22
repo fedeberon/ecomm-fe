@@ -56,9 +56,9 @@ html {
 
   header.sticky > div:first-child > div {
     height: auto !important;
-    min-height: 2.65rem;
-    padding-top: 0.4rem;
-    padding-bottom: 0.65rem;
+    min-height: 2.9rem;
+    padding-top: 0.45rem;
+    padding-bottom: 0.85rem;
     box-sizing: border-box;
   }
 
@@ -138,7 +138,7 @@ html {
 
 @keyframes storeTopBarCollapse {
   from {
-    max-height: 44px;
+    max-height: 48px;
     opacity: 1;
     transform: translateY(0);
   }
