@@ -18,23 +18,23 @@ function ProductSection({ productData }) {
     }, [productData?.id])
 
     return (
-        <main className="bg-slate-50 min-h-screen py-4 sm:py-5">
-            <div className="max-w-6xl mx-auto px-4 sm:px-6">
-                <div className="bg-white rounded-[24px] border border-slate-100 shadow-sm overflow-hidden">
-                    <div className="grid grid-cols-1 lg:grid-cols-[1.05fr_0.95fr] gap-0">
-                        <div className="p-4 sm:p-5 lg:p-6 border-b lg:border-b-0 lg:border-r border-slate-100">
+        <main className="bg-slate-50 min-h-screen py-3 sm:py-4">
+            <div className="max-w-5xl mx-auto px-4 sm:px-5">
+                <div className="bg-white rounded-[20px] border border-slate-100 shadow-sm overflow-hidden">
+                    <div className="grid grid-cols-1 lg:grid-cols-[0.95fr_1.05fr] gap-0">
+                        <div className="p-3 sm:p-4 lg:p-5 border-b lg:border-b-0 lg:border-r border-slate-100">
                             <ProductImage images={productData.images || []} id={productData.id} />
                         </div>
-                        <div className="p-5 sm:p-6 lg:p-7">
+                        <div className="p-4 sm:p-5 lg:p-5">
                             <ProductDetails productData={productData} />
                         </div>
                     </div>
                 </div>
 
                 {productsRelated?.length > 0 && (
-                    <section className="mt-7">
+                    <section className="mt-5">
                         <div className="mb-3">
-                            <h2 className="text-lg sm:text-xl font-bold text-slate-900">También te puede interesar</h2>
+                            <h2 className="text-lg font-bold text-slate-900">También te puede interesar</h2>
                             <p className="text-xs text-slate-500 mt-1">Productos relacionados</p>
                         </div>
                         <Gallery productData={productsRelated} />
