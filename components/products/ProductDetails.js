@@ -18,11 +18,11 @@ function ProductDetails({ productData }) {
     <div className="flex flex-col h-full">
       <ProductInfo productData={productData} />
 
-      <div className="mt-7 pt-6 border-t border-slate-100">
+      <div className="mt-4 pt-4 border-t border-slate-100">
         <ProductForm productData={productData} image={image} />
       </div>
 
-      <div className="mt-4">
+      <div className="mt-3">
         <BackToProductButton />
       </div>
     </div>
