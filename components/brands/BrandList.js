@@ -69,7 +69,7 @@ const BrandList = ({ brands }) => {
                         />
                     </div>
 
-                    <Link href="/brand/create" passHref>
+                    <Link legacyBehavior href="/brand/create" passHref>
                         <div className="flex justify-between">
                             <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 mt-8 m-auto rounded">
                                 Nueva Marca

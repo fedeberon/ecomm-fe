@@ -113,14 +113,14 @@ const Login = ({ csrfToken, session }) => {
               <div className="mt-7 border-t border-slate-100 pt-6 text-center">
                 <p className="text-sm text-slate-500">
                   ¿Todavía no tenés cuenta?{" "}
-                  <Link href="/users/create">
+                  <Link legacyBehavior href="/users/create">
                     <a className="font-bold text-palette-secondary hover:text-palette-sdark">
                       Registrate
                     </a>
                   </Link>
                 </p>
 
-                <Link href="/">
+                <Link legacyBehavior href="/">
                   <a className="mt-4 inline-flex text-xs font-semibold text-slate-500 hover:text-palette-sdark">
                     ← Volver a la tienda
                   </a>

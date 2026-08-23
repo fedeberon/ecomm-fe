@@ -11,13 +11,14 @@ function ProductListings() {
     const [asc, setAsc] = useState(false);
     const [triggerSearch, setTriggerSearch] = useState(true);
     const [productsToShow, setProductsToShow] = useState([]);
-    const [page, setPage] = useState(1);
+    // Spring Data pagina desde cero: la primera página es page=0.
+    const [page, setPage] = useState(0);
     const [totalPages, setTotalPages] = useState(0);
 
     const initialSearch = async (query) => {
         if (!query) return;
 
-        setPage(1);
+        setPage(0);
         setTermToSearch(query[0]);
         setCategoriesToSearch(query[1][0] || []);
         setBrandsToSearch(query[1][1] || []);
@@ -26,7 +27,7 @@ function ProductListings() {
         setIsLoading(true);
 
         try {
-            const result = await searchList(query[0], query[1][0], query[1][1], query[2], query[3] === "T", 1);
+            const result = await searchList(query[0], query[1][0], query[1][1], query[2], query[3] === "T", 0);
             if (result.totalPages > 0) {
                 setTotalPages(result.totalPages);
                 setProductsToShow(result.content);
@@ -40,10 +41,11 @@ function ProductListings() {
     }
 
     const fetchNextPage = async () => {
-        if (page < totalPages) {
+        const nextPage = page + 1;
+        if (nextPage < totalPages) {
             setIsLoading(true);
-            setPage(page + 1);
-            const result = await searchList(termToSearch, categoriesToSearch, brandsToSearch, orderBy, asc, page + 1);
+            setPage(nextPage);
+            const result = await searchList(termToSearch, categoriesToSearch, brandsToSearch, orderBy, asc, nextPage);
             setProductsToShow((current) => [...current, ...result.content]);
             setIsLoading(false);
         }

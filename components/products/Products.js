@@ -61,7 +61,7 @@ const Products = ({products}) => {
             name: 'Acciones',
             cell: (row) => ( 
                 <div className="flex justify-center absolute left-0">
-                    <Link
+                    <Link legacyBehavior
                     href={`/products/${row.id}`}
                     passHref
                     >
@@ -71,7 +71,7 @@ const Products = ({products}) => {
                     </button>
                     </Link>
 
-                    <Link
+                    <Link legacyBehavior
                     href={`/products/update/${row.id}`}
                     passHref
                     >

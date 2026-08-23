@@ -26,7 +26,7 @@ const Detail = ({ bill }) => {
                             <BillPrintBody  bill={bill}/>
                         </div>
                         <div className="flex w-full justify-center">
-                            <Link href="/">
+                            <Link legacyBehavior href="/">
                                 <button type="button" className="md:m-3 justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-blue-600 text-base font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">
                                         Volver al inicio
                                 </button>  

@@ -21,7 +21,7 @@ const UserSession = ({ session }) => {
 
     if (!session) {
         return (
-            <Link href="/api/auth/signin">
+            <Link legacyBehavior href="/api/auth/signin">
                 <a
                     className="flex h-10 w-10 items-center justify-center rounded-full border border-gray-200 bg-white text-palette-primary shadow-sm transition hover:text-palette-secondary"
                     aria-label="Iniciar sesión"
@@ -40,7 +40,7 @@ const UserSession = ({ session }) => {
             <button
                 type="button"
                 onClick={() => setIsOpen((open) => !open)}
-                className="flex h-10 max-w-[150px] items-center gap-2 rounded-full border border-gray-200 bg-white px-3 text-sm font-semibold text-gray-700 shadow-sm transition hover:border-palette-sdark hover:text-palette-sdark"
+                className="flex h-10 w-full items-center gap-2 rounded-full border border-gray-200 bg-white px-3 text-sm font-semibold text-gray-700 shadow-sm transition hover:border-palette-sdark hover:text-palette-sdark"
                 aria-expanded={isOpen}
                 aria-haspopup="true"
             >
@@ -62,13 +62,13 @@ const UserSession = ({ session }) => {
                     )}
                 </div>
 
-                <Link href="/shoping/mine">
+                <Link legacyBehavior href="/shoping/mine">
                     <a className="block px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50" role="menuitem">Mis compras</a>
                 </Link>
-                <Link href={`/users/wallet/${session.user.username}`}>
+                <Link legacyBehavior href={`/users/wallet/${session.user.username}`}>
                     <a className="block px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50" role="menuitem">Mi billetera</a>
                 </Link>
-                <Link href={`/users/${session.user.username}`}>
+                <Link legacyBehavior href={`/users/${session.user.username}`}>
                     <a className="block px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50" role="menuitem">Mis datos</a>
                 </Link>
                 <button

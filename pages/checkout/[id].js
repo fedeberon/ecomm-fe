@@ -20,7 +20,7 @@ const Checkout = ({ checkout }) => {
                         </p>
                     </div>
 
-                    <Link href="/shoping/mine">
+                    <Link legacyBehavior href="/shoping/mine">
                         <a className="inline-flex items-center justify-center rounded-xl border border-gray-200 bg-white px-4 py-2.5 text-sm font-bold text-gray-700 shadow-sm hover:bg-gray-50">
                             ← Volver a mis compras
                         </a>

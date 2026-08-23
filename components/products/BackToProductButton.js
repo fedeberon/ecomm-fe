@@ -10,7 +10,7 @@ function BackToProductButton() {
       type="button"
       onClick={() => router.back()}
       aria-label="back-to-products"
-      className="inline-flex h-9 items-center justify-center gap-2 rounded-lg border border-slate-200 px-4 text-xs font-bold text-slate-600 hover:border-palette-sdark hover:text-palette-sdark transition"
+      className="flex h-12 w-full items-center justify-center gap-3 rounded-xl border border-slate-200 bg-white px-4 text-sm font-extrabold text-slate-600 shadow-sm transition hover:-translate-y-0.5 hover:border-palette-sdark hover:text-palette-sdark focus:outline-none focus:ring-4 focus:ring-cyan-100"
     >
       <FontAwesomeIcon icon={faArrowLeft} className="w-3" />
       Seguir comprando

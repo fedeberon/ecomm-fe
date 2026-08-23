@@ -23,7 +23,7 @@ const List = ({report}) => {
         },
         {
             name:'ID ckeckout',
-            cell: row => <Link passHref href={`/checkout/${row.checkout.id}`}><a className={`text-indigo-600`}>{row.id}</a></Link>
+            cell: row => <Link legacyBehavior passHref href={`/checkout/${row.checkout.id}`}><a className={`text-indigo-600`}>{row.id}</a></Link>
         },
         {
             name:"CUIT",

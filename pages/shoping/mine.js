@@ -1,4 +1,3 @@
-import PageTitle from "@/components/PageTitle";
 import Shopping from "@/components/users/Shoping";
 import { getSession } from "next-auth/client";
 import getMyShopping from "../../services/shoppingService";
@@ -7,9 +6,6 @@ const Mine = ({ myShopping }) => {
     return (
         <section className="bg-gray-50/70 py-6 sm:py-8">
             <div className="mx-auto w-full max-w-5xl px-4 sm:px-6 lg:px-8">
-                <div className="mb-4">
-                    <PageTitle text="Mis Compras" />
-                </div>
                 <Shopping bills={myShopping} />
             </div>
         </section>

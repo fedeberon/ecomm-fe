@@ -1,5 +1,5 @@
 import React from "react";
-import PageTitle from "@/components/PageTitle";
+import StoreHeading from "@/components/StoreHeading";
 import Calendario from "@/components/calendar/calendar";
 import withAuthorization from 'components/withAuthorization';
 
@@ -7,7 +7,7 @@ const Index = () => {
 
     return (
         <div className="mx-auto max-w-6xl">
-            <PageTitle text={`Reportes`} />
+            <StoreHeading title="Reportes" />
             <Calendario/>
         </div>
     )

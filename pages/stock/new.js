@@ -1,5 +1,5 @@
 import Create   from '/components/stock/Create'
-import PageTitle from "@/components/PageTitle";
+import StoreHeading from "@/components/StoreHeading";
 import React from "react";
 import { all } from "services/providersService";
 import withAuthorization from 'components/withAuthorization';
@@ -8,7 +8,7 @@ import withAuthorization from 'components/withAuthorization';
 const New = ({providers}) => {
     return (
         <div className="mx-auto max-w-6xl">
-            <PageTitle text="Cargar Stock" />
+            <StoreHeading title="Cargar stock" />
             <Create providers={providers}/>
         </div>
     )

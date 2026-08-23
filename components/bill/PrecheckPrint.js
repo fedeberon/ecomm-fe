@@ -1,100 +1,63 @@
-import Moment from "react-moment";
 import logo from "../../images/logoMati.png";
 
-const PrecheckPrint = ({checkout}) => {
+const money = (value) => `$ ${Number(value || 0).toLocaleString("es-AR", { minimumFractionDigits: 2 })}`;
 
-    return(
-       <>
-           <div className="justify-between w-screen h-200 mt-10">
-               <div className="m-auto lg:w-11/12 sm:w-11/12">
-                   <div id="head-factura" className="flex justify-around border-b-4 border-grey-800">
-                       <img id="img-factura" src={logo.src} className="w-32" />
-                       <div id="local-factura" className="text-right text-gray-500">
-                           Dulce Bebe<br />
-                           Av. Alsina 472<br />
-                           San Carlos de Bolivar<br />
-                           Prov Buenos Aires<br />
-                           B6550<br />
-                       </div>
-                   </div>
+const PrecheckPrint = ({ checkout }) => {
+  const products = checkout?.products || [];
 
+  return (
+    <article className="mx-auto max-w-5xl overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-sm print:max-w-none print:rounded-none print:border-0 print:shadow-none">
+      <header className="flex flex-col gap-5 border-b border-slate-200 px-5 py-6 sm:flex-row sm:items-center sm:justify-between sm:px-8">
+        <img id="img-factura" src={logo.src} alt="Dulce Bebé" className="h-auto w-36 object-contain sm:w-44" />
+        <div className="text-left text-sm leading-6 text-slate-500 sm:text-right">
+          <p className="font-extrabold text-slate-800">Dulce Bebé</p>
+          <p>Av. Alsina 472</p>
+          <p>San Carlos de Bolívar, Buenos Aires</p>
+          <p>B6550 · 02314 15-41-1750</p>
+        </div>
+      </header>
 
-                   <div  className="border-b-4 border-grey-800 m-auto">
-                       <div className="flex-col max-w-full">
-                           <div className="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-0">
-                               <div className="py-12  inline-block w-full">
-                                   <div className="shadow overflow-x-auto border-b border-gray-200 sm:rounded-lg">
-                                       <table className="w-full divide-y divide-gray-200">
-                                           <thead className="">
-                                           <tr className="">
-                                               <th scope="col"
-                                                   className="px-4 lg:px-12  py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                                   Nombre
-                                               </th>
-                                               <th scope="col"
-                                                   className="px-4 py-2  text-left text-xs font-medium text-gray-500 uppercase tracking-wider hidden sm:table-cell">
-                                                   Cantidad
-                                               </th>
-                                               <th scope="col"
-                                                   className="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider hidden sm:table-cell">
-                                                   Precio Unitario
-                                               </th>
-                                               <th scope="col"
-                                                   className="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                                   Total
-                                               </th>
-                                           </tr>
-                                           </thead>
-                                           <tbody
-                                               className="bg-white divide-y divide-gray-200 lg:w-3/4 ">
+      <div className="px-5 py-6 sm:px-8">
+        <div className="mb-5 flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
+          <div>
+            <p className="text-xs font-bold uppercase tracking-[0.18em] text-palette-sdark">Detalle del presupuesto</p>
+            <h2 className="mt-1 text-xl font-extrabold text-slate-800">Productos seleccionados</h2>
+          </div>
+          <p className="text-sm text-slate-500">Fecha: <strong className="text-slate-700">{checkout?.date}</strong></p>
+        </div>
 
-                                           {
-                                               checkout.products.map((p, index) => (
-                                                   <tr key={index}>
-                                                       <td className="px-4 lg:px-12 py-2 whitespace-nowrap">
-                                                           <div className="flex items-center">
-                                                               <div className="ml-0 w-1/4">
-                                                                   <div
-                                                                       className="text-sm font-medium text-gray-900">
-                                                                       <div>{p.product.name}</div>
-                                                                   </div>
-                                                               </div>
-                                                           </div>
-                                                       </td>
-                                                       <td className="px-4 py-2 whitespace-nowrap text-sm text-gray-500 hidden sm:table-cell">
-                                                        {p.quantity}
-                                                       </td>
-                                                       <td className="px-4 py-2 whitespace-nowrap text-sm text-gray-500 hidden sm:table-cell">
-                                                           $ {p.product.price}
-                                                       </td>
-                                                       <td className="px-4 py-3 whitespace-nowrap text-sm text-gray-500">
-                                                           $ {p.price}
-                                                       </td>
-                                                   </tr>
-                                               ))
-                                           }
+        <div className="overflow-hidden rounded-2xl border border-slate-200">
+          <table className="w-full text-left">
+            <thead className="bg-slate-50 text-xs uppercase tracking-wide text-slate-500">
+              <tr>
+                <th className="px-4 py-3 font-bold sm:px-5">Producto</th>
+                <th className="hidden px-4 py-3 text-center font-bold sm:table-cell">Cantidad</th>
+                <th className="hidden px-4 py-3 text-right font-bold sm:table-cell">Precio unitario</th>
+                <th className="px-4 py-3 text-right font-bold sm:px-5">Total</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-slate-100 bg-white text-sm text-slate-600">
+              {products.map((item, index) => (
+                <tr key={`${item.product?.id || item.product?.name}-${index}`}>
+                  <td className="px-4 py-4 font-semibold text-slate-800 sm:px-5">{item.product?.name}</td>
+                  <td className="hidden px-4 py-4 text-center sm:table-cell">{item.quantity}</td>
+                  <td className="hidden px-4 py-4 text-right sm:table-cell">{money(item.product?.price)}</td>
+                  <td className="px-4 py-4 text-right font-semibold text-slate-800 sm:px-5">{money(item.price)}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
 
-                                           </tbody>
-                                       </table>
-                                   </div>
-                               </div>
-                           </div>
-                       </div>
-                       <div id="footer-factura" className="flex justify-around  mt-10 text-gray-500">
-                           <div>
-                               <div>
-                                   <span>FECHA: </span> {checkout.date}
-                               </div>
-                           </div>
-                           <div className="">IMPORTE TOTAL $ {checkout.totalAmount}</div>
-                       </div>
-                   </div>
-                   
-               </div>
-           </div>
-       </>
-    )
+        <div className="mt-6 flex justify-end">
+          <div className="w-full rounded-2xl bg-palette-slighter px-5 py-4 text-right sm:w-72">
+            <p className="text-xs font-bold uppercase tracking-wide text-slate-500">Importe total</p>
+            <p className="mt-1 text-2xl font-extrabold text-palette-sdark">{money(checkout?.totalAmount)}</p>
+          </div>
+        </div>
+      </div>
+    </article>
+  );
+};
 
-}
-
-export default PrecheckPrint
+export default PrecheckPrint;

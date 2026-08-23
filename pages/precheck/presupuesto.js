@@ -8,7 +8,7 @@ import 'react-notifications/lib/notifications.css';
 import PageTitle from '@/components/PageTitle'
 import Link from "next/link";
 import { useReactToPrint } from "react-to-print";
-import { buyWithPoints, createCheckout } from "../../services/productService";
+import { buyWithPoints, createBudget } from "../../services/productService";
 import Loading from "@/components/utils/Loading";
 import PrecheckPrint from "@/components/bill/PrecheckPrint";
 import { useRouter } from "next/router";
@@ -23,14 +23,31 @@ const Presupuesto = ({ userSession, users }) => {
     const router = useRouter();
     const [personLoaded, setPersonLoaded] = useState(false)
 
-    useEffect(async () => {
-        setLoading(true);
-        let checkout = await createCheckout(cart);
-        setCheckout(checkout.data);
-        // cleanCart();
-        console.log(checkout.data);
-        setLoading(false);
-    }, []);
+    useEffect(() => {
+        if (!cart?.length) {
+            setLoading(false);
+            return;
+        }
+
+        let cancelled = false;
+        const loadBudget = async () => {
+            setLoading(true);
+            try {
+                const response = await createBudget(cart);
+                if (!cancelled) setCheckout(response.data);
+            } catch (error) {
+                if (!cancelled) {
+                    NotificationManager.error(error.message, 'No se pudo generar el presupuesto');
+                    setCheckout(null);
+                }
+            } finally {
+                if (!cancelled) setLoading(false);
+            }
+        };
+
+        loadBudget();
+        return () => { cancelled = true; };
+    }, [cart]);
     const componentRed = useRef()
     const print = useReactToPrint({
         content: () => componentRed.current,
@@ -112,19 +129,22 @@ const Presupuesto = ({ userSession, users }) => {
                 loading
                     ?
                     <Loading message={"Un momento por favor ..."} />
+                    : !checkout
+                    ? <div className="mx-auto max-w-xl px-4 py-16 text-center text-slate-600">Agregá productos al carrito para generar un presupuesto.</div>
                     :
-                    <div>
-                        <div id="presupuesto"  >
+                    <div className="min-h-screen bg-slate-50 pb-12">
+                        <div id="presupuesto" className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
                             <div>
                                 <PageTitle text={`Presupuesto # ${checkout.id}`} />
                             </div>
                             {
                             userSession?.role?.includes("ADMIN")
                             ?
-                            <div className="m-auto w-1/2">
+                            <div className="mx-auto mb-6 max-w-6xl rounded-2xl border border-cyan-100 bg-cyan-50 p-5 shadow-sm sm:p-6">
+                                <label htmlFor="user" className="mb-3 block text-sm font-extrabold uppercase tracking-wide text-palette-sdark sm:text-base">Asignar presupuesto a un usuario</label>
                                 <select
                                     id="user"
-                                    className="no-scrollbar text-gray-600 focus:outline-none  font-normal w-full h-10 flex items-center pl-3 text-sm border-gray-300 rounded border"
+                                    className="no-scrollbar flex h-12 w-full items-center rounded-xl border border-cyan-200 bg-white px-4 text-base font-medium text-gray-600 outline-none transition focus:border-palette-sdark focus:ring-4 focus:ring-cyan-100"
                                     onChange={handleChangeUsers}>
                                         <option value="seleccionar">Seleccione el usuario </option>
                                             {users.map((user, index) => {
@@ -145,24 +165,20 @@ const Presupuesto = ({ userSession, users }) => {
                             </>
                             }
 
-                        <div ref={componentRed} className="">
+                        <div ref={componentRed}>
                             <PrecheckPrint checkout={checkout} />
                         </div>
 
                         </div>
-                        <div className="flex w-full justify-center">
-                            <Link href="/">
-                                <button type="button" className="md:m-3 justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-blue-600 text-base font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">
+                        <div className="mx-auto flex max-w-5xl flex-wrap justify-center gap-3 px-4 py-6 print:hidden">
+                            <Link legacyBehavior href="/">
+                                <button type="button" className="rounded-xl border border-slate-300 bg-white px-5 py-3 text-sm font-bold text-slate-600 transition hover:bg-slate-50">
                                     Volver al inicio
                                 </button>
                             </Link>
-                            <button onClick={print} type="button" className="md:m-3 justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-red-600 text-base font-medium text-white hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">
+                            <button onClick={print} type="button" className="rounded-xl bg-palette-sdark px-5 py-3 text-sm font-extrabold text-white transition hover:bg-palette-dark focus:outline-none focus:ring-4 focus:ring-cyan-100">
                                 Imprimir
                             </button>
-                            <p aria-label="checkout-products"
-                                className="md:m-3 justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-red-600 text-base font-medium text-white hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">
-                                SELECCIONAR USUARIO
-                            </p>
                         </div>
 
 
@@ -181,7 +197,7 @@ const Presupuesto = ({ userSession, users }) => {
                                         (
                                             <p
                                                 aria-label="checkout-products"
-                                                className="md:m-3 justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-red-600 text-base font-medium text-white hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
+                                                className="mx-auto max-w-2xl rounded-xl bg-pink-50 px-5 py-3 text-center text-sm font-semibold text-pink-700"
                                             >
                                                 EL 20% DE DESCUENTO SE APLICARA A EN LA FACTURA FINAL
                                                 DEL TOTAL DE LA COMPRA
@@ -190,12 +206,12 @@ const Presupuesto = ({ userSession, users }) => {
                                             </p>
                                         ) :
                                         (
-                                            <a onClick={() => handleCreditPoints(person.username)}
+                                            <button type="button" onClick={() => handleCreditPoints(person.username)}
                                                 value={person}
                                                 aria-label="checkout-products"
-                                                className="md:m-3 justify-center bg-gradient-to-r from-blue-900 to-blue-500 rounded-md border border-transparent shadow-sm px-4 py-2 bg-red-600 text-base font-medium text-white hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">
+                                                className="mx-auto block rounded-xl bg-gradient-to-r from-blue-900 to-blue-500 px-5 py-3 text-sm font-bold text-white shadow-sm transition hover:from-blue-800 hover:to-blue-600">
                                                 Tarjeta de Puntos. Saldo: {points}
-                                            </a>
+                                            </button>
                                         )
                                 )
                         }
@@ -239,4 +255,3 @@ export async function getServerSideProps(context) {
         },
     }
 }
-

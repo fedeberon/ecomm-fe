@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import { useCartContext } from "@/context/Store";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars, faShoppingCart, faHome } from "@fortawesome/free-solid-svg-icons";
@@ -9,12 +10,15 @@ import { useSession } from "next-auth/client";
 import { findAll } from "services/categoriesService";
 
 function Nav() {
+  const router = useRouter();
   const cart = useCartContext()[0];
   const [cartItems, setCartItems] = useState(0);
   const [session] = useSession();
   const [isShow, setIsShow] = useState(false);
   const [categoriesVisible, setCategoriesVisible] = useState(false);
   const [categories, setCategories] = useState([]);
+
+  const isActive = (path) => path === '/' ? router.pathname === '/' : router.pathname.startsWith(path);
 
   useEffect(() => {
     const loadCategories = async () => setCategories(await findAll());
@@ -50,29 +54,29 @@ function Nav() {
               <FontAwesomeIcon icon={faBars} className="w-5 text-gray-700" />
             </button>
 
-            <Link href="/">
+            <Link legacyBehavior href="/">
               <a className="flex shrink-0 items-center">
                 <BrandLogo />
               </a>
             </Link>
 
             <div className="hidden lg:flex items-center gap-7 ml-auto">
-              <Link href="/">
-                <a className="flex items-center gap-2 py-3 text-sm font-bold text-gray-800 hover:text-palette-sdark">
+              <Link legacyBehavior href="/">
+                <a className={`nav-tab flex items-center gap-2 py-3 text-sm font-bold ${isActive('/') ? 'nav-tab-active' : ''}`}>
                   <FontAwesomeIcon icon={faHome} className="w-4 text-palette-sdark" />
                   Inicio
                 </a>
               </Link>
 
-              <Link href="/diapers/inicio">
-                <a className="py-3 text-sm font-bold text-gray-800 hover:text-palette-sdark">Pañalería</a>
+              <Link legacyBehavior href="/diapers/inicio">
+                <a className={`nav-tab py-3 text-sm font-bold ${isActive('/diapers') ? 'nav-tab-active' : ''}`}>Pañalería</a>
               </Link>
 
               <div className="relative">
                 <button
                   type="button"
                   onClick={() => setCategoriesVisible(!categoriesVisible)}
-                  className="flex items-center gap-1 py-3 text-sm font-bold text-gray-800 hover:text-palette-sdark"
+                  className={`nav-tab flex items-center gap-1 py-3 text-sm font-bold ${categoriesVisible ? 'nav-tab-active' : ''}`}
                 >
                   Categorías <span className="text-xs">⌄</span>
                 </button>
@@ -80,7 +84,7 @@ function Nav() {
                   <div className="absolute right-0 mt-1 w-64 bg-white border border-gray-200 rounded-2xl shadow-xl p-2">
                     <div className="max-h-72 overflow-y-auto no-scrollbar">
                       {categories?.map((category) => (
-                        <Link key={category.id} href={`/accessories/${category.id}`} passHref>
+                        <Link legacyBehavior key={category.id} href={`/accessories/${category.id}`} passHref>
                           <a
                             onClick={() => setCategoriesVisible(false)}
                             className="block px-4 py-2.5 rounded-xl text-sm text-gray-700 hover:bg-palette-slighter hover:text-palette-dark"
@@ -94,17 +98,17 @@ function Nav() {
                 )}
               </div>
 
-              <Link href="/about/inicio">
-                <a className="py-3 text-sm font-bold text-gray-800 hover:text-palette-sdark">Quiénes somos</a>
+              <Link legacyBehavior href="/about/inicio">
+                <a className={`nav-tab py-3 text-sm font-bold ${isActive('/about') ? 'nav-tab-active' : ''}`}>Quiénes somos</a>
               </Link>
 
-              <div className="hidden sm:flex items-center">
+              <div className="hidden sm:flex w-[150px] shrink-0 items-center justify-end">
                 <UserSession session={session} />
               </div>
 
-              <Link href="/cart" passHref>
+              <Link legacyBehavior href="/cart" passHref>
                 <a
-                  className="relative flex items-center justify-center w-10 h-10 rounded-xl bg-palette-sdark hover:bg-palette-dark shadow-md"
+                  className="relative mr-12 flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-palette-sdark shadow-md transition hover:bg-palette-dark lg:mr-16"
                   aria-label="Carrito"
                 >
                   <FontAwesomeIcon icon={faShoppingCart} className="h-5 text-white" />
@@ -119,21 +123,21 @@ function Nav() {
           </div>
 
           <nav className={`${isShow ? "block" : "hidden"} lg:hidden border-t border-gray-100 pb-3`}>
-            <Link href="/"><a className="block py-3 text-sm font-bold text-gray-700">Inicio</a></Link>
-            <Link href="/diapers/inicio"><a className="block py-3 text-sm font-bold text-gray-700">Pañalería</a></Link>
+            <Link legacyBehavior href="/"><a className="block py-3 text-sm font-bold text-gray-700">Inicio</a></Link>
+            <Link legacyBehavior href="/diapers/inicio"><a className="block py-3 text-sm font-bold text-gray-700">Pañalería</a></Link>
             <button onClick={() => setCategoriesVisible(!categoriesVisible)} className="block w-full text-left py-3 text-sm font-bold text-gray-700">Categorías</button>
             {categoriesVisible && (
               <div className="pl-3 pb-2">
                 {categories?.map((category) => (
-                  <Link key={category.id} href={`/accessories/${category.id}`} passHref>
+                  <Link legacyBehavior key={category.id} href={`/accessories/${category.id}`} passHref>
                     <a className="block py-2 text-sm text-gray-600">{category.name}</a>
                   </Link>
                 ))}
               </div>
             )}
-            <Link href="/about/inicio"><a className="block py-3 text-sm font-bold text-gray-700">Quiénes somos</a></Link>
+            <Link legacyBehavior href="/about/inicio"><a className="block py-3 text-sm font-bold text-gray-700">Quiénes somos</a></Link>
             {session?.user?.role?.includes("ADMIN") && (
-              <Link href="/admin"><a className="block py-3 text-sm font-bold text-gray-700">Administración</a></Link>
+              <Link legacyBehavior href="/admin"><a className="block py-3 text-sm font-bold text-gray-700">Administración</a></Link>
             )}
           </nav>
         </div>

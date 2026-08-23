@@ -176,44 +176,44 @@ export async function getCallback(id) {
 
 
 export async function createCheckout(cart){
-    debugger
     const fetchUrl = `${process.env.NEXT_PUBLIC_BACKEND_SERVICE}/checkout`;
-    let details = []
-    cart.forEach(function(value) {
-        let detail = {
-            "id": value.id,
-            "quantity" : value.quantity,
-            "size": value.size
-        }
-        details.push(detail);
-    });
+    const details = (cart || []).map(({ id, quantity, size }) => ({ id, quantity, size }));
+
+    if (!details.length) {
+        throw new Error("El carrito está vacío.");
+    }
+
     try {
-        let response = await axios.post(fetchUrl, details);
+        const response = await axios.post(fetchUrl, details);
         return response;
     } catch (error) {
-        throw new Error("Could not create preference!");
+        console.error("Error al crear checkout", {
+            url: fetchUrl,
+            status: error.response?.status,
+            data: error.response?.data,
+        });
+        throw new Error(error.response?.data?.message || "No se pudo crear el checkout.");
     }
 }
 
 export async function createBudget(cart){
-    debugger
     const fetchUrl = `${process.env.NEXT_PUBLIC_BACKEND_SERVICE}/checkout/budget`;
-    let details = []
-    cart.forEach(function(value) {
-        let detail = {
-            "id": value.id,
-            "quantity" : value.quantity,
-            "size": value.size
-        }
-        details.push(detail);
-    });
-    let response = "";
+    const details = (cart || []).map(({ id, quantity, size }) => ({ id, quantity, size }));
+
+    if (!details.length) {
+        throw new Error("El carrito está vacío.");
+    }
+
     try {
-        response = await axios.post(fetchUrl, details);
+        const response = await axios.post(fetchUrl, details);
         return response;
     } catch (error) {
-        console.error(response)
-        throw new Error("Could not create preference!");
+        console.error("Error al crear presupuesto", {
+            url: fetchUrl,
+            status: error.response?.status,
+            data: error.response?.data,
+        });
+        throw new Error(error.response?.data?.message || "No se pudo crear el presupuesto.");
     }
 }
 

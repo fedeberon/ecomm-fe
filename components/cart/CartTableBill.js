@@ -30,42 +30,44 @@ function CartTableBill({ cart }) {
 
 
   return (
-    <div className="flex items-center justify-center m-auto w-full mb-8">
-      <table className="shadow overflow-x-auto border-b border-gray-200 sm:rounded-lgz">
-      <thead className="">
-      <tr className="content-center">
+    <div className="mb-6 min-w-0 w-full overflow-hidden rounded-2xl border border-slate-100">
+      <div className="w-full overflow-x-auto">
+      <table className="w-full table-fixed border-collapse">
+      <colgroup><col className="w-[48%]" /><col className="w-[16%]" /><col className="w-[18%]" /><col className="w-[18%]" /></colgroup>
+      <thead className="bg-slate-50">
+      <tr>
           <th scope="col"
-              className="pl-6 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider ">
+              className="px-3 py-3 text-left text-[10px] font-extrabold uppercase tracking-wider text-slate-500 sm:px-4">
               Producto
           </th>
           <th scope="col"
-              className="px-4 py-2  text-xs font-medium text-gray-500 uppercase tracking-wider">
+              className="px-2 py-3 text-center text-[10px] font-extrabold uppercase tracking-wider text-slate-500">
               Cantidad
           </th>
-          <th className="px-4 py-2  text-xs font-medium text-gray-500 uppercase tracking-wider hidden sm:table-cell">
+          <th className="hidden px-2 py-3 text-center text-[10px] font-extrabold uppercase tracking-wider text-slate-500 sm:table-cell">
             Talle
           </th>
           <th scope="col"
-              className="px-4 py-2  text-xs font-medium text-gray-500 uppercase tracking-wider">
+              className="px-2 py-3 text-center text-[10px] font-extrabold uppercase tracking-wider text-slate-500">
               Precio
           </th>
       </tr>
       </thead>
-        <tbody className="bg-white divide-y divide-gray-200 lg:w-3/4">
+        <tbody className="divide-y divide-slate-100 bg-white">
           {cartItems.map((item, index) => (
-            <tr key={index} className="text-sm sm:text-base text-gray-600 text-center">
-              <td className="text-left font-primary font-medium pl-4  px-4 sm:px-6 py-4 flex items-center">
+            <tr key={index} className="text-center text-sm text-slate-600">
+              <td className="flex min-w-0 items-center gap-2 px-3 py-4 text-left font-primary font-medium sm:gap-3 sm:px-4">
               <Image src={item.productImage ? item.productImage : defaultImage}
                        width={50}
                        height={50}
-                  className="w-12 h-12 rounded-full"/>
-               <Link passHref href={`/products/${item.id}`}>
-                  <a className="pt-1 hover:text-palette-dark ml-4 truncate hidden sm:table-cell">
+                  className="h-10 w-10 shrink-0 rounded-xl object-cover sm:h-11 sm:w-11"/>
+               <Link legacyBehavior passHref href={`/products/${item.id}`}>
+                  <a className="min-w-0 truncate text-xs hover:text-palette-dark sm:text-sm">
                     {item.productTitle}
                   </a>
               </Link>
               </td>
-              <td className="font-primary font-medium px-8 sm:px-6 py-4">
+              <td className="px-1 py-4 font-primary font-medium sm:px-2">
                 <input
                   type="number"
                   inputMode="numeric"
@@ -76,7 +78,7 @@ function CartTableBill({ cart }) {
                   value={item.quantity}
                   maxLength={2}
                   onChange={(e) => updateItem(item.id, e.target.value)}
-                  className="text-gray-900 form-input border border-gray-300 w-16 rounded-sm focus:border-palette-light focus:ring-palette-light"
+                  className="form-input h-9 w-12 rounded-lg border border-slate-200 text-center text-sm text-slate-900 focus:border-palette-light focus:ring-palette-light sm:w-14"
                   onKeyPress={(event) => {
                     if (!/[0-9]/.test(event.key)) {
                       event.preventDefault();
@@ -84,10 +86,10 @@ function CartTableBill({ cart }) {
                   }}
                 />
               </td>
-              <td className="font-primary text-base font-light px-4 sm:px-6 py-4 hidden sm:table-cell">
+              <td className="hidden px-2 py-4 font-primary text-sm font-light sm:table-cell">
                 <label>{item.sizeName}</label>
               </td>
-              <td className="font-primary text-base font-light px-4 sm:px-6 py-4">
+              <td className="px-1 py-4 font-primary text-sm font-light sm:px-2">
                 <Price
                   currency="$"
                   num={item.price}
@@ -97,10 +99,10 @@ function CartTableBill({ cart }) {
             </tr>
           ))}
 
-            <tr className="text-center">
+            <tr className="bg-slate-50 text-center">
               <td></td>
-              <td className="font-primary text-base text-gray-600 font-semibold uppercase px-4 sm:px-6 py-4">Subtotal</td>
-              <td className="font-primary text-lg text-palette-primary font-medium px-4 sm:px-6 py-4">
+              <td colSpan="2" className="px-2 py-4 text-right font-primary text-xs font-extrabold uppercase text-slate-500 sm:text-sm">Subtotal</td>
+              <td className="px-1 py-4 font-primary text-lg font-extrabold text-palette-primary sm:px-2">
                 <Price
                   currency="$"
                   num={subtotal}
@@ -109,8 +111,9 @@ function CartTableBill({ cart }) {
               </td>
               <td></td>
             </tr>
-        </tbody>
+      </tbody>
       </table>
+      </div>
     </div>
   )
 }

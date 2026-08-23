@@ -1,13 +1,13 @@
 import { findAll } from "services/categoriesService";
 import CategoriesList from "@/components/categories/CategoriesList";
-import PageTitle from "@/components/PageTitle";
+import StoreHeading from "@/components/StoreHeading";
 import withAuthorization from 'components/withAuthorization';
 import React from "react";
 
 const Category = ({categories}) => {
   return (
         <div className="mx-auto max-w-6xl">
-            <PageTitle text="Categorias"/>
+            <StoreHeading title="Categorías" />
             <CategoriesList categories={categories}/>
         </div>
   );
@@ -23,4 +23,3 @@ export async function getServerSideProps() {
 }
 
 export default withAuthorization(Category);
-

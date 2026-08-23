@@ -12,7 +12,7 @@ function ProductCard({ product, compact = false }) {
 
   if (compact) {
     return (
-      <Link href={`/products/${product.id}`} passHref>
+      <Link legacyBehavior href={`/products/${product.id}`} passHref>
         <a className="group flex min-h-[132px] overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm transition hover:border-slate-300 hover:shadow-md">
           <div className="relative w-[118px] flex-shrink-0 bg-white border-r border-slate-100">
             <Image
@@ -59,7 +59,7 @@ function ProductCard({ product, compact = false }) {
   }
 
   return (
-    <Link href={`/products/${product.id}`} passHref>
+    <Link legacyBehavior href={`/products/${product.id}`} passHref>
       <a className="group flex h-full flex-col overflow-hidden rounded-[18px] border border-slate-200 bg-white shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:shadow-lg">
         <div className="relative h-44 bg-white overflow-hidden">
           <Image

@@ -1,13 +1,13 @@
 import {findAll} from "../../services/brandService";
 import BrandList from "@/components/brands/BrandList";
-import PageTitle from "@/components/PageTitle";
+import StoreHeading from "@/components/StoreHeading";
 import React from "react";
 import withAuthorization from 'components/withAuthorization';
 
 const Brand = ({brands}) => {
   return (
         <div className="mx-auto max-w-6xl">
-            <PageTitle text="MARCAS"/>
+            <StoreHeading title="Marcas" />
             <BrandList brands={brands}/>
         </div>
   );
@@ -23,4 +23,3 @@ export async function getServerSideProps() {
 }
 
 export default withAuthorization(Brand);
-

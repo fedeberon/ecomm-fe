@@ -1,5 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { debounce } from 'lodash';
+import { useRouter } from 'next/router';
+import { searchList } from '../../services/productService';
 
 function FilterModal({ filterParams, searchFunction, columnList }) {
     const [showFilter, setShowFilter] = useState(false);
@@ -10,6 +12,10 @@ function FilterModal({ filterParams, searchFunction, columnList }) {
     const [brandSearch, setBrandSearch] = useState('');
     const [openSections, setOpenSections] = useState({ Categorias: true, Marcas: true });
     const [showAllBrands, setShowAllBrands] = useState(false);
+    const [suggestions, setSuggestions] = useState([]);
+    const [suggestionsLoading, setSuggestionsLoading] = useState(false);
+    const [highlightedSuggestion, setHighlightedSuggestion] = useState(-1);
+    const router = useRouter();
 
     const customParams = [searchTerm, queryParameters, selectedOrderCol, ascOrder ? "T" : "F"];
     const activeFilters = queryParameters.reduce((total, values) => total + values.length, 0);
@@ -62,25 +68,75 @@ function FilterModal({ filterParams, searchFunction, columnList }) {
         return () => debouncedSearch.cancel();
     }, [searchTerm]);
 
+    useEffect(() => {
+        setHighlightedSuggestion(-1);
+        const query = searchTerm.trim();
+        if (query.length < 2) {
+            setSuggestions([]);
+            return undefined;
+        }
+
+        let cancelled = false;
+        const loadSuggestions = async () => {
+            setSuggestionsLoading(true);
+            try {
+                const result = await searchList(query, '', '', 'sales', false, 0, 6);
+                if (!cancelled) setSuggestions(result?.content || []);
+            } finally {
+                if (!cancelled) setSuggestionsLoading(false);
+            }
+        };
+
+        const timer = setTimeout(loadSuggestions, 250);
+        return () => {
+            cancelled = true;
+            clearTimeout(timer);
+        };
+    }, [searchTerm]);
+
+    const openProduct = (product) => {
+        setSuggestions([]);
+        router.push(`/products/${product.id}`);
+    };
+
+    const handleSuggestionKeyDown = (event) => {
+        const isOpen = searchTerm.trim().length >= 2;
+        if (!isOpen || suggestionsLoading) return;
+
+        if (event.key === 'ArrowDown') {
+            event.preventDefault();
+            setHighlightedSuggestion((current) => suggestions.length ? (current + 1) % suggestions.length : -1);
+        } else if (event.key === 'ArrowUp') {
+            event.preventDefault();
+            setHighlightedSuggestion((current) => suggestions.length ? (current <= 0 ? suggestions.length - 1 : current - 1) : -1);
+        } else if (event.key === 'Enter' && highlightedSuggestion >= 0 && suggestions[highlightedSuggestion]) {
+            event.preventDefault();
+            openProduct(suggestions[highlightedSuggestion]);
+        } else if (event.key === 'Escape') {
+            setSuggestions([]);
+            setHighlightedSuggestion(-1);
+        }
+    };
+
     return (
         <div className="w-full bg-transparent py-2">
-            <div className="relative flex items-center w-full h-12 sm:h-14 rounded-full border-2 border-palette-sdark bg-white shadow-sm overflow-hidden">
-                <span className="absolute left-5 text-xl text-gray-400 pointer-events-none">⌕</span>
-                <input
-                    className="w-full h-full pl-14 pr-40 sm:pr-48 border-0 bg-white text-base text-gray-700 placeholder-gray-400 outline-none focus:ring-0"
-                    placeholder="Buscar productos para tu bebé..."
-                    value={searchTerm}
-                    onChange={(e) => setSearchTerm(e.target.value)}
-                    autoComplete="off"
-                />
-                {searchTerm && (
-                    <button type="button" onClick={() => setSearchTerm('')} className="absolute right-28 sm:right-36 w-8 h-8 rounded-full text-gray-400 hover:bg-gray-100">×</button>
-                )}
-                <button type="button" onClick={() => setShowFilter(true)} className="absolute right-0 top-0 h-full px-5 sm:px-6 bg-palette-sdark hover:bg-palette-dark text-white font-bold text-sm flex items-center gap-2">
-                    Filtros
-                    {activeFilters > 0 && <span className="min-w-5 h-5 px-1.5 rounded-full bg-white text-palette-sdark text-xs flex items-center justify-center">{activeFilters}</span>}
-                </button>
+        <div className="relative">
+            <div className="relative flex h-12 w-full items-center overflow-hidden rounded-full border-2 border-palette-sdark bg-white shadow-sm sm:h-14">
+                <span className="pointer-events-none absolute left-5 text-xl text-gray-400">⌕</span>
+                <input className="h-full w-full border-0 bg-white pl-14 pr-40 text-base text-gray-700 placeholder-gray-400 outline-none focus:ring-0 sm:pr-48" placeholder="Buscar productos para tu bebé..." value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} onKeyDown={handleSuggestionKeyDown} autoComplete="off" role="combobox" aria-expanded={searchTerm.trim().length >= 2} aria-controls="product-suggestions" aria-activedescendant={highlightedSuggestion >= 0 ? `product-suggestion-${highlightedSuggestion}` : undefined} />
+                {searchTerm && <button type="button" onClick={() => setSearchTerm('')} className="absolute right-28 h-8 w-8 rounded-full text-gray-400 hover:bg-gray-100 sm:right-36">×</button>}
+                <button type="button" onClick={() => setShowFilter(true)} className="absolute right-0 top-0 flex h-full items-center gap-2 bg-palette-sdark px-5 text-sm font-bold text-white hover:bg-palette-dark sm:px-6">Filtros {activeFilters > 0 && <span className="flex min-h-5 min-w-5 items-center justify-center rounded-full bg-white px-1.5 text-xs text-palette-sdark">{activeFilters}</span>}</button>
             </div>
+
+            <div id="product-suggestions" className={`absolute left-3 right-3 top-[calc(100%+8px)] z-40 overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-xl transition-all duration-300 ease-out sm:left-5 sm:right-5 ${searchTerm.trim().length >= 2 ? 'max-h-96 translate-y-0 opacity-100' : 'pointer-events-none max-h-0 -translate-y-2 border-transparent opacity-0'}`}>
+                    {suggestionsLoading ? <p className="px-4 py-3 text-sm text-slate-500">Buscando productos...</p> : suggestions.length > 0 ? suggestions.map((product, index) => (
+                        <button id={`product-suggestion-${index}`} key={product.id} type="button" onMouseDown={() => openProduct(product)} className={`flex w-full items-center justify-between gap-4 border-b border-slate-100 px-4 py-3 text-left transition last:border-0 hover:bg-cyan-50 ${highlightedSuggestion === index ? 'bg-cyan-50' : 'bg-white'}`}>
+                            <span className="min-w-0 truncate text-sm font-semibold text-slate-800">{product.name}</span>
+                            <span className="shrink-0 text-sm font-bold text-palette-sdark">$ {Number(product.price || 0).toLocaleString('es-AR')}</span>
+                        </button>
+                    )) : <p className="px-4 py-3 text-sm text-slate-500">No encontramos productos con ese nombre.</p>}
+            </div>
+        </div>
 
             <div className={`fixed inset-0 z-50 ${showFilter ? '' : 'hidden'}`}>
                 <button

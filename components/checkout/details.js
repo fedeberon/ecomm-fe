@@ -27,7 +27,7 @@ const Details = ({ checkout }) => {
                             key={`${item?.product?.id || "product"}-${index}`}
                             className="grid grid-cols-1 gap-4 px-5 py-5 md:grid-cols-[minmax(0,2.4fr)_0.7fr_0.9fr_1fr_1fr] md:items-center"
                         >
-                            <Link href={`/products/${item?.product?.id}`}>
+                            <Link legacyBehavior href={`/products/${item?.product?.id}`}>
                                 <a className="flex min-w-0 items-center gap-4 group">
                                     <div className="flex h-20 w-20 shrink-0 items-center justify-center overflow-hidden rounded-xl border border-gray-100 bg-gray-50">
                                         <Image product={item.product} />
