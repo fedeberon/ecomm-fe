@@ -98,7 +98,7 @@ function Nav() {
                 <a className="py-3 text-sm font-bold text-gray-800 hover:text-palette-sdark">Quiénes somos</a>
               </Link>
 
-              <div className="hidden sm:flex items-center justify-center w-9 h-9 rounded-full border border-gray-200 bg-white shadow-sm">
+              <div className="hidden sm:flex items-center">
                 <UserSession session={session} />
               </div>
 
