@@ -1,38 +1,10 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 980 260" role="img" aria-label="Dulce Bebe - Todo para su crecimiento">
-<defs>
- <linearGradient id="p" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#ff8fbe"/><stop offset="1" stop-color="#ef4b98"/></linearGradient>
- <linearGradient id="t" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#65d5d0"/><stop offset="1" stop-color="#20a9b5"/></linearGradient>
- <filter id="s" x="-20%" y="-20%" width="140%" height="150%"><feDropShadow dx="0" dy="5" stdDeviation="5" flood-color="#25384d" flood-opacity=".13"/></filter>
-</defs>
-<g transform="translate(28 8)" filter="url(#s)">
- <path d="M18 211 C72 226 172 225 267 202" fill="none" stroke="#75412d" stroke-width="15" stroke-linecap="round"/>
- <path d="M35 211l-19 13M249 205l22-17" stroke="#75412d" stroke-width="8" stroke-linecap="round"/>
- <ellipse cx="21" cy="216" rx="14" ry="8" fill="#62bd5d" transform="rotate(-25 21 216)"/><ellipse cx="268" cy="187" rx="15" ry="8" fill="#62bd5d" transform="rotate(28 268 187)"/>
- <g transform="translate(91 13)">
-  <path d="M35 45L55 10l25 31M132 41l25-31 19 38" fill="url(#p)"/>
-  <ellipse cx="106" cy="112" rx="78" ry="94" fill="url(#p)"/>
-  <path d="M50 77c19-42 93-43 112 0-13-17-34-25-56-25S63 60 50 77z" fill="#ffb4d3"/>
-  <ellipse cx="78" cy="91" rx="27" ry="30" fill="#fff7f8"/><ellipse cx="135" cy="91" rx="27" ry="30" fill="#fff7f8"/>
-  <circle cx="78" cy="92" r="16" fill="#202326"/><circle cx="135" cy="92" r="16" fill="#202326"/><circle cx="72" cy="85" r="6" fill="white"/><circle cx="129" cy="85" r="6" fill="white"/>
-  <path d="M96 113h21l-11 13z" fill="#ffb718"/>
-  <path d="M106 150c-18-20-43-5-36 20 6 23 36 39 36 39s31-16 37-39c7-25-18-40-37-20z" fill="#ed3d91" stroke="#ffd1e4" stroke-width="5"/>
-  <path d="M45 141c-18 13-19 38 0 52M167 141c18 13 19 38 0 52" fill="none" stroke="#f160a3" stroke-width="17" stroke-linecap="round"/>
-  <ellipse cx="77" cy="211" rx="18" ry="9" fill="#f5ad1b"/><ellipse cx="136" cy="211" rx="18" ry="9" fill="#f5ad1b"/>
-  <g transform="translate(122 18)"><ellipse cx="36" cy="14" rx="17" ry="11" fill="#ed438f" transform="rotate(-22 36 14)"/><ellipse cx="60" cy="14" rx="17" ry="11" fill="#ed438f" transform="rotate(22 60 14)"/><circle cx="48" cy="16" r="8" fill="#d92d7e"/></g>
- </g>
- <g transform="translate(15 105)">
-  <path d="M16 29L29 7l16 19M66 26L81 7l13 25" fill="url(#t)"/>
-  <ellipse cx="55" cy="69" rx="46" ry="55" fill="url(#t)"/><ellipse cx="55" cy="67" rx="35" ry="42" fill="#a9ece7"/>
-  <ellipse cx="40" cy="56" rx="15" ry="17" fill="white"/><ellipse cx="69" cy="56" rx="15" ry="17" fill="white"/><circle cx="40" cy="57" r="8" fill="#222"/><circle cx="69" cy="57" r="8" fill="#222"/><circle cx="37" cy="53" r="3" fill="white"/><circle cx="66" cy="53" r="3" fill="white"/>
-  <path d="M48 73h13l-6 9z" fill="#ffb718"/><path d="M55 94c-11-11-25-1-20 13 4 12 20 21 20 21s17-9 21-21c5-14-9-24-21-13z" fill="#24aab5"/>
-  <ellipse cx="43" cy="127" rx="10" ry="5" fill="#f5ad1b"/><ellipse cx="67" cy="127" rx="10" ry="5" fill="#f5ad1b"/>
- </g>
- <path d="M70 47c0-17 18-24 29-12 11-13 30-5 29 12-1 17-29 31-29 31S70 65 70 47z" fill="#ff5ca6"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 920 220" role="img" aria-label="Dulce Bebe">
+<defs><linearGradient id="pink" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#ff83b7"/><stop offset="1" stop-color="#ed4b98"/></linearGradient><linearGradient id="aqua" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#6bd9d2"/><stop offset="1" stop-color="#25aebb"/></linearGradient></defs>
+<g transform="translate(18 4)">
+<path d="M12 188c70 18 180 18 270-4" fill="none" stroke="#70402d" stroke-width="12" stroke-linecap="round"/><ellipse cx="24" cy="190" rx="13" ry="7" fill="#61b95d" transform="rotate(-25 24 190)"/><ellipse cx="279" cy="181" rx="13" ry="7" fill="#61b95d" transform="rotate(28 279 181)"/>
+<g transform="translate(100 3)"><path d="M28 43L48 10l23 30M127 40l24-30 19 38" fill="url(#pink)"/><ellipse cx="100" cy="108" rx="72" ry="88" fill="url(#pink)"/><ellipse cx="73" cy="87" rx="26" ry="29" fill="#fff"/><ellipse cx="128" cy="87" rx="26" ry="29" fill="#fff"/><circle cx="73" cy="88" r="15" fill="#202326"/><circle cx="128" cy="88" r="15" fill="#202326"/><circle cx="68" cy="82" r="5" fill="#fff"/><circle cx="123" cy="82" r="5" fill="#fff"/><path d="M90 108h20l-10 13z" fill="#ffb718"/><path d="M100 142c-18-20-42-4-35 20 6 22 35 38 35 38s30-16 36-38c7-24-17-40-36-20z" fill="#e9348d" stroke="#ffd4e6" stroke-width="5"/><ellipse cx="72" cy="199" rx="17" ry="8" fill="#f5ad1b"/><ellipse cx="128" cy="199" rx="17" ry="8" fill="#f5ad1b"/><g transform="translate(120 12)"><ellipse cx="30" cy="14" rx="16" ry="10" fill="#ed438f" transform="rotate(-22 30 14)"/><ellipse cx="52" cy="14" rx="16" ry="10" fill="#ed438f" transform="rotate(22 52 14)"/><circle cx="41" cy="15" r="7" fill="#d92d7e"/></g></g>
+<g transform="translate(17 92)"><path d="M13 29L26 8l15 18M63 26L77 8l13 23" fill="url(#aqua)"/><ellipse cx="52" cy="67" rx="43" ry="52" fill="url(#aqua)"/><ellipse cx="38" cy="54" rx="14" ry="16" fill="#fff"/><ellipse cx="66" cy="54" rx="14" ry="16" fill="#fff"/><circle cx="38" cy="55" r="8" fill="#222"/><circle cx="66" cy="55" r="8" fill="#222"/><circle cx="35" cy="51" r="3" fill="#fff"/><circle cx="63" cy="51" r="3" fill="#fff"/><path d="M46 70h12l-6 9z" fill="#ffb718"/><path d="M52 91c-10-10-23-1-19 12 4 12 19 20 19 20s16-8 20-20c4-13-9-22-20-12z" fill="#24aab5"/><ellipse cx="41" cy="121" rx="9" ry="5" fill="#f5ad1b"/><ellipse cx="63" cy="121" rx="9" ry="5" fill="#f5ad1b"/></g>
+<path d="M72 34c0-15 16-21 26-11 10-11 27-4 26 11-1 15-26 28-26 28S72 49 72 34z" fill="#ff5ca6"/>
 </g>
-<g transform="translate(350 53)">
- <text x="0" y="92" font-family="Arial,Helvetica,sans-serif" font-size="96" font-weight="900" letter-spacing="-4" fill="#25aebb">DULCE</text>
- <text x="337" y="92" font-family="Arial,Helvetica,sans-serif" font-size="96" font-weight="900" letter-spacing="-4" fill="#ef5aa1">BEBE</text>
- <text x="8" y="145" font-family="Arial,Helvetica,sans-serif" font-size="27" font-weight="700" letter-spacing="3.2" fill="#3d5068">TODO PARA SU CRECIMIENTO</text>
- <rect x="8" y="164" width="470" height="5" rx="2.5" fill="#eaf5f6"/><rect x="8" y="164" width="235" height="5" rx="2.5" fill="#ef5aa1"/><rect x="243" y="164" width="235" height="5" rx="2.5" fill="#25aebb"/>
-</g>
+<g transform="translate(325 43)"><text x="0" y="83" font-family="Arial,Helvetica,sans-serif" font-size="82" font-weight="900" letter-spacing="-3" fill="#25aebb">DULCE</text><text x="286" y="83" font-family="Arial,Helvetica,sans-serif" font-size="82" font-weight="900" letter-spacing="-3" fill="#ef5aa1">BEBE</text><text x="5" y="128" font-family="Arial,Helvetica,sans-serif" font-size="24" font-weight="700" letter-spacing="3" fill="#3d5068">TODO PARA SU CRECIMIENTO</text><rect x="5" y="146" width="450" height="5" rx="2.5" fill="#ef5aa1"/><rect x="230" y="146" width="225" height="5" rx="2.5" fill="#25aebb"/></g>
 </svg>
