@@ -1,5 +1,4 @@
 import SEO from '@/components/SEO'
-import PageTitle from '@/components/PageTitle'
 import CartTable from '@/components/cart/CartTable'
 import BackToProductButton from '@/components/products/BackToProductButton'
 import {useCartContext, useCleanCartContext} from '@/context/Store'
@@ -11,13 +10,10 @@ import {getPoints} from "../services/walletService";
 import {useRouter} from "next/router";
 import Link from "next/link";
 import { useSession } from "next-auth/client";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faArchive, faMoneyBill, faNewspaper} from "@fortawesome/free-solid-svg-icons";
-
 
 function CartPage({myPoints, user}) {
-  const pageTitle = `Cart | ${process.env.siteTitle}`  
-  const [cart, checkoutUrl] = useCartContext()
+  const pageTitle = `Cart | ${process.env.siteTitle}`
+  const [cart] = useCartContext()
   const [preference, setPreference] = useState();
   const [checkout, setCheckout] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -27,15 +23,14 @@ function CartPage({myPoints, user}) {
   const [totalAmount, setTotalAmount] = useState(0)
   const [items, setItems] = useState(cart.length);
 
-   useEffect(() => {
-       let total = cart.reduce((a,v) => a + v.price, 0);
-       setTotalAmount(total);
-   }, [cart] );
+  useEffect(() => {
+    const total = cart.reduce((acc, value) => acc + value.price, 0);
+    setTotalAmount(total);
+  }, [cart]);
 
-   useEffect(() => {
-       setItems(cart.length);
-   }, [cart]);
-
+  useEffect(() => {
+    setItems(cart.length);
+  }, [cart]);
 
   const preparePreference = () => {
     setLoading(true);
@@ -46,145 +41,150 @@ function CartPage({myPoints, user}) {
   }
 
   const handleCheckout = () => {
-      setLoading(true);
-      createCheckout(cart).then((res) => {
-          setCheckout(res.data);
-          setLoading(false);
-      });
+    setLoading(true);
+    createCheckout(cart).then((res) => {
+      setCheckout(res.data);
+      setLoading(false);
+    });
   }
 
   const handleCreditPoints = () => {
-      setLoading(true);
-      let walletDiscount = {
-        "username": user.username,
-        "checkoutId": checkout.id,
-      };
-      buyWithPoints(walletDiscount).then((res) => {
-          setCheckout(res.data);
-          setLoading(false);
-          router.push('/users/wallet')
-          cleanCart();
-      });
+    setLoading(true);
+    const walletDiscount = {
+      username: user.username,
+      checkoutId: checkout.id,
+    };
+    buyWithPoints(walletDiscount).then((res) => {
+      setCheckout(res.data);
+      setLoading(false);
+      router.push('/users/wallet')
+      cleanCart();
+    });
   }
 
   return (
-    
-      <div className='bg-blue-100 lg:px-6 '>
-            <div className='flex bg-white  sm:content-start'>
-            <div className="px-10 bg-white mx-auto">
-            <SEO title={pageTitle} />
-            <PageTitle text="Tu Compra" />
+    <main className="min-h-[calc(100vh-180px)] bg-gray-50/70 px-4 py-6 sm:px-6 lg:px-8">
+      <SEO title={pageTitle} />
 
-                {
-                    totalAmount  == 0 && cart.length >=1 
-                        ?
-                        <div
-                            className="flex items-center justify-center m-auto w-3/6 bg-red-100 rounded-lg py-5 px-6 mb-4 text-base text-center text-red-700 mb-3"
-                            role="alert">
-                            Encontramos el item en el carro con importes igual a CERO !!
-                        </div>
-                        :
-                        <></>
-                }
-                {
-                    items == 0
-                    ?
-                        <>
-                            <h1 className="leading-relaxed font-primary justify-between font-extrabold text-3xl text-center text-palette-primary mt-4 py-2 sm:py-4">
-                                No hay Art&iacute;culos por aqu&iacute;
-                            </h1>
-                            <div className="w-80 m-auto">
-                                <BackToProductButton  />
-                            </div>
-                        </>
-                    :
-                            <>
-                            <CartTable
-                                cart={cart}
-                            />
-                            <div className="max-w-sm mx-auto space-y-4 px-2">
-                                <BackToProductButton />
-
-                                    <Link href={"/precheck/presupuesto"} passHref>
-                                            <a href="#" className="w-1/2 bg-blue-500 text-white text-lg font-primary
-                                                            font-semibold pt-2 pb-1 leading-relaxed flex cursor-pointer
-                                                            justify-center items-center focus:ring-1 focus:ring-palette-light
-                                                            focus:outline-none w-full hover:bg-blue-600 rounded-sm">
-                                                Presupuestar
-                                            </a>
-                                    </Link>
-
-
-                                {
-                                session?.user?.role?.includes("ADMIN") 
-                                    ?
-                                        <Link href={"/checkout/payment"} passHref>
-                                                <a href="#" className="w-1/2 bg-blue-500 text-white text-lg font-primary
-                                                               font-semibold pt-2 pb-1 leading-relaxed flex cursor-pointer
-                                                               justify-center items-center focus:ring-1 focus:ring-palette-light
-                                                               focus:outline-none w-full hover:bg-blue-600 rounded-sm">
-                                                    Facturar
-                                                </a>
-                                        </Link>
-                                    :
-                                        <>
-                                        {
-                                        checkout == null
-                                            ?
-                                            <a onClick={handleCheckout}
-                                            aria-label="checkout-products"
-                                            className="bg-palette-primary text-white text-lg font-primary font-semibold pt-2 pb-1 leading-relaxed flex
-                                                        justify-center items-center focus:ring-1 focus:ring-palette-light focus:outline-none w-full hover:bg-palette-dark rounded-sm cursor-pointer"
-                                            >Checkout</a>
-                                            :
-                                            <>
-                                                <a onClick={handleCreditPoints}
-                                                aria-label="checkout-products"
-                                                className="w-1/2 bg-gradient-to-r from-blue-900 to-blue-500 text-white text-lg font-primary font-semibold pt-2 pb-1 leading-relaxed flex cursor-pointer
-                                                            justify-center items-center focus:ring-1 focus:ring-palette-light focus:outline-none w-full hover:bg-blue-600 rounded-sm"
-                                                >Tarjeta de Puntos. Saldo: {myPoints}</a>
-                                            </>
-                                        }
-                                        </>
-                                }
-`                               {
-                                    loading
-                                        ?
-                                        <Loading message={"Espere un momento por favor"} />
-                                        :
-                                        <></>
-                                }
-
-                            </div>
-                        </>
-                }
-            </div>
+      <div className="mx-auto max-w-5xl">
+        <div className="mb-6 flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
+          <div>
+            <p className="text-xs font-bold uppercase tracking-[0.18em] text-palette-sdark">Tu pedido</p>
+            <h1 className="mt-1 text-3xl font-extrabold tracking-tight text-gray-900 sm:text-4xl">Carrito de compras</h1>
+            <p className="mt-1 text-sm text-gray-500">
+              {items === 0 ? 'Todavía no agregaste productos.' : `${items} ${items === 1 ? 'producto' : 'productos'} en tu carrito`}
+            </p>
+          </div>
+          {items > 0 && (
+            <Link href="/" passHref>
+              <a className="text-sm font-bold text-palette-sdark hover:underline">+ Seguir comprando</a>
+            </Link>
+          )}
         </div>
-    </div>
+
+        {totalAmount === 0 && cart.length >= 1 && (
+          <div className="mb-5 rounded-2xl border border-red-100 bg-red-50 px-4 py-3 text-sm font-semibold text-red-700">
+            Encontramos un producto con importe igual a cero. Revisalo antes de continuar.
+          </div>
+        )}
+
+        {items === 0 ? (
+          <section className="rounded-3xl border border-gray-200 bg-white px-6 py-14 text-center shadow-sm sm:py-16">
+            <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-2xl bg-palette-lighter text-3xl">🛒</div>
+            <h2 className="mt-5 text-2xl font-extrabold text-gray-900">Tu carrito está vacío</h2>
+            <p className="mx-auto mt-2 max-w-md text-sm leading-6 text-gray-500">
+              Explorá nuestros productos y agregá lo que necesitás para tu bebé. Cuando vuelvas, tu compra va a aparecer acá.
+            </p>
+            <div className="mx-auto mt-6 max-w-xs">
+              <BackToProductButton />
+            </div>
+          </section>
+        ) : (
+          <div className="grid gap-5 lg:grid-cols-[1fr_300px]">
+            <CartTable cart={cart} />
+
+            <aside className="h-fit rounded-2xl border border-gray-200 bg-white p-5 shadow-sm lg:sticky lg:top-28">
+              <h2 className="text-lg font-extrabold text-gray-900">Resumen</h2>
+              <div className="mt-4 space-y-3 border-b border-gray-100 pb-4 text-sm">
+                <div className="flex items-center justify-between text-gray-500">
+                  <span>Productos</span>
+                  <span className="font-semibold text-gray-700">{items}</span>
+                </div>
+                <div className="flex items-center justify-between text-gray-500">
+                  <span>Subtotal</span>
+                  <span className="font-extrabold text-gray-900">$ {totalAmount}</span>
+                </div>
+              </div>
+
+              <p className="mt-4 text-xs leading-5 text-gray-500">El total final puede variar según descuentos, puntos o condiciones de facturación.</p>
+
+              <div className="mt-5 space-y-2.5">
+                <Link href="/precheck/presupuesto" passHref>
+                  <a className="flex w-full items-center justify-center rounded-xl border border-palette-sdark bg-white px-4 py-3 text-sm font-bold text-palette-sdark transition hover:bg-palette-lighter">
+                    Presupuestar
+                  </a>
+                </Link>
+
+                {session?.user?.role?.includes("ADMIN") ? (
+                  <Link href="/checkout/payment" passHref>
+                    <a className="flex w-full items-center justify-center rounded-xl bg-palette-sdark px-4 py-3 text-sm font-bold text-white transition hover:opacity-90">
+                      Facturar
+                    </a>
+                  </Link>
+                ) : checkout == null ? (
+                  <button
+                    type="button"
+                    onClick={handleCheckout}
+                    className="w-full rounded-xl bg-palette-sdark px-4 py-3 text-sm font-bold text-white shadow-sm transition hover:opacity-90"
+                  >
+                    Continuar compra
+                  </button>
+                ) : (
+                  <button
+                    type="button"
+                    onClick={handleCreditPoints}
+                    className="w-full rounded-xl bg-gradient-to-r from-blue-900 to-blue-500 px-4 py-3 text-sm font-bold text-white shadow-sm transition hover:opacity-90"
+                  >
+                    Usar puntos · Saldo {myPoints}
+                  </button>
+                )}
+
+                <div className="pt-1">
+                  <BackToProductButton />
+                </div>
+              </div>
+            </aside>
+          </div>
+        )}
+
+        {loading && <Loading message="Espere un momento por favor" />}
+      </div>
+    </main>
   )
 }
 
 export default CartPage
 
 export async function getServerSideProps(context) {
-    const session = await getSession(context)
+  const session = await getSession(context)
 
-    if(session == null) {
-        return {
-            redirect: {
-                permanent: false,
-                destination: "/login",
-            },
-            props:{},
-        };
-    }
-    const myPoints = await getPoints(session.user.username);
-    const user = session.user;
+  if(session == null) {
     return {
-        props: {
-            myPoints,
-            user
-        },
-    }
-}
+      redirect: {
+        permanent: false,
+        destination: "/login",
+      },
+      props:{},
+    };
+  }
 
+  const myPoints = await getPoints(session.user.username);
+  const user = session.user;
+
+  return {
+    props: {
+      myPoints,
+      user
+    },
+  }
+}
