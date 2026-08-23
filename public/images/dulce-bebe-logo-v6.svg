@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 180" role="img" aria-labelledby="title desc">
+<title id="title">Dulce Bebé</title><desc id="desc">Logo Dulce Bebé con dos búhos y nombre de marca</desc>
+<g transform="translate(12 10)">
+ <path d="M20 142 Q88 166 170 143" fill="none" stroke="#79513b" stroke-width="11" stroke-linecap="round"/>
+ <path d="M39 144 q-19-15-28 4 q18 9 31 1" fill="#55b56b"/>
+ <path d="M160 143 q19-15 28 4 q-18 9-31 1" fill="#55b56b"/>
+ <g transform="translate(22 60)">
+  <path d="M4 32 L18 12 L27 34" fill="#35bcc5"/><path d="M67 32 L80 12 L88 36" fill="#35bcc5"/>
+  <ellipse cx="46" cy="62" rx="39" ry="49" fill="#35bcc5"/>
+  <circle cx="31" cy="49" r="14" fill="white"/><circle cx="60" cy="49" r="14" fill="white"/>
+  <circle cx="33" cy="50" r="7" fill="#263238"/><circle cx="58" cy="50" r="7" fill="#263238"/>
+  <path d="M40 64 l7 9 8-9z" fill="#ffb21c"/>
+  <path d="M24 79 Q46 99 68 79 Q63 112 46 112 Q29 111 24 79" fill="#73d8dc"/>
+  <ellipse cx="31" cy="113" rx="11" ry="5" fill="#ffad16"/><ellipse cx="61" cy="113" rx="11" ry="5" fill="#ffad16"/>
+ </g>
+ <g transform="translate(84 8)">
+  <path d="M10 39 L27 5 L48 37" fill="#f45a9e"/><path d="M92 37 L112 5 L128 42" fill="#f45a9e"/>
+  <ellipse cx="69" cy="78" rx="58" ry="70" fill="#f45a9e"/>
+  <ellipse cx="69" cy="80" rx="44" ry="55" fill="#ff79b5"/>
+  <circle cx="48" cy="60" r="21" fill="white"/><circle cx="91" cy="60" r="21" fill="white"/>
+  <circle cx="51" cy="61" r="11" fill="#263238"/><circle cx="88" cy="61" r="11" fill="#263238"/>
+  <circle cx="47" cy="57" r="4" fill="white"/><circle cx="84" cy="57" r="4" fill="white"/>
+  <path d="M62 82 l8 10 9-10z" fill="#ffb21c"/>
+  <path d="M42 100 C42 86 60 84 69 98 C78 84 96 86 96 101 C96 118 69 137 69 137 C69 137 42 118 42 100z" fill="#ed2d82" stroke="white" stroke-width="5"/>
+  <ellipse cx="45" cy="147" rx="16" ry="7" fill="#ffad16"/><ellipse cx="94" cy="147" rx="16" ry="7" fill="#ffad16"/>
+  <path d="M103 21 C116 7 137 10 137 24 C137 38 116 40 104 28 C95 36 88 29 91 22 C94 16 99 17 103 21z" fill="#e72d80"/>
+ </g>
+ <path d="M105 28 C105 15 121 11 129 23 C137 11 153 15 153 28 C153 42 129 56 129 56 C129 56 105 42 105 28z" fill="#ff579e"/>
+</g>
+<g font-family="Arial, Helvetica, sans-serif" font-weight="800">
+ <text x="230" y="100" font-size="76" letter-spacing="1"><tspan fill="#25aeba">DULCE</tspan><tspan fill="#f0529a"> BEBÉ</tspan></text>
+ <text x="234" y="139" font-size="22" letter-spacing="5" fill="#41516b">TODO PARA SU CRECIMIENTO</text>
+ <rect x="234" y="153" width="225" height="5" rx="3" fill="#f0529a"/><rect x="459" y="153" width="223" height="5" rx="3" fill="#25aeba"/>
+</g>
+</svg>
