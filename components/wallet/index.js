@@ -1,5 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { useSession } from "next-auth/client";
+import logo from "/images/Logo Dulce bb.png";
+import logo2 from "/images/logo3buhos.png";
 import AddPoints from "./AddPoints";
 import RemovePoints from "./RemovePoints";
 import { getPoints } from "services/walletService";
@@ -91,33 +93,44 @@ const WalletOfUser = ({ walletOfUser, user }) => {
     return (
         <div className="space-y-5">
             <section className="grid gap-4 lg:grid-cols-[1.15fr_0.85fr]">
-                <div className="overflow-hidden rounded-3xl bg-gradient-to-br from-palette-sdark to-teal-500 p-6 text-white shadow-lg">
-                    <div className="flex h-full flex-col justify-between gap-8">
-                        <div className="flex items-start justify-between gap-4">
-                            <div>
-                                <p className="text-xs font-semibold uppercase tracking-[0.18em] text-white/75">Mi billetera Dulce Bebé</p>
-                                <p className="mt-2 text-sm text-white/80">Saldo disponible</p>
-                                <div className="mt-1 flex items-end gap-2">
-                                    <span className="text-5xl font-extrabold tracking-tight">{points}</span>
-                                    <span className="pb-1.5 text-lg font-semibold text-white/85">puntos</span>
+                <div className="flex items-center justify-center">
+                    {user.twins ? (
+                        <div className="w-80 h-48 overflow-hidden rounded-2xl bg-gradient-to-r from-blue-500 to-green-400 p-4 py-3 px-5 font-mono text-white shadow-md">
+                            <div className="relative flex justify-between">
+                                <div>
+                                    <h2 className="relative text-left text-xl font-bold">Tarjeta Mellizos</h2>
+                                    <h2 className="relative italic">20% de descuento</h2>
+                                </div>
+                                <div className="relative flex items-center">
+                                    <img src={logo2.src} className="relative mt-2 w-24 lg:w-32" alt="Dulce Bebé" />
                                 </div>
                             </div>
-                            <div className="rounded-2xl bg-white/15 p-3 backdrop-blur-sm">
-                                <span className="text-3xl">★</span>
+                            <div className="relative mt-8 flex w-48 justify-between">
+                                <div>
+                                    <h3 className="relative text-xs">Titular</h3>
+                                    <p className="relative font-bold">{user.name} {user.lastName}</p>
+                                </div>
                             </div>
                         </div>
-
-                        <div className="flex flex-wrap items-end justify-between gap-4 border-t border-white/20 pt-4">
-                            <div>
-                                <p className="text-xs uppercase tracking-wider text-white/65">Titular</p>
-                                <p className="mt-1 font-bold">{user.name} {user.lastName}</p>
+                    ) : (
+                        <div className="w-80 h-48 overflow-hidden rounded-2xl bg-gradient-to-r from-pink-500 to-purple-500 p-4 py-5 px-5 font-mono text-white shadow-md">
+                            <div className="flex justify-between">
+                                <div>
+                                    <h2>Mis puntos</h2>
+                                    <p className="text-2xl font-bold">{points}</p>
+                                </div>
+                                <div className="flex items-center">
+                                    <img src={logo.src} className="relative w-16 lg:w-24" alt="Dulce Bebé" />
+                                </div>
                             </div>
-                            <div className="text-right">
-                                <p className="text-xs uppercase tracking-wider text-white/65">Beneficio</p>
-                                <p className="mt-1 font-semibold">{user.twins ? "Tarjeta Mellizos · 20% OFF" : "Programa de puntos"}</p>
+                            <div className="mt-8 flex w-48 justify-between">
+                                <div>
+                                    <h3 className="text-xs">Titular</h3>
+                                    <p className="font-bold">{user.name} {user.lastName}</p>
+                                </div>
                             </div>
                         </div>
-                    </div>
+                    )}
                 </div>
 
                 <div className="grid grid-cols-2 gap-3">
