@@ -4,10 +4,9 @@ import { useCartContext } from "@/context/Store";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars, faShoppingCart, faHome } from "@fortawesome/free-solid-svg-icons";
 import UserSession from "@/components/users/UserSession";
+import BrandLogo from "@/components/BrandLogo";
 import { useSession } from "next-auth/client";
 import { findAll } from "services/categoriesService";
-
-const BRAND_LOGO = "/images/dulce-bebe-logo-horizontal.svg";
 
 function Nav() {
   const cart = useCartContext()[0];
@@ -53,11 +52,7 @@ function Nav() {
 
             <Link href="/">
               <a className="flex shrink-0 items-center">
-                <img
-                  src={BRAND_LOGO}
-                  className="h-14 sm:h-16 lg:h-20 w-auto max-w-[360px] object-contain"
-                  alt="Dulce Bebé"
-                />
+                <BrandLogo />
               </a>
             </Link>
 
