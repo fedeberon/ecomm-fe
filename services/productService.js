@@ -291,11 +291,37 @@ export async function deletedImagen(productId, image) {
 }
 
 export async function getProductsRelated(product) {
-    const fetchUrl = `${process.env.NEXT_PUBLIC_BACKEND_SERVICE}/product/relationship/${product.id}`;
     try {
-        let response = await axios.get(fetchUrl);
-        return response.data;
+        const currentId = Number(product?.id);
+        const related = [];
+        const seen = new Set([currentId]);
+
+        const addProducts = (items = []) => {
+            if (!Array.isArray(items)) return;
+            items.forEach((item) => {
+                const itemId = Number(item?.id);
+                if (!item || seen.has(itemId) || item.deleted === true) return;
+                seen.add(itemId);
+                related.push(item);
+            });
+        };
+
+        // The relationship endpoint is not available in the backend. The
+        // paginated search endpoint supports category ids and returns active
+        // products ordered by sales.
+        if (product?.category?.id) {
+            const result = await searchList("", String(product.category.id), "", "sales", false, 0, 12);
+            addProducts(Array.isArray(result) ? result : result?.content);
+        }
+
+        // Keep the category-name endpoint as a fallback for older backends.
+        if (related.length < 6 && product?.category?.name) {
+            const categoryProducts = await getProductsByType(encodeURIComponent(product.category.name));
+            addProducts(categoryProducts);
+        }
+
+        return related.slice(0, 6);
     } catch (error) {
-        throw new Error("Could not get products related about " + product.name + ". Error:" + error);
+        return [];
     }
 }

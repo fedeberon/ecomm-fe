@@ -14,7 +14,7 @@ function ProductForm({ productData, image }) {
   const [mainImg] = useState(image);
   const [id] = useState(productData.id);
   const [price] = useState(productData.price);
-  const [quantity, setQuantity] = useState(1);
+  const [quantity, setQuantity] = useState(Number(productData.stock) > 0 ? 1 : 0);
   const addToCart = useAddToCartContext();
   const [openUploadFile, setOpenUploadFile] = useState(false);
   const router = useRouter();
@@ -24,8 +24,9 @@ function ProductForm({ productData, image }) {
 
   const sizes = productData.sizes || [];
   const singleNoSize = sizes.length === 1 && (sizes[0]?.name === 'S/T' || sizes[0]?.id === 0);
-  const maxQuantity = Math.max(1, Number(productData.stock) || 1);
-  const outOfStock = Number(productData.stock) <= 0;
+  const stock = Math.max(0, Number(productData.stock) || 0);
+  const maxQuantity = stock;
+  const outOfStock = stock === 0;
   const inStock = !outOfStock;
 
   const handlePromo = async () => {
@@ -49,7 +50,7 @@ function ProductForm({ productData, image }) {
     }
 
     if (quantity && !outOfStock) {
-      addToCart({ productTitle: title, productImage: mainImg, quantity, id, price, size: selectElement, sizeName: selectedOptionText })
+      addToCart({ productTitle: title, productImage: mainImg, quantity, id, price, stock, size: selectElement, sizeName: selectedOptionText })
       NotificationManager.info(title, 'Agregado al carrito', 2000, () => router.push('/cart'));
     }
   }
@@ -90,7 +91,7 @@ function ProductForm({ productData, image }) {
           <div className="rounded-xl border border-slate-100 bg-white px-3 py-2 min-h-[70px]">
             <p className="text-[9px] font-bold uppercase tracking-wide text-slate-400 mb-1">Cantidad</p>
             <div className="flex items-center h-8 rounded-lg border border-slate-200 bg-white overflow-hidden">
-              <button type="button" onClick={decreaseQuantity} className="w-8 h-full text-slate-500 hover:bg-slate-50" aria-label="Restar cantidad">
+              <button type="button" onClick={decreaseQuantity} disabled={outOfStock || quantity <= 1} className="h-full w-8 text-slate-500 transition hover:bg-slate-50 disabled:cursor-not-allowed disabled:opacity-40" aria-label="Restar cantidad">
                 <FontAwesomeIcon icon={faMinus} className="w-2 mx-auto" />
               </button>
               <input
@@ -102,10 +103,11 @@ function ProductForm({ productData, image }) {
                 max={maxQuantity}
                 step="1"
                 value={quantity}
-                onChange={(e) => setQuantity(Math.max(1, Math.min(maxQuantity, Number(e.target.value) || 1)))}
+                disabled={outOfStock}
+                onChange={(e) => setQuantity(outOfStock ? 0 : Math.max(1, Math.min(maxQuantity, Number(e.target.value) || 1)))}
                 className="w-9 h-full border-0 border-l border-r border-slate-100 text-center text-xs font-bold text-slate-800 focus:ring-0 p-0"
               />
-              <button type="button" onClick={increaseQuantity} className="w-8 h-full text-slate-500 hover:bg-slate-50" aria-label="Sumar cantidad">
+              <button type="button" onClick={increaseQuantity} disabled={outOfStock || quantity >= maxQuantity} className="h-full w-8 text-slate-500 transition hover:bg-slate-50 disabled:cursor-not-allowed disabled:opacity-40" aria-label="Sumar cantidad">
                 <FontAwesomeIcon icon={faPlus} className="w-2 mx-auto" />
               </button>
             </div>
@@ -123,7 +125,9 @@ function ProductForm({ productData, image }) {
           </div>
         </div>
 
-        {status ? (
+        {outOfStock ? (
+          <div role="status" className="rounded-lg border border-amber-200 bg-amber-50 px-3 py-2 text-center text-xs font-bold text-amber-700">Este producto no tiene stock disponible.</div>
+        ) : status ? (
           <div className="rounded-lg bg-red-50 border border-red-100 px-3 py-2 text-xs font-bold text-red-600">Producto inactivo</div>
         ) : (
           <button onClick={handleAddToCart} disabled={outOfStock} aria-label="add-to-cart" className={`w-full h-10 rounded-lg text-sm font-bold shadow-sm transition ${outOfStock ? 'bg-slate-200 text-slate-400 cursor-not-allowed' : 'bg-palette-sdark hover:bg-palette-dark text-white'}`}>
