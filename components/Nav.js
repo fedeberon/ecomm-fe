@@ -32,7 +32,7 @@ function Nav() {
   return (
     <header className="sticky top-0 z-50 w-full bg-white shadow-sm">
       <div className="hidden md:block bg-palette-sdark text-white">
-        <div className="max-w-7xl mx-auto px-6 lg:px-8 py-2 flex items-center justify-between text-xs font-semibold tracking-wide">
+        <div className="mx-auto flex max-w-7xl items-center justify-between px-8 py-2 text-xs font-semibold tracking-wide lg:px-12">
           <div className="flex items-center gap-5">
             <span>Envíos a todo el país</span>
             <span className="opacity-40">|</span>
@@ -43,8 +43,8 @@ function Nav() {
       </div>
 
       <div className="border-b border-gray-100 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="h-20 lg:h-24 flex items-center gap-6">
+        <div className="mx-auto w-full max-w-[1440px] px-5 sm:px-8 lg:px-10">
+          <div className="flex h-20 min-w-0 items-center gap-4 lg:h-24">
             <button
               id="menuButton"
               onClick={() => setIsShow(!isShow)}
@@ -60,7 +60,7 @@ function Nav() {
               </a>
             </Link>
 
-            <div className="hidden lg:flex items-center gap-7 ml-auto">
+            <div className="ml-auto hidden min-w-0 items-center justify-end gap-5 pl-2 lg:flex lg:pr-6">
               <Link legacyBehavior href="/">
                 <a className={`nav-tab flex items-center gap-2 py-3 text-sm font-bold ${isActive('/') ? 'nav-tab-active' : ''}`}>
                   <FontAwesomeIcon icon={faHome} className="w-4 text-palette-sdark" />
@@ -102,18 +102,18 @@ function Nav() {
                 <a className={`nav-tab py-3 text-sm font-bold ${isActive('/about') ? 'nav-tab-active' : ''}`}>Quiénes somos</a>
               </Link>
 
-              <div className="hidden sm:flex w-[150px] shrink-0 items-center justify-end">
+              <div className="hidden w-[132px] shrink-0 items-center justify-end sm:flex">
                 <UserSession session={session} />
               </div>
 
               <Link legacyBehavior href="/cart" passHref>
                 <a
-                  className="relative mr-12 flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-palette-sdark shadow-md transition hover:bg-palette-dark lg:mr-16"
+                  className="relative mr-0 flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-palette-sdark shadow-md transition hover:bg-palette-dark lg:mr-2"
                   aria-label="Carrito"
                 >
                   <FontAwesomeIcon icon={faShoppingCart} className="h-5 text-white" />
                   {cartItems > 0 && (
-                    <span className="absolute -top-2 -right-2 min-w-5 h-5 px-1 flex items-center justify-center text-xs bg-white text-palette-sdark font-bold rounded-full shadow">
+                    <span className="absolute -right-1 -top-1 flex h-5 min-w-5 items-center justify-center rounded-full bg-white px-1 text-xs font-bold text-palette-sdark shadow">
                       {cartItems}
                     </span>
                   )}

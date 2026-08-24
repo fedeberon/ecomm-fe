@@ -9,7 +9,7 @@ const ProductsManager = ({products}) => {
 
     return (
 
-        <div className="items-center mx-auto bg-white max-w-6xl relative">
+        <div className="relative mx-auto w-full max-w-[1400px] items-center bg-white px-4 sm:px-6 lg:px-8">
             <StoreHeading title="Artículos" />
             <Link legacyBehavior href="/products/create" passHref>
                 <div className="absolute top-0 right-0 mt-4 mr-4">

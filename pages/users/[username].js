@@ -1,97 +1,48 @@
+import { useState } from "react";
 import UserData from "@/components/users/UserData";
 import UserSegurity from "@/components/users/UserSegurity";
-import {useState} from "react";
-import { getByUsername } from "services/userService";
 import BillsOfUser from "@/components/users/BillsOfUser";
+import { getByUsername } from "services/userService";
 import { findAllByUsername } from "services/billingService";
-import StoreHeading from "@/components/StoreHeading";
 import userAuthorization from "@/components/userAuthorization";
+import Link from "next/link";
 
-const Username = ({userSession, billsOfUSer})  => {
-  
+const tabs = [
+  { id: "profile", label: "Perfil", icon: "◎" },
+  { id: "activity", label: "Compras", icon: "▤" },
+  { id: "security", label: "Seguridad", icon: "▣" },
+];
 
-    const [tabs, setTabs] = useState({
-        usuarios: true,
-        activity: false,
-        segurity: false,
-    });
+const Username = ({ userSession, billsOfUSer }) => {
+  const [activeTab, setActiveTab] = useState("profile");
 
-    const handleClick = (e) => {
-        const {name} = e.target;
-        setTabs({
-            usuarios: false,
-            activity: false,
-            segurity: false,
-        });
-        setTabs({
-            [name]: true
-        });
-    }
- 
-
-    return (
-      <div className="bg-blue-100 lg:px-3">
-          <div className="lg:mx-6 bg-white flex min-h-screen">
-            <div className="bg-gray-100 w-1/5 h-auto ">
-                <ul id="tabs" className="w-full ">
-                    <li className={`font-semibold hover:bg-gray-200 py-3 flex justify-center ${tabs.usuarios ? `bg-gray-300` : ``}`}>
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                        </svg>
-                        <a name={`usuarios`} className="hidden sm:block" href="#" onClick={handleClick}>Usuario</a>
-                    </li>
-                    <li className={`hover:bg-gray-200 py-3 font-semibold flex ${tabs.activity ? `bg-gray-300` : ``} justify-center`}>
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                        </svg>
-                        <a id="default-tab" className="hidden sm:block" name={`activity`} href="#" onClick={handleClick}>Actividad</a>
-                    </li>
-
-                    <li className={`hover:bg-gray-200 py-3 font-semibold flex justify-center ${tabs.segurity ? `bg-gray-300 py-3` : ``}`}>
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
-                        </svg>
-                        <a name={`segurity`} className="hidden sm:block" href="#" onClick={handleClick}>Seguridad</a>
-                    </li>
-
-                </ul>
-            </div>
-            <div id="first" className={`${tabs.usuarios ? `` : `hidden`}  flex bg-white justify-center p-2 `}>
-                <UserData user={userSession}/>
-            </div>
-
-            <div id="second" className={`${tabs.activity ? `` : `hidden`}  flex bg-white justify-center mx-auto w-full `}>
-            <div className="justify-center w-4/5">
-                <div className="mt-6">
-                    <StoreHeading title="Tus Facturas"/>
-                </div>
-                <div className="md:-mt8 -mt-6">
-                    <BillsOfUser bills={billsOfUSer}/>
-                </div>
-            </div>
-            </div>
-            <div id="thirt" className={`${tabs.segurity ? `` : `hidden`}  flex bg-white justify-center p-2 `}>
-                <UserSegurity user={userSession}/>
-            </div>
-          </div>
+  return (
+    <main className="min-h-screen bg-slate-50 px-4 py-6 sm:px-6 lg:px-8">
+      <div className="mx-auto max-w-7xl">
+        <div className="grid gap-6 lg:grid-cols-[230px_minmax(0,1fr)]">
+          <aside className="h-fit rounded-3xl border border-slate-200 bg-white p-3 shadow-sm lg:sticky lg:top-28">
+            <p className="px-3 pb-3 pt-2 text-xs font-extrabold uppercase tracking-wider text-slate-400">Cuenta</p>
+            <nav className="space-y-1">
+              {tabs.map((tab) => <button key={tab.id} type="button" onClick={() => setActiveTab(tab.id)} className={`flex w-full items-center gap-3 rounded-xl px-3 py-3 text-left text-sm font-bold transition ${activeTab === tab.id ? "bg-cyan-50 text-palette-sdark" : "text-slate-600 hover:bg-slate-50"}`}><span className="flex h-8 w-8 items-center justify-center rounded-lg bg-slate-100 text-base">{tab.icon}</span>{tab.label}</button>)}
+              <Link legacyBehavior href={`/users/wallet/${userSession.username}`}><a className="flex items-center gap-3 rounded-xl px-3 py-3 text-sm font-bold text-slate-600 transition hover:bg-slate-50"><span className="flex h-8 w-8 items-center justify-center rounded-lg bg-pink-50 text-base text-pink-500">★</span>Mis puntos</a></Link>
+            </nav>
+            <div className="mt-4 rounded-2xl bg-slate-50 p-3 text-xs leading-5 text-slate-500">Tus puntos y movimientos se consultan desde la billetera.</div>
+          </aside>
+          <section className="min-w-0">
+            {activeTab === "profile" && <UserData user={userSession} />}
+            {activeTab === "activity" && <div className="rounded-3xl border border-slate-200 bg-white p-4 shadow-sm sm:p-6"><div className="mb-5"><p className="text-xs font-bold uppercase tracking-wider text-slate-400">Historial</p><h2 className="mt-1 text-2xl font-extrabold text-slate-800">Tus compras</h2></div><BillsOfUser bills={billsOfUSer} /></div>}
+            {activeTab === "security" && <div className="rounded-3xl border border-slate-200 bg-white p-5 shadow-sm sm:p-8"><div className="mb-5"><p className="text-xs font-bold uppercase tracking-wider text-slate-400">Protección de cuenta</p><h2 className="mt-1 text-2xl font-extrabold text-slate-800">Seguridad</h2></div><UserSegurity user={userSession} /></div>}
+          </section>
+        </div>
       </div>
-
-    )
-}
+    </main>
+  );
+};
 
 export default userAuthorization(Username);
 
- 
-
-export async function getServerSideProps({query}) {
-    const userSession = await getByUsername(query.username);
-    const billsOfUSer = await findAllByUsername(query.username)
- 
-
-    return {
-        props: {
-            userSession,
-            billsOfUSer
-        }
-    }
+export async function getServerSideProps({ query }) {
+  const userSession = await getByUsername(query.username);
+  const billsOfUSer = await findAllByUsername(query.username);
+  return { props: { userSession, billsOfUSer } };
 }

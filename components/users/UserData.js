@@ -1,203 +1,62 @@
-import { useState } from "react";
-import { getByUsername ,save } from "services/userService"; 
+import { useEffect, useState } from "react";
+import Link from "next/link";
+import { getByUsername, update } from "services/userService";
+import { getPoints } from "services/walletService";
 
+const fields = [
+  ["name", "Nombre"], ["lastName", "Apellido"], ["email", "Email"],
+  ["phone", "Teléfono"], ["direction", "Dirección"], ["city", "Ciudad"], ["postal", "Código postal"], ["cuit", "CUIT"],
+];
 
-const UserData = ({user}) => {
- 
-    const [userToUpdate, setUserToUpdate] = useState(user);
+const UserData = ({ user }) => {
+  const [form, setForm] = useState(user || {});
+  const [points, setPoints] = useState(0);
+  const [editing, setEditing] = useState(false);
+  const [saving, setSaving] = useState(false);
+  const [message, setMessage] = useState("");
 
-    const [enable, setEnabled] = useState(true);
+  useEffect(() => {
+    let active = true;
+    setForm(user || {});
+    getPoints(user?.username).then((value) => active && setPoints(value || 0)).catch(() => active && setPoints(0));
+    return () => { active = false; };
+  }, [user]);
 
- 
-    const enableFields = (e) => {
-        e.preventDefault();
-        setEnabled(false);
-        
-    }    
+  const handleChange = (event) => setForm({ ...form, [event.target.name]: event.target.value });
 
-
-    const handleChange = (e) => {
-        debugger    
-        setUserToUpdate({
-            ...userToUpdate,
-            [e.target.name]: e.target.value,
-        });
-    }  
-
-    const submit = (e) => {
-        e.preventDefault();
-        save(userToUpdate).then((result) => {
-            if (result.status === 202) {
-                window.location.href = '/users/' + user.cardId
-            }
-        }); 
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    setSaving(true);
+    setMessage("");
+    try {
+      await update(form);
+      const refreshed = await getByUsername(form.username);
+      setForm(refreshed);
+      setEditing(false);
+      setMessage("Datos actualizados correctamente.");
+    } catch (error) {
+      setMessage("No se pudieron guardar los cambios.");
+    } finally {
+      setSaving(false);
     }
-    
-    return (
+  };
 
-        <>
-            <form class="flex-initial shrink w-full max-w-lg p-6">
+  return (
+    <section className="w-full max-w-5xl space-y-5">
+      <div className="flex flex-col gap-3 rounded-2xl bg-gradient-to-r from-palette-sdark to-cyan-600 p-4 text-white shadow-sm sm:flex-row sm:items-center sm:justify-between sm:p-5">
+        <div><p className="text-[10px] font-bold uppercase tracking-[0.18em] text-cyan-100">Cuenta personal</p><h1 className="mt-1 text-xl font-extrabold sm:text-2xl">Hola, {form.name || form.username}</h1><p className="mt-1 text-xs text-cyan-50">Administrá tus datos y consultá tus beneficios.</p></div>
+        <div className="rounded-xl bg-white/15 px-4 py-3 backdrop-blur"><p className="text-[10px] font-bold uppercase tracking-wider text-cyan-100">Puntos disponibles</p><p className="mt-0.5 text-2xl font-extrabold">{points}</p><Link legacyBehavior href={`/users/wallet/${form.username}`}><a className="mt-0.5 block text-[11px] font-bold text-white underline underline-offset-2">Ver movimientos →</a></Link></div>
+      </div>
 
-            <div class="flex flex-wrap mx-3 mb-6"
-            onDoubleClick={enableFields}>
-                <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
-                <label
-                class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" >
-                    Nombre
-                </label>
-                <input 
-                 onChange={handleChange} 
-                 
-                 disabled = {enable}
-                 class={`appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white`}
-                 value={userToUpdate?.name} 
-                 type="text" 
-                 id="name" 
-                 name="name" 
-                 /> 
-                </div>
+      <form onSubmit={handleSubmit} className="rounded-3xl border border-slate-200 bg-white p-5 shadow-sm sm:p-8">
+        <div className="mb-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between"><div><p className="text-xs font-bold uppercase tracking-wider text-slate-400">Información personal</p><h2 className="mt-1 text-xl font-extrabold text-slate-800">Datos del usuario</h2></div><button type="button" onClick={() => { setEditing(!editing); setMessage(""); }} className="rounded-xl border border-palette-sdark px-4 py-2 text-sm font-extrabold text-palette-sdark transition hover:bg-cyan-50">{editing ? "Cancelar" : "Editar datos"}</button></div>
+        <div className="grid gap-5 sm:grid-cols-2">
+          {fields.map(([name, label]) => <div key={name} className={name === "email" || name === "direction" ? "sm:col-span-2" : ""}><label htmlFor={name} className="text-xs font-extrabold uppercase tracking-wide text-slate-500">{label}</label><input id={name} name={name} value={form?.[name] || ""} onChange={handleChange} disabled={!editing} className={`mt-2 h-11 w-full rounded-xl border px-4 text-sm outline-none transition ${editing ? "border-slate-200 bg-white text-slate-800 focus:border-palette-sdark focus:ring-4 focus:ring-cyan-50" : "border-transparent bg-slate-100 text-slate-600"}`} /></div>)}
+        </div>
+        <div className="mt-5 flex flex-col items-start justify-between gap-3 border-t border-slate-100 pt-5 sm:flex-row sm:items-center">{message ? <p className={`text-sm font-semibold ${message.includes("correctamente") ? "text-emerald-600" : "text-rose-600"}`}>{message}</p> : <p className="text-xs text-slate-400">El usuario y la contraseña se administran desde Seguridad.</p>}{editing && <button type="submit" disabled={saving} className="rounded-xl bg-palette-sdark px-5 py-3 text-sm font-extrabold text-white transition hover:bg-palette-dark disabled:opacity-50">{saving ? "Guardando..." : "Guardar cambios"}</button>}</div>
+      </form>
+    </section>
+  );
+};
 
-                <div class="w-full md:w-1/2 px-3"
-                onDoubleClick={enableFields}>
-                <label 
-                htmlFor="lastName"
-                class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" 
-                for="grid-last-name">
-                    Apellido
-                </label>
-                <input 
-                onChange={handleChange} 
-                disabled = {enable}
-                class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" 
-                value={userToUpdate?.lastName}
-                type="text" 
-                id="lastName" 
-                name="lastName"  
-                />
-                </div>    
-            </div> 
-
-            <div class="flex flex-wrap mx-3 mb-6"
-            onDoubleClick={enableFields}>
-                <div class="w-full px-3">
-                <label 
-                htmlFor="email"
-                class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" >
-                    Email
-                </label>
-                <input 
-                onChange={handleChange} 
-                disabled = {enable}
-                class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" 
-                value={userToUpdate?.email} 
-                type="text"
-                id="email" 
-                name="email" 
-                />    
-            </div>
-            </div>
-
-            
-            <div class="flex flex-wrap mx-3 mb-6"
-            onDoubleClick={enableFields}>
-                <div class="w-full px-3">
-                <label  
-                htmlFor="phone"
-                class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" 
-                for="grid-password">
-                    Telefono
-                </label>
-                <input 
-                onChange={handleChange}
-                disabled = {enable}
-                class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" 
-                value={userToUpdate?.phone} 
-                type="text"
-                id="phone" 
-                name="phone" 
-                />
-                </div>
-            </div>
-
-
-            <div class="flex flex-wrap mx-3 mb-6"
-            onDoubleClick={enableFields}>
-                <div class="w-full px-3">
-                <label 
-                htmlFor="direction"
-                class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" 
-                for="grid-password">
-                    Direccion
-                </label>
-                <input 
-                onChange={handleChange}
-                disabled = {enable}
-                class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" 
-                value={userToUpdate?.direction} 
-                type="text" 
-                id="direction" 
-                name="direction"
-                />
-                </div>
-            </div>
-
-
-            <div class="flex flex-wrap mx-3 mb-2"
-            onDoubleClick={enableFields}>
-                <div class="w-full md:w-1/3 px-3 mb-6 md:mb-0">
-                <label  
-                class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" 
-                htmlFor="city"
-                for="grid-city">
-                    Ciudad
-                </label>
-                <input 
-                    onChange={handleChange}
-                    disabled = {enable}
-                    class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" 
-                    type="text"  
-                    value={userToUpdate?.city}
-                    id="city" 
-                    name="city" 
-                /> 
-                </div>
-                <div class="w-full md:w-1/3 px-3 mb-6 md:mb-0"
-                onDoubleClick={enableFields}>
-                <label 
-                class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-                htmlFor="postal" 
-                for="grid-zip">
-                    Codigo postal
-                </label>
-                <input 
-                    onChange={handleChange}
-                    disabled = {enable}
-                    class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" 
-                    type="text" 
-                    value={userToUpdate?.postal}
-                    id="postal" 
-                    name="postal"
-                />
-                </div> 
-            </div> 
-            
-            <button onClick={submit}
-                class="bg-blue-500 hover:bg-blue-700 ml-6 rounded text-white font-bold mt-2 py-2 px-4">
-                    Guardar  
-            </button> 
-            </form>
-    
-        </>   
-    )
-}
- 
-export async function getServerSideProps({query}) {
-    const user  = await getByUsername(query.username);
-  
-    return {
-        props: {
-            user
-        }
-    }
-}
-export default UserData; 
+export default UserData;
