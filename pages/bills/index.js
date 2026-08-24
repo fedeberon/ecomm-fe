@@ -1,13 +1,13 @@
 import {getBills} from "../../services/billingService";
 import Bills from "@/components/bill/Bills";
-import PageTitle from "@/components/PageTitle";
+import StoreHeading from "@/components/StoreHeading";
 import withAuthorization from 'components/withAuthorization';
 
 const Index = ({bills}) => {
 
     return (
         <div className="mx-auto max-w-6xl">
-            <PageTitle text={`Facturacion`} />
+            <StoreHeading title="Facturación" />
             <Bills bills={bills}/>
         </div>
     )

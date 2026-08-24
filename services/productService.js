@@ -176,44 +176,44 @@ export async function getCallback(id) {
 
 
 export async function createCheckout(cart){
-    debugger
     const fetchUrl = `${process.env.NEXT_PUBLIC_BACKEND_SERVICE}/checkout`;
-    let details = []
-    cart.forEach(function(value) {
-        let detail = {
-            "id": value.id,
-            "quantity" : value.quantity,
-            "size": value.size
-        }
-        details.push(detail);
-    });
+    const details = (cart || []).map(({ id, quantity, size }) => ({ id, quantity, size }));
+
+    if (!details.length) {
+        throw new Error("El carrito está vacío.");
+    }
+
     try {
-        let response = await axios.post(fetchUrl, details);
+        const response = await axios.post(fetchUrl, details);
         return response;
     } catch (error) {
-        throw new Error("Could not create preference!");
+        console.error("Error al crear checkout", {
+            url: fetchUrl,
+            status: error.response?.status,
+            data: error.response?.data,
+        });
+        throw new Error(error.response?.data?.message || "No se pudo crear el checkout.");
     }
 }
 
 export async function createBudget(cart){
-    debugger
     const fetchUrl = `${process.env.NEXT_PUBLIC_BACKEND_SERVICE}/checkout/budget`;
-    let details = []
-    cart.forEach(function(value) {
-        let detail = {
-            "id": value.id,
-            "quantity" : value.quantity,
-            "size": value.size
-        }
-        details.push(detail);
-    });
-    let response = "";
+    const details = (cart || []).map(({ id, quantity, size }) => ({ id, quantity, size }));
+
+    if (!details.length) {
+        throw new Error("El carrito está vacío.");
+    }
+
     try {
-        response = await axios.post(fetchUrl, details);
+        const response = await axios.post(fetchUrl, details);
         return response;
     } catch (error) {
-        console.error(response)
-        throw new Error("Could not create preference!");
+        console.error("Error al crear presupuesto", {
+            url: fetchUrl,
+            status: error.response?.status,
+            data: error.response?.data,
+        });
+        throw new Error(error.response?.data?.message || "No se pudo crear el presupuesto.");
     }
 }
 
@@ -291,11 +291,37 @@ export async function deletedImagen(productId, image) {
 }
 
 export async function getProductsRelated(product) {
-    const fetchUrl = `${process.env.NEXT_PUBLIC_BACKEND_SERVICE}/product/relationship/${product.id}`;
     try {
-        let response = await axios.get(fetchUrl);
-        return response.data;
+        const currentId = Number(product?.id);
+        const related = [];
+        const seen = new Set([currentId]);
+
+        const addProducts = (items = []) => {
+            if (!Array.isArray(items)) return;
+            items.forEach((item) => {
+                const itemId = Number(item?.id);
+                if (!item || seen.has(itemId) || item.deleted === true) return;
+                seen.add(itemId);
+                related.push(item);
+            });
+        };
+
+        // The relationship endpoint is not available in the backend. The
+        // paginated search endpoint supports category ids and returns active
+        // products ordered by sales.
+        if (product?.category?.id) {
+            const result = await searchList("", String(product.category.id), "", "sales", false, 0, 12);
+            addProducts(Array.isArray(result) ? result : result?.content);
+        }
+
+        // Keep the category-name endpoint as a fallback for older backends.
+        if (related.length < 6 && product?.category?.name) {
+            const categoryProducts = await getProductsByType(encodeURIComponent(product.category.name));
+            addProducts(categoryProducts);
+        }
+
+        return related.slice(0, 6);
     } catch (error) {
-        throw new Error("Could not get products related about " + product.name + ". Error:" + error);
+        return [];
     }
 }

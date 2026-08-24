@@ -61,7 +61,10 @@ export function CartProvider({ children }) {
       // already exists and update quantity
       newCart.map(item => {
         if (item.id === newItem.id && item.size == newItem.size) {
-          item.quantity += newItem.quantity
+          const availableStock = Number(item.stock ?? newItem.stock)
+          item.quantity = availableStock > 0
+            ? Math.min(availableStock, item.quantity + newItem.quantity)
+            : item.quantity + newItem.quantity
           itemAdded = true
         }
       })

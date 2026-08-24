@@ -1,157 +1,53 @@
-import { useState, useRef } from 'react'
-import Image from 'next/image'
+import { useState } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faArrowLeft, faArrowRight , faTimes} from '@fortawesome/free-solid-svg-icons'
-import logo  from '../../images/default.jpeg'
-import {useSession} from "next-auth/client";
+import { faArrowLeft, faArrowRight, faTimes } from '@fortawesome/free-solid-svg-icons'
+import logo from '../../images/default.jpeg'
+import { useSession } from "next-auth/client";
 import * as productService from 'services/productService'
 
-function ProductImage({ images , id}) {
-    const defaultImage =
-        {
-            "url": "Image 2021-08-10 at 11.20.24 (1).jpeg",
-            "link": logo,
-            "main": false
-        };
+function ProductImage({ images = [], id }) {
+  const defaultImage = { url: "default.jpeg", link: logo, main: false };
+  const safeImages = images.length ? images : [defaultImage];
+  const [selectedIndex, setSelectedIndex] = useState(0);
+  const [delImg, setDelImg] = useState();
+  const [session] = useSession();
+  const [deletedModal, setDeletedModal] = useState(false);
+  const selectedImage = safeImages[selectedIndex] || safeImages[0];
 
-    const image = images && images.length != 0 ? images[0].link : defaultImage.link
-    const [mainImg, setMainImg] = useState(image);
-    const [delImg, setDelImg] = useState()
-    const [session, loading] = useSession();
-    const ref = useRef();
+  const previousImage = () => setSelectedIndex((index) => (index - 1 + safeImages.length) % safeImages.length);
+  const nextImage = () => setSelectedIndex((index) => (index + 1) % safeImages.length);
 
-    const [deletedModal,setDeletedModal] = useState(false)
-  function scroll(scrollOffset) {
-    ref.current.scrollLeft += scrollOffset
-  }
-
-  function deleteProduct(img){
-    if(deletedModal==false){
-      setDeletedModal(!deletedModal)
-    }
-    setDelImg(img)
-  }
-
-  function delImage(){
-   productService.deletedImagen(id, delImg.url)
-   window.location.reload()
-  }
+  function deleteProduct(img) { setDelImg(img); setDeletedModal(true); }
+  async function delImage() { await productService.deletedImagen(id, delImg.url); window.location.reload(); }
 
   return (
-
-    <div className="w-96 p-2 max-w-md rounded-lg border border-palette-lighter">
-      <div className="container relative  h-96">
-        <Image
-          src={mainImg}
-          layout="fill"
-          className="w-96 h-96 transform transform:rounded-lg duration-500 ease-in-out hover:scale-105"
-        />
+    <div className="w-full max-w-[430px] mx-auto">
+      <div className="relative overflow-hidden rounded-[18px] bg-white border border-slate-100 h-[300px] sm:h-[330px] lg:h-[350px] flex items-center justify-center">
+        <img src={selectedImage?.link?.src || selectedImage?.link} alt={selectedImage?.url || 'Imagen del producto'} className="w-full h-full object-contain p-3 sm:p-4 transition duration-300" />
+        {safeImages.length > 1 && <>
+          <button type="button" onClick={previousImage} aria-label="Imagen anterior" className="absolute left-3 top-1/2 -translate-y-1/2 h-8 w-8 rounded-full bg-white/95 border border-slate-200 shadow flex items-center justify-center text-slate-600 hover:text-palette-sdark"><FontAwesomeIcon icon={faArrowLeft} className="w-3" /></button>
+          <button type="button" onClick={nextImage} aria-label="Imagen siguiente" className="absolute right-3 top-1/2 -translate-y-1/2 h-8 w-8 rounded-full bg-white/95 border border-slate-200 shadow flex items-center justify-center text-slate-600 hover:text-palette-sdark"><FontAwesomeIcon icon={faArrowRight} className="w-3" /></button>
+        </>}
       </div>
-      <div className="relative flex border-t border-palette-lighter">
 
-          {
-              images.length != 0
-                ?
-                  <button
-                      aria-label="left-scroll"
-                      className="h-32 bg-palette-lighter hover:bg-pink-200 relative left-0 z-10 opacity-75"
-                      onClick={() => scroll(-300)}
-                  >
-                      <FontAwesomeIcon icon={faArrowLeft} className="w-3 mx-1 text-palette-primary" />
-                  </button>
-                  : <></>
-          }
+      {safeImages.length > 1 && <div className="mt-2 flex gap-2 overflow-x-auto pb-1">
+        {safeImages.map((imgItem, index) => <div key={`${imgItem.url}-${index}`} className="relative flex-shrink-0">
+          <button type="button" onClick={() => setSelectedIndex(index)} className={`w-12 h-12 rounded-lg bg-white border-2 overflow-hidden transition ${selectedIndex === index ? 'border-palette-sdark shadow-sm' : 'border-slate-100 hover:border-slate-200'}`}>
+            <img src={imgItem?.link?.src || imgItem?.link} alt={imgItem.url || `Imagen ${index + 1}`} className="w-full h-full object-contain p-1" />
+          </button>
+          {session?.user?.role?.includes("ADMIN") && images.length > 0 && <button type="button" className="absolute -top-2 -right-2 w-5 h-5 rounded-full bg-red-500 text-white flex items-center justify-center shadow" onClick={() => deleteProduct(imgItem)} aria-label="Eliminar imagen"><FontAwesomeIcon icon={faTimes} className="w-2" /></button>}
+        </div>)}
+      </div>}
+      {safeImages.length > 1 && <p className="mt-1 text-[10px] text-slate-400">{selectedIndex + 1} de {safeImages.length} imágenes</p>}
 
-        <div
-          ref={ref}
-          style={{ scrollBehavior: "smooth" }}
-          className="flex space-x-1 w-full overflow-auto border-t border-palette-lighter"
-        >
-          {
-            images.map((imgItem) => (
-              <div className="relative w-40 h-32 flex-shrink-0 rounded-sm ">
-                  <Image
-                      src={imgItem.link}
-                      layout="fill"
-                      className=""
-                      onClick={() => setMainImg(imgItem.link)}
-                  />
-                {
-                  session?.user?.role?.includes("ADMIN")
-                  ?
-                  <button className='absolute left-0' onClick={() => deleteProduct(imgItem)}><FontAwesomeIcon icon={faTimes} className="w-8 h-8 text-white bg-red-500 rounded-full p-1" /></button>
-                  :
-                  <></>
-                }
-              </div>
-            ))
-          }
+      {deletedModal && delImg && <div className="fixed z-[70] inset-0 flex items-center justify-center p-4">
+        <button className="absolute inset-0 bg-slate-900/60 backdrop-blur-sm" onClick={() => setDeletedModal(false)} aria-label="Cerrar" />
+        <div className="relative z-10 w-full max-w-md rounded-3xl bg-white p-6 shadow-2xl">
+          <h3 className="text-lg font-bold text-slate-900">¿Eliminar esta imagen?</h3><p className="mt-1 text-sm text-slate-500">{delImg.url}</p>
+          <img src={delImg.link} alt={delImg.url} className="mt-4 w-full max-h-64 object-contain rounded-2xl bg-slate-50" />
+          <div className="mt-5 flex justify-end gap-2"><button type="button" onClick={() => setDeletedModal(false)} className="h-10 px-4 rounded-xl border border-slate-200 text-sm font-semibold text-slate-600">Cancelar</button><button type="button" onClick={delImage} className="h-10 px-4 rounded-xl bg-red-600 text-white text-sm font-bold">Eliminar</button></div>
         </div>
-
-          {
-              images.length != 0
-                  ?
-                <button
-                  aria-label="right-scroll"
-                  className="h-32 bg-palette-lighter hover:bg-pink-200  absolute right-0 z-10 opacity-75"
-                  onClick={() => scroll(300)}
-                >
-                  <FontAwesomeIcon icon={faArrowRight} className="w-3 mx-1 text-palette-primary" />
-                </button>
-                  :
-                  <></>
-          }
-      </div>
-      {
-        deletedModal== true
-        ?
-        <div className="fixed z-10 inset-0 overflow-y-auto" aria-labelledby="modal-title" role="dialog"
-                             aria-modal="true">
-                            <div className="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
-                                <div className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"
-                                     aria-hidden="true"></div>
-
-                                <span className="hidden sm:inline-block sm:align-middle sm:h-screen"
-                                      aria-hidden="true">&#8203;</span>
-
-                                <div className="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
-                                    <div className="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
-                                        <div className="sm:flex sm:items-start">
-                                            <div
-                                                className="mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-red-100 sm:mx-0 sm:h-10 sm:w-10">
-                                                <svg className="h-6 w-6 text-red-600" xmlns="http://www.w3.org/2000/svg" fill="none"
-                                                     viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
-                                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"
-                                                          d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
-                                                </svg>
-                                            </div>
-                                            <div className="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
-                                                <h3 className="text-lg leading-6 font-medium text-gray-900" id="modal-title">
-                                                    Esta seguro de querer Borrar esta imagen?
-                                                </h3>
-                                                <h2 className='text-md leading-6 font-medium text-gray-900'>Archivo: {delImg.url}</h2>
-                                                <div className="flex">
-                                                    <img className='m-auto w-80' src={delImg.link}></img>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
-                                        <button type="button" onClick={() => delImage(delImg.url)}
-                                                className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-red-600 text-base font-medium text-white hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:ml-3 sm:w-auto sm:text-sm">
-                                            Eliminar
-                                        </button>
-                                        <button type="button" onClick={() => setDeletedModal(false)}
-                                                className="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm">
-                                            Cancel
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-        :
-        <></>
-      }
+      </div>}
     </div>
   )
 }

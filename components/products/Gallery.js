@@ -1,65 +1,96 @@
-import "react-responsive-carousel/lib/styles/carousel.min.css";
-import { Carousel } from "react-responsive-carousel";
 import ProductCard from "@/components/products/ProductCard";
-import {useEffect, useState} from "react";
+import { useEffect, useMemo, useState } from "react";
 
-const Gallery = ({ productData }) => {
-    const chunkSize = 3; // Tamaño de cada conjunto de productos
+const Gallery = ({ productData = [], compact = false }) => {
+    const chunkSize = compact ? 6 : 4;
+    const [currentSlide, setCurrentSlide] = useState(0);
 
-    // Agrupa los productos en conjuntos de tamaño chunkSize
-    const [groupedProducts, setGroupedProducts] = useState([]);
+    const groupedProducts = useMemo(() => {
+        const groups = [];
+        for (let i = 0; i < productData.length; i += chunkSize) {
+            groups.push(productData.slice(i, i + chunkSize));
+        }
+        return groups;
+    }, [productData, chunkSize]);
 
-    for (let i = 0; i < productData.length; i += chunkSize) {
-        groupedProducts.push(productData.slice(i, i + chunkSize));
-    }
+    useEffect(() => {
+        setCurrentSlide(0);
+    }, [productData]);
+
+    useEffect(() => {
+        if (groupedProducts.length <= 1) return undefined;
+        const timer = setInterval(() => {
+            setCurrentSlide((slide) => (slide + 1) % groupedProducts.length);
+        }, 6000);
+        return () => clearInterval(timer);
+    }, [groupedProducts.length]);
+
+    if (!groupedProducts.length) return null;
+
+    const previousSlide = () => {
+        setCurrentSlide((slide) => (slide - 1 + groupedProducts.length) % groupedProducts.length);
+    };
+
+    const nextSlide = () => {
+        setCurrentSlide((slide) => (slide + 1) % groupedProducts.length);
+    };
 
     return (
-        <div>
-            <Carousel
-                showArrows={true}
-                infiniteLoop={true}
-                selectedItem={0}
-                renderArrowPrev={(onClickHandler, hasPrev, label) =>
-                    hasPrev && (
-                        <button
-                            type="button"
-                            className="absolute left-0 top-1/2 transform -translate-y-1/2 z-10"
-                            onClick={onClickHandler}
-                            aria-label={label}
-                        >
-                            {/* Agrega aquí tu icono de flecha izquierda */}
-                        </button>
-                    )
-                }
-                renderArrowNext={(onClickHandler, hasNext, label) =>
-                    hasNext && (
-                        <button
-                            type="button"
-                            className="absolute right-0 top-1/2 transform -translate-y-1/2 z-10"
-                            onClick={onClickHandler}
-                            aria-label={label}
-                        >
-                            {/* Agrega aquí tu icono de flecha derecha */}
-                        </button>
-                    )
-                }
-                className="relative"
-            >
-                {groupedProducts.map((products, index) => (
-                    <div className="grid sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-9 2xl:gap-4" key={index} >
-                        {products.map((product, innerIndex) => (
-                            <div
-                                key={innerIndex}
-                                className="m-auto bg-white shadow-md rounded-lg p-4 w-80 h-120"
-                            >
-                                <ProductCard product={product} />
+        <div className="relative w-full overflow-hidden">
+            <div className="overflow-hidden">
+                <div
+                    className="flex transition-transform duration-500 ease-out"
+                    style={{ transform: `translateX(-${currentSlide * 100}%)` }}
+                >
+                    {groupedProducts.map((products, index) => (
+                        <div className={`min-w-full ${compact ? 'px-6 py-1' : 'px-12 py-2'}`} key={index}>
+                            <div className={compact
+                                ? "grid grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-3 justify-items-center"
+                                : "grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4"}>
+                                {products.map((product, innerIndex) => (
+                                    <div key={product?.id || innerIndex} className={compact ? "w-full max-w-[390px]" : "w-full"}>
+                                        <ProductCard product={product} compact={compact} />
+                                    </div>
+                                ))}
                             </div>
+                        </div>
+                    ))}
+                </div>
+            </div>
+
+            {groupedProducts.length > 1 && (
+                <>
+                    <button
+                        type="button"
+                        onClick={previousSlide}
+                        aria-label="Anterior"
+                        className={`absolute left-2 top-1/2 z-20 flex -translate-y-1/2 items-center justify-center rounded-full border border-slate-200 bg-white/95 text-slate-700 shadow-md transition hover:text-palette-sdark ${compact ? 'h-8 w-8 text-lg' : 'h-10 w-10 text-2xl'}`}
+                    >
+                        ‹
+                    </button>
+                    <button
+                        type="button"
+                        onClick={nextSlide}
+                        aria-label="Siguiente"
+                        className={`absolute right-2 top-1/2 z-20 flex -translate-y-1/2 items-center justify-center rounded-full border border-slate-200 bg-white/95 text-slate-700 shadow-md transition hover:text-palette-sdark ${compact ? 'h-8 w-8 text-lg' : 'h-10 w-10 text-2xl'}`}
+                    >
+                        ›
+                    </button>
+                    <div className="mt-2 flex justify-center gap-2">
+                        {groupedProducts.map((_, index) => (
+                            <button
+                                type="button"
+                                key={index}
+                                aria-label={`Ir al slide ${index + 1}`}
+                                onClick={() => setCurrentSlide(index)}
+                                className={`h-2 rounded-full transition-all ${currentSlide === index ? "w-6 bg-palette-sdark" : "w-2 bg-slate-300"}`}
+                            />
                         ))}
                     </div>
-                ))}
-            </Carousel>
+                </>
+            )}
         </div>
     );
 };
 
-export default Gallery
+export default Gallery;

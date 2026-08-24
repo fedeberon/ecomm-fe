@@ -3,9 +3,10 @@ import SEO from '@/components/SEO'
 import '@/styles/globals.css'
 import { Provider } from 'next-auth/client'
 import NextNProgress from "nextjs-progressbar";
+import { useRouter } from 'next/router'
 
 export default function MyApp({ Component, pageProps }) {
-
+          const router = useRouter();
 
 
           return (
@@ -13,7 +14,9 @@ export default function MyApp({ Component, pageProps }) {
                   <Layout>
                       <SEO title={process.env.siteTitle}/>
                       <NextNProgress />
-                      <Component {...pageProps} />
+                      <div key={router.asPath} className="page-transition">
+                        <Component {...pageProps} />
+                      </div>
                   </Layout>
 
                 </Provider>

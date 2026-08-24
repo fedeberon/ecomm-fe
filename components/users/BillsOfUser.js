@@ -7,7 +7,12 @@ import {paginationComponentOptions} from "../../DataTableUtils";
 const BillsOfUser = ({bills}) => {
     const[filterText, setFilterText]= useState ('')
     const [resetPaginationToggle, setResetPaginationToggle] = useState(false);
-    const filteredItems =bills.filter(item=> filterText == '' || filterText.toLowerCase().includes(item.cuit));
+    const safeBills = Array.isArray(bills) ? bills : [];
+    const filteredItems = safeBills.filter(item => {
+        const query = filterText.trim().toLowerCase();
+        return !query || [item.id, item.billTypeName, item.number, item.cuit, item.cae, item.totalAmount]
+            .some(value => String(value ?? '').toLowerCase().includes(query));
+    });
  
     const columns = [
 
@@ -28,12 +33,12 @@ const BillsOfUser = ({bills}) => {
         },
         {
             name: 'Fecha',
-            selector:row=>row.date.split('',10),
+            selector: row => row.date ? String(row.date).slice(0, 10) : '—',
             sortable: true
         },
         {
             name: 'Hora',
-            selector:row=>new DateObject(row.date).format('mm:ss'),
+            selector: row => row.date ? new DateObject(row.date).format('HH:mm') : '—',
             sortable:true
         },
         {
@@ -63,7 +68,7 @@ const BillsOfUser = ({bills}) => {
 
     return (
 
-        <div className="min-h-80 max-w-12 my-4 sm:my-8 mx-auto w-full">
+        <div className="my-4 min-h-80 w-full max-w-5xl overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm sm:my-6">
             <DataTable
                 columns={columns}
                 data={filteredItems} 

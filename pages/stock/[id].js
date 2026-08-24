@@ -1,6 +1,6 @@
 import ItemStock from "@/components/stock/ItemStock";
 import {findAll, findAllById} from "../../services/stockService";
-import PageTitle from "@/components/PageTitle";
+import StoreHeading from "@/components/StoreHeading";
 import React from "react";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faArrowLeft} from "@fortawesome/free-solid-svg-icons";
@@ -10,7 +10,7 @@ const StockDetail = ({stock}) => {
     const router = useRouter()
     return (
         <div className="mx-auto max-w-6xl">
-            <PageTitle text = {`${stock?.provider?.name} - Detalle # ${stock.id}`} />
+            <StoreHeading title={`${stock?.provider?.name} - Detalle # ${stock.id}`} />
             <ItemStock stock={stock}/>
 
             <a

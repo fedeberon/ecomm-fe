@@ -103,17 +103,17 @@ const UserList = ({ users }) => {
                                                 </select>
                                             </td>
                                             <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                                                <Link href={`/bills/user/${user.username}`} passHref>
+                                                <Link legacyBehavior href={`/bills/user/${user.username}`} passHref>
                                                     <a href="#" className="text-indigo-600 hover:text-indigo-900">Facturaci&oacute;n</a>
                                                 </Link>
                                             </td>
                                             <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                                                <Link href={`/users/${user.username}`} passHref>
+                                                <Link legacyBehavior href={`/users/${user.username}`} passHref>
                                                     <a href="#" className="text-indigo-600 hover:text-indigo-900">Mas ...</a>
                                                 </Link>
                                             </td>
                                             <td className="px-6 py-4 whitespace-nowrap text-rigth text-sm font-medium">
-                                                <Link href={`/users/wallet/${user.username}`} passHref>
+                                                <Link legacyBehavior href={`/users/wallet/${user.username}`} passHref>
                                                     <a href="#" className="text-indigo-600 hover:text.-indigo-900">Puntos</a>
                                                 </Link>
                                             </td>
@@ -125,7 +125,7 @@ const UserList = ({ users }) => {
                     </div>
                 </div>
             </div>
-            <Link href="/users/create" passHref>
+            <Link legacyBehavior href="/users/create" passHref>
                 <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 mt-10 ml-10 rounded w-40">
                     Nuevo Usuario
                 </button>

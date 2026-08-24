@@ -1,178 +1,147 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import { useCartContext } from "@/context/Store";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBars } from "@fortawesome/free-solid-svg-icons";
-import { faShoppingCart } from "@fortawesome/free-solid-svg-icons";
-import logo from "/images/logoMati.png";
+import { faBars, faShoppingCart, faHome } from "@fortawesome/free-solid-svg-icons";
 import UserSession from "@/components/users/UserSession";
+import BrandLogo from "@/components/BrandLogo";
 import { useSession } from "next-auth/client";
-import Loading from "./utils/Loading";
 import { findAll } from "services/categoriesService";
 
-
 function Nav() {
+  const router = useRouter();
   const cart = useCartContext()[0];
   const [cartItems, setCartItems] = useState(0);
-  const [session, loading] = useSession();
-  const [isShow, setIsShow] = useState(false)
-  const [load, setLoad] = useState(false)
+  const [session] = useSession();
+  const [isShow, setIsShow] = useState(false);
   const [categoriesVisible, setCategoriesVisible] = useState(false);
-  const [categories, setCategories] = useState([])
+  const [categories, setCategories] = useState([]);
 
-
-  const handleMenu = () => {
-    setIsShow(!isShow)
-  }
-
-  const handleButtonClick = (e) => {
-    setIsShow(false);
-  };
-
-  useEffect(async() => {
-    setCategories(await findAll())
-  }, [])
+  const isActive = (path) => path === '/' ? router.pathname === '/' : router.pathname.startsWith(path);
 
   useEffect(() => {
-    let numItems = 0;
-    cart.forEach((item) => {
-      numItems += item.quantity;
-    });
-    setCartItems(numItems);
+    const loadCategories = async () => setCategories(await findAll());
+    loadCategories();
+  }, []);
+
+  useEffect(() => {
+    setCartItems(cart.reduce((acc, item) => acc + item.quantity, 0));
   }, [cart]);
 
-  const showCategories = (() => {
-    setCategoriesVisible(!categoriesVisible)
-  })
-  
-  const handleDocumentClick = (e) => {
-    if (categoriesVisible) {
-      setCategoriesVisible(false);
-    }
-  };
-
-  useEffect(() => {
-    document.addEventListener('click', handleDocumentClick);
-
-    return () => {
-      document.removeEventListener('click', handleDocumentClick);
-    };
-  }, [categoriesVisible]);
-
   return (
-    <header className="w-full sticky  lg:static top-0 z-50 bg-white">
-
-      <div>
-        <div className="flex items-center justify-between flex-wrap p-2">
-        <div className="block lg:hidden">
-          <button id="menuButton" onClick={handleMenu} className="flex py-2 hover:border-grey">
-            <FontAwesomeIcon icon={faBars} className="w-5 top-6 ml-2 mr-0 items-center" />
-          </button>
-        </div>
-        <Link href="/">
-          <div className="flex sm:block cursor-pointer flex-row items-center">
-            <img src={logo.src} className="w-16 mx-16 ml-8 md:mx-64 lg:mx-4 lg:w-12" />
+    <header className="sticky top-0 z-50 w-full bg-white shadow-sm">
+      <div className="hidden md:block bg-palette-sdark text-white">
+        <div className="mx-auto flex max-w-7xl items-center justify-between px-8 py-2 text-xs font-semibold tracking-wide lg:px-12">
+          <div className="flex items-center gap-5">
+            <span>Envíos a todo el país</span>
+            <span className="opacity-40">|</span>
+            <span>Compras 100% seguras</span>
           </div>
-        </Link>
-        <div className="lg:order-2 -mx-8 lg:m-auto">
-          <UserSession session={session} />
+          <span className="opacity-90">Todo para acompañar cada etapa</span>
         </div>
-        <div className="lg:order-3">
-          <Link href="/cart" passHref>
-            <a className="flex md:-mt-1 flex-wrap ml-2 md:ml-1 object-right p-6 lg:order-last md:p-3 rounded-lg hover:text-palette-secondary" aria-label="cart">
-              <FontAwesomeIcon
-                className="text-palette-primary hover:text-palette-secondary h-6"
-                icon={faShoppingCart}
-              />
-              {cartItems === 0 ? null : (
-                <div className=" text-xs bg-palette-secondary rounded-full text-white font-semibold py-1 px-2 ">
-                  {cartItems}
-                </div>
-              )}
-            </a>
-          </Link>
-        </div>
+      </div>
 
-        <div
-          id="menu"
-          className={`w-full block flex-grow ${isShow ? "" : "hidden"} divide-y divide-y-reverse justify-between divide-gray-200 lg:divide-none lg:flex lg:justify-self-center lg:w-auto`}
-        >
-          <Link href="/" >
-            <a className="text-smw border-b border-gray-200 block mt-4 lg:inline-block lg:border-none lg:mt-0
-               text-m font-primary text-palette-primary md:p-2 rounded-md hover:text-palette-secondary tracking-tight pt-1">
-                INICIO                
-            </a>
-          </Link>
+      <div className="border-b border-gray-100 bg-white">
+        <div className="mx-auto w-full max-w-[1440px] px-5 sm:px-8 lg:px-10">
+          <div className="flex h-20 min-w-0 items-center gap-4 lg:h-24">
+            <button
+              id="menuButton"
+              onClick={() => setIsShow(!isShow)}
+              className="lg:hidden p-2 rounded-xl hover:bg-gray-100"
+              aria-label="Abrir menú"
+            >
+              <FontAwesomeIcon icon={faBars} className="w-5 text-gray-700" />
+            </button>
 
-          <Link href="/diapers/inicio">
-            <a className="text-smw block mt-4 lg:inline-block lg:mt-0
-                text-m font-primary text-palette-primary md:p-2 rounded-md hover:text-palette-secondary tracking-tight pt-1">
-                  PAÑALERIA
-            </a>
-          </Link>
+            <Link legacyBehavior href="/">
+              <a className="flex shrink-0 items-center">
+                <BrandLogo />
+              </a>
+            </Link>
 
-          <div className="relative text-smw block mt-4 lg:inline-block lg:mt-0">
-            <button 
-                type="button"
-                onClick={showCategories}
-                className="inline-flex text-m font-primary text-palette-primary tracking-tight md:p-2 rounded-md hover:text-palette-secondary">
-                CATEGORÍAS
-                  <svg className="h-5 w-5 align-items-lg-stretch" xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                      <path fillRule="evenodd"
-                        d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                        clipRule="evenodd"/>
-                  </svg>
-              </button>       
-              <div
-                className={`${categoriesVisible ? "" : "hidden"} z-50 absolute mt-2 w-46 lg:w-32 lg:right-0 md:w-32 rounded-md shadow-lg bg-white ring-2 ring-palette-lighter ring-opacity-75 focus:outline-none md:-mx-2 -mx-0`}
-                role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabIndex="-1">
-                <div className="overflow-y-auto no-scrollbar max-h-80 lg:max-h-44" role="none">
-                  {categories?.map((category) =>(
-                      <Link href={`/accessories/${category.id}`} passHref legacyBehavior>
-                        <a href="#" onClick={showCategories} className="text-palette-primary block text-center hover:text-palette-secondary px-4 py-2 text-sm" role="menuitem"
-                        tabIndex="-1" id="menu-item-0">{category.name}</a>
-                      </Link>
-                    ))
-                  }   
-                </div>
+            <div className="ml-auto hidden min-w-0 items-center justify-end gap-5 pl-2 lg:flex lg:pr-6">
+              <Link legacyBehavior href="/">
+                <a className={`nav-tab flex items-center gap-2 py-3 text-sm font-bold ${isActive('/') ? 'nav-tab-active' : ''}`}>
+                  <FontAwesomeIcon icon={faHome} className="w-4 text-palette-sdark" />
+                  Inicio
+                </a>
+              </Link>
+
+              <Link legacyBehavior href="/diapers/inicio">
+                <a className={`nav-tab py-3 text-sm font-bold ${isActive('/diapers') ? 'nav-tab-active' : ''}`}>Pañalería</a>
+              </Link>
+
+              <div className="relative">
+                <button
+                  type="button"
+                  onClick={() => setCategoriesVisible(!categoriesVisible)}
+                  className={`nav-tab flex items-center gap-1 py-3 text-sm font-bold ${categoriesVisible ? 'nav-tab-active' : ''}`}
+                >
+                  Categorías <span className="text-xs">⌄</span>
+                </button>
+                {categoriesVisible && (
+                  <div className="absolute right-0 mt-1 w-64 bg-white border border-gray-200 rounded-2xl shadow-xl p-2">
+                    <div className="max-h-72 overflow-y-auto no-scrollbar">
+                      {categories?.map((category) => (
+                        <Link legacyBehavior key={category.id} href={`/accessories/${category.id}`} passHref>
+                          <a
+                            onClick={() => setCategoriesVisible(false)}
+                            className="block px-4 py-2.5 rounded-xl text-sm text-gray-700 hover:bg-palette-slighter hover:text-palette-dark"
+                          >
+                            {category.name}
+                          </a>
+                        </Link>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </div>
+
+              <Link legacyBehavior href="/about/inicio">
+                <a className={`nav-tab py-3 text-sm font-bold ${isActive('/about') ? 'nav-tab-active' : ''}`}>Quiénes somos</a>
+              </Link>
+
+              <div className="hidden w-[132px] shrink-0 items-center justify-end sm:flex">
+                <UserSession session={session} />
+              </div>
+
+              <Link legacyBehavior href="/cart" passHref>
+                <a
+                  className="relative mr-0 flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-palette-sdark shadow-md transition hover:bg-palette-dark lg:mr-2"
+                  aria-label="Carrito"
+                >
+                  <FontAwesomeIcon icon={faShoppingCart} className="h-5 text-white" />
+                  {cartItems > 0 && (
+                    <span className="absolute -right-1 -top-1 flex h-5 min-w-5 items-center justify-center rounded-full bg-white px-1 text-xs font-bold text-palette-sdark shadow">
+                      {cartItems}
+                    </span>
+                  )}
+                </a>
+              </Link>
             </div>
           </div>
 
-          <Link href="/about/inicio">
-            <a className="text-smw block mt-4 lg:inline-block lg:mt-0 text-m font-primary text-palette-primary tracking-tight md:p-2 rounded-md hover:text-palette-secondary">
-                  QUIENES SOMOS
-            </a>
-          </Link>
-
-          {session?.user?.role?.includes("ADMIN") ? (
-            <Link href="/admin">
-              <a className="top-4 right-3 lg:order-last text-smw block mt-4 mr-4 lg:inline-block lg:mt-0">
-                <h1>
-                  <div className="text-m font-primary text-palette-primary md:p-2 rounded-md hover:text-palette-secondary tracking-tight pt-1">
-                    ADMINISTRACION
-                  </div>
-                </h1>
-              </a>
-            </Link>
-          ) : (
-            ""
-          )}
-        </div>
-
-        {
-          load ?
-            <Loading>
-            </Loading>
-            :
-            <></>
-
-        }
+          <nav className={`${isShow ? "block" : "hidden"} lg:hidden border-t border-gray-100 pb-3`}>
+            <Link legacyBehavior href="/"><a className="block py-3 text-sm font-bold text-gray-700">Inicio</a></Link>
+            <Link legacyBehavior href="/diapers/inicio"><a className="block py-3 text-sm font-bold text-gray-700">Pañalería</a></Link>
+            <button onClick={() => setCategoriesVisible(!categoriesVisible)} className="block w-full text-left py-3 text-sm font-bold text-gray-700">Categorías</button>
+            {categoriesVisible && (
+              <div className="pl-3 pb-2">
+                {categories?.map((category) => (
+                  <Link legacyBehavior key={category.id} href={`/accessories/${category.id}`} passHref>
+                    <a className="block py-2 text-sm text-gray-600">{category.name}</a>
+                  </Link>
+                ))}
+              </div>
+            )}
+            <Link legacyBehavior href="/about/inicio"><a className="block py-3 text-sm font-bold text-gray-700">Quiénes somos</a></Link>
+            {session?.user?.role?.includes("ADMIN") && (
+              <Link legacyBehavior href="/admin"><a className="block py-3 text-sm font-bold text-gray-700">Administración</a></Link>
+            )}
+          </nav>
         </div>
       </div>
-      {isShow && (
-        <div className="fixed top-0 left-40 right-20 bottom-0 z-40" onClick={handleButtonClick}></div>
-      )}
     </header>
   );
 }

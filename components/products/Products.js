@@ -60,30 +60,27 @@ const Products = ({products}) => {
         {
             name: 'Acciones',
             cell: (row) => ( 
-                <div className="flex justify-center absolute left-0">
-                    <Link
+                <div className="flex min-w-max items-center justify-center gap-1.5">
+                    <Link legacyBehavior
                     href={`/products/${row.id}`}
                     passHref
                     >
-                    <button onClick={() => console.log('Button clicked!')} className="bg-green-500 ml-0 hover:bg-green-400 text-white w-10 h-auto p-2 rounded-full font-primary font-semibold text-xs flex
-                         items-baselinetransform transition duration-500 group cursor-pointer">
-                    <FontAwesomeIcon icon={faEye} className="w-5 m-auto"/>
+                    <button type="button" title="Ver producto" aria-label="Ver producto" className="flex h-8 w-8 items-center justify-center rounded-lg bg-emerald-500 text-white shadow-sm transition hover:bg-emerald-600">
+                    <FontAwesomeIcon icon={faEye} className="h-4 w-4"/>
                     </button>
                     </Link>
 
-                    <Link
+                    <Link legacyBehavior
                     href={`/products/update/${row.id}`}
                     passHref
                     >
-                    <button className="bg-blue-500 ml-0 hover:bg-blue-400 text-white w-10 h-auto p-2 rounded-full font-primary font-semibold text-xs flex
-                    justify-center items-baselinetransform transition duration-500 group cursor-pointer">
-                    <FontAwesomeIcon icon={faEdit} className="w-5 m-auto"/>
+                    <button type="button" title="Editar producto" aria-label="Editar producto" className="flex h-8 w-8 items-center justify-center rounded-lg bg-blue-500 text-white shadow-sm transition hover:bg-blue-600">
+                    <FontAwesomeIcon icon={faEdit} className="h-4 w-4"/>
                     </button>
                     </Link>
 
-                    <button onClick={() => handleDelete(row.id)} className="bg-red-500 ml-0 hover:bg-red-400 text-white w-10 h-auto p-2 rounded-full font-primary font-semibold text-xs flex
-                    justify-center items-baselinetransform transition duration-500 group cursor-pointer">
-                    <FontAwesomeIcon icon={faTrash} className="w-5 m-auto"/>
+                    <button type="button" title="Eliminar producto" aria-label="Eliminar producto" onClick={() => handleDelete(row.id)} className="flex h-8 w-8 items-center justify-center rounded-lg bg-rose-500 text-white shadow-sm transition hover:bg-rose-600">
+                    <FontAwesomeIcon icon={faTrash} className="h-4 w-4"/>
                     </button>
                 </div>
             ),
@@ -103,9 +100,9 @@ const Products = ({products}) => {
 
  
     return (
-        <div className="min-h-80 max-w-12 my-4 sm:my-8 mx-auto w-full">
+        <div className="mx-auto my-4 min-h-80 w-full max-w-[1400px] px-3 sm:my-8 sm:px-0">
 
-             <div className="overflow-hidden">
+             <div className="w-full overflow-x-auto rounded-2xl border border-slate-200 bg-white shadow-sm">
 
                 <DataTable
                     columns={columns}
@@ -113,6 +110,8 @@ const Products = ({products}) => {
                     pagination
                     subHeader
                     subHeaderComponent={subHeaderComponentMemo}
+                    responsive
+                    dense
                     />
             </div>
         </div>

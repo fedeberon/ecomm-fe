@@ -3,37 +3,22 @@ import ProductForm from '@/components/products/ProductForm'
 import logo from "../../images/default.jpeg";
 import BackToProductButton from './BackToProductButton';
 
-
-function ProductDetails({ productData}) {
-    const defaultImage =
-        {
-            "url": "default.jpeg",
-            "link": logo,
-            "main": false
-        };
-        true
-   const image = productData.images && productData.images.length != 0 ? productData.images[0].link : defaultImage.link
+function ProductDetails({ productData }) {
+  const defaultImage = { url: "default.jpeg", link: logo, main: false };
+  const image = productData.images && productData.images.length !== 0
+    ? productData.images[0].link
+    : defaultImage.link
 
   return (
-
-    <div className="flex py-1 flex-col justify-between w-full max-w-xs mx-auto space-y-4 min-h-128">  
-      <div>
-        <ProductInfo 
-          title={productData.name}
-          description={productData.description}
-          price={productData.price}
-        />
+    <div className="flex flex-col h-full">
+      <ProductInfo productData={productData} />
+      <div className="mt-3 pt-3 border-t border-slate-100">
+        <ProductForm productData={productData} image={image} />
       </div>
-
-      <ProductForm 
-        productData={productData}
-        image={image}
-      />
-      <div className=''>
+      <div className="mt-2">
         <BackToProductButton />
       </div>
     </div>
-    
   )
 }
 

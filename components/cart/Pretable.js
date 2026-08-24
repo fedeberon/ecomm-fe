@@ -35,7 +35,7 @@ function PreTable ({cart}) {
           {cartItems.map((item, index) => (
             <tr key={index} className="text-sm sm:text-base text-gray-600 text-center">
               <td className="font-primary font-medium px-4 sm:px-6 py-4 flex items-center">
-                <Link passHref href={`/products/${item.id}`}>
+                <Link legacyBehavior passHref href={`/products/${item.id}`}>
                   <a className="pt-1 hover:text-palette-dark ml-4">
                     {item.productTitle} {item.variantTitle}
                   </a>

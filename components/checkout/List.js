@@ -44,7 +44,7 @@ const List = () => {
             name: 'Id',
             selector: row => row.id,
             sortable: true,
-            cell: row => <Link passHref href={`/checkout/${row.id}`}><a className={`text-indigo-600`}>#{row.id}</a></Link>
+            cell: row => <Link legacyBehavior passHref href={`/checkout/${row.id}`}><a className={`text-indigo-600`}>#{row.id}</a></Link>
         },
         {
             name: 'Estado',

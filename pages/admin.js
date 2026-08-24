@@ -6,7 +6,7 @@ const Admin = () => {
 
             <div className="antialiased bg-blue-200 w-full font-ssans flex flex-wrap">
                 <div className="flex flex-wrap m-2 w-full justify-self-center grid grid-cold-1 md:grid-cols-2 container mx-auto">
-                    <Link href="/bills">
+                    <Link legacyBehavior href="/bills">
                         <div className="pl-1 my-4 w-80 h-24 flex lg:w-3/4 justify-self-center bg-green-400 rounded-lg shadow-md cursor-pointer">
                             <div className="flex w-full h-full py-2 px-4 bg-white rounded-lg justify-between">
                                 <div className="my-auto">
@@ -21,7 +21,7 @@ const Admin = () => {
                             </div>
                         </div>
                     </Link>
-                    <Link href="/stock">
+                    <Link legacyBehavior href="/stock">
                         <div className="pl-1 my-4 w-80 h-24 lg:w-3/4 justify-self-center bg-blue-500 rounded-lg shadow-md cursor-pointer">
                             <div className="flex w-full h-full py-2 px-4 bg-white rounded-lg justify-between">
                                 <div className="my-auto">
@@ -36,7 +36,7 @@ const Admin = () => {
                             </div>
                         </div>
                     </Link>
-                    <Link href="/products">
+                    <Link legacyBehavior href="/products">
                         <div className="pl-1 my-4 w-80 h-24 lg:w-3/4 justify-self-center bg-yellow-400 rounded-lg shadow-md cursor-pointer">
                             <div className="flex w-full h-full py-2 px-4 bg-white rounded-lg justify-between">
                                 <div className="my-auto">
@@ -51,7 +51,7 @@ const Admin = () => {
                             </div>
                         </div>
                     </Link>
-                    <Link href="/users">
+                    <Link legacyBehavior href="/users">
                         <div className="pl-1 my-4 w-80 h-24 lg:w-3/4 justify-self-center bg-yellow-400 rounded-lg shadow-md cursor-pointer">
                             <div className="flex w-full h-full py-2 px-4 bg-white rounded-lg justify-between">
                                 <div className="my-auto">
@@ -66,7 +66,7 @@ const Admin = () => {
                             </div>
                         </div>
                     </Link>
-                    <Link href="/checkout">
+                    <Link legacyBehavior href="/checkout">
                         <div className="pl-1 my-4 w-80 h-24 lg:w-3/4 justify-self-center bg-green-400 rounded-lg shadow-md cursor-pointer">
                             <div className="flex w-full h-full py-2 px-4 bg-white rounded-lg justify-between">
                                 <div className="my-auto">
@@ -81,7 +81,7 @@ const Admin = () => {
                             </div>
                         </div>
                     </Link>
-                    <Link href="/brand">
+                    <Link legacyBehavior href="/brand">
                         <div className="pl-1 my-4 w-80 h-24 lg:w-3/4 justify-self-center bg-blue-500 rounded-lg shadow-md cursor-pointer">
                             <div className="flex w-full h-full py-2 px-4 bg-white rounded-lg justify-between">
                                 <div className="my-auto">
@@ -97,7 +97,7 @@ const Admin = () => {
                         </div>
                     </Link>
 
-                    <Link href="/category">
+                    <Link legacyBehavior href="/category">
                         <div className="pl-1 my-4 w-80 h-24 lg:w-3/4 justify-self-center bg-blue-500 rounded-lg shadow-md cursor-pointer">
                             <div className="flex w-full h-full py-2 px-4 bg-white rounded-lg justify-between">
                                 <div className="my-auto">
@@ -113,7 +113,7 @@ const Admin = () => {
                         </div>
                     </Link>
 
-                    <Link href="/reports">
+                    <Link legacyBehavior href="/reports">
                         <div className="pl-1 my-4 w-80 h-24 lg:w-3/4 justify-self-center bg-green-400 rounded-lg shadow-md cursor-pointer">
                             <div className="flex w-full h-full py-2 px-4 bg-white rounded-lg justify-between">
                                 <div className="my-auto">
@@ -129,7 +129,7 @@ const Admin = () => {
                         </div>
                     </Link>
 
-                    <Link href="/proveedores">
+                    <Link legacyBehavior href="/proveedores">
                         <div className="pl-1 my-4 w-80 h-24 lg:w-3/4 justify-self-center bg-green-400 rounded-lg shadow-md cursor-pointer">
                             <div className="flex w-full h-full py-2 px-4 bg-white rounded-lg justify-between">
                                 <div className="my-auto">
@@ -145,7 +145,7 @@ const Admin = () => {
                         </div>
                     </Link>
 
-                    <Link href="/size">
+                    <Link legacyBehavior href="/size">
                         <div className="pl-1 my-4 w-80 h-24 lg:w-3/4 justify-self-center bg-blue-500 rounded-lg shadow-md cursor-pointer">
                             <div className="flex w-full h-full py-2 px-4 bg-white rounded-lg justify-between">
                                 <div className="my-auto">

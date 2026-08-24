@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 190" role="img" aria-label="Dulce Bebe">
+  <defs>
+    <linearGradient id="pink" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#ff94c3"/>
+      <stop offset="1" stop-color="#ec4f99"/>
+    </linearGradient>
+    <linearGradient id="aqua" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#75ddd7"/>
+      <stop offset="1" stop-color="#27aeb8"/>
+    </linearGradient>
+  </defs>
+
+  <g transform="translate(8 6)">
+    <path d="M18 154 C78 168 150 166 218 150" fill="none" stroke="#6e402c" stroke-width="10" stroke-linecap="round"/>
+    <ellipse cx="26" cy="155" rx="12" ry="6" fill="#5db95b" transform="rotate(-25 26 155)"/>
+    <ellipse cx="215" cy="150" rx="12" ry="6" fill="#5db95b" transform="rotate(22 215 150)"/>
+
+    <g transform="translate(86 0)">
+      <path d="M20 34 L39 7 L59 31 M101 31 L122 7 L140 36" fill="url(#pink)"/>
+      <ellipse cx="80" cy="88" rx="61" ry="74" fill="url(#pink)"/>
+      <ellipse cx="58" cy="71" rx="22" ry="25" fill="#fff"/>
+      <ellipse cx="102" cy="71" rx="22" ry="25" fill="#fff"/>
+      <circle cx="58" cy="72" r="13" fill="#201f20"/>
+      <circle cx="102" cy="72" r="13" fill="#201f20"/>
+      <circle cx="53" cy="67" r="5" fill="#fff"/>
+      <circle cx="97" cy="67" r="5" fill="#fff"/>
+      <path d="M71 89 H89 L80 101 Z" fill="#ffb51a"/>
+      <path d="M80 117 C67 103 48 113 53 131 C57 147 80 158 80 158 C80 158 104 147 108 131 C113 113 94 103 80 117 Z" fill="#e9348e" stroke="#ffd6e7" stroke-width="4"/>
+      <ellipse cx="58" cy="160" rx="14" ry="7" fill="#f5ad1a"/>
+      <ellipse cx="102" cy="160" rx="14" ry="7" fill="#f5ad1a"/>
+    </g>
+
+    <g transform="translate(13 79)">
+      <path d="M11 24 L22 7 L35 22 M53 22 L66 7 L78 25" fill="url(#aqua)"/>
+      <ellipse cx="45" cy="56" rx="36" ry="43" fill="url(#aqua)"/>
+      <ellipse cx="33" cy="46" rx="12" ry="14" fill="#fff"/>
+      <ellipse cx="57" cy="46" rx="12" ry="14" fill="#fff"/>
+      <circle cx="33" cy="47" r="7" fill="#222"/>
+      <circle cx="57" cy="47" r="7" fill="#222"/>
+      <circle cx="30" cy="44" r="2.5" fill="#fff"/>
+      <circle cx="54" cy="44" r="2.5" fill="#fff"/>
+      <path d="M39 58 H51 L45 66 Z" fill="#ffb51a"/>
+      <path d="M45 76 C37 68 26 75 29 85 C32 95 45 101 45 101 C45 101 58 95 61 85 C64 75 53 68 45 76 Z" fill="#239fac"/>
+      <ellipse cx="36" cy="99" rx="8" ry="4" fill="#f5ad1a"/>
+      <ellipse cx="54" cy="99" rx="8" ry="4" fill="#f5ad1a"/>
+    </g>
+  </g>
+
+  <g transform="translate(255 43)">
+    <text x="0" y="67" font-family="Arial, Helvetica, sans-serif" font-size="72" font-weight="900" letter-spacing="-3" fill="#25aeba">DULCE</text>
+    <text x="245" y="67" font-family="Arial, Helvetica, sans-serif" font-size="72" font-weight="900" letter-spacing="-3" fill="#ef5aa1">BEBE</text>
+    <text x="4" y="105" font-family="Arial, Helvetica, sans-serif" font-size="18" font-weight="700" letter-spacing="2.5" fill="#4a5a70">TODO PARA ACOMPAÑAR CADA ETAPA</text>
+  </g>
+</svg>
